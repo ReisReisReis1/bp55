@@ -1,0 +1,24 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'home/style.css' %}">
+</head>
+<body>
+
+<!-- Logo in der Mitte-->
+<div class="container">
+    <div style="margin-top: 30%; margin-left: -8%">
+        <img src="{% static "logoneu.png"  %}" width="140%">
+    </div>
+</div>
+
+
+<!-- Anmeldebutton-->
+<div style = "position:relative; margin-top: -15%; left: 17% ">
+    <a href="{% url "start" %}" > <button class="block">Anmelden</button> </a>
+</div>
+
+</body>
+</html>

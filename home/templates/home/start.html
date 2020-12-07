@@ -1,0 +1,51 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+     <link rel="stylesheet" type="text/css" href="{% static 'home/topnav.css' %}">
+<style>
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+</style>
+</head>
+
+<body>
+<!-- Suchfeld -->
+<div class="topnav">
+    <input type="text" placeholder="Search..">
+
+<!-- Logo in der Navigationsleiste -->
+    <div class="topnav-centered">
+    <div class="Container">
+        <div style="margin-left:45%">
+        <img src="{% static "logoneu.png" %}" width="15%" height="15%" class="center">
+            </div>
+</div>
+  </div>
+
+</div>
+
+<!-- Top navigation -->
+<div class="topnav" style="background: #ffea93 ">
+
+<!-- Menüauswahl -->
+   <div style="margin-left: 40%">
+       <a href="{% url "start" %}" class="active"> Startseite</a>
+       <a href="{% url "zeitstrahl" %}" class="active"> Zeitstrahl</a>
+       <a href="#Themengrid" class="active"> ThemenGrid</a>
+</div>
+
+</div>
+
+<div class="topnav">
+<!-- Hier kommt der Text -->
+</div>
+
+
+</body>
+</html>
