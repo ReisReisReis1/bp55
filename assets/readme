@@ -2,4 +2,4 @@
 in der HTML Datei hinzufügen, damit Static auch aufgerufen werden kann
 
 Hier kommen die Bilder rein und wird aufgerufen mit :
-"{% static 'bild.dateiende' %}"
+"{% static "bild.dateiende" %}"
