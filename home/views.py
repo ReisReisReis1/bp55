@@ -16,3 +16,7 @@ def zeitstrahl(request):
 
 def themengrid(request):
     return render(request, 'home/themengrid.html')
+
+
+def t(request):
+    return render(request, 'home/t.html')
