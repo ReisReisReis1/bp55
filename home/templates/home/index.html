@@ -1,0 +1,30 @@
+{% load static %}
+{% load bootstrap4 %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'home/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'home/index.css' %}">
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='slim' %}
+</head>
+<body>
+
+<!-- Logo in der Mitte-->
+
+<div class="container full_height" height="100%">
+    <div class="row align-items-center full_height" height="100%">
+        <div class="col">
+            <div class="row main_logo_container">
+                <img src="{% static "logoneu.png"  %}" width="100%">
+            </div>
+            <div class="row main_button_container">
+                <a href="{% url "start" %}" style="width: 100%;"> <button class="button" style="width: 100%;">Anmelden</button></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
