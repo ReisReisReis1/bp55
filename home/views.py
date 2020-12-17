@@ -1,5 +1,6 @@
 from django.shortcuts import render
 
+
 # Create your views here.
 
 # Definition auf Index mit Rückgabe auf index.html
@@ -14,9 +15,14 @@ def start(request):
 def zeitstrahl(request):
     return render(request, 'home/zeitstrahl.html')
 
+
 def themengrid(request):
     return render(request, 'home/themengrid.html')
 
 
 def t(request):
     return render(request, 'home/t.html')
+
+
+def header(request):
+    return render(request, 'home/header.html')
