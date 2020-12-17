@@ -20,3 +20,9 @@ def themengrid(request):
 
 def t(request):
     return render(request, 'home/t.html')
+
+
+def introvideo(request):
+    return render(request, 'home/introvideo.html')
+
+
