@@ -20,3 +20,7 @@ def themengrid(request):
 
 def t(request):
     return render(request, 'home/t.html')
+
+
+def header(request):
+    return render(request, 'home/header.html')
