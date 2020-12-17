@@ -1,31 +1,22 @@
-html, body {
-  height: 100%;
+.row-no-margin {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
 }
 
-.full_height {
-  height: 100%;
+
+
+#color-txt-primary {
+    color: black;
 }
 
-.main_logo_container {
-  margin-bottom: 50px;
+#color-txt-secondary {
+
 }
 
-.main_button_container a {
-  text-decoration: none !important;
+#color-bg-primary {
+    background-color: #F9B848 !important;
 }
 
-.button {
-  background-color: #F9B848;
-  display: block;
-  border: none;
-  border-radius: 5px;
-  padding: 20px 28px;
-  font-size: 30px;
-  cursor: pointer;
-  text-align: center;
-}
-
-.button:hover {
-  background-color: #FFD997;
-  color: black;
+#color-bg-secondary {
+    background-color: #FFE0AB !important;
 }
