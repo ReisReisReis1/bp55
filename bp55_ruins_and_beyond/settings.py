@@ -21,12 +21,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'igs=lol-l81_i^ur4zjpqsu*zyg52f#qbr@3)g9qxhpgupe7t^'
+#SECRET_KEY = 'igs=lol-l81_i^ur4zjpqsu*zyg52f#qbr@3)g9qxhpgupe7t^'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'igs=lol-l81_i^ur4zjpqsu*zyg52f#qbr@3)g9qxhpgupe7t^')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEBUG', "") != 'False'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["dmz-48.architektur.tu-darmstadt.de", '127.0.0.1']
 
 
 # Application definition
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'video_content',
     'bootstrap4',
 ]
 
@@ -52,7 +54,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'home.urls'
+ROOT_URLCONF = 'bp55_ruins_and_beyond.urls'
 
 TEMPLATES = [
     {
@@ -79,8 +81,12 @@ WSGI_APPLICATION = 'bp55_ruins_and_beyond.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'ruinsandbeyond',
+        'USER': 'ruinsandbeyond',
+        'PASSWORD': 'test1234',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 
@@ -109,7 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Berlin'
 
 USE_I18N = True
 
@@ -126,5 +132,12 @@ STATIC_URL = '/static/'
 STATIC_ROOT = 'static'
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'assets'),
+    os.path.join(BASE_DIR, 'static'),
 )
+STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
+
+# Media Files
+
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
