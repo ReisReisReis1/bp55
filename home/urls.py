@@ -10,5 +10,4 @@ urlpatterns = [
     path('zeitstrahl', views.zeitstrahl, name='zeitstrahl'),
     path('themengrid', views.themengrid, name='themengrid'),
     path('t', views.t, name='t'),
-    path('introvideo', views.introvideo, name='introvideo'),
 ]

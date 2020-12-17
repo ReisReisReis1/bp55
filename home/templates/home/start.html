@@ -1,51 +1,28 @@
 {% load static %}
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-     <link rel="stylesheet" type="text/css" href="{% static 'home/topnav.css' %}">
-<style>
-
-body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-}
-</style>
-</head>
 
 <body>
-<!-- Suchfeld -->
+
+
+<!-- Intro-Video -->
+<div>
+    <b>{{video.title}}</b><br>
+    <video width="720" height="480" controls preload>
+        <source src="{{video.video.url}}" type="video/mp4">
+        <b>{{video.title}}</b>
+    </video>
+    <br>
+</div>
 <div class="topnav">
-    <input type="text" placeholder="Search..">
-
-<!-- Logo in der Navigationsleiste -->
-    <div class="topnav-centered">
-    <div class="Container">
-        <div style="margin-left:45%">
-        <img src="{% static "logoneu.png" %}" width="15%" height="15%" class="center">
-            </div>
+<!-- Description text for the webapplikation -->
+    Diese Webanwednung soll die Vorlesung 'Klassische Architektur und Städtebau der Antike' begleiten.<br>
+    Lorem ipsum dolor sit amet, consetetur sadipscing elitr,<br>
+    sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.<br>
+    At vero eos et accusam et justo duo dolores et ea rebum.<br>
+    Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet,<br>
+    consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,<br>
+    sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.<br>
+    Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.<br>
 </div>
-  </div>
-
-</div>
-
-<!-- Top navigation -->
-<div class="topnav" style="background: #ffea93 ">
-
-<!-- Menüauswahl -->
-   <div style="margin-left: 40%">
-       <a href="{% url "start" %}" class="active"> Startseite</a>
-       <a href="{% url "zeitstrahl" %}" class="active"> Zeitstrahl</a>
-       <a href="{% url "themengrid" %}" class="active"> ThemenGrid</a>
-</div>
-
-</div>
-
-<div class="topnav">
-<!-- Hier kommt der Text -->
-</div>
-
-
 </body>
 </html>
