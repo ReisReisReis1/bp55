@@ -15,7 +15,6 @@ html, body {
 }
 
 .button {
-  background-color: #F9B848;
   display: block;
   border: none;
   border-radius: 5px;
@@ -26,6 +25,5 @@ html, body {
 }
 
 .button:hover {
-  background-color: #FFD997;
   color: black;
 }
