@@ -21,7 +21,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = 'igs=lol-l81_i^ur4zjpqsu*zyg52f#qbr@3)g9qxhpgupe7t^'
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY',
                             'igs=lol-l81_i^ur4zjpqsu*zyg52f#qbr@3)g9qxhpgupe7t^')
 
@@ -42,6 +41,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'video_content',
+    'details_page',
+    'filter_page',
+    'timeline',
+    'start',
     'bootstrap4',
 ]
 
@@ -86,7 +89,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 
 # Password validation

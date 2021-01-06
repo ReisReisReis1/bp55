@@ -12,6 +12,7 @@ class Videos(models.Model):
     """
     title = models.CharField(max_length=100)
     video = models.FileField(upload_to='videos/')
+    era = models.CharField(max_length=100)
 
     def __str__(self):
         return str(self.title)
