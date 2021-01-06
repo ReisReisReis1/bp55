@@ -39,7 +39,6 @@ def display(request):
         'Hellenismus': Video.get_era('Hellenismus'),
         'Römische Kaiserzeit': Video.get_era('Römische Kaiserzeit'),
         'Spätantike': Video.get_era('Spätantike'),
-
     }
 
     return render(request, 'videos.html', context)

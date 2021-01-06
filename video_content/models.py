@@ -22,15 +22,18 @@ class Video(models.Model):
 
     def __str__(self):
         return str(self.title)
+
     # TODO improve for more then one intro-video
     def get_intro(self):
         try:
             self.objects.get(self, intro=True)
         except ObjectDoesNotExist:
-            return
-
+            return ObjectDoesNotExist
 
     def get_era(self, wanted_era):
-        return self.objects.filter(era=wanted_era)
+        try:
+            self.objects.filter(self, era=wanted_era)
+        except ObjectDoesNotExist:
+            return ObjectDoesNotExist
 
     # pylint: disable = too-few-public-methods
