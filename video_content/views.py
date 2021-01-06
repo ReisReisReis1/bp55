@@ -1,20 +1,24 @@
-from django.shortcuts import render
+"""
+Configurations of the Website subpages from the App: video-content
+"""
 
-# Create your views here.
 
 from django.shortcuts import render, redirect
+# pylint: disable = import-error
+from .models import Video
 
-from .models import Videos
-
-
-# Create your views here.
 
 def upload_video(request):
+    """
+    Subpage to upload videos
+    :param request: url request to subpage /upload
+    :return: rendering the subpage based on upload.html
+    """
     if request.method == 'POST':
         title = request.POST['title']
         video = request.POST['video']
 
-        content = Videos(title=title, video=video)
+        content = Video(title=title, video=video)
         content.save()
         return redirect('home')
 
@@ -22,11 +26,19 @@ def upload_video(request):
 
 
 def display(request):
-    videos = Videos.objects.all()
+    """
+    Subpage to show all videos
+    :param request: url request to subpage /videos
+    :return: rendering the subpage based on videos.html
+    """
 
     context = {
-        'videos': videos,
-
+        'Frühzeit': Video.get_era('Frühzeit'),
+        'Archaik': Video.get_era('Archaik'),
+        'Klassik': Video.get_era('Klassik'),
+        'Hellenismus': Video.get_era('Hellenismus'),
+        'Römische Kaiserzeit': Video.get_era('Römische Kaiserzeit'),
+        'Spätantike': Video.get_era('Spätantike'),
     }
 
     return render(request, 'videos.html', context)

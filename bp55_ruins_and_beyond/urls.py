@@ -15,25 +15,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-
-from video_content.views import upload_video, display
-
 from django.conf.urls.static import static
 from django.conf import settings
-from home import views
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include([
-        path('', views.index, name='index'),
-        path('start', views.start, name='start'),
-        path('zeitstrahl', views.zeitstrahl, name='zeitstrahl'),
-        path('themengrid', views.themengrid, name='themengrid'),
-        path('t', views.t, name='t'),
-    ])),
-    # For later use´in the admin interface
-    # path('upload/', upload_video, name='upload'),
-    # path('videos/', display, name='videos'),
+    path('', include('home.urls')),
+    path('start/', include('start.urls')),
+    path('videos/', include('video_content.urls')),
+    path('filter/', include('filter_page.urls')),
+    path('details_page/', include('details_page.urls')),
+    path('timeline/', include('timeline.urls')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
