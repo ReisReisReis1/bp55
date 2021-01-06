@@ -1,26 +1,24 @@
-from django.shortcuts import render
+"""
+Configurations of the different viewable functions and subpages from the App: home
+"""
 
+from django.shortcuts import render
 # Create your views here.
 
-# Definition auf Index mit Rückgabe auf index.html
+
 def index(request):
+    """
+    Subpage to index (first site appearing after someone opens the website)
+    :param request: url request to subpage /
+    :return: rendering the subpage based on index.html
+    """
     return render(request, 'home/index.html')
 
 
-def start(request):
-    return render(request, 'home/start.html')
-
-
-def zeitstrahl(request):
-    return render(request, 'home/zeitstrahl.html')
-
-def themengrid(request):
-    return render(request, 'home/themengrid.html')
-
-
-def t(request):
-    return render(request, 'home/t.html')
-
-
 def header(request):
+    """
+    The header of every site of the webpage excluding the homesite
+    :param request: requesting to render the header
+    :return: rendering the header on the site based on header.html
+    """
     return render(request, 'home/header.html')

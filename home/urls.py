@@ -1,14 +1,17 @@
-from django.conf.urls import url
-from django.urls import path
+"""
+URL Settings for the APP: home
+"""
 
+from django.urls import include, path
+# pylint: disable = import-error
 from . import views
-
+# pylint: disable = invalid-name
 app_name = 'home'
 urlpatterns = [
     path('', views.index, name='index'),
-    path('start', views.start, name='start'),
-    path('zeitstrahl', views.zeitstrahl, name='zeitstrahl'),
-    path('themengrid', views.themengrid, name='themengrid'),
-    path('t', views.t , name='t'),
-    path('header', views.header, name='header'),
-]
+    path('start', include('start.urls'), name='start'),
+
+    ]
+
+
+

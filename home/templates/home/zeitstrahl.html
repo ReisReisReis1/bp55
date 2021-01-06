@@ -6,46 +6,14 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{% static 'home/style.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'home/topnav.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'home/timeline.css' %}"  >
+    <link rel="stylesheet" type="text/css" href="{% static 'home/timeline.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'home/image.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'home/link.css' %}">
-<style>
-
-body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-}
-</style>
 </head>
 
-<div>
-
-<div class="topnav">
-    <input type="text" placeholder="Search..">
-
-
-    <div class="topnav-centered">
-    <div class="Container" >
-        <div style="margin-left:45%">
-        <img src="{% static "logoneu.png" %}" width="15%" height="15%" class="center">
-            </div>
-</div>
-  </div>
-
-</div>
-
-<!-- Top navigation -->
-<div class="topnav" style="background: #ffea93 ">
-
-
-   <div style="margin-left: 40%">
-       <a href="{% url "start" %}" class="active"> Startseite</a>
-       <a href="{% url "zeitstrahl" %}" class="active"> Zeitstrahl</a>
-      <a href="{% url "themengrid" %}" class="active"> ThemenGrid</a>
-</div>
-
-</div>
+{% include './header.html' %}
 
 
 
@@ -63,7 +31,7 @@ body {
           </span>
         </div>
 				<p>
-                    <img src="{% static 'karo5.jpg' %}" class="container">
+                    <img src="{% static 'card_placeholder.png' %}" class="container">
 		        </p>
 		</div> <!-- cd-timeline-content -->
 		</div> <!-- cd-timeline-block -->
@@ -77,7 +45,7 @@ body {
             <div class="timeline-content-info-date">
                    <span class="cd-date">March 12</span>
             </div>
-             <img src="{% static "Hexa.png" %}" class="image">
+             <img src="{% static "card_placeholder.png" %}" class="image">
                 <div class="overlay">
                 <div class="text">
                     <a href="{% url "start" %}">  Hello World </a> </div>

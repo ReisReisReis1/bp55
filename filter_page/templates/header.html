@@ -1,0 +1,44 @@
+{% load static %}
+{% load bootstrap4 %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'topnav.css' %}">
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='slim' %}
+</head>
+<body>
+    <div class="row row-no-margin" id="color-bg-primary">
+
+        <div class = "col text-left">
+            <div style="padding: 45px">
+
+            </div>
+        </div>
+        <div class = "col align-items-center text-center">
+            <img class="header_logo" src="{% static "logoneu.png" %}">
+        </div>
+        <div class = "col text-right">
+            <div class="row align-items-center justify-content-end" style="height: 100%">
+                <form class="header-search">
+                    <input type="text" class="form-control header-search-input" id="color-bg-secondary" placeholder="Suche">
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row row-no-margin row-distance-lg" id="color-bg-secondary">
+        <div class="container">
+            <div class="row">
+                <div class = "col align-items-center text-center sub_menu">
+                    <a href="{% url "start" %}" class="active" id="color-txt-primary"> Startseite</a>
+                    <a href="{% url "zeitstrahl" %}" class="active" id="color-txt-primary"> Zeitstrahl</a>
+                    <a href="{% url "themengrid" %}" class="active" id="color-txt-primary"> Gebäudefilter</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
