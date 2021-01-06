@@ -31,9 +31,15 @@ def display(request):
     :param request: url request to subpage /videos
     :return: rendering the subpage based on videos.html
     """
-    videos = Video.objects.all()
+
     context = {
-        'videos': videos,
+        'Frühzeit': Video.get_era('Frühzeit'),
+        'Archaik': Video.get_era('Archaik'),
+        'Klassik': Video.get_era('Klassik'),
+        'Hellenismus': Video.get_era('Hellenismus'),
+        'Römische Kaiserzeit': Video.get_era('Römische Kaiserzeit'),
+        'Spätantike': Video.get_era('Spätantike'),
+
     }
 
     return render(request, 'videos.html', context)
