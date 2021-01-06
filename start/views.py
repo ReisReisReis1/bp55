@@ -4,7 +4,7 @@
 
 from django.shortcuts import render
 # pylint: disable = import-error, no-name-in-module
-from video_content.models import Videos
+from video_content.models import Video
 
 
 # Create your views here.
@@ -17,7 +17,7 @@ def start(request):
     :return: rendering the subpage based on start.html
     """
     # pylint: disable = no-member
-    video = Videos.objects.get(title='VL_Archaik-1-3')
+    video = Video.get_intro()
     context = {
         'video': video
     }

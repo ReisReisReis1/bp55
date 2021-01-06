@@ -5,6 +5,6 @@ from django.contrib import admin
 
 # Register your models here.
 # pylint: disable = import-error, relative-beyond-top-level
-from .models import Videos
+from .models import Video
 
-admin.site.register(Videos)
+admin.site.register(Video)

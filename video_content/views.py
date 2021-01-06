@@ -5,7 +5,7 @@ Configurations of the Website subpages from the App: video-content
 
 from django.shortcuts import render, redirect
 # pylint: disable = import-error
-from .models import Videos
+from .models import Video
 
 
 def upload_video(request):
@@ -18,7 +18,7 @@ def upload_video(request):
         title = request.POST['title']
         video = request.POST['video']
 
-        content = Videos(title=title, video=video)
+        content = Video(title=title, video=video)
         content.save()
         return redirect('home')
 
@@ -31,8 +31,7 @@ def display(request):
     :param request: url request to subpage /videos
     :return: rendering the subpage based on videos.html
     """
-    videos = Videos.objects.all()
-
+    videos = Video.objects.all()
     context = {
         'videos': videos,
     }
