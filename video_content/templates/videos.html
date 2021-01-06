@@ -1,6 +1,46 @@
 
 <div>
-{% for video in videos %}
+{% for video in Frühzeit %}
+    <b>{{video.title}}</b><br>
+<video width="500" height="500" controls preload>
+<source src="{{video.video.url}}" type="video/mp4">
+<b>{{video.title}}</b>
+</video>
+<br>
+{% endfor %}
+{% for video in Archaik %}
+    <b>{{video.title}}</b><br>
+<video width="500" height="500" controls preload>
+<source src="{{video.video.url}}" type="video/mp4">
+<b>{{video.title}}</b>
+</video>
+<br>
+{% endfor %}
+{% for video in Hellenismus %}
+    <b>{{video.title}}</b><br>
+<video width="500" height="500" controls preload>
+<source src="{{video.video.url}}" type="video/mp4">
+<b>{{video.title}}</b>
+</video>
+<br>
+{% endfor %}
+{% for video in Klassik %}
+    <b>{{video.title}}</b><br>
+<video width="500" height="500" controls preload>
+<source src="{{video.video.url}}" type="video/mp4">
+<b>{{video.title}}</b>
+</video>
+<br>
+{% endfor %}
+{% for video in RömischeKaiserzeit %}
+    <b>{{video.title}}</b><br>
+<video width="500" height="500" controls preload>
+<source src="{{video.video.url}}" type="video/mp4">
+<b>{{video.title}}</b>
+</video>
+<br>
+{% endfor %}
+{% for video in Spätantike %}
     <b>{{video.title}}</b><br>
 <video width="500" height="500" controls preload>
 <source src="{{video.video.url}}" type="video/mp4">
