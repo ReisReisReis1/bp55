@@ -1,7 +1,7 @@
 """
 Configurations for the Database-Models in video-contents
 """
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 from django.db import models
 
 
@@ -26,13 +26,15 @@ class Video(models.Model):
     # TODO improve for more then one intro-video
     def get_intro(self):
         try:
-            self.objects.get(self, intro=True)
+            self.objects.get(intro=True)
         except ObjectDoesNotExist:
             return ObjectDoesNotExist
+        except MultipleObjectsReturned:
+            return self.objects.filter(intro=True).get(id=1)
 
     def get_era(self, wanted_era):
         try:
-            self.objects.filter(self, era=wanted_era)
+            self.objects.filter(era=wanted_era)
         except ObjectDoesNotExist:
             return ObjectDoesNotExist
 

@@ -16,8 +16,7 @@ def start(request):
     :param request: url request to subpage /start
     :return: rendering the subpage based on start.html
     """
-    # pylint: disable = no-member
-    video = Video.get_intro()
+    video = Video.get_intro(Video)
     context = {
         'video': video
     }

@@ -33,12 +33,12 @@ def display(request):
     """
 
     context = {
-        'Frühzeit': Video.get_era('Frühzeit'),
-        'Archaik': Video.get_era('Archaik'),
-        'Klassik': Video.get_era('Klassik'),
-        'Hellenismus': Video.get_era('Hellenismus'),
-        'Römische Kaiserzeit': Video.get_era('Römische Kaiserzeit'),
-        'Spätantike': Video.get_era('Spätantike'),
+        'Frühzeit': Video.get_era(Video, 'Frühzeit'),
+        'Archaik': Video.get_era(Video, 'Archaik'),
+        'Klassik': Video.get_era(Video, 'Klassik'),
+        'Hellenismus': Video.get_era(Video, 'Hellenismus'),
+        'Römische Kaiserzeit': Video.get_era(Video, 'Römische Kaiserzeit'),
+        'Spätantike': Video.get_era(Video, 'Spätantike'),
     }
 
     return render(request, 'videos.html', context)
