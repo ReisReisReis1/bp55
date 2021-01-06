@@ -14,20 +14,11 @@ def upload_video(request):
     :param request: url request to subpage /upload
     :return: rendering the subpage based on upload.html
     """
-    if request.method == 'POST':
-        title = request.POST['title']
-        video = request.POST['video']
-
-        content = Video(title=title, video=video)
-        content.save()
-        return redirect('home')
-
-    return render(request, 'upload.html')
 
 
 def display(request):
     """
-    Subpage to show all videos
+    Subpage to show all videos sorted into fitting era
     :param request: url request to subpage /videos
     :return: rendering the subpage based on videos.html
     """
@@ -37,7 +28,7 @@ def display(request):
         'Archaik': Video.get_era(Video, 'Archaik'),
         'Klassik': Video.get_era(Video, 'Klassik'),
         'Hellenismus': Video.get_era(Video, 'Hellenismus'),
-        'Römische Kaiserzeit': Video.get_era(Video, 'Römische Kaiserzeit'),
+        'RömischeKaiserzeit': Video.get_era(Video, 'Römische Kaiserzeit'),
         'Spätantike': Video.get_era(Video, 'Spätantike'),
     }
 
