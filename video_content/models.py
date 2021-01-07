@@ -28,6 +28,7 @@ class Video(models.Model):
     def __str__(self):
         return str(self.title)
 
+    #TODO: Lowest ID
     def get_intro(self):
         try:
             intro = self.objects.get(intro=True)
