@@ -3,6 +3,10 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.container-page {
+    margin-bottom: 100px;
+}
+
 
 .row-no-margin {
     margin-left: 0 !important;
