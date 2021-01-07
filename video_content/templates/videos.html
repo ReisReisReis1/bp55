@@ -1,51 +1,154 @@
+{% load static %}
+{% load bootstrap4 %}
 
-<div>
-{% for video in Frühzeit %}
-    <b>{{video.title}}</b><br>
-<video width="500" height="500" controls preload>
-<source src="{{video.video.url}}" type="video/mp4">
-<b>{{video.title}}</b>
-</video>
-<br>
-{% endfor %}
-{% for video in Archaik %}
-    <b>{{video.title}}</b><br>
-<video width="500" height="500" controls preload>
-<source src="{{video.video.url}}" type="video/mp4">
-<b>{{video.title}}</b>
-</video>
-<br>
-{% endfor %}
-{% for video in Hellenismus %}
-    <b>{{video.title}}</b><br>
-<video width="500" height="500" controls preload>
-<source src="{{video.video.url}}" type="video/mp4">
-<b>{{video.title}}</b>
-</video>
-<br>
-{% endfor %}
-{% for video in Klassik %}
-    <b>{{video.title}}</b><br>
-<video width="500" height="500" controls preload>
-<source src="{{video.video.url}}" type="video/mp4">
-<b>{{video.title}}</b>
-</video>
-<br>
-{% endfor %}
-{% for video in RömischeKaiserzeit %}
-    <b>{{video.title}}</b><br>
-<video width="500" height="500" controls preload>
-<source src="{{video.video.url}}" type="video/mp4">
-<b>{{video.title}}</b>
-</video>
-<br>
-{% endfor %}
-{% for video in Spätantike %}
-    <b>{{video.title}}</b><br>
-<video width="500" height="500" controls preload>
-<source src="{{video.video.url}}" type="video/mp4">
-<b>{{video.title}}</b>
-</video>
-<br>
-{% endfor %}
-</div>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'videos.css' %}">
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='slim' %}
+</head>
+
+<body>
+
+    {% include './header.html' %}
+
+    <div class="container container-page">
+        <div class="row video-section">
+            <div class="video-section-title">
+                <h1>Frühzeit</h1>
+            </div>
+            <div class="row row-video">
+                {% for video in Frühzeit %}
+                    <div class="col align-items-center video-box">
+                        <video width="100%" preload onclick="window.location.href='{{video.video.url}}'">
+                        <source src="{{video.video.url}}" type="video/mp4">
+                        {{video.title}}
+                        </video>
+                        <div class="video-title">
+                            {{video.title}}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div style="width: 100%">
+                <a href="#" style="width: 100%;"><button class="button more-videos-button">V</button></a>
+            </div>
+        </div>
+
+        <div class="row video-section">
+            <div class="video-section-title">
+                <h1>Archaik</h1>
+            </div>
+            <div class="row row-video">
+                {% for video in Archaik %}
+                    <div class="col align-items-center video-box">
+                        <video width="100%" preload onclick="window.location.href='{{video.video.url}}'">
+                        <source src="{{video.video.url}}" type="video/mp4">
+                        {{video.title}}
+                        </video>
+                        <div class="video-title">
+                            {{video.title}}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div style="width: 100%">
+                <a href="#" style="width: 100%;"><button class="button more-videos-button">V</button></a>
+            </div>
+        </div>
+
+        <div class="row video-section">
+            <div class="video-section-title">
+                <h1>Hellenismus</h1>
+            </div>
+            <div class="row row-video">
+                {% for video in Hellenismus %}
+                    <div class="col align-items-center video-box">
+                        <video width="100%" preload onclick="window.location.href='{{video.video.url}}'">
+                        <source src="{{video.video.url}}" type="video/mp4">
+                        {{video.title}}
+                        </video>
+                        <div class="video-title">
+                            {{video.title}}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div style="width: 100%">
+                <a href="#" style="width: 100%;"><button class="button more-videos-button">V</button></a>
+            </div>
+        </div>
+
+        <div class="row video-section">
+            <div class="video-section-title">
+                <h1>Klassik</h1>
+            </div>
+            <div class="row row-video">
+                {% for video in Klassik %}
+                    <div class="col align-items-center video-box">
+                        <video width="100%" preload onclick="window.location.href='{{video.video.url}}'">
+                        <source src="{{video.video.url}}" type="video/mp4">
+                        {{video.title}}
+                        </video>
+                        <div class="video-title">
+                            {{video.title}}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div style="width: 100%">
+                <a href="#" style="width: 100%;"><button class="button more-videos-button">V</button></a>
+            </div>
+        </div>
+
+        <div class="row video-section">
+            <div class="video-section-title">
+                <h1>Römische Kaiserzeit</h1>
+            </div>
+            <div class="row row-video">
+                {% for video in RömischeKaiserzeit %}
+                    <div class="col align-items-center video-box">
+                        <video width="100%" preload onclick="window.location.href='{{video.video.url}}'">
+                        <source src="{{video.video.url}}" type="video/mp4">
+                        {{video.title}}
+                        </video>
+                        <div class="video-title">
+                            {{video.title}}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div style="width: 100%">
+                <a href="#" style="width: 100%;"><button class="button more-videos-button">V</button></a>
+            </div>
+        </div>
+
+        <div class="row video-section">
+            <div class="video-section-title">
+                <h1>Spätantike</h1>
+            </div>
+            <div class="row row-video">
+                {% for video in Spätantike %}
+                    <div class="col align-items-center video-box">
+                        <video width="100%" preload onclick="window.location.href='{{video.video.url}}'">
+                        <source src="{{video.video.url}}" type="video/mp4">
+                        {{video.title}}
+                        </video>
+                        <div class="video-title">
+                            {{video.title}}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div style="width: 100%">
+                <a href="#" style="width: 100%;"><button class="button more-videos-button">V</button></a>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
