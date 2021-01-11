@@ -1,3 +1,3 @@
-from django.db import models
-
-# Create your models here.
+"""
+Configurations for the Database Models for the App 'start'
+"""

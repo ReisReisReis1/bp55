@@ -3,24 +3,17 @@ Configurations of the Website subpages from the App: video-content
 """
 
 
-from django.shortcuts import render, redirect
-# pylint: disable = import-error
+from django.shortcuts import render
+# pylint: disable = import-error,relative-beyond-top-level
 from .models import Video
-
-
-def upload_video(request):
-    """
-    Subpage to upload videos
-    :param request: url request to subpage /upload
-    :return: rendering the subpage based on upload.html
-    """
 
 
 def display(request):
     """
     Subpage to show all videos sorted into fitting era
-    :param request: url request to subpage /videos
+    :param request: url request to get subpage /videos
     :return: rendering the subpage based on videos.html
+    with a context variable to get Videos sorted in eras
     """
 
     context = {
