@@ -1,5 +1,12 @@
+"""
+Modification for this Django-App: home
+"""
+
 from django.apps import AppConfig
 
 
-class DetailesPageConfig(AppConfig):
-    name = 'detailes_page'
+class DetailsPageConfig(AppConfig):
+    """
+    Configurations for this APP
+    """
+    name = 'details_page'

@@ -1,5 +1,5 @@
 """
-Possibility to add sth. to Admin Interface
+Possibility to add sth. to Admin Interface out of this APP: video_content
 """
 from django.contrib import admin
 
