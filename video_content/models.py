@@ -19,7 +19,8 @@ class Video(models.Model):
                            choices=[
                                ('Frühzeit', 'Frühzeit'), ('Archaik', 'Archaik'),
                                ('Klassik', 'Klassik'), ('Hellenismus', 'Hellenismus'),
-                               ('Römische Kaiserzeit', 'Römische Kaiserzeit'), ('Spätantike', 'Spätantike'),
+                               ('Römische Kaiserzeit', 'Römische Kaiserzeit'),
+                               ('Spätantike', 'Spätantike'),
                                ('Sonstiges', 'Sonstiges'),
                                     ], default='Sonstiges')
 
@@ -28,21 +29,31 @@ class Video(models.Model):
     def __str__(self):
         return str(self.title)
 
-    #TODO: Lowest ID
     def get_intro(self):
+        """
+        Getting the video, where intro=true.
+        If there are more then one, return ObjectDoesNotExist
+        If there are more then one, return first in list
+        :return: Video where the mark 'Intro' is set or ObjectDoesNotExist
+        """
         try:
+            # pylint: disable= no-member
             intro = self.objects.get(intro=True)
         except ObjectDoesNotExist:
             return ObjectDoesNotExist
         except MultipleObjectsReturned:
-            return self.objects.filter(intro=True).get(id=1)
+            # pylint: disable= no-member
+            return self.objects.filter(intro=True).first
         return intro
 
     def get_era(self, wanted_era):
-        try:
-            videos = self.objects.filter(era=wanted_era)
-        except ObjectDoesNotExist:
-            return ObjectDoesNotExist
+        """
+        Getting a List of Videos with the given era
+        :param wanted_era: String,
+        :return: List of videos with given era or empty list
+        """
+        # pylint: disable= no-member
+        videos = self.objects.filter(era=wanted_era)
         return videos
 
     # pylint: disable = too-few-public-methods

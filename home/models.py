@@ -1,7 +1,3 @@
 """
-Configurations for the Database Models for this App
+Configurations for the Database Models for the App 'home'
 """
-# pylint: disable= unused-import
-from django.db import models
-
-# Create your models here.
