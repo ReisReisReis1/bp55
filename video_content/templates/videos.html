@@ -20,6 +20,7 @@
         }
 
 
+
     </script>
 
 
@@ -60,7 +61,8 @@
                         {% endif %}
                           <div class=" {% cycle 'video-box-first' 'video-box' 'video-box' 'video-box-last' %} ">
                                 <!-- Add video -->
-                               <a class="button" href="#popup-{{ forloop.counter }}" > <video width="100%">
+                               <a class="button" href="#popup-{{ video.id }}" >
+                                   <video width="100%" >
                                 <source src="{{video.video.url}}" type="video/mp4">
                                 {{video.title}}
                                 </video>
@@ -71,9 +73,9 @@
                                </a>
 
 
-                              <div id="popup-{{ forloop.counter }}" class="overlay">
+                              <div id="popup-{{ video.id }}" class="overlay">
 	                            <div class="popup">
-		                        <a class="close" href="#">&times;</a>
+		                        <a class="close" href="#" id="close">&times;</a>
 		                        <div class="content">
                                 <video width="100%" controls preload>
                                  <source src="{{video.video.url}}" type="video/mp4">
