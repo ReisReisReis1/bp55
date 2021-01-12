@@ -1,3 +1,66 @@
+.row-timeline {
+  width: 100%;
+}
+
+.card-title {
+  border-bottom: solid;
+  border-color: lightgray;
+  border-width: 2px;
+}
+
+.card-left {
+  margin-right: 40%;
+}
+
+.card-left::before {
+  content: " ";
+  height: 0;
+  position: absolute;
+  top: 35px;
+  width: 0;
+  z-index: 1;
+  right: -75px;
+  border: solid;
+  border-width: 4px 75px 4px 0;
+  border-color: #F9B848;
+}
+
+.card-right {
+  margin-left: 40%;
+}
+
+.card-right::before {
+  content: " ";
+  height: 0;
+  position: absolute;
+  top: 35px;
+  width: 0;
+  z-index: 1;
+  left: -75px;
+  border: solid;
+  border-width: 4px 0 4px 75px;
+  border-color: #F9B848;
+}
+
+.row-timeline::after {
+  content: '';
+  position: absolute;
+  width: 50px;
+  background-color: #F9B848;
+  top: -100px;
+  bottom: 0;
+  left: 46.8%;
+  margin-left: -3px;
+  z-index: -1;
+}
+
+
+
+
+
+
+
+
 html, body {
 
     height: 100%;

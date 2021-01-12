@@ -15,6 +15,31 @@
 
     {% include './header.html' %}
 
+    <div class="container container-page">
+        <div class="row era-1">
+            <div class="row justify-content-center row-timeline">
+                <div class="card card-left">
+                    <div class="card-body">
+                        <h5 class="card-title">Card Title · Datum</h5>
+
+                        <div class="card-img">
+                            <img src="{% static "card_placeholder.png" %}" style="width: 100%;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center row-timeline">
+                <div class="card card-right">
+                    <div class="card-body">
+                        <h5 class="card-title">Card Title · Datum</h5>
+                    </div>
+                    <div class="card-img">
+                        <img src="{% static "card_placeholder.png" %}" style="width: 100%;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div>
         <section id="cd-timeline" class="cd-container">
@@ -30,7 +55,7 @@
               </span>
             </div>
                     <p>
-                        <img src="{% static 'card_placeholder.png' %}" class="container">
+                        <img src="{% static 'card_placeholder.png' %}" class="container image">
                     </p>
             </div> <!-- cd-timeline-content -->
             </div> <!-- cd-timeline-block -->
