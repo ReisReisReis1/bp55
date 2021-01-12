@@ -1,0 +1,27 @@
+.video-section-title {
+    width: 100%;
+}
+
+.row-video {
+    width: 101%;
+    margin-left: -5px !important;
+    margin-bottom: 20px;
+}
+
+.video-section {
+    border-bottom: solid;
+    border-color: lightgray;
+}
+
+.video-box {
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+}
+
+.more-videos-button {
+    width: 100%;
+    border: none;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    color: gray;
+}

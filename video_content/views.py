@@ -3,42 +3,26 @@ Configurations of the Website subpages from the App: video-content
 """
 
 
-from django.shortcuts import render, redirect
-# pylint: disable = import-error
+from django.shortcuts import render
+# pylint: disable = import-error,relative-beyond-top-level
 from .models import Video
-
-
-def upload_video(request):
-    """
-    Subpage to upload videos
-    :param request: url request to subpage /upload
-    :return: rendering the subpage based on upload.html
-    """
-    if request.method == 'POST':
-        title = request.POST['title']
-        video = request.POST['video']
-
-        content = Video(title=title, video=video)
-        content.save()
-        return redirect('home')
-
-    return render(request, 'upload.html')
 
 
 def display(request):
     """
-    Subpage to show all videos
-    :param request: url request to subpage /videos
+    Subpage to show all videos sorted into fitting era
+    :param request: url request to get subpage /videos
     :return: rendering the subpage based on videos.html
+    with a context variable to get Videos sorted in eras
     """
 
     context = {
-        'Frühzeit': Video.get_era('Frühzeit'),
-        'Archaik': Video.get_era('Archaik'),
-        'Klassik': Video.get_era('Klassik'),
-        'Hellenismus': Video.get_era('Hellenismus'),
-        'Römische Kaiserzeit': Video.get_era('Römische Kaiserzeit'),
-        'Spätantike': Video.get_era('Spätantike'),
+        'Frühzeit': Video.get_era(Video, 'Frühzeit'),
+        'Archaik': Video.get_era(Video, 'Archaik'),
+        'Klassik': Video.get_era(Video, 'Klassik'),
+        'Hellenismus': Video.get_era(Video, 'Hellenismus'),
+        'RömischeKaiserzeit': Video.get_era(Video, 'Römische Kaiserzeit'),
+        'Spätantike': Video.get_era(Video, 'Spätantike'),
     }
 
     return render(request, 'videos.html', context)

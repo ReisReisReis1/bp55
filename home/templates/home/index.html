@@ -4,27 +4,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="{% static 'home/style.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'home/index.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static './home/index.css' %}">
     {% bootstrap_css %}
     {% bootstrap_javascript jquery='slim' %}
 </head>
 <body>
 
-<!-- Logo in der Mitte-->
+    <!-- Logo in the middle-->
 
-<div class="container full_height" height="100%">
-    <div class="row align-items-center full_height" height="100%">
-        <div class="col">
-            <div class="row main_logo_container">
-                <img src="{% static "logoneu.png"  %}" width="100%">
-            </div>
-            <div class="row main_button_container">
-                <a href="{% url 'start:start' %}" style="width: 100%;"> <button class="button" id="color-btn" style="width: 100%;">Anmelden</button></a>
+    <div class="container full_height" height="100%">
+        <div class="row align-items-center full_height" height="100%">
+            <div class="col">
+                <div class="row main_logo_container">
+                    <img src="{% static "logoneu.png"  %}" width="100%">
+                </div>
+                <div class="row main_button_container">
+                    <a href="{% url 'start:start' %}" style="width: 100%;"> <button class="button" id="color-btn" style="width: 100%;">Anmelden</button></a>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 </body>
 </html>
