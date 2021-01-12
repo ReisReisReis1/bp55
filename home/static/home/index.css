@@ -1,0 +1,29 @@
+html, body {
+  height: 100%;
+}
+
+.full_height {
+  height: 100%;
+}
+
+.main_logo_container {
+  margin-bottom: 50px;
+}
+
+.main_button_container a {
+  text-decoration: none !important;
+}
+
+.button {
+  display: block;
+  border: none;
+  border-radius: 5px;
+  padding: 20px 28px;
+  font-size: 30px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.button:hover {
+  color: black;
+}
