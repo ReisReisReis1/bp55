@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'videos.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'popup.css' %}">
     {% bootstrap_css %}
     {% bootstrap_javascript jquery='slim' %}
 
@@ -17,7 +18,14 @@
                 video_row[i].classList.toggle("video-hide");
             }
         }
+
+
     </script>
+
+
+
+
+
 </head>
 
 <body>
@@ -50,14 +58,33 @@
                                 <div id="video-hide-{{ forloop.parentloop.counter }}" class="row row-video row-no-margin video-hide">
                             {% endif %}
                         {% endif %}
-                            <div class=" {% cycle 'video-box-first' 'video-box' 'video-box' 'video-box-last' %} ">
-                                <video width="100%" onclick="window.location.href='{{video.video.url}}'">
+                          <div class=" {% cycle 'video-box-first' 'video-box' 'video-box' 'video-box-last' %} ">
+                                <!-- Add video -->
+                               <a class="button" href="#popup-{{ forloop.counter }}" > <video width="100%">
                                 <source src="{{video.video.url}}" type="video/mp4">
                                 {{video.title}}
                                 </video>
+
                                 <div class="video-title">
                                     {{video.title}}
                                 </div>
+                               </a>
+
+
+                              <div id="popup-{{ forloop.counter }}" class="overlay">
+	                            <div class="popup">
+		                        <a class="close" href="#">&times;</a>
+		                        <div class="content">
+                                <video width="100%" controls preload>
+                                 <source src="{{video.video.url}}" type="video/mp4">
+                                     <b>{{video.title}}</b>
+                                </video>
+		                        </div>
+                                </div>
+                                </div>
+
+
+
                             </div>
                         {% if forloop.counter|divisibleby:4 or forloop.last %}
                             </div>
@@ -70,6 +97,7 @@
             </div>
         {% endfor %}
     </div>
+ </div>
 
 </body>
 </html>
