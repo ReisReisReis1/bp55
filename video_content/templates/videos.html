@@ -1,3 +1,4 @@
+
 {% load static %}
 {% load bootstrap4 %}
 
@@ -7,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'videos.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'popup.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'magnific-popup.css' %}">
     {% bootstrap_css %}
     {% bootstrap_javascript jquery='slim' %}
 
@@ -19,13 +20,15 @@
             }
         }
 
+        type="text/javascript">
+         $( document ).ready(function() {
+         $('#headerVideoLink').magnificPopup({
+          type:'inline',
+          midClick: true, // Allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source in href.
+        });
+        });
 
-
-    </script>
-
-
-
-
+</script>
 
 </head>
 
@@ -61,31 +64,28 @@
                         {% endif %}
                           <div class=" {% cycle 'video-box-first' 'video-box' 'video-box' 'video-box-last' %} ">
                                 <!-- Add video -->
-                               <a class="button" href="#popup-{{ video.id }}" >
-                                   <video width="100%" >
-                                <source src="{{video.video.url}}" type="video/mp4">
-                                {{video.title}}
-                                </video>
-
-                                <div class="video-title">
-                                    {{video.title}}
+                              <div class="container">
+                                  <div class="row">
+                                    <div class="col-sm-12">
+                                      <p class="text-center mt-5">
+                                        <a href="#headerPopup" id="headerVideoLink" target="_blank" class="btn btn-outline-danger popup-modal" style="background: white; border-color: white">
+                                            <video width="100%" >
+                                            <source src="{{video.video.url}}" type="video/mp4">
+                                            </video>
+                                        </a>
+                                      </p>
+                                        <div class="video.title">
+                                          {{video.title}}
+                                        </div>
+                                     <div id="headerPopup" class="mfp-hide embed-responsive embed-responsive-21by9"  >
+                                            <video id="myvideo" controls="controls" width="80%" >
+{#                                              <source src="{{video.video.url}}" type="video/mp4">
+{#                                              <b>{{video.title}}</b>
+{#                                          </video>
+                                    </div>
                                 </div>
-                               </a>
-
-
-                              <div id="popup-{{ video.id }}" class="overlay">
-	                            <div class="popup">
-		                        <a class="close" href="#" id="close">&times;</a>
-		                        <div class="content">
-                                <video width="100%" controls preload>
-                                 <source src="{{video.video.url}}" type="video/mp4">
-                                     <b>{{video.title}}</b>
-                                </video>
-		                        </div>
+                              </div>
                                 </div>
-                                </div>
-
-
 
                             </div>
                         {% if forloop.counter|divisibleby:4 or forloop.last %}
@@ -101,5 +101,10 @@
     </div>
  </div>
 
+    <!-- Script muss in body stehen. Sonst funktioniert es nicht -->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="{% static "jquery.magnific-popup.js"%}"> </script>
 </body>
 </html>
+
+
