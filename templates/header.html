@@ -5,10 +5,25 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="{% static 'home/style.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'home/topnav.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/topnav.css' %}">
     {% bootstrap_css %}
     {% bootstrap_javascript jquery='slim' %}
+
+    <script>
+        $(function(){
+            // this will get the full URL at the address bar
+            var url = window.location.href;
+
+            // passes on every "a" tag
+            $(".menu_item").each(function() {
+                    // checks if its the same on the address bar
+                if(url == (this.href)) {
+                    $(this).closest("a").addClass("active");
+                }
+            });
+        });
+    </script>
 </head>
 <body>
     <div class="row row-no-margin" id="color-bg-primary">
@@ -33,9 +48,10 @@
         <div class="container">
             <div class="row">
                 <div class = "col align-items-center text-center sub_menu">
-                    <a href="{% url "start" %}" class="active" id="color-txt-primary"> Startseite</a>
-                    <a href="{% url "zeitstrahl" %}" class="active" id="color-txt-primary"> Zeitstrahl</a>
-                    <a href="{% url "themengrid" %}" class="active" id="color-txt-primary"> Gebäudefilter</a>
+                    <a href="{% url "start:start" %}" class="menu_item" id="color-txt-primary"> Startseite</a>
+                    <a href="{% url "timeline:timeline" %}" class="menu_item" id="color-txt-primary"> Zeitstrahl</a>
+                    <a href="{% url "filter_page:filter" %}" class="menu_item" id="color-txt-primary"> Gebäudefilter</a>
+                    <a href="{% url "video_content:videos" %}" class="menu_item" id="color-txt-primary"> Videos</a>
                 </div>
             </div>
         </div>

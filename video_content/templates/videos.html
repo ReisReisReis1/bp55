@@ -1,0 +1,105 @@
+{% load static %}
+{% load bootstrap4 %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'videos.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'popup.css' %}">
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='slim' %}
+
+    <script>
+        function toggleHide(video_id) {
+            var video_row = Array.from(document.querySelectorAll('[id='+"video-hide-"+video_id+']'));
+            for (var i = 0; i < video_row.length; i++) {
+                video_row[i].classList.toggle("video-hide");
+            }
+        }
+
+
+
+    </script>
+
+
+
+
+
+</head>
+
+<body>
+
+    {% include './header.html' %}
+
+    <div class="container container-page">
+        {% for era in Era %}
+            <div class="row video-section">
+                <div class="video-section-title">
+                    {% if forloop.counter == 1 %}
+                        <h1>Frühzeit</h1>
+                    {% elif forloop.counter == 2 %}
+                        <h1>Archaik</h1>
+                    {% elif forloop.counter == 3 %}
+                        <h1>Hellenismus</h1>
+                    {% elif forloop.counter == 4 %}
+                        <h1>Klassik</h1>
+                    {% elif forloop.counter == 5 %}
+                        <h1>Römische Kaiserzeit</h1>
+                    {% elif forloop.counter == 6 %}
+                        <h1>Spätantike</h1>
+                    {% endif %}
+                </div>
+                    {% for video in era %}
+                        {% if forloop.counter0|divisibleby:4 or forloop.first %}
+                            {% if forloop.counter <= 4 %}
+                                <div class="row row-video row-no-margin">
+                            {% else %}
+                                <div id="video-hide-{{ forloop.parentloop.counter }}" class="row row-video row-no-margin video-hide">
+                            {% endif %}
+                        {% endif %}
+                          <div class=" {% cycle 'video-box-first' 'video-box' 'video-box' 'video-box-last' %} ">
+                                <!-- Add video -->
+                               <a class="button" href="#popup-{{ video.id }}" >
+                                   <video width="100%" >
+                                <source src="{{video.video.url}}" type="video/mp4">
+                                {{video.title}}
+                                </video>
+
+                                <div class="video-title">
+                                    {{video.title}}
+                                </div>
+                               </a>
+
+
+                              <div id="popup-{{ video.id }}" class="overlay">
+	                            <div class="popup">
+		                        <a class="close" href="#" id="close">&times;</a>
+		                        <div class="content">
+                                <video width="100%" controls preload>
+                                 <source src="{{video.video.url}}" type="video/mp4">
+                                     <b>{{video.title}}</b>
+                                </video>
+		                        </div>
+                                </div>
+                                </div>
+
+
+
+                            </div>
+                        {% if forloop.counter|divisibleby:4 or forloop.last %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    {% resetcycle %}
+                <div style="width: 100%">
+                    <button class="button more-videos-button" onclick="toggleHide({{ forloop.counter }})">V</button>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+ </div>
+
+</body>
+</html>
