@@ -4,7 +4,6 @@
 
 .card-title {
   border-bottom: solid;
-  border-color: lightgray;
   border-width: 2px;
 }
 
@@ -22,7 +21,6 @@
   right: -75px;
   border: solid;
   border-width: 4px 75px 4px 0;
-  border-color: #F9B848;
 }
 
 .card-right {
@@ -39,14 +37,12 @@
   left: -75px;
   border: solid;
   border-width: 4px 0 4px 75px;
-  border-color: #F9B848;
 }
 
 .row-timeline::after {
   content: '';
   position: absolute;
   width: 50px;
-  background-color: #F9B848;
   top: -100px;
   bottom: 0;
   left: 46.8%;

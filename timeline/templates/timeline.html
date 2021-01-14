@@ -6,7 +6,6 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'timeline.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'image.css' %}">
 </head>
@@ -17,10 +16,10 @@
 
     <div class="container container-page">
         <div class="row era-1">
-            <div class="row justify-content-center row-timeline">
-                <div class="card card-left">
+            <div class="row justify-content-center row-timeline" id="color-era-1">
+                <div class="card card-left" id="color-era-1">
                     <div class="card-body">
-                        <h5 class="card-title">Card Title · Datum</h5>
+                        <h5 class="card-title" id="color-border-primary">Card Title · Datum</h5>
 
                         <div class="card-img">
                             <img src="{% static "card_placeholder.png" %}" style="width: 100%;">
@@ -28,8 +27,8 @@
                     </div>
                 </div>
             </div>
-            <div class="row justify-content-center row-timeline">
-                <div class="card card-right">
+            <div class="row justify-content-center row-timeline" id="color-era-1">
+                <div class="card card-right" id="color-era-1">
                     <div class="card-body">
                         <h5 class="card-title">Card Title · Datum</h5>
                     </div>

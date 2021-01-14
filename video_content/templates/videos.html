@@ -5,7 +5,6 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'videos.css' %}">
     {% bootstrap_css %}
     {% bootstrap_javascript jquery='slim' %}
@@ -40,10 +39,10 @@
     <div class="container container-page">
         <!-- Iterate through all eras -->
         {% for era in Era %}
-            <div class="row video-section">
+            <div class="row video-section" id="color-border-primary">
                 <div class="video-section-title">
                     <!-- Cycle through all eras as title -->
-                    <h1>{% cycle "Frühzeit" "Archaik" "Hellenismus" "Klassik" "Römische Kaiserzeit" "Spätantike"%}</h1>
+                    <h1>{% cycle "Frühzeit" "Archaik" "Klassik" "Helenismus" "Römische Kaiserzeit" "Spätantike"%}</h1>
                 </div>
                     <!-- Iterate through all videos of every era -->
                     {% for video in era %}
@@ -92,7 +91,7 @@
                     {% resetcycle %}
                 <!-- Add button to toggle hide the hidden videos -->
                 <div style="width: 100%">
-                    <button class="button more-videos-button" onclick="toggleHide({{ forloop.counter }})">V</button>
+                    <button class="button more-videos-button" id="color-btn-video" onclick="toggleHide({{ forloop.counter }})">V</button>
                 </div>
             </div>
         {% endfor %}
