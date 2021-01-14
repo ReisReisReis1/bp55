@@ -133,7 +133,7 @@ class Building(models.Model):
         building = self.objects.filter(pk=id)
         return self.name
 
-    def get_city(self):
+    def get_city(self, id):
         """
         :return: city in which the building is located
         """
@@ -141,7 +141,7 @@ class Building(models.Model):
         building = self.objects.filter(pk=id)
         return self.city
 
-    def get_region(self):
+    def get_region(self, id):
         """
         :return: city in which the building is located
         """
@@ -149,7 +149,7 @@ class Building(models.Model):
         building = self.objects.filter(pk=id)
         return self.region
 
-    def get_country(self):
+    def get_country(self, id):
         """
         :return: country in which the building is located
         """
@@ -157,7 +157,7 @@ class Building(models.Model):
         building = self.objects.filter(pk=id)
         return self.country
 
-    def get_date_from(self):
+    def get_date_from(self, id):
         """
         :return: date on which construction began
         """
@@ -165,7 +165,7 @@ class Building(models.Model):
         building = self.objects.filter(pk=id)
         return self.date_from
 
-    def get_date_from_BC_or_AD(self):
+    def get_date_from_BC_or_AD(self, id):
         """
         :return: if date_from is BC or AD
         """
@@ -173,7 +173,7 @@ class Building(models.Model):
         building = self.objects.filter(pk=id)
         return self.date_from_BC_or_AD()
 
-    def get_date_to(self):
+    def get_date_to(self, id):
         """
         :return: date on which construction began
         """
@@ -181,7 +181,7 @@ class Building(models.Model):
         building = self.objects.filter(pk=id)
         return self.date_to
 
-    def get_date_to_BC_or_AD(self):
+    def get_date_to_BC_or_AD(self, id):
         """
         :return: if date_from is BC or AD
         """
@@ -189,7 +189,7 @@ class Building(models.Model):
         building = self.objects.filter(pk=id)
         return self.date_to_BC_or_AD()
 
-    def get_architect(self):
+    def get_architect(self, id):
         """
         :return: architect of the building
         """
@@ -197,7 +197,7 @@ class Building(models.Model):
         building = self.objects.filter(pk=id)
         return self.architect
 
-    def get_context(self):
+    def get_context(self, id):
         """
         :return: context/type of the building
         """
@@ -205,7 +205,7 @@ class Building(models.Model):
         building = self.objects.filter(pk=id)
         return self.context
 
-    def get_builder(self):
+    def get_builder(self, id):
         """
         :return: builder of the building
         """
@@ -213,7 +213,7 @@ class Building(models.Model):
         building = self.objects.filter(pk=id)
         return self.builder
 
-    def get_construction_type(self):
+    def get_construction_type(self, id):
         """
         :return: construction type of the building
         """
@@ -221,7 +221,7 @@ class Building(models.Model):
         building = self.objects.filter(pk=id)
         return self.construction
 
-    def get_design(self):
+    def get_design(self, id):
         """
         :return: design/shape of the building
         """
@@ -229,7 +229,7 @@ class Building(models.Model):
         building = self.objects.filter(pk=id)
         return self.design
 
-    def get_funtion(self):
+    def get_funtion(self, id):
         """
         :return: function of the building
         """
@@ -237,7 +237,7 @@ class Building(models.Model):
         building = self.objects.filter(pk=id)
         return self.function
 
-    def get_dimension(self):
+    def get_dimension(self, id):
         """
         :return: Dimension of the building including length, width, height, circumference and area
         """
@@ -251,7 +251,7 @@ class Building(models.Model):
         dimension= Concat(V('Länge:'), 'length_var', V('Breite:'), 'width_var', V('Höhe:'), 'height_var', V('Durchmesser'), 'circumference_var', V('Fläche:'), 'area_var')
         return dimension
 
-    def get_length(self):
+    def get_length(self, id):
         """
         :return: length of the building
         """
@@ -259,7 +259,7 @@ class Building(models.Model):
         building = self.objects.filter(pk=id)
         return building.length
 
-    def get_width(self):
+    def get_width(self, id):
         """
         :return: width of the building
         """
@@ -267,7 +267,7 @@ class Building(models.Model):
         building = self.objects.filter(pk=id)
         return building.width
 
-    def get_height(self):
+    def get_height(self, id):
         """
         :return: height of the building
         """
@@ -275,7 +275,7 @@ class Building(models.Model):
         building = self.objects.filter(pk=id)
         return building.height
 
-    def get_circumference(self):
+    def get_circumference(self, id):
         """
         :return: circumference of the building
         """
@@ -283,7 +283,7 @@ class Building(models.Model):
         building = self.objects.filter(pk=id)
         return building.circumference
 
-    def get_area(self):
+    def get_area(self, id):
         """
         :return: area of the building
         """
@@ -291,7 +291,7 @@ class Building(models.Model):
         building = self.objects.filter(pk=id)
         return building.area
 
-    def get_column_order(self):
+    def get_column_order(self, id):
         """
         :return: column order of the building
         """
@@ -299,7 +299,7 @@ class Building(models.Model):
         building = self.objects.filter(pk=id)
         return building.column_order
 
-    def get_construction(self):
+    def get_construction(self, id):
         """
         :return: construction of the building
         """
@@ -307,7 +307,7 @@ class Building(models.Model):
         building = self.objects.filter(pk=id)
         return building.construction
 
-    def get_material(self):
+    def get_material(self, id):
         """
         :return: material of the building
         """
@@ -315,7 +315,7 @@ class Building(models.Model):
         building = self.objects.filter(pk=id)
         return building.material
 
-    def get_literature(self):
+    def get_literature(self, id):
         """
         :return: further literature about the building
         """
@@ -323,7 +323,7 @@ class Building(models.Model):
         building = self.objects.filter(pk=id)
         return building.literature
 
-    def get_videos(self):
+    def get_videos(self, id):
         """
         :return: videos about the building
         """
@@ -331,7 +331,7 @@ class Building(models.Model):
         building = self.objects.filter(pk=id)
         return building.videos
 
-    def get_pictures(self):
+    def get_pictures(self, id):
         """
         :return: pictures of the building
         """
@@ -339,7 +339,7 @@ class Building(models.Model):
         building = self.objects.filter(pk=id)
         return building.pictures
 
-    def get_building_plan(self):
+    def get_building_plan(self, id):
         """
         :return: building plan of the building
         """
