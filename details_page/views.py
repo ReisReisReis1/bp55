@@ -4,7 +4,7 @@ Configurations of the different viewable functions and subpages from the App: de
 
 from django.shortcuts import render
 # pylint: disable = import-error, relative beyond-top-level
-from .models import Detail
+from .models import Building
 
 
 def detailed(request):
