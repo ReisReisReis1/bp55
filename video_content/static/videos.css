@@ -3,19 +3,32 @@
 }
 
 .row-video {
-    width: 101%;
-    margin-left: -5px !important;
+    width: 100%;
     margin-bottom: 20px;
 }
 
 .video-section {
     border-bottom: solid;
-    border-color: lightgray;
+}
+
+.video-box-first {
+    width: 25%;
+    padding-right: 5px !important;
 }
 
 .video-box {
+    width: 25%;
     padding-left: 5px !important;
     padding-right: 5px !important;
+}
+
+.video-box-last {
+    width: 25%;
+    padding-left: 5px !important;
+}
+
+.video-hide {
+    display: none !important;
 }
 
 .more-videos-button {
@@ -23,5 +36,8 @@
     border: none;
     padding-top: 5px;
     padding-bottom: 5px;
-    color: gray;
+}
+
+.video:hover, .video-title:hover {
+    cursor: pointer;
 }
