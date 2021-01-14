@@ -25,7 +25,7 @@ urlpatterns = [
     path('start/', include('start.urls')),
     path('videos/', include('video_content.urls')),
     path('filter/', include('filter_page.urls')),
-    path('details_page/', include('details_page.urls')),
+    path('details_page', include('details_page.urls')),
     path('timeline/', include('timeline.urls')),
 ]
 

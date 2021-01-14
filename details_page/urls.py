@@ -1,5 +1,6 @@
 """
 URL Settings for the APP: details_page
+path('', views.detailed, name='detailed'),
 """
 
 from django.urls import path
@@ -9,6 +10,5 @@ from . import views
 # pylint: disable = invalid-name
 app_name = 'details_page'
 urlpatterns = [
-    path('detailed/<int: id>/', views.detailed),
-    """path('', views.detailed, name='detailed'),"""
+    path('<int:id>/', views.detailed, name='detailed'),
 ]
