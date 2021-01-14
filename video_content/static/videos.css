@@ -44,3 +44,8 @@
     background-color: lightgray;
 }
 
+
+.video:hover, .video-title:hover {
+    cursor: pointer;
+}
+
