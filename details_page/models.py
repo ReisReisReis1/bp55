@@ -117,13 +117,24 @@ class Building(models.Model):
                                     null=True, blank=True)
     material = models.CharField(max_length=100, help_text="Material des Bauwerks eingeben (max. 100 Zeichen).",
                                 null=True, blank=True)
-    # Added max_lenght
+    # Added max_length
     literature = models.TextField(max_length=1000, help_text="Literatur zum Gebäude angeben (max. 1000 Zeichen).",
                                   null=True, blank=True)
 
     # Added
     def __str__(self):
         return self.name
+
+    def getDateFromAsSignedInt(self):
+        """
+        Helper function for sorting. Works with the date_from.
+        :return: returns the year as signed int, negative if year is BC, positive if it's AD.
+        """
+        if self.date_from_BC_or_AD == "v.Chr.":
+            return (-1) * int(self.date_from)
+        else:
+            return int(self.date_from)
+
 
 
 class Picture(models.Model):

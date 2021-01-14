@@ -20,7 +20,17 @@ class HistoricDate(models.Model):
     infos = models.TextField(
         help_text="Hier eine kurze Beschreibung des historischen Ereignisses einfügen (max. 1000 Zeichen).",
         max_length=1000)
-    era = models.ForeignKey(to=Era, on_delete=models.SET_NULL, null=True)
+    era = models.ForeignKey(to=Era, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
-        return str(self.title)+" ("+str(self.year)+")"
+        return str(self.title)+" ("+str(self.year)+" "+str(self.year_BC_or_AD)+")"
+
+    def getYearAsSignedInt(self):
+        """
+        Helper function for sorting.
+        :return: returns the year as signed int, negative if year is BC, positive if it's AD.
+        """
+        if self.year_BC_or_AD == "v.Chr.":
+            return (-1) * int(self.year)
+        else:
+            return int(self.year)
