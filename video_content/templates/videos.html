@@ -5,22 +5,31 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'videos.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'popup.css' %}">
     {% bootstrap_css %}
     {% bootstrap_javascript jquery='slim' %}
 
     <script>
+        // Function to toggle hide hidden videos
+        // video_id: The ID of the era where to toggle hide the hidden videos
         function toggleHide(video_id) {
+            // Get all contents with the ID of the current row
             var video_row = Array.from(document.querySelectorAll('[id='+"video-hide-"+video_id+']'));
+            // Iterate through every row with the returned ID
             for (var i = 0; i < video_row.length; i++) {
+                // Toggle the class 'video-hide'
                 video_row[i].classList.toggle("video-hide");
             }
         }
 
-
-
+        function stopPopupVideo(section, id) {
+            var video = document.getElementById("popup-video-" + section + "-" + id);
+            var popup = "popup-" + section + "-" + id;
+            $('#' + popup).on('hidden.bs.modal', function () {
+                video.pause();
+            });
+        }
     </script>
 
 
@@ -34,41 +43,52 @@
     {% include './header.html' %}
 
     <div class="container container-page">
+        <!-- Iterate through all eras -->
         {% for era in Era %}
-            <div class="row video-section">
+            <div class="row video-section" id="color-border-primary">
                 <div class="video-section-title">
-                    {% if forloop.counter == 1 %}
-                        <h1>Frühzeit</h1>
-                    {% elif forloop.counter == 2 %}
-                        <h1>Archaik</h1>
-                    {% elif forloop.counter == 3 %}
-                        <h1>Hellenismus</h1>
-                    {% elif forloop.counter == 4 %}
-                        <h1>Klassik</h1>
-                    {% elif forloop.counter == 5 %}
-                        <h1>Römische Kaiserzeit</h1>
-                    {% elif forloop.counter == 6 %}
-                        <h1>Spätantike</h1>
-                    {% endif %}
+                    <!-- Cycle through all eras as title -->
+                    <h1>{% cycle "Frühzeit" "Archaik" "Klassik" "Helenismus" "Römische Kaiserzeit" "Spätantike"%}</h1>
                 </div>
+                    <!-- Iterate through all videos of every era -->
                     {% for video in era %}
+                        <!-- Add a new video row every four videos -->
                         {% if forloop.counter0|divisibleby:4 or forloop.first %}
                             {% if forloop.counter <= 4 %}
+                                <!-- The first row of videos -->
                                 <div class="row row-video row-no-margin">
                             {% else %}
+                                <!-- Every other row of videos which is hidden until clicked on the button -->
                                 <div id="video-hide-{{ forloop.parentloop.counter }}" class="row row-video row-no-margin video-hide">
                             {% endif %}
                         {% endif %}
-                          <div class=" {% cycle 'video-box-first' 'video-box' 'video-box' 'video-box-last' %} ">
+                            <!-- Distinguish between first, middle and last video of the current row -->
+                            <div class="{% cycle 'video-box-first' 'video-box' 'video-box' 'video-box-last' %}">
                                 <!-- Add video -->
-                               <a class="button" href="#popup-{{ video.id }}" >
-                                   <video width="100%" >
-                                <source src="{{video.video.url}}" type="video/mp4">
-                                {{video.title}}
+                                <video class="video" width="100%" data-toggle="modal" data-target="#popup-{{ forloop.parentloop.counter }}-{{ forloop.counter }}">
+                                    <source src="{{ video.video.url }}" type="video/mp4">
+                                    {{ video.title }}
                                 </video>
 
                                 <div class="video-title">
-                                    {{video.title}}
+                                    {{ video.title }}
+                                </div>
+
+                                <div class="modal" id="popup-{{ forloop.parentloop.counter }}-{{ forloop.counter }}" data-keyboard="false" onclick="stopPopupVideo({{ forloop.parentloop.counter }}, {{ forloop.counter }})">
+                                    <div class="modal-dialog modal-xl modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">{{ video.title }}</h4>
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <video id="popup-video-{{ forloop.parentloop.counter }}-{{ forloop.counter }}" width="100%" controls>
+                                                    <source src="{{ video.video.url }}" type="video/mp4">
+                                                    {{ video.title }}
+                                                </video>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                </a>
 
@@ -93,13 +113,12 @@
                         {% endif %}
                     {% endfor %}
                     {% resetcycle %}
+                <!-- Add button to toggle hide the hidden videos -->
                 <div style="width: 100%">
-                    <button class="button more-videos-button" onclick="toggleHide({{ forloop.counter }})">V</button>
+                    <button class="button more-videos-button" id="color-btn-video" onclick="toggleHide({{ forloop.counter }})">V</button>
                 </div>
             </div>
         {% endfor %}
     </div>
- </div>
-
 </body>
 </html>

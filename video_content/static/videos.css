@@ -9,7 +9,6 @@
 
 .video-section {
     border-bottom: solid;
-    border-color: lightgray;
 }
 
 .video-box-first {
@@ -37,10 +36,8 @@
     border: none;
     padding-top: 5px;
     padding-bottom: 5px;
-    color: gray;
 }
 
-.more-videos-button:hover {
-    background-color: lightgray;
+.video:hover, .video-title:hover {
+    cursor: pointer;
 }
-
