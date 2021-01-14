@@ -6,6 +6,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="{% static 'videos.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'popup.css' %}">
     {% bootstrap_css %}
     {% bootstrap_javascript jquery='slim' %}
 
@@ -30,6 +31,11 @@
             });
         }
     </script>
+
+
+
+
+
 </head>
 
 <body>
@@ -63,6 +69,7 @@
                                     <source src="{{ video.video.url }}" type="video/mp4">
                                     {{ video.title }}
                                 </video>
+
                                 <div class="video-title">
                                     {{ video.title }}
                                 </div>
@@ -83,6 +90,23 @@
                                         </div>
                                     </div>
                                 </div>
+                               </a>
+
+
+                              <div id="popup-{{ video.id }}" class="overlay">
+	                            <div class="popup">
+		                        <a class="close" href="#" id="close">&times;</a>
+		                        <div class="content">
+                                <video width="100%" controls preload>
+                                 <source src="{{video.video.url}}" type="video/mp4">
+                                     <b>{{video.title}}</b>
+                                </video>
+		                        </div>
+                                </div>
+                                </div>
+
+
+
                             </div>
                         {% if forloop.counter|divisibleby:4 or forloop.last %}
                             </div>
