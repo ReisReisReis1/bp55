@@ -1,11 +1,24 @@
+/*============================================================================
+    CSS File for styling on the filter page
+=============================================================================*/
+
+/*----------------------------------------------------------------------------
+    Style for the 'Mehr erfahren' buttons
+ */
 .btn {
     width: 100%;
 }
 
+/*
+    Remove shadow of 'Mehr erfahren' buttons after they get clicked
+ */
 .btn:focus {
     box-shadow: none !important;
 }
 
+/*----------------------------------------------------------------------------
+    Style of the active filters
+ */
 .btn-filter {
     margin-left: 10px;
     padding-top: 5px;
@@ -14,11 +27,17 @@
     padding-bottom: 5px;
 }
 
+/*
+    Style of the active filters on hover
+ */
 .btn-filter:hover {
     text-decoration: none;
     color: black;
 }
 
+/*
+    Style of the remove active filter button
+ */
 .btn-filter-x {
     color: black;
 
@@ -28,6 +47,9 @@
     padding-bottom: 5px;
 }
 
+/*
+    Style of the remove active filter button on mouse hover
+ */
 .btn-filter-x:hover {
     text-decoration: none;
     color: black;

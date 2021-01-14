@@ -1,76 +1,132 @@
+/*============================================================================
+    General CSS file to define all colors
+=============================================================================*/
+
+
+/*----------------------------------------------------------------------------
+    Primary text color
+ */
 #color-txt-primary {
     color: black;
 }
 
+/*
+    Secondary text color
+ */
 #color-txt-secondary {
 
 }
 
+/*----------------------------------------------------------------------------
+    Primary background color
+ */
 #color-bg-primary {
     background-color: #F9B848 !important;
 }
 
+/*
+    Secondary background color
+ */
 #color-bg-secondary {
     background-color: #FFE0AB !important;
 }
 
+/*----------------------------------------------------------------------------
+    Primary border color
+ */
 #color-border-primary {
     border-color: lightgray;
 }
 
+/*----------------------------------------------------------------------------
+    Button color
+ */
 #color-btn {
     color: black;
     background-color: #F9B848;
 }
 
+/*
+    Button color on mouse hover
+ */
 #color-btn:hover {
     color: black;
     background-color: #FFE0AB;
 }
 
+/*
+    Inverted button color
+ */
 #color-btn-inv {
     color: black;
     background-color: #FFE0AB;
 }
 
+/*
+    Inverted button color on mouse hover
+ */
 #color-btn-inv:hover {
     color: black;
     background-color: #F9B848;
 }
 
+/*----------------------------------------------------------------------------
+    Show more videos button color
+ */
 #color-btn-video {
     color: gray;
 }
 
+/*
+    Show more videos button color on hover
+ */
 #color-btn-video:hover {
     background-color: lightgray;
 }
 
+/*----------------------------------------------------------------------------
+    Color for the first era
+ */
 #color-era-1::before, #color-era-1::after {
     border-color: #F9B848;
     background-color: #F9B848;
 }
 
+/*
+    Color for the second era
+ */
 #color-era-2::before, #color-era-2::after {
     border-color: #ffd837;
     background-color: #ffd837;
 }
 
+/*
+    Color for the third era
+ */
 #color-era-3::before, #color-era-3::after {
     border-color: #FB3199;
     background-color: #FB3199;
 }
 
+/*
+    Color for the fourth era
+ */
 #color-era-4::before, #color-era-4::after {
     border-color: #C02619;
     background-color: #C02619;
 }
 
+/*
+    Color for the seventh era
+ */
 #color-era-5::before, #color-era-5::after {
     border-color: #287863;
     background-color: #287863;
 }
 
+/*
+    Color for the eighth era
+ */
 #color-era-6::before, #color-era-6::after {
     border-color: #0E3692;
     background-color: #0E3692;

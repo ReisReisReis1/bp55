@@ -6,7 +6,6 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="{% static 'videos.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'popup.css' %}">
     {% bootstrap_css %}
     {% bootstrap_javascript jquery='slim' %}
 
@@ -23,6 +22,18 @@
             }
         }
 
+        function changeIcon(video_id){
+            var button = document.getElementById("color-btn-video-" + video_id);
+
+            if (button.innerHTML === '∨') {
+                button.innerHTML = '∧';
+            }
+            else {
+                button.innerHTML = '∨';
+            }
+
+        }
+
         function stopPopupVideo(section, id) {
             var video = document.getElementById("popup-video-" + section + "-" + id);
             var popup = "popup-" + section + "-" + id;
@@ -31,11 +42,6 @@
             });
         }
     </script>
-
-
-
-
-
 </head>
 
 <body>
@@ -90,23 +96,6 @@
                                         </div>
                                     </div>
                                 </div>
-                               </a>
-
-
-                              <div id="popup-{{ video.id }}" class="overlay">
-	                            <div class="popup">
-		                        <a class="close" href="#" id="close">&times;</a>
-		                        <div class="content">
-                                <video width="100%" controls preload>
-                                 <source src="{{video.video.url}}" type="video/mp4">
-                                     <b>{{video.title}}</b>
-                                </video>
-		                        </div>
-                                </div>
-                                </div>
-
-
-
                             </div>
                         {% if forloop.counter|divisibleby:4 or forloop.last %}
                             </div>
@@ -115,7 +104,7 @@
                     {% resetcycle %}
                 <!-- Add button to toggle hide the hidden videos -->
                 <div style="width: 100%">
-                    <button class="button more-videos-button" id="color-btn-video" onclick="toggleHide({{ forloop.counter }})">V</button>
+                    <button class="button more-videos-button" id="color-btn-video-{{ forloop.counter }}" onclick="toggleHide({{ forloop.counter }}),changeIcon({{ forloop.counter }})">∨</button>
                 </div>
             </div>
         {% endfor %}
