@@ -43,7 +43,6 @@ def timeline(request):
     context = {
         "items": items,
     }
-    print(items)
     return render(request, 'timeline.html', context)
 
 
