@@ -125,6 +125,228 @@ class Building(models.Model):
     def __str__(self):
         return self.name
 
+    def get_name(self, id):
+        """
+        :return: name of the building
+        """
+        # pylint: disable= no-member
+        building = self.objects.filter(pk=id)
+        return self.name
+
+    def get_city(self):
+        """
+        :return: city in which the building is located
+        """
+        # pylint: disable= no-member
+        building = self.objects.filter(pk=id)
+        return self.city
+
+    def get_region(self):
+        """
+        :return: city in which the building is located
+        """
+        # pylint: disable= no-member
+        building = self.objects.filter(pk=id)
+        return self.region
+
+    def get_country(self):
+        """
+        :return: country in which the building is located
+        """
+        # pylint: disable= no-member
+        building = self.objects.filter(pk=id)
+        return self.country
+
+    def get_date_from(self):
+        """
+        :return: date on which construction began
+        """
+        # pylint: disable= no-member
+        building = self.objects.filter(pk=id)
+        return self.date_from
+
+    def get_date_from_BC_or_AD(self):
+        """
+        :return: if date_from is BC or AD
+        """
+        # pylint: disable= no-member
+        building = self.objects.filter(pk=id)
+        return self.date_from_BC_or_AD()
+
+    def get_date_to(self):
+        """
+        :return: date on which construction began
+        """
+        # pylint: disable= no-member
+        building = self.objects.filter(pk=id)
+        return self.date_to
+
+    def get_date_to_BC_or_AD(self):
+        """
+        :return: if date_from is BC or AD
+        """
+        # pylint: disable= no-member
+        building = self.objects.filter(pk=id)
+        return self.date_to_BC_or_AD()
+
+    def get_architect(self):
+        """
+        :return: architect of the building
+        """
+        # pylint: disable= no-member
+        building = self.objects.filter(pk=id)
+        return self.architect
+
+    def get_context(self):
+        """
+        :return: context/type of the building
+        """
+        # pylint: disable= no-member
+        building = self.objects.filter(pk=id)
+        return self.context
+
+    def get_builder(self):
+        """
+        :return: builder of the building
+        """
+        # pylint: disable= no-member
+        building = self.objects.filter(pk=id)
+        return self.builder
+
+    def get_construction_type(self):
+        """
+        :return: construction type of the building
+        """
+        # pylint: disable= no-member
+        building = self.objects.filter(pk=id)
+        return self.construction
+
+    def get_design(self):
+        """
+        :return: design/shape of the building
+        """
+        # pylint: disable= no-member
+        building = self.objects.filter(pk=id)
+        return self.design
+
+    def get_funtion(self):
+        """
+        :return: function of the building
+        """
+        # pylint: disable= no-member
+        building = self.objects.filter(pk=id)
+        return self.function
+
+    def get_dimension(self):
+        """
+        :return: Dimension of the building including length, width, height, circumference and area
+        """
+        # pylint: disable= no-member
+        building = self.objects.filter(pk=id)
+        length_var=self.length
+        width_var=self.width
+        height_var=self.height
+        circumference_var=self.circumference
+        area_var=self.area
+        dimension= Concat(V('Länge:'), 'length_var', V('Breite:'), 'width_var', V('Höhe:'), 'height_var', V('Durchmesser'), 'circumference_var', V('Fläche:'), 'area_var')
+        return dimension
+
+    def get_length(self):
+        """
+        :return: length of the building
+        """
+        # pylint: disable= no-member
+        building = self.objects.filter(pk=id)
+        return building.length
+
+    def get_width(self):
+        """
+        :return: width of the building
+        """
+        # pylint: disable= no-member
+        building = self.objects.filter(pk=id)
+        return building.width
+
+    def get_height(self):
+        """
+        :return: height of the building
+        """
+        # pylint: disable= no-member
+        building = self.objects.filter(pk=id)
+        return building.height
+
+    def get_circumference(self):
+        """
+        :return: circumference of the building
+        """
+        # pylint: disable= no-member
+        building = self.objects.filter(pk=id)
+        return building.circumference
+
+    def get_area(self):
+        """
+        :return: area of the building
+        """
+        # pylint: disable= no-member
+        building = self.objects.filter(pk=id)
+        return building.area
+
+    def get_column_order(self):
+        """
+        :return: column order of the building
+        """
+        # pylint: disable= no-member
+        building = self.objects.filter(pk=id)
+        return building.column_order
+
+    def get_construction(self):
+        """
+        :return: construction of the building
+        """
+        # pylint: disable= no-member
+        building = self.objects.filter(pk=id)
+        return building.construction
+
+    def get_material(self):
+        """
+        :return: material of the building
+        """
+        # pylint: disable= no-member
+        building = self.objects.filter(pk=id)
+        return building.material
+
+    def get_literature(self):
+        """
+        :return: further literature about the building
+        """
+        # pylint: disable= no-member
+        building = self.objects.filter(pk=id)
+        return building.literature
+
+    def get_videos(self):
+        """
+        :return: videos about the building
+        """
+        # pylint: disable= no-member
+        building = self.objects.filter(pk=id)
+        return building.videos
+
+    def get_pictures(self):
+        """
+        :return: pictures of the building
+        """
+        # pylint: disable= no-member
+        building = self.objects.filter(pk=id)
+        return building.pictures
+
+    def get_building_plan(self):
+        """
+        :return: building plan of the building
+        """
+        # pylint: disable= no-member
+        building = self.objects.filter(pk=id)
+        return building.building_plan
+
 
 class Picture(models.Model):
     name = models.CharField(max_length=100, help_text="Titel des Bildes eingeben (max. 100 Zeichen).")
@@ -140,172 +362,6 @@ class Picture(models.Model):
     def __str__(self):
         return self.name
 
-    def get_name(self):
-        """
-        :return: name of the building
-        """
-        return self.name
 
-    def get_city(self):
-        """
-        :return: city in which the building is located
-        """
-        return self.city
-
-    def get_region(self):
-        """
-        :return: city in which the building is located
-        """
-        return self.region
-
-    def get_country(self):
-        """
-        :return: country in which the building is located
-        """
-        return self.country
-
-    def get_date_from(self):
-        """
-        :return: date on which construction began
-        """
-        return self.date_from
-
-    def get_date_from_BC_or_AD(self):
-        """
-        :return: if date_from is BC or AD
-        """
-        return self.date_from_BC_or_AD()
-
-    def get_date_to(self):
-        """
-        :return: date on which construction began
-        """
-        return self.date_to
-
-    def get_date_to_BC_or_AD(self):
-        """
-        :return: if date_from is BC or AD
-        """
-        return self.date_to_BC_or_AD()
-
-    def get_architect(self):
-        """
-        :return: architect of the building
-        """
-        return self.architect
-
-    def get_context(self):
-        """
-        :return: context/type of the building
-        """
-        return self.context
-
-    def get_builder(self):
-        """
-        :return: builder of the building
-        """
-        return self.builder
-
-    def get_construction_type(self):
-        """
-        :return: construction type of the building
-        """
-        return self.construction
-
-    def get_design(self):
-        """
-        :return: design/shape of the building
-        """
-        return self.design
-
-    def get_funtion(self):
-        """
-        :return: function of the building
-        """
-        return self.function
-
-    def get_dimension(self):
-        """
-        :return: Dimension of the building including length, width, height, circumference and area
-        """
-        length_var=self.length
-        width_var=self.width
-        height_var=self.height
-        circumference_var=self.circumference
-        area_var=self.area
-        dimension= Concat(V('Länge:'), 'length_var', V('Breite:'), 'width_var', V('Höhe:'), 'height_var', V('Durchmesser'), 'circumference_var', V('Fläche:'), 'area_var')
-        return dimension
-
-    def get_length(self):
-        """
-        :return: length of the building
-        """
-        return self.length
-
-    def get_width(self):
-        """
-        :return: width of the building
-        """
-        return self.width
-
-    def get_height(self):
-        """
-        :return: height of the building
-        """
-        return self.height
-
-    def get_circumference(self):
-        """
-        :return: circumference of the building
-        """
-        return self.circumference
-
-    def get_area(self):
-        """
-        :return: area of the building
-        """
-        return self.area
-
-    def get_column_order(self):
-        """
-        :return: column order of the building
-        """
-        return self.column_order
-
-    def get_construction(self):
-        """
-        :return: construction of the building
-        """
-        return self.construction
-
-    def get_material(self):
-        """
-        :return: material of the building
-        """
-        return self.material
-
-    def get_literature(self):
-        """
-        :return: further literature about the building
-        """
-        return self.literature
-
-    def get_videos(self):
-        """
-        :return: videos about the building
-        """
-        return self.videos
-
-    def get_pictures(self):
-        """
-        :return: pictures of the building
-        """
-        return self.pictures
-
-    def get_building_plan(self):
-        """
-        :return: building plan of the building
-        """
-        return self.building_plan
 
 

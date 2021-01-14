@@ -9,5 +9,6 @@ from . import views
 # pylint: disable = invalid-name
 app_name = 'details_page'
 urlpatterns = [
-    path('', views.detailed, name='detailed'),
+    path('detailed/<int: id>/', views.detailed),
+    """path('', views.detailed, name='detailed'),"""
 ]
