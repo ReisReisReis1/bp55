@@ -30,7 +30,7 @@ def detailed(request):
         'Material' : Detail.get_material(Detail),
         'Litertur' : Detail.get_literature(Detail),
         'Videos' : Detail.get_videos(Detail),
-        'Bilder' : Detail.get_pictures(Detail),
+        'Bilder' : Detail.get_Bilder(Detail),
         'Baupläne' : Detail.get_building_plan(Detail),
     }
 
