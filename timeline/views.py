@@ -4,6 +4,7 @@ Configurations of the different viewable functions and subpages from the App: ti
 
 
 from django.shortcuts import render
+from details_page import models
 
 # Create your views here.
 
