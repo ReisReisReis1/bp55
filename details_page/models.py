@@ -55,7 +55,7 @@ class Building(models.Model):
     length: length of the building
     width: width of the building
     height: height of the building
-    circumference: circumference of the building ( for circular buildings9
+    circumference: circumference of the building ( for circular buildings)
     area: surface area of the building
     column_order: column order of the building
     construction: construction of the building
@@ -146,14 +146,17 @@ class Picture(models.Model):
         """
         return self.name
 
-    def get_city_region(self):
+    def get_city(self):
         """
         :return: city in which the building is located
         """
-        city_variable= self.city
-        region_variable= self.region
-        city_and_region= Concat('city' , V('/'), 'region')
         return self.city
+
+    def get_region(self):
+        """
+        :return: city in which the building is located
+        """
+        return self.region
 
     def get_country(self):
         """
@@ -161,22 +164,29 @@ class Picture(models.Model):
         """
         return self.country
 
-    def get_date(self):
+    def get_date_from(self):
         """
-        :return: date
+        :return: date on which construction began
         """
-        date_to_string= srting(self.date_to)
-        date_from_string=string(self.date_from)
-        if self.date_to<0:
-            date_to_with_BCAD=Concat('date_to_string', V('BC'))
-        else:
-            date_to_with_BCAD=Concat('date_to_string', V('AD'))
-        if self.date_from<0:
-            date_from_with_BCAD=Concat('date_from_string', V('BC'))
-        else:
-            date_from_with_BCAD=Concat('date_from_string', V('AD'))
-        date_total=Concat('date_from_with_BCAD', V('-'), 'date_to_with_BCAD')
-        return date_total
+        return self.date_from
+
+    def get_date_from_BC_or_AD(self):
+        """
+        :return: if date_from is BC or AD
+        """
+        return self.date_from_BC_or_AD()
+
+    def get_date_to(self):
+        """
+        :return: date on which construction began
+        """
+        return self.date_to
+
+    def get_date_to_BC_or_AD(self):
+        """
+        :return: if date_from is BC or AD
+        """
+        return self.date_to_BC_or_AD()
 
     def get_architect(self):
         """
@@ -225,6 +235,36 @@ class Picture(models.Model):
         area_var=self.area
         dimension= Concat(V('Länge:'), 'length_var', V('Breite:'), 'width_var', V('Höhe:'), 'height_var', V('Durchmesser'), 'circumference_var', V('Fläche:'), 'area_var')
         return dimension
+
+    def get_length(self):
+        """
+        :return: length of the building
+        """
+        return self.length
+
+    def get_width(self):
+        """
+        :return: width of the building
+        """
+        return self.width
+
+    def get_height(self):
+        """
+        :return: height of the building
+        """
+        return self.height
+
+    def get_circumference(self):
+        """
+        :return: circumference of the building
+        """
+        return self.circumference
+
+    def get_area(self):
+        """
+        :return: area of the building
+        """
+        return self.area
 
     def get_column_order(self):
         """
