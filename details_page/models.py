@@ -125,17 +125,6 @@ class Building(models.Model):
     def __str__(self):
         return self.name
 
-    def getDateFromAsSignedInt(self):
-        """
-        Helper function for sorting. Works with the date_from.
-        :return: returns the year as signed int, negative if year is BC, positive if it's AD.
-        """
-        if self.date_from_BC_or_AD == "v.Chr.":
-            return (-1) * int(self.date_from)
-        else:
-            return int(self.date_from)
-
-
 
 class Picture(models.Model):
     name = models.CharField(max_length=100, help_text="Titel des Bildes eingeben (max. 100 Zeichen).")

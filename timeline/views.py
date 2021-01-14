@@ -24,9 +24,15 @@ def timeline(request):
         as calculated by the called helper.
         """
         if isinstance(item, Building):
-            return item.getDateFromAsSignedInt()
+            if item.date_from_BC_or_AD == "v.Chr.":
+                return -1*int(item.date_from)
+            else:
+                return int(item.date_from)
         elif isinstance(item, HistoricDate):
-            return item.getYearAsSignedInt()
+            if item.year_BC_or_AD == "v.Chr.":
+                return -1*int(item.year)
+            else:
+                return int(item.year)
 
     buildings = Building.objects.all()
     historic_dates = HistoricDate.objects.all()
@@ -37,6 +43,7 @@ def timeline(request):
     context = {
         "items": items,
     }
+    print(items)
     return render(request, 'timeline.html', context)
 
 

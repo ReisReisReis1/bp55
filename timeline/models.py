@@ -25,12 +25,3 @@ class HistoricDate(models.Model):
     def __str__(self):
         return str(self.title)+" ("+str(self.year)+" "+str(self.year_BC_or_AD)+")"
 
-    def getYearAsSignedInt(self):
-        """
-        Helper function for sorting.
-        :return: returns the year as signed int, negative if year is BC, positive if it's AD.
-        """
-        if self.year_BC_or_AD == "v.Chr.":
-            return (-1) * int(self.year)
-        else:
-            return int(self.year)
