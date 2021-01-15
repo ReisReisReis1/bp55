@@ -1,14 +1,14 @@
 """
 Configurations for the Database-Models in video-contents
 """
-from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
+from django.core.exceptions import MultipleObjectsReturned
 from django.db import models
 
 
 class Video(models.Model):
     """
     Set a model for video
-    titel: Name of the video
+    title: Name of the video
     video: Path to the video-file
     era: The Era that the video is about
     intro: Checkbox, if it's the entry video or not
@@ -39,12 +39,12 @@ class Video(models.Model):
         try:
             # pylint: disable= no-member
             intro = self.objects.get(intro=True)
-        except ObjectDoesNotExist:
-            return ObjectDoesNotExist
-        except MultipleObjectsReturned:
+            return intro
+        except Video.DoesNotExist:
+            return Video.DoesNotExist
+        except Video.MultipleObjects:
             # pylint: disable= no-member
             return self.objects.filter(intro=True).first
-        return intro
 
     def get_era(self, wanted_era):
         """
