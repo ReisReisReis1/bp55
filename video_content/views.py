@@ -32,9 +32,10 @@ def display(request):
             # If era has no year return 2021, so it will be listed last.
             return 2021
 
-    eras = Era.objects.all()
+    eras = Era.objects.filter(visible_on_video_page=True)
     eras = sorted(eras, key=lambda era: getYearOfItemAsSignedInt(era))
     context = {}
     for e in eras:
         context[e.name] = Video.get_era(Video, e.pk)
+    print(context)
     return render(request, 'videos.html', context)
