@@ -1,5 +1,17 @@
 """
 Configurations for the Database Models for the App 'details_page'
+
+def get_dimension(self, id):
+        :return: Dimension of the building including length, width, height, circumference and area
+        # pylint: disable= no-member
+        building = self.objects.filter(pk=id)
+        length_var=self.length
+        width_var=self.width
+        height_var=self.height
+        circumference_var=self.circumference
+        area_var=self.area
+        dimension= Concat(V('Länge:'), 'length_var', V('Breite:'), 'width_var', V('Höhe:'), 'height_var', V('Durchmesser'), 'circumference_var', V('Fläche:'), 'area_var')
+        return dimension
 """
 
 from django.db import models
@@ -130,133 +142,119 @@ class Building(models.Model):
         :return: name of the building
         """
         # pylint: disable= no-member
-        building = self.objects.filter(pk=id)
-        return self.name
+        building = self.objects.get(pk=id)
+        return building.name
 
     def get_city(self, id):
         """
         :return: city in which the building is located
         """
         # pylint: disable= no-member
-        building = self.objects.filter(pk=id)
-        return self.city
+        building = self.objects.get(pk=id)
+        return building.city
 
     def get_region(self, id):
         """
         :return: city in which the building is located
         """
         # pylint: disable= no-member
-        building = self.objects.filter(pk=id)
-        return self.region
+        building = self.objects.get(pk=id)
+        return building.region
 
     def get_country(self, id):
         """
         :return: country in which the building is located
         """
         # pylint: disable= no-member
-        building = self.objects.filter(pk=id)
-        return self.country
+        building = self.objects.get(pk=id)
+        return building.country
 
     def get_date_from(self, id):
         """
         :return: date on which construction began
         """
         # pylint: disable= no-member
-        building = self.objects.filter(pk=id)
-        return self.date_from
+        building = self.objects.get(pk=id)
+        return building.date_from
 
     def get_date_from_BC_or_AD(self, id):
         """
         :return: if date_from is BC or AD
         """
         # pylint: disable= no-member
-        building = self.objects.filter(pk=id)
-        return self.date_from_BC_or_AD()
+        building = self.objects.get(pk=id)
+        return building.date_from_BC_or_AD
 
     def get_date_to(self, id):
         """
         :return: date on which construction began
         """
         # pylint: disable= no-member
-        building = self.objects.filter(pk=id)
-        return self.date_to
+        building = self.objects.get(pk=id)
+        return building.date_to
 
     def get_date_to_BC_or_AD(self, id):
         """
         :return: if date_from is BC or AD
         """
         # pylint: disable= no-member
-        building = self.objects.filter(pk=id)
-        return self.date_to_BC_or_AD()
+        building = self.objects.get(pk=id)
+        return building.date_to_BC_or_AD
 
     def get_architect(self, id):
         """
         :return: architect of the building
         """
         # pylint: disable= no-member
-        building = self.objects.filter(pk=id)
-        return self.architect
+        building = self.objects.get(pk=id)
+        return building.architect
 
     def get_context(self, id):
         """
         :return: context/type of the building
         """
         # pylint: disable= no-member
-        building = self.objects.filter(pk=id)
-        return self.context
+        building = self.objects.get(pk=id)
+        return building.context
 
     def get_builder(self, id):
         """
         :return: builder of the building
         """
         # pylint: disable= no-member
-        building = self.objects.filter(pk=id)
-        return self.builder
+        building = self.objects.get(pk=id)
+        return building.builder
 
     def get_construction_type(self, id):
         """
         :return: construction type of the building
         """
         # pylint: disable= no-member
-        building = self.objects.filter(pk=id)
-        return self.construction
+        building = self.objects.get(pk=id)
+        return building.construction
 
     def get_design(self, id):
         """
         :return: design/shape of the building
         """
         # pylint: disable= no-member
-        building = self.objects.filter(pk=id)
-        return self.design
+        building = self.objects.get(pk=id)
+        return building.design
 
-    def get_funtion(self, id):
+    def get_function(self, id):
         """
         :return: function of the building
         """
         # pylint: disable= no-member
-        building = self.objects.filter(pk=id)
-        return self.function
-
-    def get_dimension(self, id):
-        """
-        :return: Dimension of the building including length, width, height, circumference and area
-        """
-        # pylint: disable= no-member
-        building = self.objects.filter(pk=id)
-        length_var=self.length
-        width_var=self.width
-        height_var=self.height
-        circumference_var=self.circumference
-        area_var=self.area
-        dimension= Concat(V('Länge:'), 'length_var', V('Breite:'), 'width_var', V('Höhe:'), 'height_var', V('Durchmesser'), 'circumference_var', V('Fläche:'), 'area_var')
-        return dimension
+        building = self.objects.get(pk=id)
+        return building.function
 
     def get_length(self, id):
         """
         :return: length of the building
         """
         # pylint: disable= no-member
-        building = self.objects.filter(pk=id)
+        building = self.objects.get(pk=id)
         return building.length
 
     def get_width(self, id):
@@ -264,7 +262,7 @@ class Building(models.Model):
         :return: width of the building
         """
         # pylint: disable= no-member
-        building = self.objects.filter(pk=id)
+        building = self.objects.get(pk=id)
         return building.width
 
     def get_height(self, id):
@@ -272,7 +270,7 @@ class Building(models.Model):
         :return: height of the building
         """
         # pylint: disable= no-member
-        building = self.objects.filter(pk=id)
+        building = self.objects.get(pk=id)
         return building.height
 
     def get_circumference(self, id):
@@ -280,7 +278,7 @@ class Building(models.Model):
         :return: circumference of the building
         """
         # pylint: disable= no-member
-        building = self.objects.filter(pk=id)
+        building = self.objects.get(pk=id)
         return building.circumference
 
     def get_area(self, id):
@@ -288,7 +286,7 @@ class Building(models.Model):
         :return: area of the building
         """
         # pylint: disable= no-member
-        building = self.objects.filter(pk=id)
+        building = self.objects.get(pk=id)
         return building.area
 
     def get_column_order(self, id):
@@ -296,7 +294,7 @@ class Building(models.Model):
         :return: column order of the building
         """
         # pylint: disable= no-member
-        building = self.objects.filter(pk=id)
+        building = self.objects.get(pk=id)
         return building.column_order
 
     def get_construction(self, id):
@@ -304,7 +302,7 @@ class Building(models.Model):
         :return: construction of the building
         """
         # pylint: disable= no-member
-        building = self.objects.filter(pk=id)
+        building = self.objects.get(pk=id)
         return building.construction
 
     def get_material(self, id):
@@ -312,7 +310,7 @@ class Building(models.Model):
         :return: material of the building
         """
         # pylint: disable= no-member
-        building = self.objects.filter(pk=id)
+        building = self.objects.get(pk=id)
         return building.material
 
     def get_literature(self, id):
@@ -320,7 +318,7 @@ class Building(models.Model):
         :return: further literature about the building
         """
         # pylint: disable= no-member
-        building = self.objects.filter(pk=id)
+        building = self.objects.get(pk=id)
         return building.literature
 
     def get_videos(self, id):
@@ -328,7 +326,7 @@ class Building(models.Model):
         :return: videos about the building
         """
         # pylint: disable= no-member
-        building = self.objects.filter(pk=id)
+        building = self.objects.get(pk=id)
         return building.videos
 
     def get_pictures(self, id):
@@ -336,7 +334,7 @@ class Building(models.Model):
         :return: pictures of the building
         """
         # pylint: disable= no-member
-        building = self.objects.filter(pk=id)
+        building = self.objects.get(pk=id)
         return building.pictures
 
     def get_building_plan(self, id):
@@ -344,7 +342,7 @@ class Building(models.Model):
         :return: building plan of the building
         """
         # pylint: disable= no-member
-        building = self.objects.filter(pk=id)
+        building = self.objects.get(pk=id)
         return building.building_plan
 
 

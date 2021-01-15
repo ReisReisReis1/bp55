@@ -18,7 +18,7 @@ def detailed(request, id):
         'Name': Building.get_name(Building, id),
         'Ort': Building.get_city(Building, id),
         'Region': Building.get_region(Building, id),
-        'Land': Building.get_date(Building, id),
+        'Land': Building.get_country(Building, id),
         'Datum_von': Building.get_date_from(Building, id),
         'Datum_von_BC_oder_AD': Building.get_date_from_BC_or_AD(Building, id),
         'Datum_bis': Building.get_date_to(Building, id),
@@ -29,19 +29,21 @@ def detailed(request, id):
         'Bautypus': Building.get_construction_type(Building, id),
         'Bauform': Building.get_design(Building, id),
         'Gattung/Funktion':  Building.get_function(Building, id),
+        """
         'Dimension': Building.get_dimension(Building, id),
+        'Videos': Building.get_videos(Building, id),
+        'Bilder': Building.get_Bilder(Building, id),
+        'Baupläne': Building.get_building_plan(Building, id),
+        """
         'Länge': Building.get_length(Building, id),
         'Breite': Building.get_width(Building, id),
-        'Höhe': Building.get_hight(Building, id),
+        'Höhe': Building.get_height(Building, id),
         'Umfang': Building.get_circumference(Building, id),
         'Fläche': Building.get_area(Building, id),
         'Säulenordung': Building.get_column_order(Building, id),
         'Konstruktion': Building.get_construction(Building, id),
         'Material': Building.get_material(Building, id),
         'Litertur': Building.get_literature(Building, id),
-        'Videos': Building.get_videos(Building, id),
-        'Bilder': Building.get_Bilder(Building, id),
-        'Baupläne': Building.get_building_plan(Building, id),
     }
 
     return render(request, 'detailed.html', context)
