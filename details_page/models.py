@@ -360,6 +360,38 @@ class Picture(models.Model):
     def __str__(self):
         return self.name
 
+    def get_picture_for_building(self, wanted_building):
+        """
+        Getting a List of Pictures for the given building
+        :param wanted_building:
+        :return: list of Pictures for given building or empty list
+        """
+        #pylint disable= no-member
+        pictures = self.objects.filter(building=wanted_building)
+        return pictures
+
+
+class Blueprint(models.Model):
+    name = models.CharField(max_length=100, help_text="Titel des Bauplans eingeben (max. 100 Zeichen).")
+    description = models.TextField(max_length=1000, help_text="Beschreibung des Bauplans eingeben (max. 1000 Zeichen).")
+    blueprint = models.FileField(help_text="Auf \"Durchsuchen\" drücken um einen Bauplan hochzuladen.",
+                                 upload_to="blueprints/")
+    building = models.ForeignKey(to=Building, null=True, blank=True, on_delete=models.SET_NULL)
+
+    def __str__(self):
+        return self.name
+
+    def get_blueprint_for_building(self, wanted_building):
+        """
+        Getting a list of blueprints for the given building
+        :param wanted_building:
+        :return: list of blueprints for given building or empty list
+        """
+        #pylint disable= no-member
+        blueprints = self.objects.filter(building=wanted_building)
+        return blueprints
+
+
 
 
 
