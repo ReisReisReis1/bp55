@@ -9,6 +9,8 @@ from .models import Picture
 from .models import Building
 # pylint: disable = import-error, relative beyond-top-level
 from .models import Blueprint
+# pylint: disable = import-error, relative beyond-top-level
+from video_content.models import Video
 
 
 
@@ -38,7 +40,6 @@ def detailed(request, id):
         """
         'Dimension': Building.get_dimension(Building, id),
         'Videos': Building.get_videos(Building, id),
-        'Baupläne': Building.get_building_plan(Building, id),
         """
         'Länge': Building.get_length(Building, id),
         'Breite': Building.get_width(Building, id),
