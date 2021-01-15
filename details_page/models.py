@@ -19,17 +19,15 @@ class Era(models.Model):
     ], default='Sonstiges',
                             help_text="Epoche auswählen")
     year_from = models.PositiveIntegerField(help_text="Jahr des Beginns der Epoche eingeben.", blank=True, null=True)
-                                            #label="Jahr des Beginns der Epoche:")
     year_from_BC_or_AD = models.CharField(max_length=7, help_text="Jahr des Beginns: v.Chr. bzw. n.Chr. auswählen.",
                                           choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")], default="v.Chr.",
                                           null=True, blank=True)
-                                          #label="Ist das Jahr des Beginns der Epoche vor oder nach Christus?:")
     year_to = models.PositiveIntegerField(help_text="Jahr des Endes der Epoche eingeben.", blank=True, null=True)
-                                          #label="Jahr des Endes der Epoche:")
     year_to_BC_Or_AD = models.CharField(max_length=7, help_text="Jahr des Endes: v.Chr. bzw. n.Chr. auswählen.",
                                         choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")], default="v.Chr.",
                                         null=True, blank=True)
-                                        #label="Ist das Jahr des Endes der Epoche vor oder nach Christus?:")
+    visible_on_video_page = models.BooleanField(default=True, help_text="""Angeben ob die Epoche auf der 'Staffeln' 
+                                                Seite sichtbar sein soll.""")
 
     def __str__(self):
         return self.name
