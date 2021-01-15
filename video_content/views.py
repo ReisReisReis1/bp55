@@ -17,7 +17,23 @@ def display(request):
     with a context variable to get Videos sorted in eras
     """
 
-    eras = Era.objects.all().order_by()
+    def getYearOfItemAsSignedInt(era):
+        """
+        Inner helper to sorting the years.
+        :param era: the era to get the year from
+        :return: the year of the era (beginning year)
+        """
+        try:
+            if era.year_from_BC_or_AD == "v.Chr.":
+                return -1 * int(era.year_from)
+            else:
+                return int(era.year_from)
+        except TypeError:
+            # If era has no year return 2021, so it will be listed last.
+            return 2021
+
+    eras = Era.objects.all()
+    eras = sorted(eras, key=lambda era: getYearOfItemAsSignedInt(era))
     context = {}
     for e in eras:
         context[e.name] = Video.get_era(Video, e.pk)
