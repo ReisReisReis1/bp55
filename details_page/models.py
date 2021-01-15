@@ -28,7 +28,7 @@ class Era(models.Model):
         ('Späte Kaiserzeit', 'Späte Kaiserzeit'),
         ('Spätantike', 'Spätantike'),
         ('Sonstiges', 'Sonstiges'),
-    ], default='Sonstiges',
+    ], default='Sonstigedes',
                             help_text="Epoche auswählen")
     year_from = models.PositiveIntegerField(help_text="Jahr des Beginns der Epoche eingeben.", blank=True, null=True)
                                             #label="Jahr des Beginns der Epoche:")
@@ -38,7 +38,7 @@ class Era(models.Model):
                                           #label="Ist das Jahr des Beginns der Epoche vor oder nach Christus?:")
     year_to = models.PositiveIntegerField(help_text="Jahr des Endes der Epoche eingeben.", blank=True, null=True)
                                           #label="Jahr des Endes der Epoche:")
-    year_to_BC_Or_AD = models.CharField(max_length=7, help_text="Jahr des Endes: v.Chr. bzw. n.Chr. auswählen.",
+    year_to_BC_or_AD = models.CharField(max_length=7, help_text="Jahr des Endes: v.Chr. bzw. n.Chr. auswählen.",
                                         choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")], default="v.Chr.",
                                         null=True, blank=True)
                                         #label="Ist das Jahr des Endes der Epoche vor oder nach Christus?:")
@@ -72,11 +72,9 @@ class Building(models.Model):
     column_order: column order of the building
     construction: construction of the building
     material: material of the building
+
     literature: further literature about the building
     era: era in which the building was built
-    #videos: videos about the building
-    #pictures: pictures of teh building
-    #building_plan: building plan of the building
     """
 
     # Added help_texts everywhere
@@ -231,7 +229,7 @@ class Building(models.Model):
         """
         # pylint: disable= no-member
         building = self.objects.get(pk=id)
-        return building.construction
+        return building.construction_type
 
     def get_design(self, id):
         """
@@ -320,30 +318,6 @@ class Building(models.Model):
         # pylint: disable= no-member
         building = self.objects.get(pk=id)
         return building.literature
-
-    def get_videos(self, id):
-        """
-        :return: videos about the building
-        """
-        # pylint: disable= no-member
-        building = self.objects.get(pk=id)
-        return building.videos
-
-    def get_pictures(self, id):
-        """
-        :return: pictures of the building
-        """
-        # pylint: disable= no-member
-        building = self.objects.get(pk=id)
-        return building.pictures
-
-    def get_building_plan(self, id):
-        """
-        :return: building plan of the building
-        """
-        # pylint: disable= no-member
-        building = self.objects.get(pk=id)
-        return building.building_plan
 
 
 class Picture(models.Model):
