@@ -30,6 +30,7 @@ class BuildingTestCases(TestCase):
                                 construction='Massivbau', material='penetelischer Marmor',
                                 literature='Muss - Schubert 1988, SEITEN?; Gruben 2001, 173-190; Hellmann 2006, 82-96;')
 
+
     def test1_get_name(self):
         """
         Testing get_name
@@ -191,6 +192,15 @@ class BuildingTestCases(TestCase):
         self.assertEqual(Building.get_literature(Building, 0), '')
         self.assertEqual(Building.get_literature(Building, 1),
                          'Muss - Schubert 1988, SEITEN?; Gruben 2001, 173-190; Hellmann 2006, 82-96;')
+
+    def test24__str__(self):
+        """
+        Testing the __str__ function
+        """
+        test1=Building.objects.get(name='').__str__()
+        test2=Building.objects.get(name='Parthenon').__str__()
+        self.assertEqual(test1, '')
+        self.assertEqual(test2, 'Parthenon')
 
 
 
