@@ -1,8 +1,11 @@
 """
 Configurations for the Database-Models in video-contents
 """
-from django.core.exceptions import MultipleObjectsReturned
+
 from django.db import models
+from details_page.models import Building
+from django.core.exceptions import ValidationError
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 class Video(models.Model):
@@ -13,8 +16,9 @@ class Video(models.Model):
     era: The Era that the video is about
     intro: Checkbox, if it's the entry video or not
     """
-    title = models.CharField(max_length=100)
-    video = models.FileField(upload_to='videos/')
+
+    title = models.CharField(max_length=100, help_text='Titel des Videos')
+    video = models.FileField(upload_to='videos/', help_text='Videodatei in .mp4')
     era = models.CharField(max_length=100,
                            choices=[
                                ('Frühzeit', 'Frühzeit'), ('Archaik', 'Archaik'),
@@ -22,9 +26,10 @@ class Video(models.Model):
                                ('Römische Kaiserzeit', 'Römische Kaiserzeit'),
                                ('Spätantike', 'Spätantike'),
                                ('Sonstiges', 'Sonstiges'),
-                                    ], default='Sonstiges')
-
-    intro = models.BooleanField(default=False)
+                           ], default='Sonstiges')
+    intro = models.BooleanField(default=False, help_text='Ist dieses Video das Intro-Video?')
+    length = models.FloatField(validators=[MinValueValidator(0.0)],  help_text='Länge des Videos')
+    # TODO: Adding timestamps
 
     def __str__(self):
         return str(self.title)
@@ -42,7 +47,7 @@ class Video(models.Model):
             return intro
         except Video.DoesNotExist:
             return Video.DoesNotExist
-        except Video.MultipleObjects:
+        except Video.MultipleObjectsReturned:
             # pylint: disable= no-member
             return self.objects.filter(intro=True).first
 
@@ -56,4 +61,30 @@ class Video(models.Model):
         videos = self.objects.filter(era=wanted_era)
         return videos
 
+    def get_length(self):
+        """
+        Function to get the length of this video
+        :return: Length of this video
+        """
+        return self.length
     # pylint: disable = too-few-public-methods
+
+
+class Timestamps(models.Model):
+    """
+    Model for timestamps in a video assigned to a building
+    """
+
+    building = models.ForeignKey(to=Building, on_delete=models.SET_NULL, null=True,
+                                 help_text='Zugehöriges Gebäude')
+    video = models.ForeignKey(to=Video, on_delete=models.CASCADE, null=False,
+                              help_text='Zugehöriges Video')
+    time = models.FloatField(validators=[MinValueValidator(0.0)],
+                             help_text='Geben Sie hier eine Stelle ein, '
+                                       'an dem das gewählte Gebäude erscheint')
+
+    def get_timestamps_by_video(self, vid):
+        return self.objects.filter(video=vid)
+
+    def get_timestamps_by_building(self, build):
+        return self.objects.filter(building=build)

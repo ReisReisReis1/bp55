@@ -1,5 +1,5 @@
 """
-Configurations of the different viewable functions and subpages from the App: start
+Configurations of the different functions and subpages from the App: start
 """
 
 
