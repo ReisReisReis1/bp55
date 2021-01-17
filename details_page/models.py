@@ -152,26 +152,6 @@ class Building(models.Model):
     literature = models.TextField(max_length=1000, help_text="Literatur zum Gebäude angeben (max. 1000 Zeichen).",
                                   null=True, blank=True)
 
-    # Added
-    def __str__(self):
-        return self.name
-
-
-class Picture(models.Model):
-    name = models.CharField(max_length=100, help_text="Titel des Bildes eingeben (max. 100 Zeichen).")
-    description = models.TextField(max_length=1000, help_text="Beschreibung des Bildes eingeben (max. 1000 Zeichen).",
-                                   null=True, blank=True)
-    picture = models.ImageField(help_text="Auf \"Durchsuchen\" drücken um ein Bild hochzuladen.", upload_to="pics/",
-                                width_field="width", height_field="height")
-    width = models.IntegerField(editable=False, default=0)
-    height = models.IntegerField(editable=False, default=0)
-    building = models.ForeignKey(to=Building, null=True, blank=True, on_delete=models.SET_NULL)
-    usable_as_thumbnail = models.BooleanField(default=False,
-                                              help_text="""Anwählen wenn das Bild als Thumbnail (Vorschaubild) für sein 
-                                              Bauwerk in der Zeitachse und den Bauwerken erscheinen darf. Bei mehreren 
-                                              möglichen Vorschaubildern für ein Bauwerk wird zufällig eins 
-                                              ausgewählt.""")
-
     def __str__(self):
         return self.name
 
@@ -343,4 +323,22 @@ class Picture(models.Model):
         """
         return self.building_plan
 
+
+class Picture(models.Model):
+    name = models.CharField(max_length=100, help_text="Titel des Bildes eingeben (max. 100 Zeichen).")
+    description = models.TextField(max_length=1000, help_text="Beschreibung des Bildes eingeben (max. 1000 Zeichen).",
+                                   null=True, blank=True)
+    picture = models.ImageField(help_text="Auf \"Durchsuchen\" drücken um ein Bild hochzuladen.", upload_to="pics/",
+                                width_field="width", height_field="height")
+    width = models.IntegerField(editable=False, default=0)
+    height = models.IntegerField(editable=False, default=0)
+    building = models.ForeignKey(to=Building, null=True, blank=True, on_delete=models.SET_NULL)
+    usable_as_thumbnail = models.BooleanField(default=False,
+                                              help_text="""Anwählen wenn das Bild als Thumbnail (Vorschaubild) für sein 
+                                              Bauwerk in der Zeitachse und den Bauwerken erscheinen darf. Bei mehreren 
+                                              möglichen Vorschaubildern für ein Bauwerk wird zufällig eins 
+                                              ausgewählt.""")
+
+    def __str__(self):
+        return self.name
 
