@@ -3,7 +3,29 @@ Configurations for the Database Models for the App 'details_page'
 """
 
 from django.db import models
+from django.core.validators import MaxValueValidator
+from django.core.exceptions import ValidationError
 from . import country_codes
+
+
+"""Give max year for validation here"""
+max_year = 1400
+
+
+def validate_color_code(code):
+    """
+    Validator for color Code in Era.
+    :param code: the code to test
+    :return: None or ValidationError
+    """
+    for sign in code:
+        if sign not in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f",
+                        "A", "B", "C", "D", "E", "F"]:
+            raise ValidationError(message="Bitte einen gültigen Code im Hex-Format einfügen: "
+                                          "Nur Hex-Zeichen: 0-9, a-f und A-F.")
+        if len(code) != 6:
+            raise ValidationError(message="Bitte einen gültigen Code im Hex-Format einfügen: "
+                                          "Muss genau 6 Zeichen lang sein.")
 
 
 class Era(models.Model):
@@ -18,16 +40,30 @@ class Era(models.Model):
         ('Sonstiges', 'Sonstiges'),
     ], default='Sonstiges',
                             help_text="Epoche auswählen")
-    year_from = models.PositiveIntegerField(help_text="Jahr des Beginns der Epoche eingeben.", blank=True, null=True)
+    year_from = models.PositiveIntegerField(help_text="Jahr des Beginns der Epoche eingeben.", blank=True, null=True,
+                                            validators=[MaxValueValidator(max_year,
+                                                                          message="Diese Jahreszahl ist zu hoch."
+                                                                                  + "Bitte etwas zwischen 0 und "
+                                                                                  + str(max_year)
+                                                                                  + " eintragen.")])
     year_from_BC_or_AD = models.CharField(max_length=7, help_text="Jahr des Beginns: v.Chr. bzw. n.Chr. auswählen.",
                                           choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")], default="v.Chr.",
                                           null=True, blank=True)
-    year_to = models.PositiveIntegerField(help_text="Jahr des Endes der Epoche eingeben.", blank=True, null=True)
-    year_to_BC_Or_AD = models.CharField(max_length=7, help_text="Jahr des Endes: v.Chr. bzw. n.Chr. auswählen.",
+    year_to = models.PositiveIntegerField(help_text="Jahr des Endes der Epoche eingeben.", blank=True, null=True,
+                                          validators=[MaxValueValidator(max_year,
+                                                                        message="Diese Jahreszahl ist zu hoch."
+                                                                                + "Bitte etwas zwischen 0 und "
+                                                                                + str(max_year)
+                                                                                + " eintragen.")]
+                                          )
+    year_to_BC_or_AD = models.CharField(max_length=7, help_text="Jahr des Endes: v.Chr. bzw. n.Chr. auswählen.",
                                         choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")], default="v.Chr.",
                                         null=True, blank=True)
     visible_on_video_page = models.BooleanField(default=True, help_text="""Angeben ob die Epoche auf der 'Staffeln' 
                                                 Seite sichtbar sein soll.""")
+    color_code = models.CharField(max_length=6, help_text="""Hier 6. stelligen Hex-Farbcode für die Epoche eingeben 
+                                                             (ohne das führende '#')(z.B.: #ffffff = Weiß).""",
+                                  default="ffffff", validators=[validate_color_code])
 
     def __str__(self):
         return self.name
@@ -65,7 +101,6 @@ class Building(models.Model):
     #building_plan: building plan of the building
     """
 
-    # Added help_texts everywhere
     name = models.CharField(max_length=100, help_text="Namen des Bauwerks eingeben (max. 100 Zeichen).")
     city = models.CharField(max_length=100, help_text="Stadt des Bauweks eingeben (max. 100 Zeichen).",
                             null=True, blank=True)
@@ -73,15 +108,14 @@ class Building(models.Model):
                               null=True, blank=True)
     country = models.CharField(max_length=100, help_text="""Hier Land des Bauwerks auswählen (Tipp: Zum Suchen Kürzel 
                                auf der Tastatur eingeben).""",
-                               # Country code choices in different file (for better readable code here)
                                choices=country_codes.contry_codes_as_tuple_list,
                                default="Griechenland", null=True, blank=True)
-    # IntegerField -> Positive Integer Field, and added BC/AD choice for it
-    date_from = models.PositiveIntegerField(help_text="Jahr des Baubeginns eingeben.", null=True, blank=True)
+    date_from = models.PositiveIntegerField(help_text="Jahr des Baubeginns eingeben. Wenn nicht gesetzt, "
+                                                      + "erscheint das Gebäude nicht auf der Zeitachse.",
+                                            null=True, blank=True)
     date_from_BC_or_AD = models.CharField(max_length=7, help_text="Jahr des Baubeginns: v.Chr. bzw. n.Chr. auswählen.",
                                           choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")], default="v.Chr.",
                                           null=True, blank=True)
-    # IntegerField -> Positive Integer Field, and added BC/AD choice for it
     date_to = models.PositiveIntegerField(help_text="Jahr des Bauendes eingeben.", null=True, blank=True)
     date_to_BC_or_AD = models.CharField(max_length=7, help_text="Jahr des Bauendes: v.Chr. bzw. n.Chr. auswählen.",
                                         choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")], default="v.Chr.",
@@ -115,7 +149,6 @@ class Building(models.Model):
                                     null=True, blank=True)
     material = models.CharField(max_length=100, help_text="Material des Bauwerks eingeben (max. 100 Zeichen).",
                                 null=True, blank=True)
-    # Added max_length
     literature = models.TextField(max_length=1000, help_text="Literatur zum Gebäude angeben (max. 1000 Zeichen).",
                                   null=True, blank=True)
 
@@ -126,8 +159,12 @@ class Building(models.Model):
 
 class Picture(models.Model):
     name = models.CharField(max_length=100, help_text="Titel des Bildes eingeben (max. 100 Zeichen).")
-    description = models.TextField(max_length=1000, help_text="Beschreibung des Bildes eingeben (max. 1000 Zeichen).")
-    picture = models.FileField(help_text="Auf \"Durchsuchen\" drücken um ein Bild hochzuladen.", upload_to="pics/")
+    description = models.TextField(max_length=1000, help_text="Beschreibung des Bildes eingeben (max. 1000 Zeichen).",
+                                   null=True, blank=True)
+    picture = models.ImageField(help_text="Auf \"Durchsuchen\" drücken um ein Bild hochzuladen.", upload_to="pics/",
+                                width_field="width", height_field="height")
+    width = models.IntegerField(editable=False, default=0)
+    height = models.IntegerField(editable=False, default=0)
     building = models.ForeignKey(to=Building, null=True, blank=True, on_delete=models.SET_NULL)
     usable_as_thumbnail = models.BooleanField(default=False,
                                               help_text="""Anwählen wenn das Bild als Thumbnail (Vorschaubild) für sein 
