@@ -4,7 +4,6 @@ Configurations for the Database-Models in video-contents
 
 from django.db import models
 from details_page.models import Building
-from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 
@@ -30,6 +29,7 @@ class Video(models.Model):
     intro = models.BooleanField(default=False, help_text='Ist dieses Video das Intro-Video?')
     length = models.FloatField(validators=[MinValueValidator(0.0)],  help_text='Länge des Videos')
     # TODO: Adding timestamps
+
 
     def __str__(self):
         return str(self.title)
@@ -61,12 +61,6 @@ class Video(models.Model):
         videos = self.objects.filter(era=wanted_era)
         return videos
 
-    def get_length(self):
-        """
-        Function to get the length of this video
-        :return: Length of this video
-        """
-        return self.length
     # pylint: disable = too-few-public-methods
 
 
@@ -79,7 +73,8 @@ class Timestamps(models.Model):
                                  help_text='Zugehöriges Gebäude')
     video = models.ForeignKey(to=Video, on_delete=models.CASCADE, null=False,
                               help_text='Zugehöriges Video')
-    time = models.FloatField(validators=[MinValueValidator(0.0)],
+    time = models.FloatField(validators=[MinValueValidator(0.0),
+                                         MaxValueValidator(Video.objects.get(video).length)],
                              help_text='Geben Sie hier eine Stelle ein, '
                                        'an dem das gewählte Gebäude erscheint')
 
