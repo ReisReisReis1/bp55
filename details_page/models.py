@@ -375,6 +375,7 @@ class Picture(models.Model):
     description = models.TextField(max_length=1000, help_text="Beschreibung des Bildes eingeben (max. 1000 Zeichen).",
                                    null=True, blank=True)
     picture = models.ImageField(help_text="Auf \"Durchsuchen\" drücken um ein Bild hochzuladen.", upload_to="pics/",
+                               # )
                                 width_field="width", height_field="height")
     width = models.IntegerField(editable=False, default=0)
     height = models.IntegerField(editable=False, default=0)
