@@ -383,8 +383,7 @@ class Picture(models.Model):
     usable_as_thumbnail = models.BooleanField(default=False,
                                               help_text="""Anwählen wenn das Bild als Thumbnail (Vorschaubild) für sein 
                                               Bauwerk in der Zeitachse und den Bauwerken erscheinen darf. Bei mehreren 
-                                              möglichen Vorschaubildern für ein Bauwerk wird zufällig eins 
-                                              ausgewählt.""")
+                                              möglichen Vorschaubildern für ein Bauwerk wird zufällig eins """)
 
     def __str__(self):
         return self.name
