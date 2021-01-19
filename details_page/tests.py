@@ -86,8 +86,8 @@ class BuildingTestCases(TestCase):
         """
         Testing get_name
         """
-        self.assertEqual(Building.get_date_from_BC_or_AD(Building, 0), '')
-        self.assertEqual(Building.get_date_from_BC_or_AD(Building, 1), 'v.Chr.')
+        self.assertEqual(Building.get_date_from_bc_or_ad(Building, 0), '')
+        self.assertEqual(Building.get_date_from_bc_or_ad(Building, 1), 'v.Chr.')
 
     def test7_get_date_to(self):
         """
@@ -100,8 +100,8 @@ class BuildingTestCases(TestCase):
         """
         Testing get_name
         """
-        self.assertEqual(Building.get_date_to_BC_or_AD(Building, 0), '')
-        self.assertEqual(Building.get_date_to_BC_or_AD(Building, 1), 'v.Chr.')
+        self.assertEqual(Building.get_date_to_bc_or_ad(Building, 0), '')
+        self.assertEqual(Building.get_date_to_bc_or_ad(Building, 1), 'v.Chr.')
 
     def test9_get_architect(self):
         """

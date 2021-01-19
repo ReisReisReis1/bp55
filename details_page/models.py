@@ -19,7 +19,6 @@ from django.core.validators import MaxValueValidator
 from django.core.exceptions import ValidationError
 from . import country_codes
 
-
 """Give max year for validation here"""
 max_year = 1400
 
@@ -204,7 +203,7 @@ class Building(models.Model):
         building = self.objects.get(pk=building_id)
         return building.date_from
 
-    def get_date_from_BC_or_AD(self, building_id):
+    def get_date_from_bc_or_ad(self, building_id):
         """
         :return: if date_from is BC or AD
         """
@@ -220,7 +219,7 @@ class Building(models.Model):
         building = self.objects.get(pk=building_id)
         return building.date_to
 
-    def get_date_to_BC_or_AD(self, building_id):
+    def get_date_to_bc_or_ad(self, building_id):
         """
         :return: if date_from is BC or AD
         """
@@ -353,8 +352,9 @@ class Blueprint(models.Model):
     name = models.CharField(max_length=100, help_text="Titel des Bauplans eingeben (max. 100 Zeichen).")
     description = models.TextField(max_length=1000, help_text="Beschreibung des Bildes eingeben (max. 1000 Zeichen).",
                                    null=True, blank=True)
-    blueprint = models.ImageField(help_text="Auf \"Durchsuchen\" drücken um einen Bauplan hochzuladen.", upload_to="blueprint/",
-                                width_field="width", height_field="height")
+    blueprint = models.ImageField(help_text="Auf \"Durchsuchen\" drücken um einen Bauplan hochzuladen.",
+                                  upload_to="blueprint/",
+                                  width_field="width", height_field="height")
     width = models.IntegerField(editable=False, default=0)
     height = models.IntegerField(editable=False, default=0)
     building = models.ForeignKey(to=Building, null=True, blank=True, on_delete=models.SET_NULL)
@@ -368,7 +368,7 @@ class Blueprint(models.Model):
         :param wanted_building:
         :return: list of blueprints for given building or empty list
         """
-        #pylint disable= no-member
+        # pylint disable= no-member
         blueprints = self.objects.filter(building=wanted_building)
         return blueprints
 
@@ -396,7 +396,6 @@ class Picture(models.Model):
         :param wanted_building:
         :return: list of Pictures for given building or empty list
         """
-        #pylint disable= no-member
+        # pylint disable= no-member
         pictures = self.objects.filter(building=wanted_building)
         return pictures
-
