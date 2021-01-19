@@ -349,31 +349,6 @@ class Building(models.Model):
         return building.literature
 
 
-class Picture(models.Model):
-    name = models.CharField(max_length=100, help_text="Titel des Bildes eingeben (max. 100 Zeichen).")
-    description = models.TextField(max_length=1000, help_text="Beschreibung des Bildes eingeben (max. 1000 Zeichen).")
-    picture = models.FileField(help_text="Auf \"Durchsuchen\" drücken um ein Bild hochzuladen.", upload_to="pics/")
-    building = models.ForeignKey(to=Building, null=True, blank=True, on_delete=models.SET_NULL)
-    usable_as_thumbnail = models.BooleanField(default=False,
-                                              help_text="""Anwählen wenn das Bild als Thumbnail (Vorschaubild) für sein 
-                                              Bauwerk in der Zeitachse und den Bauwerken erscheinen darf. Bei mehreren 
-                                              möglichen Vorschaubildern für ein Bauwerk wird zufällig eins 
-                                              ausgewählt.""")
-
-    def __str__(self):
-        return self.name
-
-    def get_picture_for_building(self, wanted_building):
-        """
-        Getting a List of Pictures for the given building
-        :param wanted_building:
-        :return: list of Pictures for given building or empty list
-        """
-        #pylint disable= no-member
-        pictures = self.objects.filter(building=wanted_building)
-        return pictures
-
-
 class Blueprint(models.Model):
     name = models.CharField(max_length=100, help_text="Titel des Bauplans eingeben (max. 100 Zeichen).")
     description = models.TextField(max_length=1000, help_text="Beschreibung des Bauplans eingeben (max. 1000 Zeichen).")
@@ -395,14 +370,12 @@ class Blueprint(models.Model):
         return blueprints
 
 
-
-
-
 class Picture(models.Model):
     name = models.CharField(max_length=100, help_text="Titel des Bildes eingeben (max. 100 Zeichen).")
     description = models.TextField(max_length=1000, help_text="Beschreibung des Bildes eingeben (max. 1000 Zeichen).",
                                    null=True, blank=True)
     picture = models.ImageField(help_text="Auf \"Durchsuchen\" drücken um ein Bild hochzuladen.", upload_to="pics/",
+                               # )
                                 width_field="width", height_field="height")
     width = models.IntegerField(editable=False, default=0)
     height = models.IntegerField(editable=False, default=0)
@@ -410,9 +383,18 @@ class Picture(models.Model):
     usable_as_thumbnail = models.BooleanField(default=False,
                                               help_text="""Anwählen wenn das Bild als Thumbnail (Vorschaubild) für sein 
                                               Bauwerk in der Zeitachse und den Bauwerken erscheinen darf. Bei mehreren 
-                                              möglichen Vorschaubildern für ein Bauwerk wird zufällig eins 
-                                              ausgewählt.""")
+                                              möglichen Vorschaubildern für ein Bauwerk wird zufällig eins """)
 
     def __str__(self):
         return self.name
+
+    def get_picture_for_building(self, wanted_building):
+        """
+        Getting a List of Pictures for the given building
+        :param wanted_building:
+        :return: list of Pictures for given building or empty list
+        """
+        #pylint disable= no-member
+        pictures = self.objects.filter(building=wanted_building)
+        return pictures
 
