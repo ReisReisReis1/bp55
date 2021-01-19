@@ -4,7 +4,6 @@ Configurations of the different viewable functions and subpages from the App: ti
 
 
 from django.shortcuts import render
-from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 from details_page.models import Building, Picture
 from timeline.models import HistoricDate
@@ -20,32 +19,32 @@ def timeline(request):
     :return: rendering the subpage based on timeline.html
     """
     # Inner helper method for items
-    def getYearOfItem(item):
+    def get_year_of_item(i):
         """
         Inner function used the call of helpers for the two different classes
-        :param item: the item to call the helper for
+        :param i: the item to call the helper for
         :return: the year of an Historic Date, or the date_from of an Building, as Signed int,
         as calculated by the called helper.
         """
-        if isinstance(item, Building):
-            if item.date_from_BC_or_AD == "v.Chr.":
-                return -1*int(item.date_from)
+        if isinstance(i, Building):
+            if i.date_from_BC_or_AD == "v.Chr.":
+                return -1*int(i.date_from)
             else:
-                return int(item.date_from)
-        elif isinstance(item, HistoricDate):
-            if item.exacter_date is None:
-                if item.year_BC_or_AD == "v.Chr.":
-                    return -1*int(item.year)
+                return int(i.date_from)
+        elif isinstance(i, HistoricDate):
+            if i.exacter_date is None:
+                if i.year_BC_or_AD == "v.Chr.":
+                    return -1*int(i.year)
                 else:
-                    return int(item.year)
+                    return int(i.year)
             else:
-                if item.year_BC_or_AD == "v.Chr.":
-                    return -1*int(item.exacter_date.year)
+                if i.year_BC_or_AD == "v.Chr.":
+                    return -1*int(i.exacter_date.year)
                 else:
-                    return int(item.exacter_date.year)
+                    return int(i.exacter_date.year)
 
     # get only buildings with dates set
-    buildings = Building.objects.filter(~Q(date_from=None))
+    buildings = Building.objects.exclude(date_from=None)
     thumbnails = {}
     # Search for thumbnails
     for building in buildings:
@@ -62,11 +61,12 @@ def timeline(request):
     # Make lists from QuerySets because otherwise pythons list concatenation and sorting will no work
     items = list(buildings)+list(historic_dates)
     # Sort it with years as key, ascending
-    items = sorted(items, key=lambda item: getYearOfItem(item))
-
-    # save all in context
+    items = sorted(items, key=lambda i: get_year_of_item(i))
+    items_with_dates = []
+    for item in items:
+        items_with_dates = (item, get_date_as_str(item))
     context = {
-        "items": items,
+        "items": items_with_dates,
         "thumbnails": thumbnails,
     }
     return render(request, 'timeline.html', context)
@@ -89,6 +89,3 @@ def get_date_as_str(item):
             return str(item.year) + " " + str(item.year_BC_or_AD)
         else:
             return str(item.exacter_date) + " " + str(item.year_BC_or_AD)
-
-
-
