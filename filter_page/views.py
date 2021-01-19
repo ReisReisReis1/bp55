@@ -12,14 +12,14 @@ def building_filter(criteria):
     :param criteria: the criteria the buildings will be filtered
     :return: a list with the filtered buildings
     """
-    return Building.objects.filter(Q(city=criteria[0]) |
-                                   Q(region=criteria[1]) |
-                                   Q(country=criteria[2]) |
-                                   Q(era=criteria[3]) |
-                                   Q(architect=criteria[4]) |
-                                   Q(builder=criteria[5]) |
-                                   Q(design=criteria[6]) |
-                                   Q(column_order=criteria[7]))
+    return Building.objects.filter(Q(city__icontains=criteria[0]) |
+                                   Q(region__icontains=criteria[1]) |
+                                   Q(country__icontains=criteria[2]) |
+                                   Q(era__name__icontains=criteria[3]) |
+                                   Q(architect__icontains=criteria[4]) |
+                                   Q(builder__icontains=criteria[5]) |
+                                   Q(design__icontains=criteria[6]) |
+                                   Q(column_order__icontains=criteria[7]))
 
 
 def display_building_filter(request):
@@ -30,7 +30,7 @@ def display_building_filter(request):
     context: Variable to filter all buildings with the criteria got from the request
     """
     context = {
-        'Result': building_filter(request.GET.get('criteria'))
+        #'Result': building_filter(request.GET.get('criteria'))
     }
 
     return render(request, 'filter.html', context)
