@@ -1,6 +1,7 @@
 """
 Tests for functions in the App: timeline
 """
+
 from django.test import TestCase, Client
 from django.core.exceptions import ValidationError
 from datetime import date
@@ -8,6 +9,24 @@ from timeline.models import HistoricDate
 from timeline.models import max_year
 from details_page.models import Era, Building, Picture
 from timeline.views import get_date_as_str
+
+
+class ViewsTestCases(TestCase):
+    """
+     Testcases for the functions in view
+    """
+    def setUp(self):
+        """
+        Setting up a client for the tests
+        """
+        self.client = Client()
+
+    def test1(self):
+        """
+        Testing timeline function in views
+        """
+        response = self.client.get('/timeline/')
+        self.assertEqual(response.status_code, 200)
 
 
 class HistoricDatesModelTests(TestCase):

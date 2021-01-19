@@ -66,7 +66,7 @@ class Era(models.Model):
                                                                         message="Diese Jahreszahl ist zu hoch."
                                                                                 + "Bitte etwas zwischen 0 und "
                                                                                 + str(max_year)
-                                                                                + " eintragen.")]
+                                                                                + " eintragen.")])
     year_to_BC_or_AD = models.CharField(max_length=7, help_text="Jahr des Endes: v.Chr. bzw. n.Chr. auswählen.",
                                         choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")], default="v.Chr.",
                                         null=True, blank=True)
@@ -164,7 +164,7 @@ class Building(models.Model):
     def __str__(self):
         return self.name
 
-    def get_name(self):
+    def get_name(self, id):
         """
         :return: name of the building
         """

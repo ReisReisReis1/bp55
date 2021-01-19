@@ -1,29 +1,44 @@
-html, body {
-  height: 100%;
+/*============================================================================
+    CSS File for styling on the home page
+=============================================================================*/
+
+/*----------------------------------------------------------------------------
+    Let the content get on full height of the page
+ */
+html, body, .full_height {
+    height: 100%;
 }
 
-.full_height {
-  height: 100%;
-}
-
+/*----------------------------------------------------------------------------
+    Style of the container with the logo
+ */
 .main_logo_container {
-  margin-bottom: 50px;
+    margin-bottom: 50px;
 }
 
+/*
+    Style of the container with the button
+ */
 .main_button_container a {
-  text-decoration: none !important;
+    text-decoration: none !important;
 }
 
+/*----------------------------------------------------------------------------
+    Style of the 'Anmelden' button
+ */
 .button {
-  display: block;
-  border: none;
-  border-radius: 5px;
-  padding: 20px 28px;
-  font-size: 30px;
-  cursor: pointer;
-  text-align: center;
+    display: block;
+    border: none;
+    border-radius: 5px;
+    padding: 20px 28px;
+    font-size: 30px;
+    cursor: pointer;
+    text-align: center;
 }
 
+/*
+    Style of the 'Anmelden' button on mouse hover
+ */
 .button:hover {
-  color: black;
+    color: black;
 }
