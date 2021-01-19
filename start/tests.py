@@ -8,6 +8,9 @@ from video_content.models import Video
 
 
 class ViewsTestCases(TestCase):
+    """
+
+    """
     def setUp(self):
         """
         Setting up a client for the tests

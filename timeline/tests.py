@@ -12,6 +12,9 @@ from timeline.views import get_date_as_str
 
 
 class ViewsTestCases(TestCase):
+    """
+     Testcases for the functions in view
+    """
     def setUp(self):
         """
         Setting up a client for the tests

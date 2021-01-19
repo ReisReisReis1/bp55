@@ -6,6 +6,9 @@ from django.test import TestCase
 from video_content.models import Video
 
 class VideoTestCases(TestCase):
+    """
+    Testcases for the functions in the model 'Video'
+    """
     def test1_get_intro_era(self):
         """
         Testing get_intro  and get_era function
@@ -82,6 +85,9 @@ class VideoTestCases(TestCase):
 
 
 class ViewsTestCases(TestCase):
+    """
+    Testcases for the functions in view
+    """
     def setUp(self):
 
         """

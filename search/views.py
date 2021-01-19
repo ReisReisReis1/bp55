@@ -20,9 +20,7 @@ def search(request):
                                           Q(city__icontains=search_id) | \
                                           Q(region__icontains=search_id) | \
                                           Q(country__icontains=search_id) | \
-                                          Q(date_from__icontains=search_id) | \
-                                          Q(date_to__icontains=search_id) | \
-                                          Q(era__icontains=search_id) | \
+                                          Q(era__name__icontains=search_id) | \
                                           Q(architect__icontains=search_id) | \
                                           Q(context__iscontains=search_id) | \
                                           Q(builder__iscontains=search_id) | \

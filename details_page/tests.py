@@ -9,6 +9,9 @@ from details_page.models import Era, Picture, Building, Blueprint
 
 
 class ViewsTestCases(TestCase):
+    """
+    Testcases for the functions in view
+    """
     def setUp(self):
         """
         Setting up a client for the tests
