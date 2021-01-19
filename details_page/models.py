@@ -1,5 +1,17 @@
 """
 Configurations for the Database Models for the App 'details_page'
+
+def get_dimension(self, id):
+        :return: Dimension of the building including length, width, height, circumference and area
+        # pylint: disable= no-member
+        building = self.objects.filter(pk=id)
+        length_var=self.length
+        width_var=self.width
+        height_var=self.height
+        circumference_var=self.circumference
+        area_var=self.area
+        dimension= Concat(V('Länge:'), 'length_var', V('Breite:'), 'width_var', V('Höhe:'), 'height_var', V('Durchmesser'), 'circumference_var', V('Fläche:'), 'area_var')
+        return dimension
 """
 
 from django.db import models
@@ -38,7 +50,7 @@ class Era(models.Model):
         ('Späte Kaiserzeit', 'Späte Kaiserzeit'),
         ('Spätantike', 'Spätantike'),
         ('Sonstiges', 'Sonstiges'),
-    ], default='Sonstiges',
+    ], default='Sonstigedes',
                             help_text="Epoche auswählen")
     year_from = models.PositiveIntegerField(help_text="Jahr des Beginns der Epoche eingeben.", blank=True, null=True,
                                             validators=[MaxValueValidator(max_year,
@@ -55,7 +67,6 @@ class Era(models.Model):
                                                                                 + "Bitte etwas zwischen 0 und "
                                                                                 + str(max_year)
                                                                                 + " eintragen.")]
-                                          )
     year_to_BC_or_AD = models.CharField(max_length=7, help_text="Jahr des Endes: v.Chr. bzw. n.Chr. auswählen.",
                                         choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")], default="v.Chr.",
                                         null=True, blank=True)
@@ -94,11 +105,9 @@ class Building(models.Model):
     column_order: column order of the building
     construction: construction of the building
     material: material of the building
+
     literature: further literature about the building
     era: era in which the building was built
-    #videos: videos about the building
-    #pictures: pictures of teh building
-    #building_plan: building plan of the building
     """
 
     name = models.CharField(max_length=100, help_text="Namen des Bauwerks eingeben (max. 100 Zeichen).")
@@ -159,169 +168,234 @@ class Building(models.Model):
         """
         :return: name of the building
         """
-        return self.name
+        # pylint: disable= no-member
+        building = self.objects.get(pk=id)
+        return building.name
 
-    def get_city(self):
+    def get_city(self, id):
         """
         :return: city in which the building is located
         """
-        return self.city
+        # pylint: disable= no-member
+        building = self.objects.get(pk=id)
+        return building.city
 
-    def get_region(self):
+    def get_region(self, id):
         """
         :return: city in which the building is located
         """
-        return self.region
+        # pylint: disable= no-member
+        building = self.objects.get(pk=id)
+        return building.region
 
-    def get_country(self):
+    def get_country(self, id):
         """
         :return: country in which the building is located
         """
-        return self.country
+        # pylint: disable= no-member
+        building = self.objects.get(pk=id)
+        return building.country
 
-    def get_date_from(self):
+    def get_date_from(self, id):
         """
         :return: date on which construction began
         """
-        return self.date_from
+        # pylint: disable= no-member
+        building = self.objects.get(pk=id)
+        return building.date_from
 
-    def get_date_from_BC_or_AD(self):
+    def get_date_from_BC_or_AD(self, id):
         """
         :return: if date_from is BC or AD
         """
-        return self.date_from_BC_or_AD()
+        # pylint: disable= no-member
+        building = self.objects.get(pk=id)
+        return building.date_from_BC_or_AD
 
-    def get_date_to(self):
+    def get_date_to(self, id):
         """
         :return: date on which construction began
         """
-        return self.date_to
+        # pylint: disable= no-member
+        building = self.objects.get(pk=id)
+        return building.date_to
 
-    def get_date_to_BC_or_AD(self):
+    def get_date_to_BC_or_AD(self, id):
         """
         :return: if date_from is BC or AD
         """
-        return self.date_to_BC_or_AD()
+        # pylint: disable= no-member
+        building = self.objects.get(pk=id)
+        return building.date_to_BC_or_AD
 
-    def get_architect(self):
+    def get_architect(self, id):
         """
         :return: architect of the building
         """
-        return self.architect
+        # pylint: disable= no-member
+        building = self.objects.get(pk=id)
+        return building.architect
 
-    def get_context(self):
+    def get_context(self, id):
         """
         :return: context/type of the building
         """
-        return self.context
+        # pylint: disable= no-member
+        building = self.objects.get(pk=id)
+        return building.context
 
-    def get_builder(self):
+    def get_builder(self, id):
         """
         :return: builder of the building
         """
-        return self.builder
+        # pylint: disable= no-member
+        building = self.objects.get(pk=id)
+        return building.builder
 
-    def get_construction_type(self):
+    def get_construction_type(self, id):
         """
         :return: construction type of the building
         """
-        return self.construction
+        # pylint: disable= no-member
+        building = self.objects.get(pk=id)
+        return building.construction_type
 
-    def get_design(self):
+    def get_design(self, id):
         """
         :return: design/shape of the building
         """
-        return self.design
+        # pylint: disable= no-member
+        building = self.objects.get(pk=id)
+        return building.design
 
-    def get_funtion(self):
+    def get_function(self, id):
         """
         :return: function of the building
         """
-        return self.function
+        # pylint: disable= no-member
+        building = self.objects.get(pk=id)
+        return building.function
 
-    def get_dimension(self):
-        """
-        :return: Dimension of the building including length, width, height, circumference and area
-        """
-        length_var=self.length
-        width_var=self.width
-        height_var=self.height
-        circumference_var=self.circumference
-        area_var=self.area
-        dimension= Concat(V('Länge:'), 'length_var', V('Breite:'), 'width_var', V('Höhe:'), 'height_var', V('Durchmesser'), 'circumference_var', V('Fläche:'), 'area_var')
-        return dimension
-
-    def get_length(self):
+    def get_length(self, id):
         """
         :return: length of the building
         """
-        return self.length
+        # pylint: disable= no-member
+        building = self.objects.get(pk=id)
+        return building.length
 
-    def get_width(self):
+    def get_width(self, id):
         """
         :return: width of the building
         """
-        return self.width
+        # pylint: disable= no-member
+        building = self.objects.get(pk=id)
+        return building.width
 
-    def get_height(self):
+    def get_height(self, id):
         """
         :return: height of the building
         """
-        return self.height
+        # pylint: disable= no-member
+        building = self.objects.get(pk=id)
+        return building.height
 
-    def get_circumference(self):
+    def get_circumference(self, id):
         """
         :return: circumference of the building
         """
-        return self.circumference
+        # pylint: disable= no-member
+        building = self.objects.get(pk=id)
+        return building.circumference
 
-    def get_area(self):
+    def get_area(self, id):
         """
         :return: area of the building
         """
-        return self.area
+        # pylint: disable= no-member
+        building = self.objects.get(pk=id)
+        return building.area
 
-    def get_column_order(self):
+    def get_column_order(self, id):
         """
         :return: column order of the building
         """
-        return self.column_order
+        # pylint: disable= no-member
+        building = self.objects.get(pk=id)
+        return building.column_order
 
-    def get_construction(self):
+    def get_construction(self, id):
         """
         :return: construction of the building
         """
-        return self.construction
+        # pylint: disable= no-member
+        building = self.objects.get(pk=id)
+        return building.construction
 
-    def get_material(self):
+    def get_material(self, id):
         """
         :return: material of the building
         """
-        return self.material
+        # pylint: disable= no-member
+        building = self.objects.get(pk=id)
+        return building.material
 
-    def get_literature(self):
+    def get_literature(self, id):
         """
         :return: further literature about the building
         """
-        return self.literature
+        # pylint: disable= no-member
+        building = self.objects.get(pk=id)
+        return building.literature
 
-    def get_videos(self):
-        """
-        :return: videos about the building
-        """
-        return self.videos
 
-    def get_pictures(self):
-        """
-        :return: pictures of the building
-        """
-        return self.pictures
+class Picture(models.Model):
+    name = models.CharField(max_length=100, help_text="Titel des Bildes eingeben (max. 100 Zeichen).")
+    description = models.TextField(max_length=1000, help_text="Beschreibung des Bildes eingeben (max. 1000 Zeichen).")
+    picture = models.FileField(help_text="Auf \"Durchsuchen\" drücken um ein Bild hochzuladen.", upload_to="pics/")
+    building = models.ForeignKey(to=Building, null=True, blank=True, on_delete=models.SET_NULL)
+    usable_as_thumbnail = models.BooleanField(default=False,
+                                              help_text="""Anwählen wenn das Bild als Thumbnail (Vorschaubild) für sein 
+                                              Bauwerk in der Zeitachse und den Bauwerken erscheinen darf. Bei mehreren 
+                                              möglichen Vorschaubildern für ein Bauwerk wird zufällig eins 
+                                              ausgewählt.""")
 
-    def get_building_plan(self):
+    def __str__(self):
+        return self.name
+
+    def get_picture_for_building(self, wanted_building):
         """
-        :return: building plan of the building
+        Getting a List of Pictures for the given building
+        :param wanted_building:
+        :return: list of Pictures for given building or empty list
         """
-        return self.building_plan
+        #pylint disable= no-member
+        pictures = self.objects.filter(building=wanted_building)
+        return pictures
+
+
+class Blueprint(models.Model):
+    name = models.CharField(max_length=100, help_text="Titel des Bauplans eingeben (max. 100 Zeichen).")
+    description = models.TextField(max_length=1000, help_text="Beschreibung des Bauplans eingeben (max. 1000 Zeichen).")
+    blueprint = models.FileField(help_text="Auf \"Durchsuchen\" drücken um einen Bauplan hochzuladen.",
+                                 upload_to="blueprints/")
+    building = models.ForeignKey(to=Building, null=True, blank=True, on_delete=models.SET_NULL)
+
+    def __str__(self):
+        return self.name
+
+    def get_blueprint_for_building(self, wanted_building):
+        """
+        Getting a list of blueprints for the given building
+        :param wanted_building:
+        :return: list of blueprints for given building or empty list
+        """
+        #pylint disable= no-member
+        blueprints = self.objects.filter(building=wanted_building)
+        return blueprints
+
+
+
 
 
 class Picture(models.Model):
