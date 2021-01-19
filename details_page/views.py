@@ -13,8 +13,6 @@ from .models import Blueprint
 from video_content.models import Video
 
 
-
-
 def detailed(request, id):
     """
     Subpage to show the characteristics of a building
