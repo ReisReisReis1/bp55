@@ -1,10 +1,26 @@
 """
 Tests for the functions in the App: details_page
 """
+
 from django.test import Client
 from django.test import TestCase
 from django.core.exceptions import ValidationError
 from details_page.models import Era, Picture, Building, Blueprint
+
+
+class ViewsTestCases(TestCase):
+    def setUp(self):
+        """
+        Setting up a client for the tests
+        """
+        self.client = Client()
+
+    def test1(self):
+        """
+        Testing detailed function in views
+        """
+        response = self.client.get('/details_page/')
+        self.assertEqual(response.status_code, 200)
 
 class BuildingTestCases(TestCase):
     def setUp(self):
