@@ -15,13 +15,8 @@ def get_dimension(self, id):
 """
 
 from django.db import models
-from django.core.validators import MaxValueValidator
 from django.core.exceptions import ValidationError
 from . import country_codes
-
-
-"""Give max year for validation here"""
-max_year = 1400
 
 
 def validate_color_code(code):
@@ -52,21 +47,11 @@ class Era(models.Model):
         ('Sonstiges', 'Sonstiges'),
     ], default='Sonstigedes',
                             help_text="Epoche auswählen")
-    year_from = models.PositiveIntegerField(help_text="Jahr des Beginns der Epoche eingeben.", blank=True, null=True,
-                                            validators=[MaxValueValidator(max_year,
-                                                                          message="Diese Jahreszahl ist zu hoch."
-                                                                                  + "Bitte etwas zwischen 0 und "
-                                                                                  + str(max_year)
-                                                                                  + " eintragen.")])
+    year_from = models.PositiveIntegerField(help_text="Jahr des Beginns der Epoche eingeben.", blank=True, null=True)
     year_from_BC_or_AD = models.CharField(max_length=7, help_text="Jahr des Beginns: v.Chr. bzw. n.Chr. auswählen.",
                                           choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")], default="v.Chr.",
                                           null=True, blank=True)
-    year_to = models.PositiveIntegerField(help_text="Jahr des Endes der Epoche eingeben.", blank=True, null=True,
-                                          validators=[MaxValueValidator(max_year,
-                                                                        message="Diese Jahreszahl ist zu hoch."
-                                                                                + "Bitte etwas zwischen 0 und "
-                                                                                + str(max_year)
-                                                                                + " eintragen.")])
+    year_to = models.PositiveIntegerField(help_text="Jahr des Endes der Epoche eingeben.", blank=True, null=True)
     year_to_BC_or_AD = models.CharField(max_length=7, help_text="Jahr des Endes: v.Chr. bzw. n.Chr. auswählen.",
                                         choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")], default="v.Chr.",
                                         null=True, blank=True)
