@@ -1,3 +1,6 @@
+"""
+All country codes and names as a tuple list. Outsourced, to make the code in models.py more readable.
+"""
 contry_codes_as_tuple_list = [("Afghanistan", "AF - Afghanistan"),
                               ("Åland", "AX - Åland"),
                               ("Albanien", "AL - Albanien"),
