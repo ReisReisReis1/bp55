@@ -56,7 +56,7 @@ class Video(models.Model):
         """
         # pylint: disable= no-member
         # imported and added models.Q, to realise and OR lookup (so either on is the searched era)
-        videos = self.objects.filter(Q(era=wanted_era) | Q(era2=wanted_era))
+        videos = self.objects.filter(Q(era__name=wanted_era) | Q(era2__name=wanted_era))
         return videos
 
     # pylint: disable = too-few-public-methods
@@ -71,10 +71,12 @@ class Timestamps(models.Model):
                                  help_text='Zugehöriges Gebäude')
     video = models.ForeignKey(to=Video, on_delete=models.CASCADE, null=False,
                               help_text='Zugehöriges Video')
+    """
     time = models.FloatField(validators=[MinValueValidator(0.0),
                                          MaxValueValidator(Video.objects.get(video).length)],
                              help_text='Geben Sie hier eine Stelle ein, '
                                        'an dem das gewählte Gebäude erscheint')
+   """
 
     def get_timestamps_by_video(self, vid):
         return self.objects.filter(video=vid)

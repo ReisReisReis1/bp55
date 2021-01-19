@@ -2,7 +2,6 @@
 Configurations of the Website subpages from the App: video-content
 """
 
-
 from django.shortcuts import render
 # pylint: disable = import-error,relative-beyond-top-level
 from .models import Video
@@ -31,7 +30,11 @@ def display(request):
                 Video.get_era(Video, 'Hellenismus'),
                 Video.get_era(Video, 'Römische Kaiserzeit'),
                 Video.get_era(Video, 'Spätantike')),
-      """
+    }
+
+    return render(request, 'videos.html', context)
+
+    """
     def getYearOfItemAsSignedInt(era):
     
     
@@ -54,5 +57,4 @@ def display(request):
     context = {}
     for e in eras:
         context[e.name] = Video.get_era(Video, e.pk)
-      """
-    return render(request, 'videos.html', context)
+    """

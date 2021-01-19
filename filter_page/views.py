@@ -30,7 +30,7 @@ def display_building_filter(request):
     context: Variable to filter all buildings with the criteria got from the request
     """
     context = {
-        'Result': building_filter(request.GET.get('criteria'))
+        #'Result': building_filter(request.GET.get('criteria'))
     }
 
     return render(request, 'filter.html', context)
