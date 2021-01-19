@@ -19,10 +19,6 @@ from django.core.exceptions import ValidationError
 from . import country_codes
 
 
-"""Give max year for validation here"""
-max_year = 1400
-
-
 def validate_color_code(code):
     """
     Validator for color Code in Era.
