@@ -1,53 +1,78 @@
+/*============================================================================
+    CSS File for styling on the timeline page
+=============================================================================*/
+
+/*----------------------------------------------------------------------------
+    One row in the timeline
+ */
 .row-timeline {
-  width: 100%;
+    width: 100%;
 }
 
+/*----------------------------------------------------------------------------
+    Style of the title box
+ */
 .card-title {
-  border-bottom: solid;
-  border-width: 2px;
+    border-bottom: solid;
+    border-width: 2px;
 }
 
+/*
+    Style of a card on the left side of the timeline
+ */
 .card-left {
-  margin-right: 40%;
+    margin-right: 40%;
 }
 
+/*
+    Style of the link between left side card and timeline center
+ */
 .card-left::before {
-  content: " ";
-  height: 0;
-  position: absolute;
-  top: 35px;
-  width: 0;
-  z-index: 1;
-  right: -75px;
-  border: solid;
-  border-width: 4px 75px 4px 0;
+    content: " ";
+    height: 0;
+    position: absolute;
+    top: 35px;
+    width: 0;
+    z-index: 1;
+    right: -75px;
+    border: solid;
+    border-width: 4px 75px 4px 0;
 }
 
+/*
+    Style of a card on the right side of the timeline
+ */
 .card-right {
-  margin-left: 40%;
+    margin-left: 40%;
 }
 
+/*
+    Style of the link between right side card and timeline center
+ */
 .card-right::before {
-  content: " ";
-  height: 0;
-  position: absolute;
-  top: 35px;
-  width: 0;
-  z-index: 1;
-  left: -75px;
-  border: solid;
-  border-width: 4px 0 4px 75px;
+    content: " ";
+    height: 0;
+    position: absolute;
+    top: 35px;
+    width: 0;
+    z-index: 1;
+    left: -75px;
+    border: solid;
+    border-width: 4px 0 4px 75px;
 }
 
+/*
+    Style of the center bar of the timeline
+ */
 .row-timeline::after {
-  content: '';
-  position: absolute;
-  width: 50px;
-  top: -100px;
-  bottom: 0;
-  left: 46.8%;
-  margin-left: -3px;
-  z-index: -1;
+    content: '';
+    position: absolute;
+    width: 50px;
+    top: -100px;
+    bottom: 0;
+    left: 46.8%;
+    margin-left: -3px;
+    z-index: -1;
 }
 
 

@@ -1,26 +1,44 @@
+/*============================================================================
+    General CSS file for styling on every page
+=============================================================================*/
+
 body {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
 }
 
+/*----------------------------------------------------------------------------
+    Add to Bootstrap .container to get the default spacing
+ */
 .container-page {
     margin-bottom: 100px;
 }
 
-
+/*----------------------------------------------------------------------------
+    Add to Bootstrap .row to remove the margin
+ */
 .row-no-margin {
     margin-left: 0 !important;
     margin-right: 0 !important;
 }
 
+/*
+    Add to Bootstrap .row to add a small spacing on bottom
+ */
 .row-distance-sm {
     margin-bottom: 30px;
 }
 
+/*
+    Add to Bootstrap .row to add a normal spacing on bottom
+ */
 .row-distance {
     margin-bottom: 70px;
 }
 
+/*
+    Add to Bootstrap .row to add a large spacing on bottom
+ */
 .row-distance-lg {
     margin-bottom: 100px;
 }
