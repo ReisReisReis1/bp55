@@ -1,0 +1,12 @@
+[run]
+branch = True
+source = .
+omit =
+    */__init__.py
+    */bp55_ruins_and_beyond/*
+    manage.py
+    .github/*
+    assets/*
+    */migrations/*
+    */tests.py
+    */apps.py

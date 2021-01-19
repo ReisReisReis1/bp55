@@ -4,6 +4,7 @@ Configurations of the different viewable functions and subpages from the App: ti
 
 
 from django.shortcuts import render
+from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 from details_page.models import Building, Picture
 from timeline.models import HistoricDate
@@ -32,12 +33,19 @@ def timeline(request):
             else:
                 return int(item.date_from)
         elif isinstance(item, HistoricDate):
-            if item.year_BC_or_AD == "v.Chr.":
-                return -1*int(item.year)
+            if item.exacter_date is None:
+                if item.year_BC_or_AD == "v.Chr.":
+                    return -1*int(item.year)
+                else:
+                    return int(item.year)
             else:
-                return int(item.year)
+                if item.year_BC_or_AD == "v.Chr.":
+                    return -1*int(item.exacter_date.year)
+                else:
+                    return int(item.exacter_date.year)
 
-    buildings = Building.objects.all()
+    # get only buildings with dates set
+    buildings = Building.objects.filter(~Q(date_from=None))
     thumbnails = {}
     # Search for thumbnails
     for building in buildings:
@@ -62,6 +70,25 @@ def timeline(request):
         "thumbnails": thumbnails,
     }
     return render(request, 'timeline.html', context)
+
+
+def get_date_as_str(item):
+    """
+    Method to get the Date as String (for the frontend)
+    This will also mange getting the exacter Date or just the number of the year
+    for historic dates.
+    :param item: the item to get the date for
+    :return: an String with the date
+                (buildings: year number for beginning of the construction,
+                historic dates: exact date (if present), otherwise year number. Each along with BC/AD).
+    """
+    if isinstance(item, Building):
+        return str(item.date_from)+" "+str(item.date_from_BC_or_AD)
+    elif isinstance(item, HistoricDate):
+        if item.exacter_date is None:
+            return str(item.year) + " " + str(item.year_BC_or_AD)
+        else:
+            return str(item.exacter_date) + " " + str(item.year_BC_or_AD)
 
 
 
