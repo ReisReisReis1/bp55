@@ -351,9 +351,12 @@ class Building(models.Model):
 
 class Blueprint(models.Model):
     name = models.CharField(max_length=100, help_text="Titel des Bauplans eingeben (max. 100 Zeichen).")
-    description = models.TextField(max_length=1000, help_text="Beschreibung des Bauplans eingeben (max. 1000 Zeichen).")
-    blueprint = models.FileField(help_text="Auf \"Durchsuchen\" drücken um einen Bauplan hochzuladen.",
-                                 upload_to="blueprints/")
+    description = models.TextField(max_length=1000, help_text="Beschreibung des Bildes eingeben (max. 1000 Zeichen).",
+                                   null=True, blank=True)
+    blueprint = models.ImageField(help_text="Auf \"Durchsuchen\" drücken um einen Bauplan hochzuladen.", upload_to="blueprint/",
+                                width_field="width", height_field="height")
+    width = models.IntegerField(editable=False, default=0)
+    height = models.IntegerField(editable=False, default=0)
     building = models.ForeignKey(to=Building, null=True, blank=True, on_delete=models.SET_NULL)
 
     def __str__(self):
@@ -375,7 +378,6 @@ class Picture(models.Model):
     description = models.TextField(max_length=1000, help_text="Beschreibung des Bildes eingeben (max. 1000 Zeichen).",
                                    null=True, blank=True)
     picture = models.ImageField(help_text="Auf \"Durchsuchen\" drücken um ein Bild hochzuladen.", upload_to="pics/",
-                               # )
                                 width_field="width", height_field="height")
     width = models.IntegerField(editable=False, default=0)
     height = models.IntegerField(editable=False, default=0)
