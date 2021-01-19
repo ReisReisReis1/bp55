@@ -7,6 +7,9 @@ from django.test import TestCase
 
 
 class ViewsTestCases(TestCase):
+    """
+     Testcases for the functions in view
+    """
     def setUp(self):
         """
         Setting up a client for the tests

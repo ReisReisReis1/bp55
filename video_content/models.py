@@ -30,7 +30,6 @@ class Video(models.Model):
     length = models.FloatField(validators=[MinValueValidator(0.0)],  help_text='Länge des Videos')
     # TODO: Adding timestamps
 
-
     def __str__(self):
         return str(self.title)
 
