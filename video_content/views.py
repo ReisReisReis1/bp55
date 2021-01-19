@@ -30,6 +30,8 @@ def display(request):
                 Video.get_era(Video, 'Hellenismus'),
                 Video.get_era(Video, 'Römische Kaiserzeit'),
                 Video.get_era(Video, 'Spätantike')),
+
+        'Test': {"1": [1,2,3,4], "2": [5,6,7,8]}
     }
 
     return render(request, 'videos.html', context)

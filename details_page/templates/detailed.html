@@ -24,7 +24,12 @@
                                 Ort/Region
                             </td>
                             <td>
-                                Pergamon
+                                {% if Ort != None %}
+                                    {{ Ort }}
+                                {% endif %}
+                                {% if Region != None %}
+                                    / {{ Region }}
+                                {% endif %}
                             </td>
                         </tr>
                         <tr>
@@ -32,7 +37,9 @@
                                 Land
                             </td>
                             <td>
-                                TR
+                                {% if Land != None %}
+                                    {{ Land }}
+                                {% endif %}
                             </td>
                         </tr>
                         <tr>
@@ -40,7 +47,12 @@
                                 Datierung
                             </td>
                             <td>
-                                300-275 v.Chr.
+                                {% if Datum_von != None %}
+                                    {{ Datum_von }} {{ Datum_von_BC_oder_AD }}
+                                {% endif %}
+                                {% if Datum_bis != None %}
+                                    - {{ Datum_bis }} {{ Datum_bis_BC_oder_AD }}
+                                {% endif %}
                             </td>
                         </tr>
                         <tr>
@@ -48,7 +60,9 @@
                                 Architekt
                             </td>
                             <td>
-                                Philetairos von Pergamon
+                                {% if Architekt != None %}
+                                    {{ Architekt }}
+                                {% endif %}
                             </td>
                         </tr>
                         <tr>
@@ -61,10 +75,12 @@
                         </tr>
                         <tr>
                             <td>
-                                Kontext/Lage
+                                Kontext
                             </td>
                             <td>
-                                Heiligtum
+                                {% if Kontext_Lage != None %}
+                                    {{ Kontext_Lage }}
+                                {% endif %}
                             </td>
                         </tr>
                         <tr>
@@ -72,7 +88,9 @@
                                 Bauherr
                             </td>
                             <td>
-
+                                {% if Bauherr != None %}
+                                    {{ Bauherr }}
+                                {% endif %}
                             </td>
                         </tr>
                         <tr>
@@ -88,7 +106,9 @@
                                 Bautypus
                             </td>
                             <td>
-                                Sakralbau
+                                {% if Bautypus != None %}
+                                    {{ Bautypus }}
+                                {% endif %}
                             </td>
                         </tr>
                         <tr>
@@ -96,7 +116,9 @@
                                 Bauform
                             </td>
                             <td>
-                                Tempel
+                                {% if Bauform != None %}
+                                    {{ Bauform }}
+                                {% endif %}
                             </td>
                         </tr>
                         <tr>
@@ -104,7 +126,9 @@
                                 Gattung/Funktion
                             </td>
                             <td>
-                                Peripteros
+                                {% if Gattung_Funktion != None %}
+                                    {{ Gattung_Funktion }}
+                                {% endif %}
                             </td>
                         </tr>
                         <tr>
@@ -120,7 +144,15 @@
                                 Dimension
                             </td>
                             <td>
-                                12,27 x 21,77 m
+                                {% if Länge != None %}
+                                    {{ Länge }}m
+                                {% endif %}
+                                {% if Breite != None %}
+                                     x {{ Breite }}m
+                                {% endif %}
+                                {% if Höhe != None %}
+                                     x {{ Höhe }}m
+                                {% endif %}
                             </td>
                         </tr>
                         <tr>
@@ -128,7 +160,9 @@
                                 Säulenordnung
                             </td>
                             <td>
-                                Dorische Säulenordnung
+                                {% if Säulenordung != None %}
+                                    {{ Säulenordung }}
+                                {% endif %}
                             </td>
                         </tr>
                         <tr>
@@ -136,7 +170,9 @@
                                 Konstruktion
                             </td>
                             <td>
-                                Massivbau
+                                {% if Konstruktion != None %}
+                                    {{ Konstruktion }}
+                                {% endif %}
                             </td>
                         </tr>
                         <tr>
@@ -144,7 +180,9 @@
                                 Material
                             </td>
                             <td>
-                                Marmor
+                                {% if Material != None %}
+                                    {{ Material }}
+                                {% endif %}
                             </td>
                         </tr>
                         <tr>
@@ -160,7 +198,9 @@
                                 Literatur
                             </td>
                             <td>
-                                Gruben 2001, 464-467; Radt 2016, 159-168
+                                {% if Litertur != None %}
+                                    {{ Litertur }}
+                                {% endif %}
                             </td>
                         </tr>
                     </tbody>
@@ -201,7 +241,7 @@
                         </tr>
                         <tr>
                             <td>
-                                Athenatempel
+                                {{ Name }}
                             </td>
                         </tr>
                     </tbody>
