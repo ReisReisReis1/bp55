@@ -1,10 +1,9 @@
-"""
+""""
 Test for the App: video-content
 """
 from django.test import Client
 from django.test import TestCase
 from video_content.models import Video
-
 
 class VideoTestCases(TestCase):
     def test1_get_intro_era(self):
@@ -32,6 +31,7 @@ class VideoTestCases(TestCase):
         self.assertEqual(Video.get_intro(Video), intro)
 
     def test3_get_intro(self):
+
         """
         Testing get_intro function
         Testcase where there are more then one intro-videos
@@ -41,6 +41,7 @@ class VideoTestCases(TestCase):
         self.assertEqual(Video.get_intro(Video), intro[0])
 
     def test4_get_era(self):
+    
         """
         Testing get_era function
         One Video for every era, checking if they will be given back by the function
@@ -67,6 +68,7 @@ class VideoTestCases(TestCase):
         self.assertEqual(list(Video.get_era(Video, 'Spätantike')), list(spaet))
 
     def test5__str__(self):
+
         """
         Tests the __str__ function
         """
@@ -81,6 +83,7 @@ class VideoTestCases(TestCase):
 
 class ViewsTestCases(TestCase):
     def setUp(self):
+
         """
         Setting up objects and a client for the tests
         """
@@ -94,6 +97,7 @@ class ViewsTestCases(TestCase):
         Video.objects.create(title='Test7', video='/media/videos/Test7.mp4', era='Klassik')
 
     def test1(self):
+
         """
         Testing display function in view
         """

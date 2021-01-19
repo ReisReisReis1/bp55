@@ -5,6 +5,8 @@ Configurations for the Database-Models in video-contents
 from django.db import models
 from details_page.models import Building
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.db.models import Q
+from details_page.models import Era
 
 
 class Video(models.Model):
@@ -15,21 +17,16 @@ class Video(models.Model):
     era: The Era that the video is about
     intro: Checkbox, if it's the entry video or not
     """
-
     title = models.CharField(max_length=100, help_text='Titel des Videos')
     video = models.FileField(upload_to='videos/', help_text='Videodatei in .mp4')
-    era = models.CharField(max_length=100,
-                           choices=[
-                               ('Frühzeit', 'Frühzeit'), ('Archaik', 'Archaik'),
-                               ('Klassik', 'Klassik'), ('Hellenismus', 'Hellenismus'),
-                               ('Römische Kaiserzeit', 'Römische Kaiserzeit'),
-                               ('Spätantike', 'Spätantike'),
-                               ('Sonstiges', 'Sonstiges'),
-                           ], default='Sonstiges')
+    era = models.ForeignKey(to=Era, on_delete=models.SET_NULL, null=True, help_text="Epoche des Videos auswählen.",
+                            related_name="+")
+    era2 = models.ForeignKey(to=Era, on_delete=models.SET_NULL, blank=True, null=True,
+                             help_text="""Falls das Video in zwei Epochen fällt, kann hier eine zweite
+                             hinzugefügt werden. Diese Feld kann auch leer bleiben.""", related_name="+")
     intro = models.BooleanField(default=False, help_text='Ist dieses Video das Intro-Video?')
     length = models.FloatField(validators=[MinValueValidator(0.0)],  help_text='Länge des Videos')
     # TODO: Adding timestamps
-
 
     def __str__(self):
         return str(self.title)
@@ -54,11 +51,12 @@ class Video(models.Model):
     def get_era(self, wanted_era):
         """
         Getting a List of Videos with the given era
-        :param wanted_era: String,
+        :param wanted_era: Era id (pk),
         :return: List of videos with given era or empty list
         """
         # pylint: disable= no-member
-        videos = self.objects.filter(era=wanted_era)
+        # imported and added models.Q, to realise and OR lookup (so either on is the searched era)
+        videos = self.objects.filter(Q(era=wanted_era) | Q(era2=wanted_era))
         return videos
 
     # pylint: disable = too-few-public-methods
