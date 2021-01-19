@@ -2,7 +2,6 @@
 Configurations of the Website subpages from the App: video-content
 """
 
-
 from django.shortcuts import render
 # pylint: disable = import-error,relative-beyond-top-level
 from .models import Video
@@ -17,12 +16,33 @@ def display(request):
     with a context variable to get Videos sorted in eras
     """
 
+    context = {
+        'Frühzeit': Video.get_era(Video, 'Frühzeit'),
+        'Archaik': Video.get_era(Video, 'Archaik'),
+        'Klassik': Video.get_era(Video, 'Klassik'),
+        'Hellenismus': Video.get_era(Video, 'Hellenismus'),
+        'RömischeKaiserzeit': Video.get_era(Video, 'Römische Kaiserzeit'),
+        'Spätantike': Video.get_era(Video, 'Spätantike'),
+
+        'Era': (Video.get_era(Video, 'Frühzeit'),
+                Video.get_era(Video, 'Archaik'),
+                Video.get_era(Video, 'Klassik'),
+                Video.get_era(Video, 'Hellenismus'),
+                Video.get_era(Video, 'Römische Kaiserzeit'),
+                Video.get_era(Video, 'Spätantike')),
+    }
+
+    return render(request, 'videos.html', context)
+
+    """
     def getYearOfItemAsSignedInt(era):
-        """
+    
+    
         Inner helper to sorting the years.
         :param era: the era to get the year from
         :return: the year of the era (beginning year)
-        """
+      
+      
         try:
             if era.year_from_BC_or_AD == "v.Chr.":
                 return -1 * int(era.year_from)
@@ -37,5 +57,4 @@ def display(request):
     context = {}
     for e in eras:
         context[e.name] = Video.get_era(Video, e.pk)
-    print(context)
-    return render(request, 'videos.html', context)
+    """
