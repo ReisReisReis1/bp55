@@ -3,7 +3,6 @@ Configurations for the Database Models for the App 'timeline'
 """
 from django.db import models
 from details_page.models import Era
-from datetime import date
 
 
 class HistoricDate(models.Model):
