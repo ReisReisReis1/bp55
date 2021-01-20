@@ -83,5 +83,17 @@
 
         </div>
 
+    <div>
+        {{ items }}<br>
+        {% for is_building,building,time,image in items %}
+            {% if is_building %}
+                {{ building.id }} {{ building.name }} - {{ time }} {{ image.picture }}<br>
+            {% else %}
+                {{ building.title }} - {{ time }}<br>
+            {% endif %}
+        {% endfor %}
+        <br>
+    </div>
+
 </body>
 </html>

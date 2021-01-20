@@ -50,14 +50,14 @@
 
     <div class="container container-page">
         <!-- Iterate through all eras -->
-        {% for era in Era %}
+        {% for era,videos in Era.items %}
             <div class="row video-section" id="color-border-primary">
                 <div class="video-section-title">
                     <!-- Cycle through all eras as title -->
-                    <h1>{% cycle "Frühzeit" "Archaik" "Klassik" "Helenismus" "Römische Kaiserzeit" "Spätantike"%}</h1>
+                    <h1>{{ era }}</h1>
                 </div>
                     <!-- Iterate through all videos of every era -->
-                    {% for video in era %}
+                    {% for video in videos %}
                         <!-- Add a new video row every four videos -->
                         {% if forloop.counter0|divisibleby:4 or forloop.first %}
                             {% if forloop.counter <= 4 %}
@@ -69,7 +69,7 @@
                             {% endif %}
                         {% endif %}
                             <!-- Distinguish between first, middle and last video of the current row -->
-                            <div class="{% cycle 'video-box-first' 'video-box' 'video-box' 'video-box-last' %}">
+                            <div class="video-box">
                                 <!-- Add video -->
                                 <video class="video" width="100%" data-toggle="modal" data-target="#popup-{{ forloop.parentloop.counter }}-{{ forloop.counter }}">
                                     <source src="{{ video.video.url }}" type="video/mp4">
@@ -101,13 +101,23 @@
                             </div>
                         {% endif %}
                     {% endfor %}
-                    {% resetcycle %}
                 <!-- Add button to toggle hide the hidden videos -->
                 <div style="width: 100%">
                     <button class="button more-videos-button" id="color-btn-video-{{ forloop.counter }}" onclick="toggleHide({{ forloop.counter }}),changeIcon({{ forloop.counter }})">∨</button>
                 </div>
             </div>
         {% endfor %}
+    </div>
+
+    <div>
+        {% for foo, foo1 in Test.items %}
+            {{ foo }}<br>
+            {% for fooNew in foo1 %}
+                {{ fooNew }}
+            {% endfor %}<br>
+
+        {% endfor %}
+
     </div>
 </body>
 </html>

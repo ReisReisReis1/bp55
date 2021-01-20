@@ -9,12 +9,23 @@
     <link rel="stylesheet" type="text/css" href="{% static 'filter.css' %}">
     {% bootstrap_css %}
     {% bootstrap_javascript jquery='slim' %}
+
+    <script>
+        function addParameterToURL(param){
+            curr_url = location.href;
+            curr_url += (curr_url.split('?')[1] ? '&':'?') + param;
+            location.href = curr_url;
+        }
+    </script>
 </head>
 
 <body>
 
     {% include './header.html' %}
 
+    <a class="btn" onclick="addParameterToURL('city=Berlin')">
+        Test
+    </a>
 
     <div class="container container-page">
         <div class="row">

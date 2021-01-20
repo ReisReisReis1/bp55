@@ -15,13 +15,8 @@ def get_dimension(self, id):
 """
 
 from django.db import models
-from django.core.validators import MaxValueValidator
 from django.core.exceptions import ValidationError
 from . import country_codes
-
-
-"""Give max year for validation here"""
-max_year = 1400
 
 
 def validate_color_code(code):
@@ -52,21 +47,11 @@ class Era(models.Model):
         ('Sonstiges', 'Sonstiges'),
     ], default='Sonstigedes',
                             help_text="Epoche auswählen")
-    year_from = models.PositiveIntegerField(help_text="Jahr des Beginns der Epoche eingeben.", blank=True, null=True,
-                                            validators=[MaxValueValidator(max_year,
-                                                                          message="Diese Jahreszahl ist zu hoch."
-                                                                                  + "Bitte etwas zwischen 0 und "
-                                                                                  + str(max_year)
-                                                                                  + " eintragen.")])
+    year_from = models.PositiveIntegerField(help_text="Jahr des Beginns der Epoche eingeben.", blank=True, null=True)
     year_from_BC_or_AD = models.CharField(max_length=7, help_text="Jahr des Beginns: v.Chr. bzw. n.Chr. auswählen.",
                                           choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")], default="v.Chr.",
                                           null=True, blank=True)
-    year_to = models.PositiveIntegerField(help_text="Jahr des Endes der Epoche eingeben.", blank=True, null=True,
-                                          validators=[MaxValueValidator(max_year,
-                                                                        message="Diese Jahreszahl ist zu hoch."
-                                                                                + "Bitte etwas zwischen 0 und "
-                                                                                + str(max_year)
-                                                                                + " eintragen.")])
+    year_to = models.PositiveIntegerField(help_text="Jahr des Endes der Epoche eingeben.", blank=True, null=True)
     year_to_BC_or_AD = models.CharField(max_length=7, help_text="Jahr des Endes: v.Chr. bzw. n.Chr. auswählen.",
                                         choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")], default="v.Chr.",
                                         null=True, blank=True)
@@ -349,36 +334,14 @@ class Building(models.Model):
         return building.literature
 
 
-class Picture(models.Model):
-    name = models.CharField(max_length=100, help_text="Titel des Bildes eingeben (max. 100 Zeichen).")
-    description = models.TextField(max_length=1000, help_text="Beschreibung des Bildes eingeben (max. 1000 Zeichen).")
-    picture = models.FileField(help_text="Auf \"Durchsuchen\" drücken um ein Bild hochzuladen.", upload_to="pics/")
-    building = models.ForeignKey(to=Building, null=True, blank=True, on_delete=models.SET_NULL)
-    usable_as_thumbnail = models.BooleanField(default=False,
-                                              help_text="""Anwählen wenn das Bild als Thumbnail (Vorschaubild) für sein 
-                                              Bauwerk in der Zeitachse und den Bauwerken erscheinen darf. Bei mehreren 
-                                              möglichen Vorschaubildern für ein Bauwerk wird zufällig eins 
-                                              ausgewählt.""")
-
-    def __str__(self):
-        return self.name
-
-    def get_picture_for_building(self, wanted_building):
-        """
-        Getting a List of Pictures for the given building
-        :param wanted_building:
-        :return: list of Pictures for given building or empty list
-        """
-        #pylint disable= no-member
-        pictures = self.objects.filter(building=wanted_building)
-        return pictures
-
-
 class Blueprint(models.Model):
     name = models.CharField(max_length=100, help_text="Titel des Bauplans eingeben (max. 100 Zeichen).")
-    description = models.TextField(max_length=1000, help_text="Beschreibung des Bauplans eingeben (max. 1000 Zeichen).")
-    blueprint = models.FileField(help_text="Auf \"Durchsuchen\" drücken um einen Bauplan hochzuladen.",
-                                 upload_to="blueprints/")
+    description = models.TextField(max_length=1000, help_text="Beschreibung des Bildes eingeben (max. 1000 Zeichen).",
+                                   null=True, blank=True)
+    blueprint = models.ImageField(help_text="Auf \"Durchsuchen\" drücken um einen Bauplan hochzuladen.", upload_to="blueprint/",
+                                width_field="width", height_field="height")
+    width = models.IntegerField(editable=False, default=0)
+    height = models.IntegerField(editable=False, default=0)
     building = models.ForeignKey(to=Building, null=True, blank=True, on_delete=models.SET_NULL)
 
     def __str__(self):
@@ -395,9 +358,6 @@ class Blueprint(models.Model):
         return blueprints
 
 
-
-
-
 class Picture(models.Model):
     name = models.CharField(max_length=100, help_text="Titel des Bildes eingeben (max. 100 Zeichen).")
     description = models.TextField(max_length=1000, help_text="Beschreibung des Bildes eingeben (max. 1000 Zeichen).",
@@ -410,9 +370,18 @@ class Picture(models.Model):
     usable_as_thumbnail = models.BooleanField(default=False,
                                               help_text="""Anwählen wenn das Bild als Thumbnail (Vorschaubild) für sein 
                                               Bauwerk in der Zeitachse und den Bauwerken erscheinen darf. Bei mehreren 
-                                              möglichen Vorschaubildern für ein Bauwerk wird zufällig eins 
-                                              ausgewählt.""")
+                                              möglichen Vorschaubildern für ein Bauwerk wird zufällig eins """)
 
     def __str__(self):
         return self.name
+
+    def get_picture_for_building(self, wanted_building):
+        """
+        Getting a List of Pictures for the given building
+        :param wanted_building:
+        :return: list of Pictures for given building or empty list
+        """
+        #pylint disable= no-member
+        pictures = self.objects.filter(building=wanted_building)
+        return pictures
 

@@ -25,7 +25,7 @@ class Video(models.Model):
                              help_text="""Falls das Video in zwei Epochen fällt, kann hier eine zweite
                              hinzugefügt werden. Diese Feld kann auch leer bleiben.""", related_name="+")
     intro = models.BooleanField(default=False, help_text='Ist dieses Video das Intro-Video?')
-    length = models.FloatField(validators=[MinValueValidator(0.0)],  help_text='Länge des Videos')
+    length = models.FloatField(validators=[MinValueValidator(0.0)],  help_text='Länge des Videos', default=0.0)
     # TODO: Adding timestamps
 
     def __str__(self):
