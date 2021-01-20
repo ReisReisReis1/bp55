@@ -2,26 +2,7 @@
 Configurations for the Database Models for the App 'timeline'
 """
 from django.db import models
-from django.core.exceptions import ValidationError
-from django.core.validators import MaxValueValidator
 from details_page.models import Era
-from datetime import date
-
-
-"""Give the maximal year accepted for historic date objects here"""
-max_year = 1400
-
-
-def validate_exact_year(value):
-    """
-    Vaildator for the exact year.
-    :param value:
-    :return:
-    """
-    if value > date(max_year, 12, 31):
-        raise ValidationError(
-            message="Das eingegebene Datum ist zu hoch. Bitte etwas zwischen dem 01.01.0000 und dem 31.12."
-                    + str(max_year) + " eingeben.")
 
 
 class HistoricDate(models.Model):
@@ -33,11 +14,7 @@ class HistoricDate(models.Model):
     """
     year = models.PositiveIntegerField(default=0000, help_text="""Hier das Jahr des Ereignisses einfügen.
                                         Falls es ein genaueres Datum gibt, wird diese angezeigt. Damit es sich ist, 
-                                        dass ein Datum gegeben ist, muss dieses Feld hier aber ausgefüllt werden . """,
-                                       validators=[MaxValueValidator(max_year,
-                                                                     message="Diese Jahreszahl ist zu hoch. "
-                                                                             + "Bitte etwas zwischen 0 und "
-                                                                             + str(max_year) + " eingeben.")])
+                                        dass ein Datum gegeben ist, muss dieses Feld hier aber ausgefüllt werden . """)
     exacter_date = models.DateField(null=True, blank=True,
                                     help_text="""Falls das Ereignis ein genaueres Datum hat, hier eingeben.
                                          Diese Feld unterstützt zusätzlich zur Jahreszahl (wie obendrüber), 
@@ -45,8 +22,7 @@ class HistoricDate(models.Model):
                                          Falls diese und die Jahreszahl gesetzt sind, wird dieses genauere Datum das 
                                          sein, dass angezeigt wird. ACHTUNG: Jahreszahlen bitte vierstellig eingeben: 
                                          Das Jahr '17' wird sonst automatisch zu '2017' erweitert, 
-                                         möchte man das Jahr 17 haben, muss man '0017' eingeben.""",
-                                    validators=[validate_exact_year])
+                                         möchte man das Jahr 17 haben, muss man '0017' eingeben.""")
     year_BC_or_AD = models.CharField(max_length=7, help_text="Jahr des Ereignisses: v.Chr. bzw. n.Chr. auswählen.",
                                      choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")], default="v.Chr.")
     title = models.CharField(max_length=100,

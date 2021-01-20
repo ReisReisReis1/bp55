@@ -64,7 +64,7 @@ def timeline(request):
     items = sorted(items, key=lambda i: get_year_of_item(i))
     items_with_dates = []
     for item in items:
-        items_with_dates = (item, get_date_as_str(item))
+        items_with_dates.append((item, get_date_as_str(item)))
     context = {
         "items": items_with_dates,
         "thumbnails": thumbnails,
