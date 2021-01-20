@@ -64,10 +64,12 @@ def timeline(request):
     items = sorted(items, key=lambda i: get_year_of_item(i))
     items_with_dates = []
     for item in items:
-        items_with_dates.append((item, get_date_as_str(item)))
+        if isinstance(item, Building):
+            items_with_dates.append((True, item, get_date_as_str(item), thumbnails[item.pk]))
+        else:
+            items_with_dates.append((False, item, get_date_as_str(item), None))
     context = {
         "items": items_with_dates,
-        "thumbnails": thumbnails,
     }
     return render(request, 'timeline.html', context)
 
