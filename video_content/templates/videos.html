@@ -54,7 +54,7 @@
             <div class="row video-section" id="color-border-primary">
                 <div class="video-section-title">
                     <!-- Cycle through all eras as title -->
-                    <h1>{{ era }}</h1>
+                    <h1 style="border-bottom-style: solid; border-bottom-color: #{{ era.color_code }}">{{ era.name }}</h1>
                 </div>
                     <!-- Iterate through all videos of every era -->
                     {% for video in videos %}
