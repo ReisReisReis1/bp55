@@ -39,8 +39,8 @@
         </div>
         <div class = "col text-right">
             <div class="row align-items-center justify-content-end" style="height: 100%">
-                <form class="header-search">
-                    <input type="text" class="form-control header-search-input" id="color-bg-secondary" placeholder="Suche">
+                <form class="header-search" action="{% url 'search:search' %}" method="get">
+                    <input type="search" class="form-control header-search-input" id="color-bg-secondary" placeholder="Suche" name="search_request">
                 </form>
             </div>
         </div>

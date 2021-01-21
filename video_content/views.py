@@ -42,7 +42,7 @@ def display(request):
     # Add all eras that do not have an year_from
     eras = eras + list(Era.objects.filter(year_from=None, visible_on_video_page=True))
     for e in eras:
-        eras_context[e.name] = Video.get_era(Video, e.name)
+        eras_context[e] = Video.get_era(Video, e.name)
     context = {
         'Era': eras_context,
     }

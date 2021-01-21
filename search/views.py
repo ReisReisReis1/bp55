@@ -10,10 +10,9 @@ from timeline.views import get_thumbnails_for_buildings
 def search(request):
     """
     Function to search in buildings
-    :param request: url request to make a search
-    :return: if the request.method is a post,
-             then return the rendered search.html with the search results
-             else return nothing
+    :param request: url request to make a search with the search criteria
+    :return: rendering the subpage based on search.html with context
+    context: Variable to search all buildings with the criteria got from the request
     """
     search_id = request.POST.get('textfield', None)
     results = Building.objects.filter(Building, Q(name__icontains=search_id) |

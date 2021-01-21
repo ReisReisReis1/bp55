@@ -48,8 +48,8 @@ def detailed(request, id):
         'Konstruktion': Building.get_construction(Building, id),
         'Material': Building.get_material(Building, id),
         'Litertur': Building.get_literature(Building, id),
-        #'Bilder': Picture.get_picture_for_building(Picture, id),
-        #'Baupläne': Blueprint.get_blueprint_for_building(Blueprint, id),
+        'Bilder': Picture.get_picture_for_building(Picture, id),
+        'Baupläne': Blueprint.get_blueprint_for_building(Blueprint, id),
     }
 
     return render(request, 'detailed.html', context)
