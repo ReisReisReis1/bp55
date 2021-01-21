@@ -4,6 +4,7 @@ Configurations of the different functions and subpages from the App: search
 from django.db.models import Q
 from django.shortcuts import render
 from details_page.models import Building
+from timeline.views import get_thumbnails_for_buildings
 
 
 def search(request):
@@ -28,6 +29,7 @@ def search(request):
                                           Q(design__icontains=search_id) | \
                                           Q(function__icontains=search_id) | \
                                           Q(column_order__iscontains=search_id))
+        results = get_thumbnails_for_buildings(results)
         context = {
             'Result': results
         }
