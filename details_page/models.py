@@ -105,7 +105,6 @@ class Building(models.Model):
     column_order: column order of the building
     construction: construction of the building
     material: material of the building
-
     literature: further literature about the building
     era: era in which the building was built
     """
