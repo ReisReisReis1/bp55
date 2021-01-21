@@ -22,6 +22,7 @@ def detailed(request, building_id):
     """
     context = {
         'Name': Building.get_name(Building, building_id),
+        'Beschreibung': Building.get_description(Building, building_id),
         'Ort': Building.get_city(Building, building_id),
         'Region': Building.get_region(Building, building_id),
         'Land': Building.get_country(Building, building_id),
@@ -51,6 +52,7 @@ def detailed(request, building_id):
         'Bilder': Picture.get_picture_for_building(Picture, building_id),
         'Baupläne': Blueprint.get_blueprint_for_building(Blueprint, building_id),
         'Videos': Timestamps.get_timestamps_by_building(Timestamps, building_id),
+
     }
 
     return render(request, 'detailed.html', context)

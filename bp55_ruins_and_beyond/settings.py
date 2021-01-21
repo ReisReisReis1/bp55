@@ -57,7 +57,7 @@ MIDDLEWARE = [
     """
     Adds the possibility to use external authentication sources (Apache, mod_auth_cas)
     """
-    'django.contrib.auth,middleware.RemoteUserMiddleware'
+    'django.contrib.auth,middleware.RemoteUserMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -74,7 +74,7 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend'
     """
     Djangos user management, such as the views in contrib.admin and the createsuperuser management command,
-    doesn't intehgrate with remote users. These interfaces work with users stored in the database regardless of
+    doesn't integrate with remote users. These interfaces work with users stored in the database regardless of
     ATHENTICATION_BACKENDS
     """
 ]

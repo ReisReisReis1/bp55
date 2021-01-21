@@ -83,6 +83,7 @@ class Building(models.Model):
     """
     Database model for buildings. Will be used in detail page, but also in timeline and filter page.
     name: name of the building
+    description: a short description of the building
     city: city in which the building is located
     region: region in which the buildind is located
     country: country in which the building is located
@@ -110,6 +111,8 @@ class Building(models.Model):
     """
 
     name = models.CharField(max_length=100, help_text="Namen des Bauwerks eingeben (max. 100 Zeichen).")
+    description = models.TextField(max_length=1000, help_text="Beschreibung des Gebäudes angeben (max. 1000 Zeichen",
+                                  null=True, blank=True)
     city = models.CharField(max_length=100, help_text="Stadt des Bauweks eingeben (max. 100 Zeichen).",
                             null=True, blank=True)
     region = models.CharField(max_length=100, help_text="Region des Bauwerks eingeben (max. 100 Zeichen).",
@@ -170,6 +173,14 @@ class Building(models.Model):
         # pylint: disable= no-member
         building = self.objects.get(pk=building_id)
         return building.name
+
+    def get_description(self, building_id):
+        """
+        :return: description of the building
+        """
+        # pylint: disable= no-member
+        building =self.objects.get(pk=building_id)
+        return building.description
 
     def get_city(self, building_id):
         """
