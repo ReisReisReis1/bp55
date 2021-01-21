@@ -6,8 +6,9 @@ from django.contrib import admin
 
 # Register your models here.
 # pylint: disable = import-error, relative-beyond-top-level
-from .models import Era, Building, Picture
+from .models import Era, Building, Picture, Blueprint
 
 admin.site.register(Era)
 admin.site.register(Building)
 admin.site.register(Picture)
+admin.site.register(Blueprint)
