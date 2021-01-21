@@ -7,22 +7,6 @@ from details_page.models import Building, Era
 from timeline.views import get_thumbnails_for_buildings
 
 
-def building_filter(criteria):
-    """
-    Function to filter all buildings with the given criteria
-    :param criteria: the criteria the buildings will be filtered
-    :return: a list with the filtered buildings
-    """
-    return Building.objects.filter(Q(city__icontains=criteria[0]) |
-                                   Q(region__icontains=criteria[1]) |
-                                   Q(country__icontains=criteria[2]) |
-                                   Q(era__name__icontains=criteria[3]) |
-                                   Q(architect__icontains=criteria[4]) |
-                                   Q(builder__icontains=criteria[5]) |
-                                   Q(design__icontains=criteria[6]) |
-                                   Q(column_order__icontains=criteria[7]))
-
-
 def my_filter(lst, key, value):
     """
     This will execute filtering on a given list, while given key as string.
@@ -123,8 +107,6 @@ def display_building_filter(request):
     builders = buildings.only('builder')
     column_orders = buildings.only('column_order')
     designs = buildings.only('design')
-    filter_criteria = request.GET
-    filter_result = building_filter(filter_criteria)
     context = {
         'Cities': cities,
         'Regions': regions,
