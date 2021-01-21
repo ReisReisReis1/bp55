@@ -20,7 +20,7 @@
         {% endif %}
 
 
-        {% for result in Result %}
+        {% for building,image in Result %}
             {% if forloop.counter0|divisibleby:3 or forloop.first %}
                 <div class="row row-result row-no-margin">
             {% endif %}
@@ -30,9 +30,9 @@
                             <img src="{% static "card_placeholder.png" %}" style="width: 100%;">
                         </div>
                         <div class="card-body">
-                            <h5 class="card-title">{{ result.name }}</h5>
-                            <p class="card-text" align="justify"> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-                            <a href="{% url 'details_page:detailed' id=result.id %}" class="btn" id="color-btn">Mehr erfahren</a>
+                            <h5 class="card-title">{{ building.name }}</h5>
+                            <p class="card-text" align="justify">{{ building.description }}</p>
+                            <a href="{% url 'details_page:detailed' building_id=building.id %}" class="btn" id="color-btn">Mehr erfahren</a>
                         </div>
                     </div>
                 </div>
