@@ -27,6 +27,7 @@ urlpatterns = [
     path('filter/', include('filter_page.urls')),
     path('details_page/', include('details_page.urls')),
     path('timeline/', include('timeline.urls')),
+    path('search/', include('search.urls')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
