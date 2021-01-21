@@ -4,15 +4,15 @@ Configurations of the different functions and subpages from the App: search
 from django.db.models import Q
 from django.shortcuts import render
 from details_page.models import Building
+from timeline.views import get_thumbnails_for_buildings
 
 
 def search(request):
     """
     Function to search in buildings
-    :param request: url request to make a search
-    :return: if the request.method is a post,
-             then return the rendered search.html with the search results
-             else return nothing
+    :param request: url request to make a search with the search criteria
+    :return: rendering the subpage based on search.html with context
+    context: Variable to search all buildings with the criteria got from the request
     """
     if request.method == 'POST':
         search_id = request.POST.get('textfield', None)
@@ -28,6 +28,7 @@ def search(request):
                                           Q(design__icontains=search_id) | \
                                           Q(function__icontains=search_id) | \
                                           Q(column_order__iscontains=search_id))
+        results = get_thumbnails_for_buildings(results)
         context = {
             'Result': results
         }

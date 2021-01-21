@@ -7,7 +7,7 @@ from django.urls import path
 from . import views
 
 # pylint: disable = invalid-name
-app_name = 'timeline'
+app_name = 'search'
 urlpatterns = [
-    path('', views.timeline, name='timeline'),
+    path('', views.search, name='search')
 ]

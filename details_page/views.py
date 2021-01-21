@@ -36,10 +36,10 @@ def detailed(request, building_id):
         'Bautypus': Building.get_construction_type(Building, building_id),
         'Bauform': Building.get_design(Building, building_id),
         'Gattung/Funktion':  Building.get_function(Building, building_id),
-        """
-        'Dimension': Building.get_dimension(Building, id),
-        'Videos': Building.get_videos(Building, id),
-        """
+        
+        #'Dimension': Building.get_dimension(Building, id),
+        #'Videos': Building.get_videos(Building, id),
+        
         'Länge': Building.get_length(Building, building_id),
         'Breite': Building.get_width(Building, building_id),
         'Höhe': Building.get_height(Building, building_id),
@@ -52,7 +52,6 @@ def detailed(request, building_id):
         'Bilder': Picture.get_picture_for_building(Picture, building_id),
         'Baupläne': Blueprint.get_blueprint_for_building(Blueprint, building_id),
         'Videos': Timestamps.get_timestamps_by_building(Timestamps, building_id),
-
     }
 
     return render(request, 'detailed.html', context)

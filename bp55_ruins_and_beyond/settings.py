@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'timeline',
     'start',
     'bootstrap4',
+    'search',
 ]
 
 MIDDLEWARE = [
