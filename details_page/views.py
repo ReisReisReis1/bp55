@@ -10,7 +10,7 @@ from .models import Building
 # pylint: disable = import-error, relative beyond-top-level
 from .models import Blueprint
 # pylint: disable = import-error, relative beyond-top-level
-from video_content.models import Timestamps
+from video_content.models import Timestamp
 
 
 def detailed(request, building_id):
@@ -22,6 +22,7 @@ def detailed(request, building_id):
     """
     context = {
         'Name': Building.get_name(Building, building_id),
+        'Era': Building.get_era(Building,building_id),
         'Beschreibung': Building.get_description(Building, building_id),
         'Ort': Building.get_city(Building, building_id),
         'Region': Building.get_region(Building, building_id),

@@ -161,6 +161,14 @@ class Building(models.Model):
         building = self.objects.get(pk=building_id)
         return building.name
 
+    def get_era(self, building_id):
+        """
+        :return: era of the building
+        """
+        # pylint: disable= no-member
+        building = self.objects.get(pk=building_id)
+        return building.era
+
     def get_description(self, building_id):
         """
         :return: description of the building

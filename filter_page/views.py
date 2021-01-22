@@ -33,7 +33,7 @@ def delete_duplicates(lst):
             result.append(e)
     return result
 
-
+  
 def my_filter(lst, key, value):
     """
     This will execute filtering on a given list, while given key as string.
@@ -127,8 +127,9 @@ def display_building_filter(request):
     # Append Thumbnails
     result = get_thumbnails_for_buildings(result)
 
-    filter_names = ('Epoche', 'Land', 'Region', 'Stadt', 'Architekt', 'Erbauer', 'Säulenordnung', 'Design')
+    filter_names = ('Stadt', 'Region', 'Land', 'Epoche', 'Architekt', 'Erbauer', 'Design', 'Säulenordnung')
     buildings = Building.objects.all()
+
     eras = Era.objects.all().exclude(name=None).order_by("name").values('name')
     # Now we just need to delete all duplicates. We could use .distinct() for that,
     # but this only works on postgres Databases (what is painful cause we use sqlite for development)
@@ -162,8 +163,7 @@ def display_building_filter(request):
         'Column_Orders': column_orders,
         'Filter_Result': result,
         'Filter_Names': filter_names,
+        'Active_Filter': dict(q),
     }
 
     return render(request, 'filter.html', context)
-
-
