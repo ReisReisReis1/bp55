@@ -2,6 +2,10 @@
     CSS File for styling on the filter page
 =============================================================================*/
 
+.dropdown-item:hover {
+    cursor: pointer !important;
+}
+
 /*----------------------------------------------------------------------------
     Style for the 'Mehr erfahren' buttons
  */
@@ -21,6 +25,7 @@
  */
 .btn-filter {
     margin-left: 10px;
+    margin-bottom: 5px;
     padding-top: 5px;
     padding-right: 15px;
     padding-left: 15px;
@@ -31,6 +36,7 @@
     Style of the active filters on hover
  */
 .btn-filter:hover {
+    cursor: pointer;
     text-decoration: none;
     color: black;
 }
@@ -42,6 +48,7 @@
     color: black;
 
     padding-top: 5px;
+    margin-bottom: 5px;
     padding-right: 10px;
     padding-left: 10px;
     padding-bottom: 5px;
@@ -51,6 +58,17 @@
     Style of the remove active filter button on mouse hover
  */
 .btn-filter-x:hover {
+    cursor: pointer;
     text-decoration: none;
     color: black;
+}
+
+.result-box {
+    width: 33.33%;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.row-result {
+    margin-bottom: 20px;
 }

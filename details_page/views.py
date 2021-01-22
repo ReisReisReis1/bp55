@@ -22,6 +22,7 @@ def detailed(request, building_id):
     """
     context = {
         'Name': Building.get_name(Building, building_id),
+        'Era': Building.get_era(Building,building_id),
         'Beschreibung': Building.get_description(Building, building_id),
         'Ort': Building.get_city(Building, building_id),
         'Region': Building.get_region(Building, building_id),

@@ -97,16 +97,16 @@ def display_building_filter(request):
 
     result = get_thumbnails_for_buildings(result)
 
-    filter_names = ('Epoche', 'Land', 'Region', 'Stadt', 'Architekt', 'Erbauer', 'Säulenordnung', 'Design')
+    filter_names = ('Stadt', 'Region', 'Land', 'Epoche', 'Architekt', 'Erbauer', 'Design', 'Säulenordnung')
     buildings = Building.objects.all()
-    eras = Era.objects.all().only('name')
-    countries = buildings.only('country')
-    regions = buildings.only('region')
-    cities = buildings.only('city')
-    architects = buildings.only('architect')
-    builders = buildings.only('builder')
-    column_orders = buildings.only('column_order')
-    designs = buildings.only('design')
+    eras = Era.objects.all().values('name')
+    countries = buildings.values('country')
+    regions = buildings.values('region')
+    cities = buildings.values('city')
+    architects = buildings.values('architect')
+    builders = buildings.values('builder')
+    column_orders = buildings.values('column_order')
+    designs = buildings.values('design')
     context = {
         'Cities': cities,
         'Regions': regions,
@@ -118,6 +118,7 @@ def display_building_filter(request):
         'Column_Orders': column_orders,
         'Filter_Result': result,
         'Filter_Names': filter_names,
+        'Active_Filter': dict(q),
     }
 
     return render(request, 'filter.html', context)
