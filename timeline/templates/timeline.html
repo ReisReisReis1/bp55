@@ -24,13 +24,13 @@
                             {% endif %}
                                 <div class="card-body card-left" style="border-color: #{{ building.era.color_code }}">
                                     {% if is_building %}
-                                        <h5 class="card-title" id="color-border-primary">{{ building.name }} · {{ time }}</h5>
+                                        <h5 class="card-title" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.name }} · {{ time }}</h5>
 
                                         <div class="card-img">
                                             <img src="/media/{{ image.picture }}" style="width: 100%;">
                                         </div>
                                     {% else %}
-                                        <h5 class="card-title" id="color-border-primary">{{ building.title }} · {{ time }}</h5>
+                                        <h5 class="card-title" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.title }} · {{ time }}</h5>
 
                                         <div class="card-text" align="justify">
                                             {{ building.infos }}
@@ -62,13 +62,13 @@
                             {% endif %}
                                 <div class="card-body card-right" style="border-color: #{{ building.era.color_code }}">
                                     {% if is_building %}
-                                        <h5 class="card-title" id="color-border-primary">{{ building.name }} · {{ time }}</h5>
+                                        <h5 class="card-title" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.name }} · {{ time }}</h5>
 
                                         <div class="card-img">
                                             <img src="/media/{{ image.picture }}" style="width: 100%;">
                                         </div>
                                     {% else %}
-                                        <h5 class="card-title" id="color-border-primary">{{ building.title }} · {{ time }}</h5>
+                                        <h5 class="card-title" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.title }} · {{ time }}</h5>
 
                                         <div class="card-text" align="justify">
                                             {{ building.infos }}
