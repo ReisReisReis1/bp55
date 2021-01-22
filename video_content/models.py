@@ -3,10 +3,9 @@ Configurations for the Database-Models in video-contents
 """
 
 from django.db import models
-from details_page.models import Building
+from details_page.models import Building, Era
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db.models import Q
-from details_page.models import Era
 
 
 class Video(models.Model):
@@ -19,14 +18,15 @@ class Video(models.Model):
     """
     title = models.CharField(max_length=100, help_text='Titel des Videos')
     video = models.FileField(upload_to='videos/', help_text='Videodatei in .mp4')
-    era = models.ForeignKey(to=Era, on_delete=models.SET_NULL, null=True, help_text="Epoche des Videos auswählen.",
+    era = models.ForeignKey(to=Era, on_delete=models.SET_NULL, null=True,
+                            help_text="Epoche des Videos auswählen.",
                             related_name="+")
     era2 = models.ForeignKey(to=Era, on_delete=models.SET_NULL, blank=True, null=True,
                              help_text="""Falls das Video in zwei Epochen fällt, kann hier eine zweite
                              hinzugefügt werden. Diese Feld kann auch leer bleiben.""", related_name="+")
+    length = models.FloatField(validators=[MinValueValidator(0.0)], help_text='Länge des Videos')
+    # TODO: timestamps =
     intro = models.BooleanField(default=False, help_text='Ist dieses Video das Intro-Video?')
-    length = models.FloatField(validators=[MinValueValidator(0.0)],  help_text='Länge des Videos')
-    # TODO: Adding timestamps
 
     def __str__(self):
         return str(self.title)
@@ -62,21 +62,18 @@ class Video(models.Model):
     # pylint: disable = too-few-public-methods
 
 
-class Timestamps(models.Model):
+class Timestamp(models.Model):
     """
     Model for timestamps in a video assigned to a building
     """
-
-    building = models.ForeignKey(to=Building, on_delete=models.SET_NULL, null=True,
+    video = models.ForeignKey(to=Video, on_delete=models.CASCADE, blank=False, null=False)
+    building = models.ForeignKey(to=Building, on_delete=models.SET_NULL, null=True, blank=False,
                                  help_text='Zugehöriges Gebäude')
-    video = models.ForeignKey(to=Video, on_delete=models.CASCADE, null=False,
-                              help_text='Zugehöriges Video')
-    """
     time = models.FloatField(validators=[MinValueValidator(0.0),
-                                         MaxValueValidator(Video.objects.get(video).length)],
-                             help_text='Geben Sie hier eine Stelle ein, '
-                                       'an dem das gewählte Gebäude erscheint')
-   """
+                                         MaxValueValidator(15)],
+                             help_text='Geben Sie hier eine Stelle ein,'
+                                       'an dem das gewählte Gebäude erscheint',
+                             default=0, blank=False, null=False)
 
     def get_timestamps_by_video(self, vid):
         return self.objects.filter(video=vid)
