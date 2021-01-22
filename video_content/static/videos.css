@@ -1,51 +1,58 @@
+/*============================================================================
+    CSS File for styling on the videos page
+=============================================================================*/
+
+/*----------------------------------------------------------------------------
+    Styling of one row of videos, containing all videos from one era
+ */
+.video-section {
+    border-bottom: solid;
+}
+
+/*
+    Styling of title of each era
+ */
 .video-section-title {
     width: 100%;
 }
 
+/*
+    Styling of one row of videos, containing max. 4 videos
+ */
 .row-video {
     width: 100%;
     margin-bottom: 20px;
 }
 
-.video-section {
-    border-bottom: solid;
-    border-color: lightgray;
-}
-
-.video-box-first {
-    width: 25%;
-    padding-right: 5px !important;
-}
-
+/*
+    Styling of the element containing a video and its title
+ */
 .video-box {
     width: 25%;
     padding-left: 5px !important;
     padding-right: 5px !important;
 }
 
-.video-box-last {
-    width: 25%;
-    padding-left: 5px !important;
-}
-
+/*
+    Styling of the video rows which are hidden until clicked on the button
+ */
 .video-hide {
     display: none !important;
 }
 
+/*
+    Styling of the button which opens and closes more rows of videos
+ */
 .more-videos-button {
     width: 100%;
     border: none;
     padding-top: 5px;
     padding-bottom: 5px;
-    color: gray;
 }
 
-.more-videos-button:hover {
-    background-color: lightgray;
-}
-
-
+/*
+    Styling of the button which opens and closes more rows of videos on mouse hover
+ */
 .video:hover, .video-title:hover {
     cursor: pointer;
 }
-

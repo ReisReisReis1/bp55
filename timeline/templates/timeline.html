@@ -6,58 +6,84 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'timeline.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'image.css' %}">
 </head>
 
 <body>
 
     {% include './header.html' %}
 
+    <div class="container container-page">
+        {% for is_building,building,time,image in items %}
+            <div class="row justify-content-center row-timeline" id="color-era-1">
+                <div class="col d-flex justify-content-center">
+                    {% if not forloop.counter|divisibleby:2 %}
+                        <div class="card">
+                            {% if is_building %}
+                                <a href="{% url 'details_page:detailed' building_id=building.id %}" class="card-link">
+                            {% endif %}
+                                <div class="card-body card-left" style="border-color: #{{ building.era.color_code }}">
+                                    {% if is_building %}
+                                        <h5 class="card-title" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.name }} · {{ time }}</h5>
 
-    <div>
-        <section id="cd-timeline" class="cd-container">
-            <div class="cd-timeline-block">
-                <div class="cd-timeline-img cd-picture">
+                                        <div class="card-img">
+                                            <img src="/media/{{ image.picture }}" style="width: 100%;">
+                                        </div>
+                                    {% else %}
+                                        <h5 class="card-title" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.title }} · {{ time }}</h5>
+
+                                        <div class="card-text" align="justify">
+                                            {{ building.infos }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% if is_building %}
+                                </a>
+                            {% endif %}
+                        </div>
+                    {% endif %}
                 </div>
+                <div class="col-1">
+                    {% if forloop.first %}
+                        <div class="timeline-center-first" style="background-color: #{{ building.era.color_code }}">
+                    {% elif forloop.last %}
+                        <div class="timeline-center-last" style="background-color: #{{ building.era.color_code }}; border-color: #{{ building.era.color_code }}">
+                    {% else %}
+                        <div class="timeline-center" style="background-color: #{{ building.era.color_code }}">
+                    {% endif %}
 
-                <div class="cd-timeline-content">
-                    <h2>Karo5</h2>
-            <div class="timeline-content-info">
-                <span class="cd-date">Dez 10</span>
-              <span class="timeline-content-info-date">
-              </span>
-            </div>
-                    <p>
-                        <img src="{% static 'card_placeholder.png' %}" class="container">
-                    </p>
-            </div> <!-- cd-timeline-content -->
-            </div> <!-- cd-timeline-block -->
-
-            <div class="cd-timeline-block">
-            <div class="cd-timeline-img cd-movie">
-            </div>
-
-            <div class="cd-timeline-content">
-                <h2>Hexagon</h2>
-                <div class="timeline-content-info-date">
-                       <span class="cd-date">March 12</span>
+                    </div>
                 </div>
-                 <img src="{% static "card_placeholder.png" %}" class="image">
-                    <div class="overlay">
-                    <div class="text">
-                        <a href="{% url "start:start" %}">  Hello World </a> </div>
-              </div>
+                <div class="col d-flex justify-content-center">
+                    {% if forloop.counter|divisibleby:2 %}
+                        <div class="card">
+                            {% if is_building %}
+                                <a href="{% url 'details_page:detailed' building_id=building.id %}" class="card-link">
+                            {% endif %}
+                                <div class="card-body card-right" style="border-color: #{{ building.era.color_code }}">
+                                    {% if is_building %}
+                                        <h5 class="card-title" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.name }} · {{ time }}</h5>
 
+                                        <div class="card-img">
+                                            <img src="/media/{{ image.picture }}" style="width: 100%;">
+                                        </div>
+                                    {% else %}
+                                        <h5 class="card-title" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.title }} · {{ time }}</h5>
 
-
+                                        <div class="card-text" align="justify">
+                                            {{ building.infos }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% if is_building %}
+                                </a>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </div>
             </div>
-        </div>
-
-        </section> <!-- cd-timeline -->
-
-        </div>
+        {% endfor %}
+    </div>
 
 </body>
 </html>

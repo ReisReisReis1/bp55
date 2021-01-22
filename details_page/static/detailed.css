@@ -1,0 +1,15 @@
+/*============================================================================
+    CSS File for styling on the details pages
+=============================================================================*/
+
+.details-box {
+    padding-top: 15px;
+    border: solid;
+}
+
+.video-box {
+    cursor: pointer;
+    width: 25%;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+}
