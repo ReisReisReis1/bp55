@@ -89,7 +89,6 @@ class ViewsTestCases(TestCase):
     Testcases for the functions in view
     """
     def setUp(self):
-
         """
         Setting up objects and a client for the tests
         """
