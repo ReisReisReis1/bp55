@@ -35,12 +35,14 @@
             </div>
         </div>
         <div class = "col align-items-center text-center">
-            <img class="header_logo" src="{% static "logoneu.png" %}">
+            <a href="{% url "start:start" %}">
+                <img class="header_logo" src="{% static "logoneu.png" %}">
+            </a>
         </div>
         <div class = "col text-right">
             <div class="row align-items-center justify-content-end" style="height: 100%">
-                <form class="header-search">
-                    <input type="text" class="form-control header-search-input" id="color-bg-secondary" placeholder="Suche">
+                <form class="header-search" action="{% url 'search:search' %}" method="get">
+                    <input type="search" class="form-control header-search-input" id="color-bg-secondary" placeholder="Suche" name="search_request">
                 </form>
             </div>
         </div>
@@ -49,10 +51,10 @@
         <div class="container">
             <div class="row">
                 <div class = "col align-items-center text-center sub_menu">
-                    <a href="{% url "start:start" %}" class="menu_item" id="color-txt-primary"> Startseite</a>
-                    <a href="{% url "timeline:timeline" %}" class="menu_item" id="color-txt-primary"> Zeitstrahl</a>
-                    <a href="{% url "filter_page:filter" %}" class="menu_item" id="color-txt-primary"> Gebäudefilter</a>
-                    <a href="{% url "video_content:videos" %}" class="menu_item" id="color-txt-primary"> Videos</a>
+                    <a href="{% url "start:start" %}" class="menu_item" id="color-txt-primary">Intro</a>
+                    <a href="{% url "timeline:timeline" %}" class="menu_item" id="color-txt-primary">Zeitachse</a>
+                    <a href="{% url "filter_page:filter" %}" class="menu_item" id="color-txt-primary">Bauwerke</a>
+                    <a href="{% url "video_content:videos" %}" class="menu_item" id="color-txt-primary">Staffeln</a>
                 </div>
             </div>
         </div>

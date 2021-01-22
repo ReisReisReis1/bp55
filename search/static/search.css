@@ -1,0 +1,18 @@
+/*============================================================================
+    CSS File for styling on the search page
+=============================================================================*/
+
+
+.btn {
+    width: 100%;
+}
+
+.result-box {
+    width: 33.33%;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.row-result {
+    margin-bottom: 20px;
+}
