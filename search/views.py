@@ -27,6 +27,9 @@ def search(request):
                                       Q(design__icontains=search_request) | \
                                       Q(function__icontains=search_request) | \
                                       Q(column_order__icontains=search_request))
+    # order results alphabetically:
+    results = results.order_by("name")
+    # adding thumbnails:
     results = get_thumbnails_for_buildings(results)
     context = {
         'Result': results,
