@@ -14,6 +14,7 @@ class ViewsTestCases(TestCase):
     """
      Testcases for the functions in view
     """
+
     def setUp(self):
         """
         Setting up a client for the tests
@@ -77,13 +78,13 @@ class HistoricDatesModelTests(TestCase):
         """
 
         hd = HistoricDate.objects.create(year=0, exacter_date=None,
-                          year_BC_or_AD="n.Chr.",
-                          title="Test Datum",
-                          infos="Ein Test Datum",
-                          era=self.an_era)
+                                         year_BC_or_AD="n.Chr.",
+                                         title="Test Datum",
+                                         infos="Ein Test Datum",
+                                         era=self.an_era)
 
         # If year number is too high
-        hd.year = max_year+100
+        hd.year = max_year + 100
         self.assertRaises(ValidationError, hd.full_clean)
         self.assertRaisesMessage(ValidationError,
                                  "{'year': ['Diese Jahreszahl ist zu hoch. Bitte etwas zwischen 0 und "
@@ -113,8 +114,8 @@ class HistoricDatesModelTests(TestCase):
                                          title="Test",
                                          infos="Ein Test Datum",
                                          era=self.an_era)
-        self.assertEqual(str(HistoricDate.objects.get(title="Test")), str(hd.title)+" ("+str(hd.year)+" "
-                         + str(hd.year_BC_or_AD)+")")
+        self.assertEqual(str(HistoricDate.objects.get(title="Test")), str(hd.title) + " (" + str(hd.year) + " "
+                         + str(hd.year_BC_or_AD) + ")")
         # with exacter date
         hd.exacter_date = date(23, 3, 1)
         hd.save()
@@ -126,6 +127,7 @@ class TimelineViewsTest(TestCase):
     """
     Tests for the views.py for the timeline app.
     """
+
     @classmethod
     def setUpTestData(cls):
         """
@@ -133,16 +135,17 @@ class TimelineViewsTest(TestCase):
         :return: None
         """
         cls.client = Client()
-        cls.bronzezeit = Era.objects.create(name="Bronzezeit", year_from=1400, year_from_BC_or_AD="v.Chr.", year_to=1101,
-                                        year_to_BC_or_AD="v.Chr.", visible_on_video_page=True, color_code="fffff1")
+        cls.bronzezeit = Era.objects.create(name="Bronzezeit", year_from=1400, year_from_BC_or_AD="v.Chr.",
+                                            year_to=1101,
+                                            year_to_BC_or_AD="v.Chr.", visible_on_video_page=True, color_code="fffff1")
         cls.eisenzeit = Era.objects.create(name="Eisenzeit", year_from=1100, year_from_BC_or_AD="v.Chr.", year_to=701,
-                                        year_to_BC_or_AD="v.Chr.", visible_on_video_page=True, color_code="fffff2")
+                                           year_to_BC_or_AD="v.Chr.", visible_on_video_page=True, color_code="fffff2")
         cls.archaik = Era.objects.create(name="Arachik", year_from=700, year_from_BC_or_AD="v.Chr.", year_to=501,
-                                        year_to_BC_or_AD="v.Chr.", visible_on_video_page=True, color_code="fffff3")
+                                         year_to_BC_or_AD="v.Chr.", visible_on_video_page=True, color_code="fffff3")
         cls.klassik = Era.objects.create(name="Klassisk", year_from=500, year_from_BC_or_AD="v.Chr.", year_to=337,
-                                        year_to_BC_or_AD="v.Chr.", visible_on_video_page=True, color_code="fffff4")
+                                         year_to_BC_or_AD="v.Chr.", visible_on_video_page=True, color_code="fffff4")
         cls.helinismus = Era.objects.create(name="Helinismus", year_from=336, year_from_BC_or_AD="v.Chr.", year_to=100,
-                                        year_to_BC_or_AD="n.Chr.", visible_on_video_page=True, color_code="fffff5")
+                                            year_to_BC_or_AD="n.Chr.", visible_on_video_page=True, color_code="fffff5")
 
     def test_timeline_empty(self):
         """
@@ -392,9 +395,9 @@ class TimelineViewsTest(TestCase):
         """
         b = Building.objects.create(name="Building 1", date_from=100, date_from_BC_or_AD="v.Chr.")
         p1 = Picture.objects.create(name="Test", picture="../media/pics/external-content.duckduckgo.com.jpg",
-                                   building=b, usable_as_thumbnail=True)
+                                    building=b, usable_as_thumbnail=True)
         p2 = Picture.objects.create(name="Test", picture="../media/pics/external-content.duckduckgo.com.jpg",
-                                   building=b, usable_as_thumbnail=True)
+                                    building=b, usable_as_thumbnail=True)
         response = self.client.get("/timeline/")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context["items"], [b])
@@ -406,6 +409,7 @@ class GetDateAsStingTests(TestCase):
     """
     Tests for class method get_date_as_string(item), witch returns the date in best manner, as Sting.
     """
+
     @classmethod
     def setUpTestData(cls):
         """
