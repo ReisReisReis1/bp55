@@ -7,6 +7,33 @@ from details_page.models import Building, Era
 from timeline.views import get_thumbnails_for_buildings
 
 
+def one_dict_set_to_string_list(dictqs):
+    """
+    This will refactor the dict list queryset to a string list, with the same contents.
+    :param dictqs: QuerySet with only a one parameter (from .values("<param-name>"))
+    :return: this values from the inner dicts as a string list
+    """
+    str_lst = []
+    for d in dictqs:
+        for v in d.values():
+            str_lst.append(v)
+    return str_lst
+
+
+def delete_duplicates(lst):
+    """
+    This will - wait for it - delete duplicates from the given list.
+    Meant for deleting the duplicates from the QuerySets, therefore it fetches the .id fields.
+    :param lst: the given list
+    :return: the list without duplicates
+    """
+    result = []
+    for e in lst:
+        if e not in result:
+            result.append(e)
+    return result
+
+  
 def my_filter(lst, key, value):
     """
     This will execute filtering on a given list, while given key as string.
@@ -95,18 +122,36 @@ def display_building_filter(request):
             # Theoretically we add everything here and do AND.
             # But this is unnecessary, because, we started with all()
 
+    # order results alphabetically
+    result = result.order_by("name")
+    # Append Thumbnails
     result = get_thumbnails_for_buildings(result)
 
     filter_names = ('Stadt', 'Region', 'Land', 'Epoche', 'Architekt', 'Erbauer', 'Design', 'Säulenordnung')
     buildings = Building.objects.all()
-    eras = Era.objects.all().values('name')
-    countries = buildings.values('country')
-    regions = buildings.values('region')
-    cities = buildings.values('city')
-    architects = buildings.values('architect')
-    builders = buildings.values('builder')
-    column_orders = buildings.values('column_order')
-    designs = buildings.values('design')
+
+    eras = Era.objects.all().exclude(name=None).order_by("name").values('name')
+    # Now we just need to delete all duplicates. We could use .distinct() for that,
+    # but this only works on postgres Databases (what is painful cause we use sqlite for development)
+    # so we will implement duplication deletion in python here for this matter. But later (if no one uses
+    # sqlite anymore) it would be better and more efficient to set .distinct() for that.
+    eras = delete_duplicates(one_dict_set_to_string_list(eras))
+    countries = buildings.only('country').exclude(country=None).order_by("country").values('country')
+    countries = delete_duplicates(one_dict_set_to_string_list(countries))
+    regions = buildings.only('region').exclude(region=None).order_by("region").values('region')
+    regions = delete_duplicates(one_dict_set_to_string_list(regions))
+    cities = buildings.only('city').exclude(city=None).order_by("city").values('city')
+    cities = delete_duplicates(one_dict_set_to_string_list(cities))
+    architects = buildings.only('architect').exclude(architect=None).order_by("architect").values('architect')
+    architects = delete_duplicates(one_dict_set_to_string_list(architects))
+    builders = buildings.only('builder').exclude(builder=None).order_by("builder").values('builder')
+    builders = delete_duplicates(one_dict_set_to_string_list(builders))
+    column_orders = buildings.only('column_order').exclude(column_order=None).order_by("column_order").\
+        values('column_order')
+    column_orders = delete_duplicates(one_dict_set_to_string_list(column_orders))
+    designs = buildings.only('design').exclude(design=None).order_by("design").values('design')
+    designs = delete_duplicates(one_dict_set_to_string_list(designs))
+
     context = {
         'Cities': cities,
         'Regions': regions,
@@ -122,5 +167,3 @@ def display_building_filter(request):
     }
 
     return render(request, 'filter.html', context)
-
-
