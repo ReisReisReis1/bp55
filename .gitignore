@@ -153,6 +153,3 @@ dmypy.json
 .prof
 
 # End of https://www.toptal.com/developers/gitignore/api/django
-/timeline/migrations/
-/details_page/migrations/
-/video_content/migrations/
