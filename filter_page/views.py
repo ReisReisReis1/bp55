@@ -122,5 +122,3 @@ def display_building_filter(request):
     }
 
     return render(request, 'filter.html', context)
-
-
