@@ -6,15 +6,345 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'detailed.css' %}">
-    {% bootstrap_css %}
-    {% bootstrap_javascript jquery='slim' %}
+
+    <script>
+        function stopPopupVideo(id) {
+            var video = document.getElementById("popup-video-" + id);
+            var popup = "popup-" + id;
+            $('#' + popup).on('hidden.bs.modal', function () {
+                video.pause();
+            });
+        }
+    </script>
 </head>
 <body>
 
     {% include './header.html' %}
 
+    <div class="container container-page">
+        <div class="row details-box" style="border-color: #{{ Era.color_code }}">
+            <div class="col">
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td>
+                                Ort/Region
+                            </td>
+                            <td>
+                                {% if Ort != None %}
+                                    {{ Ort }}
+                                {% endif %}
+                                {% if Region != None %}
+                                    / {{ Region }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Land
+                            </td>
+                            <td>
+                                {% if Land != None %}
+                                    {{ Land }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Datierung
+                            </td>
+                            <td>
+                                {% if Datum_von != None %}
+                                    {{ Datum_von }} {{ Datum_von_BC_oder_AD }}
+                                {% endif %}
+                                {% if Datum_bis != None %}
+                                    - {{ Datum_bis }} {{ Datum_bis_BC_oder_AD }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Architekt
+                            </td>
+                            <td>
+                                {% if Architekt != None %}
+                                    {{ Architekt }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
 
+                            </td>
+                            <td>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Kontext
+                            </td>
+                            <td>
+                                {% if Kontext_Lage != None %}
+                                    {{ Kontext_Lage }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Bauherr
+                            </td>
+                            <td>
+                                {% if Bauherr != None %}
+                                    {{ Bauherr }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+
+                            </td>
+                            <td>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Bautypus
+                            </td>
+                            <td>
+                                {% if Bautypus != None %}
+                                    {{ Bautypus }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Bauform
+                            </td>
+                            <td>
+                                {% if Bauform != None %}
+                                    {{ Bauform }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Gattung/Funktion
+                            </td>
+                            <td>
+                                {% if Gattung_Funktion != None %}
+                                    {{ Gattung_Funktion }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+
+                            </td>
+                            <td>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Dimension
+                            </td>
+                            <td>
+                                {% if Länge != None %}
+                                    {{ Länge }}m
+                                {% endif %}
+                                {% if Breite != None %}
+                                     x {{ Breite }}m
+                                {% endif %}
+                                {% if Höhe != None %}
+                                     x {{ Höhe }}m
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Säulenordnung
+                            </td>
+                            <td>
+                                {% if Säulenordung != None %}
+                                    {{ Säulenordung }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Konstruktion
+                            </td>
+                            <td>
+                                {% if Konstruktion != None %}
+                                    {{ Konstruktion }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Material
+                            </td>
+                            <td>
+                                {% if Material != None %}
+                                    {{ Material }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+
+                            </td>
+                            <td>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Literatur
+                            </td>
+                            <td>
+                                {% if Litertur != None %}
+                                    {{ Litertur }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col">
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div id="details_images" class="carousel slide" data-interval="false">
+                                    <ol class="carousel-indicators">
+                                        {% for image in Bilder %}
+                                            {% if forloop.first %}
+                                                <li data-target="#details_images" class="active"></li>
+                                            {% else %}
+                                                <li data-target="#details_images"></li>
+                                            {% endif %}
+                                        {% endfor %}
+                                        {% for blueprints in Baupläne %}
+                                            {% if forloop.first and Bilder|length == 0%}
+                                                <li data-target="#details_images" class="active"></li>
+                                            {% else %}
+                                                <li data-target="#details_images"></li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ol>
+
+                                    <div class="carousel-inner">
+                                        {% for image in Bilder %}
+                                            {% if forloop.first %}
+                                                <div class="carousel-item active">
+                                            {% else %}
+                                                <div class="carousel-item">
+                                            {% endif %}
+                                                <img class="d-block w-100" src="/media/{{ image.picture }}">
+                                            </div>
+                                        {% endfor %}
+                                        {% for blueprints in Baupläne %}
+                                            {% if forloop.first and Bilder|length == 0 %}
+                                                <div class="carousel-item active">
+                                            {% else %}
+                                                <div class="carousel-item">
+                                            {% endif %}
+                                                <img class="d-block w-100" src="/media/{{ blueprints.blueprint }}">
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+
+                                    <a class="carousel-control-prev" href="#details_images" role="button" data-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="carousel-control-next" href="#details_images" role="button" data-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% if Beschreibung == None or Beschreibung|length == 0%}
+                            <tr>
+                                <td>
+                                    {{ Name }}
+                                </td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+
+                {% if not Beschreibung == None and not Beschreibung|length == 0%}
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    {{ Name }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {{ Beschreibung }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                {% endif %}
+
+                {% if not Videos == None and not Videos|length == 0%}
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="row row-no-margin">
+                                        {% for timestamp in Videos %}
+                                            <div class="video-box" data-toggle="modal" data-target="#popup-{{ forloop.counter }}">
+                                                <table class="table table-bordered">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <img src="{% static "videomarketing.png" %}" width="100%">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                {{ timestamp.video.title }}
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <div class="modal" id="popup-{{ forloop.counter }}" data-keyboard="false" onclick="stopPopupVideo({{ forloop.counter }})">
+                                                <div class="modal-dialog modal-xl modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title">{{ timestamp.video.title }}</h4>
+                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <video id="popup-video-{{ forloop.counter }}" width="100%" controls preload="metadata">
+                                                                <source src="{{ timestamp.video.video.url }}#t={{ timestamp.time }}" type="video/mp4">
+                                                                {{ timestamp.title }}
+                                                            </video>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 </body>
 </html>
