@@ -25,6 +25,11 @@ class HistoricDate(models.Model):
                                          möchte man das Jahr 17 haben, muss man '0017' eingeben.""")
     year_BC_or_AD = models.CharField(max_length=7, help_text="Jahr des Ereignisses: v.Chr. bzw. n.Chr. auswählen.",
                                      choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")], default="v.Chr.")
+    date_century = models.BooleanField(default=False,
+                                       help_text="Sind die Daten Jahrhundert Angaben?")
+    date_ca = models.BooleanField(default=False,
+                                  help_text="ca. zum Datum hinzufügen (für ungenaue Datumsangaben)"
+                                            ".")
     title = models.CharField(max_length=100,
                              help_text="Hier einen Titel für der Ereignis einfügen (max. 100 Zeichen).")
     infos = models.TextField(
