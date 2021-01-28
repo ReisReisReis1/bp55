@@ -19,13 +19,22 @@ class Video(models.Model):
     """
     title = models.CharField(max_length=100, help_text='Titel des Videos')
     video = models.FileField(upload_to='videos/', help_text='Videodatei in .mp4')
-    era = models.ForeignKey(to=Era, on_delete=models.SET_NULL, null=True, help_text="Epoche des Videos auswählen.",
+    thumbnail = models.ImageField(height_field="height", width_field="width",
+                                  help_text="Hier das Vorschaubild zum Video hochladen.",
+                                  upload_to="pics/thumbnails/")
+    width = models.IntegerField(editable=False, default=0)
+    height = models.IntegerField(editable=False, default=0)
+    era = models.ForeignKey(to=Era, on_delete=models.SET_NULL, null=True,
+                            help_text="Epoche des Videos auswählen.",
                             related_name="+")
     era2 = models.ForeignKey(to=Era, on_delete=models.SET_NULL, blank=True, null=True,
-                             help_text="""Falls das Video in zwei Epochen fällt, kann hier eine zweite
-                             hinzugefügt werden. Diese Feld kann auch leer bleiben.""", related_name="+")
+                             help_text="""Falls das Video in zwei Epochen fällt, 
+                             kann hier eine zweite
+                             hinzugefügt werden. Diese Feld kann auch leer bleiben.""",
+                             related_name="+")
     intro = models.BooleanField(default=False, help_text='Ist dieses Video das Intro-Video?')
-    length = models.FloatField(validators=[MinValueValidator(0.0)], help_text='Länge des Videos', default=0.0)
+    length = models.FloatField(validators=[MinValueValidator(0.0)], help_text='Länge des Videos',
+                               default=0.0)
 
     # TODO: Adding timestamps
 
@@ -53,7 +62,7 @@ class Video(models.Model):
         """
         Getting a List of Videos with the given era
         :param wanted_era: Era id (pk),
-        :return: List of videos with given era or empty list
+        :return: QuerySet of videos with given era or empty list
         """
         # pylint: disable= no-member
         # imported and added models.Q, to realise and OR lookup (so either on is the searched era)
@@ -72,12 +81,22 @@ class Timestamp(models.Model):
                                  help_text='Zugehöriges Gebäude')
     video = models.ForeignKey(to=Video, on_delete=models.CASCADE, null=False,
                               help_text='Zugehöriges Video')
-    time = models.FloatField(validators=[MinValueValidator(0.0)],
+    time = models.FloatField(validators=[MinValueValidator(0.0, 'Keine Werte kleiner als Null')],
                              help_text='Geben Sie hier eine Stelle ein, '
-                                       'an dem das gewählte Gebäude erscheint')
+                                       'an dem das gewählte Gebäude im Video erscheint')
 
     def get_timestamps_by_video(self, vid):
+        """
+        Getting all timestamp in a video filtered by the id of the video
+        :param vid: id of the video
+        :return: QuerySet of the filtered timestamps
+        """
         return self.objects.filter(video=vid)
 
     def get_timestamps_by_building(self, build):
+        """
+        Getting all timestamp for the given building filtered by the id of the building
+        :param build: id of the building
+        :return: QuerySet of the filtered timestamps
+        """
         return self.objects.filter(building=build)

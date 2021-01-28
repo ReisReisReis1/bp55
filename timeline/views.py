@@ -2,12 +2,12 @@
 Configurations of the different viewable functions and subpages from the App: timeline
 """
 
-
 from django.shortcuts import render
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 from details_page.models import Building, Picture
 from timeline.models import HistoricDate
 import random
+
 
 # Create your views here.
 
@@ -28,14 +28,17 @@ def get_thumbnails_for_buildings(building_list):
     for building in building_list:
         try:
             buildings_with_thumbnails.append((building,
-                                              Picture.objects.get(building=building.pk, usable_as_thumbnail=True)))
+                                              Picture.objects.get(building=building.pk,
+                                                                  usable_as_thumbnail=True)))
         except ObjectDoesNotExist:
             buildings_with_thumbnails.append((building, None))
         except MultipleObjectsReturned:
-            possible_thumbnails = Picture.objects.filter(building=building.pk, usable_as_thumbnail=True)
+            possible_thumbnails = Picture.objects.filter(building=building.pk,
+                                                         usable_as_thumbnail=True)
             # set a random thumbnail out of all possible ones
             buildings_with_thumbnails.append((building,
-                                              possible_thumbnails[random.randint(0, len(possible_thumbnails) - 1)]))
+                                              possible_thumbnails[
+                                                  random.randint(0, len(possible_thumbnails) - 1)]))
     return buildings_with_thumbnails
 
 
@@ -45,6 +48,7 @@ def timeline(request):
     :param request: url request to get subpage /timeline
     :return: rendering the subpage based on timeline.html
     """
+
     # Inner helper method for items
     def get_year_of_item(i):
         """
@@ -56,18 +60,18 @@ def timeline(request):
         # A Building is a tuple with its thumbnail, [0] to get Building
         if isinstance(i, tuple):
             if i[0].date_from_BC_or_AD == "v.Chr.":
-                return -1*int(i[0].date_from)
+                return -1 * int(i[0].date_from)
             else:
                 return int(i[0].date_from)
         elif isinstance(i, HistoricDate):
             if i.exacter_date is None:
                 if i.year_BC_or_AD == "v.Chr.":
-                    return -1*int(i.year)
+                    return -1 * int(i.year)
                 else:
                     return int(i.year)
             else:
                 if i.year_BC_or_AD == "v.Chr.":
-                    return -1*int(i.exacter_date.year)
+                    return -1 * int(i.exacter_date.year)
                 else:
                     return int(i.exacter_date.year)
 
@@ -77,7 +81,7 @@ def timeline(request):
     # get historic dates (they must have a date (not nullable database field))
     historic_dates = HistoricDate.objects.all()
     # Make lists from QuerySets because otherwise pythons list concatenation and sorting will no work
-    items = list(buildings)+list(historic_dates)
+    items = list(buildings) + list(historic_dates)
     # Sort it with years as key, ascending
     items = sorted(items, key=lambda i: get_year_of_item(i))
     items_with_dates = []
@@ -104,7 +108,7 @@ def get_date_as_str(item):
     """
     if isinstance(item, tuple):
         # Building is a tuple with its thumbnail, therefore [0] to get the building
-        return str(item[0].date_from)+" "+str(item[0].date_from_BC_or_AD)
+        return str(item[0].date_from) + " " + str(item[0].date_from_BC_or_AD)
     elif isinstance(item, HistoricDate):
         if item.exacter_date is None:
             return str(item.year) + " " + str(item.year_BC_or_AD)
