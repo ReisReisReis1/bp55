@@ -6,7 +6,6 @@ from django.shortcuts import render
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 from details_page.models import Building, Picture
 from timeline.models import HistoricDate
-import random
 
 
 # Create your views here.
@@ -20,8 +19,8 @@ def get_thumbnails_for_buildings(building_list):
     If there is more than one possible thumbnail it will choose one randomly.
     If there is no thumbnail for a building, it will set and return None for it.
     :param building_list: A list of buildings you want to get thumbnails for.
-    :return: Will return an tuple: The building from building_list, along with the thumbnail or None.
-    The
+    :return: Will return an tuple: The building from building_list, along with the thumbnail or
+    default thumbnail. Or empty list, if building was empty.
     """
     buildings_with_thumbnails = []
     # Search for thumbnails
@@ -31,14 +30,12 @@ def get_thumbnails_for_buildings(building_list):
                                               Picture.objects.get(building=building.pk,
                                                                   usable_as_thumbnail=True)))
         except ObjectDoesNotExist:
-            buildings_with_thumbnails.append((building, None))
+            buildings_with_thumbnails.append((building, "/static/default-thumbnail.png"))
         except MultipleObjectsReturned:
             possible_thumbnails = Picture.objects.filter(building=building.pk,
                                                          usable_as_thumbnail=True)
             # set a random thumbnail out of all possible ones
-            buildings_with_thumbnails.append((building,
-                                              possible_thumbnails[
-                                                  random.randint(0, len(possible_thumbnails) - 1)]))
+            buildings_with_thumbnails.append((building, possible_thumbnails[0]))
     return buildings_with_thumbnails
 
 

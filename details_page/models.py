@@ -18,8 +18,17 @@ from django.db import models
 from django.core.exceptions import ValidationError
 from . import country_codes
 
-"""Give max year for validation here"""
-max_year = 1400
+
+def validate_url_conform_str(string):
+    """
+    Validates input for not having "&" and "?" in it.
+    :param string: the input string
+    :return: None or ValidationError
+    """
+    if "&" in string or "?" in string:
+        raise ValidationError(message="Diese Eingabe darf nicht die Zeichen \"&\" und \"?\" "
+                                      "enthalten.")
+
 
 def validate_color_code(code):
     """
@@ -28,8 +37,8 @@ def validate_color_code(code):
     :return: None or ValidationError
     """
     for sign in code:
-        if sign not in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f",
-                        "A", "B", "C", "D", "E", "F"]:
+        if sign not in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e",
+                        "f", "A", "B", "C", "D", "E", "F"]:
             raise ValidationError(message="Bitte einen gültigen Code im Hex-Format einfügen: "
                                           "Nur Hex-Zeichen: 0-9, a-f und A-F.")
         if len(code) != 6:
@@ -40,22 +49,28 @@ def validate_color_code(code):
 class Era(models.Model):
     name = models.CharField(max_length=100, choices=[
         ('Bronzezeit', 'Bronzezeit'), ('Frühzeit', 'Frühzeit'), ('Archaik', 'Archaik'),
-        ('Klassik', 'Klassik'), ('Helenismus', 'Helenismus'),
+        ('Klassik', 'Klassik'), ('Hellenismus', 'Hellenismus'),
         ('Königszeit', 'Königszeit'), ('Republik', 'Republik'),
         ('Frühe Kaiserzeit', 'Frühe Kaiserzeit'),
         ('Mittlere Kaiserzeit', 'Mittlere Kaiserzeit'),
         ('Späte Kaiserzeit', 'Späte Kaiserzeit'),
         ('Spätantike', 'Spätantike'),
         ('Sonstiges', 'Sonstiges'),
-    ], default='Sonstigedes',
-                            help_text="Epoche auswählen")
-    year_from = models.PositiveIntegerField(help_text="Jahr des Beginns der Epoche eingeben.", blank=True, null=True)
-    year_from_BC_or_AD = models.CharField(max_length=7, help_text="Jahr des Beginns: v.Chr. bzw. n.Chr. auswählen.",
-                                          choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")], default="v.Chr.",
+    ], default='Sonstiges',
+                            help_text="Epoche auswählen.")
+    year_from = models.PositiveIntegerField(help_text="Jahr des Beginns der Epoche eingeben.",
+                                            blank=True, null=True)
+    year_from_BC_or_AD = models.CharField(max_length=7,
+                                          help_text="Jahr des Beginns: v.Chr. bzw. n.Chr. auswählen.",
+                                          choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")],
+                                          default="v.Chr.",
                                           null=True, blank=True)
-    year_to = models.PositiveIntegerField(help_text="Jahr des Endes der Epoche eingeben.", blank=True, null=True)
-    year_to_BC_or_AD = models.CharField(max_length=7, help_text="Jahr des Endes: v.Chr. bzw. n.Chr. auswählen.",
-                                        choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")], default="v.Chr.",
+    year_to = models.PositiveIntegerField(help_text="Jahr des Endes der Epoche eingeben.",
+                                          blank=True, null=True)
+    year_to_BC_or_AD = models.CharField(max_length=7,
+                                        help_text="Jahr des Endes: v.Chr. bzw. n.Chr. auswählen.",
+                                        choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")],
+                                        default="v.Chr.",
                                         null=True, blank=True)
     visible_on_video_page = models.BooleanField(default=True, help_text="""Angeben ob die Epoche auf der 'Staffeln' 
                                                 Seite sichtbar sein soll.""")
@@ -65,6 +80,26 @@ class Era(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_year_of_item_as_signed_int(self):
+        """
+        Inner helper to sorting the years.
+        About the try/except: You can define an Era without an year. This leads to following problem:
+        You can not sort Eras by year if there is one without an year. In line 29 or 31 we try to get the
+        year as an Int. This will raise the TypeError, if this Era don't has a year (or the year is set
+        to None to be exact). Therefore we except this error, and return 2021, which is higher than
+        every year in the Database (limited to max_years (currently 1400)).
+        :param era: the era to get the year from
+        :return: the year of the era(beginning year)
+        """
+        try:
+            if self.year_from_BC_or_AD == "v.Chr.":
+                return -1 * int(self.year_from)
+            else:
+                return int(self.year_from)
+        except TypeError:
+            # If era has no year return big int, so it will be listed last.
+            return 9999999999999999999
 
 
 class Building(models.Model):
@@ -97,57 +132,87 @@ class Building(models.Model):
     era: era in which the building was built
     """
 
-    name = models.CharField(max_length=100, help_text="Namen des Bauwerks eingeben (max. 100 Zeichen).")
-    description = models.TextField(max_length=1000, help_text="Beschreibung des Gebäudes angeben (max. 1000 Zeichen",
-                                  null=True, blank=True)
-    city = models.CharField(max_length=100, help_text="Stadt des Bauweks eingeben (max. 100 Zeichen).",
-                            null=True, blank=True)
-    region = models.CharField(max_length=100, help_text="Region des Bauwerks eingeben (max. 100 Zeichen).",
-                              null=True, blank=True)
-    country = models.CharField(max_length=100, help_text="""Hier Land des Bauwerks auswählen (Tipp: Zum Suchen Kürzel 
-                               auf der Tastatur eingeben).""",
+    name = models.CharField(max_length=100,
+                            help_text="Namen des Bauwerks eingeben (max. 100 Zeichen).")
+    description = models.TextField(max_length=1000,
+                                   help_text="Beschreibung des Gebäudes angeben (max. 1000 Zeichen",
+                                   null=True, blank=True, editable=False)
+    city = models.CharField(max_length=100,
+                            help_text="Stadt des Bauweks eingeben (max. 100 Zeichen).",
+                            null=True, blank=True, validators=[validate_url_conform_str])
+    region = models.CharField(max_length=100,
+                              help_text="Region des Bauwerks eingeben (max. 100 Zeichen).",
+                              null=True, blank=True, validators=[validate_url_conform_str])
+    country = models.CharField(max_length=100, help_text="Hier Land des Bauwerks auswählen (Tipp:" 
+                                                         "Zum Suchen Kürzel" 
+                                                         "auf der Tastatur eingeben).",
                                choices=country_codes.contry_codes_as_tuple_list,
-                               default="Griechenland", null=True, blank=True)
-    date_from = models.PositiveIntegerField(help_text="Jahr des Baubeginns eingeben. Wenn nicht gesetzt, "
-                                                      + "erscheint das Gebäude nicht auf der Zeitachse.",
-                                            null=True, blank=True)
-    date_from_BC_or_AD = models.CharField(max_length=7, help_text="Jahr des Baubeginns: v.Chr. bzw. n.Chr. auswählen.",
-                                          choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")], default="v.Chr.",
+                               default="Griechenland", null=True, blank=True,
+                               validators=[validate_url_conform_str])
+    date_from = models.PositiveIntegerField(
+        help_text="Jahr des Baubeginns eingeben. Wenn nicht gesetzt, "
+                  "erscheint das Gebäude nicht auf der Zeitachse.",
+        null=True, blank=True)
+    date_from_BC_or_AD = models.CharField(max_length=7,
+                                          help_text="Jahr des Baubeginns: v.Chr. bzw. n.Chr. auswählen.",
+                                          choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")],
+                                          default="v.Chr.",
                                           null=True, blank=True)
-    date_to = models.PositiveIntegerField(help_text="Jahr des Bauendes eingeben.", null=True, blank=True)
-    date_to_BC_or_AD = models.CharField(max_length=7, help_text="Jahr des Bauendes: v.Chr. bzw. n.Chr. auswählen.",
-                                        choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")], default="v.Chr.",
+    date_to = models.PositiveIntegerField(help_text="Jahr des Bauendes eingeben.", null=True,
+                                          blank=True)
+    date_to_BC_or_AD = models.CharField(max_length=7,
+                                        help_text="Jahr des Bauendes: v.Chr. bzw. n.Chr. auswählen.",
+                                        choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")],
+                                        default="v.Chr.",
                                         null=True, blank=True)
+    date_century = models.BooleanField(default=False,
+                                       help_text="Sind die Daten Jahrhundert Angaben?")
+    date_ca = models.BooleanField(default=False,
+                                  help_text="ca. zum Datum hinzufügen (für ungenaue Datumsangaben)"
+                                            ".")
     era = models.ForeignKey(to=Era, on_delete=models.SET_NULL, null=True, blank=True)
-    architect = models.CharField(max_length=100, help_text="Architekt des Bauwerks eingeben (max. 100 Zeichen).",
-                                 null=True, blank=True)
+    architect = models.CharField(max_length=100,
+                                 help_text="Architekt des Bauwerks eingeben (max. 100 Zeichen).",
+                                 null=True, blank=True, validators=[validate_url_conform_str])
     context = models.CharField(max_length=100,
                                help_text="""Kontext des Bauwerks eingeben (Haus, Siedlung, öfftl. Platz etc., "
                                          max. 100 Zeichen)""",
                                null=True, blank=True)
-    builder = models.CharField(max_length=100, help_text="Bauherren des Bauwerks eingeben (max. 100 Zeichen).",
-                               null=True, blank=True)
-    construction_type = models.CharField(max_length=100, help_text="Bautyp des Bauwerks eingeben (max. 100 Zeichen).",
+    builder = models.CharField(max_length=100,
+                               help_text="Bauherren des Bauwerks eingeben (max. 100 Zeichen).",
+                               null=True, blank=True, validators=[validate_url_conform_str])
+    construction_type = models.CharField(max_length=100,
+                                         help_text="Bautyp des Bauwerks eingeben (max. 100 Zeichen).",
                                          null=True, blank=True)
-    design = models.CharField(max_length=100, help_text="Bauform des Bauwerks angeben. (max. 100 Zeichen)",
+    design = models.CharField(max_length=100,
+                              help_text="Bauform des Bauwerks angeben. (max. 100 Zeichen)",
                               null=True, blank=True)
-    function = models.CharField(max_length=100, help_text="Funktion des Bauwerks eingeben (max. 100 Zeichen).",
-                                null=True, blank=True)
-    length = models.FloatField(help_text="Länge des Bauwerks eingeben (falls vorhanden, in m).", null=True, blank=True)
-    width = models.FloatField(help_text="Breite des Bauwerks eingeben (falls vorhanden, in m).", null=True, blank=True)
-    height = models.FloatField(help_text="Höhe des Bauwerks eingeben (falls vorhanden, in m).", null=True, blank=True)
-    circumference = models.FloatField(help_text="Durchmesser des Bauwerks eingeben (falls vorhanden).",
-                                      null=True, blank=True)
-    area = models.FloatField(help_text="Fläche des Bauwerks eingeben (falls vorhanden, in m²).", null=True, blank=True)
-    column_order = models.CharField(max_length=100, help_text="Säulenordnung des Gebäudes eingeben (max. 100 Zeichen).",
-                                    null=True, blank=True)
+    function = models.CharField(max_length=100,
+                                help_text="Gattung/Funktion des Bauwerks eingeben (max. 100 Zeichen).",
+                                null=True, blank=True, validators=[validate_url_conform_str])
+    length = models.FloatField(help_text="Länge des Bauwerks eingeben (falls vorhanden, in m).",
+                               null=True, blank=True)
+    width = models.FloatField(help_text="Breite des Bauwerks eingeben (falls vorhanden, in m).",
+                              null=True, blank=True)
+    height = models.FloatField(help_text="Höhe des Bauwerks eingeben (falls vorhanden, in m).",
+                               null=True, blank=True)
+    circumference = models.FloatField(
+        help_text="Durchmesser des Bauwerks eingeben (falls vorhanden).",
+        null=True, blank=True)
+    area = models.FloatField(help_text="Fläche des Bauwerks eingeben (falls vorhanden, in m²).",
+                             null=True, blank=True)
+    column_order = models.CharField(max_length=100,
+                                    help_text="Säulenordnung des Gebäudes eingeben (max. 100 Zeichen).",
+                                    null=True, blank=True, validators=[validate_url_conform_str])
     construction = models.CharField(max_length=100,
                                     help_text="""Konstruktion des Bauwerks eingeben (z.B. Massivbau, etc., falls 
                                     vorhanden, max. 100 Zeichen)""",
                                     null=True, blank=True)
-    material = models.CharField(max_length=100, help_text="Material des Bauwerks eingeben (max. 100 Zeichen).",
-                                null=True, blank=True)
-    literature = models.TextField(max_length=1000, help_text="Literatur zum Gebäude angeben (max. 1000 Zeichen).",
+    material = models.CharField(max_length=100,
+                                help_text="Material des Bauwerks eingeben (max. 100 Zeichen).",
+                                null=True, blank=True, validators=[validate_url_conform_str])
+    literature = models.TextField(max_length=1000,
+                                  help_text="Literatur zum Gebäude angeben (max. 1000 Zeichen).",
                                   null=True, blank=True)
 
     def __str__(self):
@@ -174,7 +239,7 @@ class Building(models.Model):
         :return: description of the building
         """
         # pylint: disable= no-member
-        building =self.objects.get(pk=building_id)
+        building = self.objects.get(pk=building_id)
         return building.description
 
     def get_city(self, building_id):
@@ -355,12 +420,15 @@ class Building(models.Model):
 
 
 class Blueprint(models.Model):
-    name = models.CharField(max_length=100, help_text="Titel des Bauplans eingeben (max. 100 Zeichen).")
-    description = models.TextField(max_length=1000, help_text="Beschreibung des Bildes eingeben (max. 1000 Zeichen).",
+    name = models.CharField(max_length=100,
+                            help_text="Titel des Bauplans eingeben (max. 100 Zeichen).")
+    description = models.TextField(max_length=1000,
+                                   help_text="Beschreibung des Bildes eingeben (max. 1000 Zeichen).",
                                    null=True, blank=True)
-    blueprint = models.ImageField(help_text="Auf \"Durchsuchen\" drücken um einen Bauplan hochzuladen.",
-                                  upload_to="blueprint/",
-                                  width_field="width", height_field="height")
+    blueprint = models.ImageField(
+        help_text="Auf \"Durchsuchen\" drücken um einen Bauplan hochzuladen.",
+        upload_to="blueprint/",
+        width_field="width", height_field="height")
     width = models.IntegerField(editable=False, default=0)
     height = models.IntegerField(editable=False, default=0)
     building = models.ForeignKey(to=Building, null=True, blank=True, on_delete=models.SET_NULL)
@@ -380,10 +448,13 @@ class Blueprint(models.Model):
 
 
 class Picture(models.Model):
-    name = models.CharField(max_length=100, help_text="Titel des Bildes eingeben (max. 100 Zeichen).")
-    description = models.TextField(max_length=1000, help_text="Beschreibung des Bildes eingeben (max. 1000 Zeichen).",
+    name = models.CharField(max_length=100,
+                            help_text="Titel des Bildes eingeben (max. 100 Zeichen).")
+    description = models.TextField(max_length=1000,
+                                   help_text="Beschreibung des Bildes eingeben (max. 1000 Zeichen).",
                                    null=True, blank=True)
-    picture = models.ImageField(help_text="Auf \"Durchsuchen\" drücken um ein Bild hochzuladen.", upload_to="pics/",
+    picture = models.ImageField(help_text="Auf \"Durchsuchen\" drücken um ein Bild hochzuladen.",
+                                upload_to="pics/",
                                 width_field="width", height_field="height")
     width = models.IntegerField(editable=False, default=0)
     height = models.IntegerField(editable=False, default=0)
