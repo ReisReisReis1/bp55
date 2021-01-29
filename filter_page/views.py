@@ -1,7 +1,6 @@
 """
 Configurations of the different viewable functions and subpages from the App: home
 """
-from django.db.models import Q
 from django.shortcuts import render
 from details_page.models import Building, Era
 from timeline.views import get_thumbnails_for_buildings
@@ -71,17 +70,21 @@ def my_filter(lst, key, value):
     elif key == "country":
         return lst.filter(country=value)
     elif key == "region":
-        return lst.filter(region=value)
+        return lst.filter(region__icontains=value)
     elif key == "city":
-        return lst.filter(city=value)
+        return lst.filter(city__icontains=value)
     elif key == "architect":
-        return lst.filter(architect=value)
+        return lst.filter(architect__icontains=value)
     elif key == "builder":
-        return lst.filter(builder=value)
+        return lst.filter(builder__icontains=value)
     elif key == "column_order":
-        return lst.filter(column_order=value)
+        return lst.filter(column_order__icontains=value)
     elif key == "design":
-        return lst.filter(design=value)
+        return lst.filter(design__icontains=value)
+    elif key == "material":
+        return lst.filter(material__icontains=value)
+    elif key == "function":
+        return lst.filter(function__icontains=value)
     else:
         return lst
 
@@ -95,8 +98,9 @@ def display_building_filter(request):
     """
 
     # We can filter by this options:
-    # era, country, region, city, architect, builders, column_orders, designs
-    keys = ["era", "country", "region", "city", "architect", "builder", "column_order", "design"]
+    # era, country, region, city, architect, builders, column_orders, designs, material, function
+    keys = ["era", "country", "region", "city", "architect", "builder", "column_order", "design",
+            "material", "function"]
     q = request.GET
     # Set all, to return all.
     # This will take care of returning all Buildings, if no filter is set.
@@ -147,8 +151,9 @@ def display_building_filter(request):
     # Append Thumbnails
     result = get_thumbnails_for_buildings(result)
 
-    filter_names = (
-        'Stadt', 'Region', 'Land', 'Epoche', 'Architekt', 'Erbauer', 'Design', 'Säulenordnung')
+
+    filter_names = ('Stadt', 'Region', 'Land', 'Epoche', 'Architekt', 'Bauherr', 'Bauform',
+                    'Säulenordnung', 'Material', 'Funktion')
     buildings = Building.objects.all()
 
     eras = Era.objects.all().exclude(name=None).order_by("name").values('name')
@@ -175,6 +180,12 @@ def display_building_filter(request):
     column_orders = delete_duplicates(one_dict_set_to_string_list(column_orders))
     designs = buildings.only('design').exclude(design=None).order_by("design").values('design')
     designs = delete_duplicates(one_dict_set_to_string_list(designs))
+    material = buildings.only('material').exclude(material=None).order_by("material")\
+        .values('material')
+    material = delete_duplicates(one_dict_set_to_string_list(material))
+    function = buildings.only('function').exclude(function=None).order_by("function")\
+        .values('function')
+    function = delete_duplicates(one_dict_set_to_string_list(function))
 
     context = {
         'Cities': cities,
@@ -185,6 +196,8 @@ def display_building_filter(request):
         'Builders': builders,
         'Designs': designs,
         'Column_Orders': column_orders,
+        'Material': material,
+        'Function': function,
         'Filter_Result': result,
         'Filter_Names': filter_names,
         'Active_Filter': dict(q),
