@@ -1,21 +1,10 @@
 """
 Configurations for the Database Models for the App 'details_page'
-
-def get_dimension(self, id):
-        :return: Dimension of the building including length, width, height, circumference and area
-        # pylint: disable= no-member
-        building = self.objects.filter(pk=id)
-        length_var=self.length
-        width_var=self.width
-        height_var=self.height
-        circumference_var=self.circumference
-        area_var=self.area
-        dimension= Concat(V('Länge:'), 'length_var', V('Breite:'), 'width_var', V('Höhe:'), 'height_var', V('Durchmesser'), 'circumference_var', V('Fläche:'), 'area_var')
-        return dimension
 """
 
 from django.db import models
 from django.core.exceptions import ValidationError
+# pylint: disable=import-error
 from . import country_codes
 
 
@@ -47,6 +36,9 @@ def validate_color_code(code):
 
 
 class Era(models.Model):
+    """
+    Muss noch gemacht werden
+    """
     name = models.CharField(max_length=100, choices=[
         ('Bronzezeit', 'Bronzezeit'), ('Frühzeit', 'Frühzeit'), ('Archaik', 'Archaik'),
         ('Klassik', 'Klassik'), ('Hellenismus', 'Hellenismus'),
@@ -61,7 +53,8 @@ class Era(models.Model):
     year_from = models.PositiveIntegerField(help_text="Jahr des Beginns der Epoche eingeben.",
                                             blank=True, null=True)
     year_from_BC_or_AD = models.CharField(max_length=7,
-                                          help_text="Jahr des Beginns: v.Chr. bzw. n.Chr. auswählen.",
+                                          help_text="Jahr des Beginns: v.Chr. bzw. n.Chr. "
+                                                    "auswählen.",
                                           choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")],
                                           default="v.Chr.",
                                           null=True, blank=True)
@@ -72,24 +65,26 @@ class Era(models.Model):
                                         choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")],
                                         default="v.Chr.",
                                         null=True, blank=True)
-    visible_on_video_page = models.BooleanField(default=True, help_text="""Angeben ob die Epoche auf der 'Staffeln' 
-                                                Seite sichtbar sein soll.""")
-    color_code = models.CharField(max_length=6, help_text="""Hier 6. stelligen Hex-Farbcode für die Epoche eingeben 
-                                                             (ohne das führende '#')(z.B.: #ffffff = Weiß).""",
+    visible_on_video_page = models.BooleanField(default=True, help_text="""Angeben ob die Epoche
+                                                auf der 'Staffeln' Seite sichtbar sein soll.""")
+    color_code = models.CharField(max_length=6, help_text="""Hier 6. stelligen Hex-Farbcode für die
+                                  Epoche eingeben (ohne das führende '#')(z.B.: #ffffff = Weiß).""",
                                   default="ffffff", validators=[validate_color_code])
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
     def get_year_of_item_as_signed_int(self):
         """
         Inner helper to sorting the years.
-        About the try/except: You can define an Era without an year. This leads to following problem:
-        You can not sort Eras by year if there is one without an year. In line 29 or 31 we try to get the
-        year as an Int. This will raise the TypeError, if this Era don't has a year (or the year is set
-        to None to be exact). Therefore we except this error, and return 2021, which is higher than
+        About the try/except: You can define an Era without an year.
+        This leads to following problem:
+        You can not sort Eras by year if there is one without an year.
+        In line 29 or 31 we try to get the
+        year as an Int. This will raise the TypeError,
+        if this Era don't has a year (or the year is setto None to be exact).
+        Therefore we except this error, and return 2021, which is higher than
         every year in the Database (limited to max_years (currently 1400)).
-        :param era: the era to get the year from
         :return: the year of the era(beginning year)
         """
         try:
@@ -103,6 +98,7 @@ class Era(models.Model):
 
 
 class Building(models.Model):
+    # pylint: disable = too-many-public-methods
     """
     Database model for buildings. Will be used in detail page, but also in timeline and filter page.
     name: name of the building
@@ -143,8 +139,8 @@ class Building(models.Model):
     region = models.CharField(max_length=100,
                               help_text="Region des Bauwerks eingeben (max. 100 Zeichen).",
                               null=True, blank=True, validators=[validate_url_conform_str])
-    country = models.CharField(max_length=100, help_text="Hier Land des Bauwerks auswählen (Tipp:" 
-                                                         "Zum Suchen Kürzel" 
+    country = models.CharField(max_length=100, help_text="Hier Land des Bauwerks auswählen (Tipp:"
+                                                         "Zum Suchen Kürzel"
                                                          "auf der Tastatur eingeben).",
                                choices=country_codes.contry_codes_as_tuple_list,
                                default="Griechenland", null=True, blank=True,
@@ -154,14 +150,16 @@ class Building(models.Model):
                   "erscheint das Gebäude nicht auf der Zeitachse.",
         null=True, blank=True)
     date_from_BC_or_AD = models.CharField(max_length=7,
-                                          help_text="Jahr des Baubeginns: v.Chr. bzw. n.Chr. auswählen.",
+                                          help_text="Jahr des Baubeginns: v.Chr. bzw. n.Chr. "
+                                                    "auswählen.",
                                           choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")],
                                           default="v.Chr.",
                                           null=True, blank=True)
     date_to = models.PositiveIntegerField(help_text="Jahr des Bauendes eingeben.", null=True,
                                           blank=True)
     date_to_BC_or_AD = models.CharField(max_length=7,
-                                        help_text="Jahr des Bauendes: v.Chr. bzw. n.Chr. auswählen.",
+                                        help_text="Jahr des Bauendes: v.Chr. bzw. n.Chr. "
+                                                  "auswählen.",
                                         choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")],
                                         default="v.Chr.",
                                         null=True, blank=True)
@@ -175,20 +173,22 @@ class Building(models.Model):
                                  help_text="Architekt des Bauwerks eingeben (max. 100 Zeichen).",
                                  null=True, blank=True, validators=[validate_url_conform_str])
     context = models.CharField(max_length=100,
-                               help_text="""Kontext des Bauwerks eingeben (Haus, Siedlung, öfftl. Platz etc., "
-                                         max. 100 Zeichen)""",
+                               help_text="""Kontext des Bauwerks eingeben (Haus, Siedlung, 
+                               öfftl. Platz etc., "max. 100 Zeichen)""",
                                null=True, blank=True)
     builder = models.CharField(max_length=100,
                                help_text="Bauherren des Bauwerks eingeben (max. 100 Zeichen).",
                                null=True, blank=True, validators=[validate_url_conform_str])
     construction_type = models.CharField(max_length=100,
-                                         help_text="Bautyp des Bauwerks eingeben (max. 100 Zeichen).",
+                                         help_text="Bautyp des Bauwerks eingeben "
+                                                   "(max. 100 Zeichen).",
                                          null=True, blank=True)
     design = models.CharField(max_length=100,
                               help_text="Bauform des Bauwerks angeben. (max. 100 Zeichen)",
                               null=True, blank=True)
     function = models.CharField(max_length=100,
-                                help_text="Gattung/Funktion des Bauwerks eingeben (max. 100 Zeichen).",
+                                help_text="Gattung/Funktion des Bauwerks eingeben "
+                                          "(max. 100 Zeichen).",
                                 null=True, blank=True, validators=[validate_url_conform_str])
     length = models.FloatField(help_text="Länge des Bauwerks eingeben (falls vorhanden, in m).",
                                null=True, blank=True)
@@ -199,14 +199,13 @@ class Building(models.Model):
     circumference = models.FloatField(
         help_text="Durchmesser des Bauwerks eingeben (falls vorhanden).",
         null=True, blank=True)
-    area = models.FloatField(help_text="Fläche des Bauwerks eingeben (falls vorhanden, in m²).",
+    area = models.FloatField(help_text="Fläche des Bauwerks eingeben (falls vorhanden, in ha).",
                              null=True, blank=True)
-    column_order = models.CharField(max_length=100,
-                                    help_text="Säulenordnung des Gebäudes eingeben (max. 100 Zeichen).",
+    column_order = models.CharField(max_length=100, help_text="Säulenordnung des Gebäudes eingeben "
+                                                              "(max. 100 Zeichen).",
                                     null=True, blank=True, validators=[validate_url_conform_str])
-    construction = models.CharField(max_length=100,
-                                    help_text="""Konstruktion des Bauwerks eingeben (z.B. Massivbau, etc., falls 
-                                    vorhanden, max. 100 Zeichen)""",
+    construction = models.CharField(max_length=100, help_text="""Konstruktion des Bauwerks eingeben 
+                                    (z.B. Massivbau, etc., falls vorhanden, max. 100 Zeichen)""",
                                     null=True, blank=True)
     material = models.CharField(max_length=100,
                                 help_text="Material des Bauwerks eingeben (max. 100 Zeichen).",
@@ -216,7 +215,7 @@ class Building(models.Model):
                                   null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
     def get_name(self, building_id):
         """
@@ -420,10 +419,14 @@ class Building(models.Model):
 
 
 class Blueprint(models.Model):
+    """
+    Muss noch gemacht werden
+    """
     name = models.CharField(max_length=100,
                             help_text="Titel des Bauplans eingeben (max. 100 Zeichen).")
     description = models.TextField(max_length=1000,
-                                   help_text="Beschreibung des Bildes eingeben (max. 1000 Zeichen).",
+                                   help_text="Beschreibung des Bildes eingeben "
+                                             "(max. 1000 Zeichen).",
                                    null=True, blank=True)
     blueprint = models.ImageField(
         help_text="Auf \"Durchsuchen\" drücken um einen Bauplan hochzuladen.",
@@ -434,7 +437,7 @@ class Blueprint(models.Model):
     building = models.ForeignKey(to=Building, null=True, blank=True, on_delete=models.SET_NULL)
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
     def get_blueprint_for_building(self, wanted_building):
         """
@@ -442,16 +445,20 @@ class Blueprint(models.Model):
         :param wanted_building:
         :return: list of blueprints for given building or empty list
         """
-        # pylint disable= no-member
+        # pylint: disable= no-member
         blueprints = self.objects.filter(building=wanted_building)
         return blueprints
 
 
 class Picture(models.Model):
+    """
+    Muss noch gemacht werden
+    """
     name = models.CharField(max_length=100,
                             help_text="Titel des Bildes eingeben (max. 100 Zeichen).")
     description = models.TextField(max_length=1000,
-                                   help_text="Beschreibung des Bildes eingeben (max. 1000 Zeichen).",
+                                   help_text="Beschreibung des Bildes eingeben "
+                                             "(max. 1000 Zeichen).",
                                    null=True, blank=True)
     picture = models.ImageField(help_text="Auf \"Durchsuchen\" drücken um ein Bild hochzuladen.",
                                 upload_to="pics/",
@@ -460,13 +467,15 @@ class Picture(models.Model):
     height = models.IntegerField(editable=False, default=0)
     building = models.ForeignKey(to=Building, null=True, blank=True, on_delete=models.SET_NULL)
     usable_as_thumbnail = models.BooleanField(default=False,
-                                              help_text="""Anwählen wenn das Bild als Thumbnail (Vorschaubild) für sein 
-                                              Bauwerk in der Zeitachse, der Bauwerke-Seite, und in den Suchergebnissen 
-                                              erscheinen darf. Bei mehreren möglichen Vorschaubildern für ein Bauwerk 
+                                              help_text="""Anwählen wenn das Bild als Thumbnail 
+                                              (Vorschaubild) für sein Bauwerk in der Zeitachse,
+                                              der Bauwerke-Seite, und in den Suchergebnissen 
+                                              erscheinen darf. 
+                                              Bei mehreren möglichen Vorschaubildern für ein Bauwerk 
                                               wird zufällig eins ausgewählt.""")
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
     def get_picture_for_building(self, wanted_building):
         """
@@ -474,6 +483,6 @@ class Picture(models.Model):
         :param wanted_building:
         :return: list of Pictures for given building or empty list
         """
-        # pylint disable= no-member
+        # pylint: disable= no-member
         pictures = self.objects.filter(building=wanted_building)
         return pictures

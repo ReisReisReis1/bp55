@@ -1,7 +1,7 @@
 """
 Tests for the functions in the App: details_page
 """
-
+# pylint: disable=all
 from django.test import Client
 from django.test import TestCase
 from django.core.exceptions import ValidationError

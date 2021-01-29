@@ -1,10 +1,11 @@
 """"
 Test for the App: video-content
 """
+# pylint: disable=all
 from django.test import Client, TestCase
+from model_bakery import baker
 from video_content.models import Video, Timestamp
 from details_page.models import Era
-from model_bakery import baker
 
 
 class VideoTestCases(TestCase):
@@ -260,6 +261,8 @@ class ViewsTestCases(TestCase):
         """
         Setting up objects and a client for the tests
         """
+        self.client = Client()
+
         self.frühzeit = Era.objects.create(name='Frühzeit', visible_on_video_page=True,
                                            year_from=50, year_from_BC_or_AD='v.Chr', year_to=55,
                                            year_to_BC_or_AD='n.Chr')

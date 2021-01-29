@@ -1,7 +1,7 @@
 """
 Tests for functions in the App: start
 """
-
+# pylint: disable=all
 from django.test import Client
 from django.test import TestCase
 from video_content.models import Video
@@ -10,7 +10,7 @@ from details_page.models import Era
 
 class ViewsTestCases(TestCase):
     """
-
+    Tests if the intro page with the intro video is loading correctly
     """
 
     def setUp(self):
@@ -20,6 +20,7 @@ class ViewsTestCases(TestCase):
         self.client = Client()
 
     def test1(self):
+        # pylint: disable=no-member
         """
         Testing start function in views
         """

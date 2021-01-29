@@ -1,11 +1,13 @@
 """
 Tests for the functions in the App: search
 """
-
+# pylint: disable=all
 from django.test import TestCase, Client
+# pylint: disable = import-error
 from details_page.models import Building, Era
 
-test_picture_path = '/static/default-thumbnail.png'
+TEST_PICTURE_PATH = '/static/default-thumbnail.png'
+
 
 class SearchTestCases(TestCase):
     """
@@ -144,19 +146,32 @@ class SearchTestCases(TestCase):
         response12 = self.client.get('/search/?search_request=' + self.building11.column_order)
         response13 = self.client.get('/search/?search_request=' + self.building11.material)
 
-        self.assertListEqual(list(response1.context['Result']), [(self.building11, test_picture_path)])
-        self.assertListEqual(list(response2.context['Result']), [(self.building11, test_picture_path)])
-        self.assertListEqual(list(response3.context['Result']), [(self.building11, test_picture_path)])
-        self.assertListEqual(list(response4.context['Result']), [(self.building11, test_picture_path)])
-        self.assertListEqual(list(response5.context['Result']), [(self.building11, test_picture_path)])
-        self.assertListEqual(list(response6.context['Result']), [(self.building11, test_picture_path)])
-        self.assertListEqual(list(response7.context['Result']), [(self.building11, test_picture_path)])
-        self.assertListEqual(list(response8.context['Result']), [(self.building11, test_picture_path)])
-        self.assertListEqual(list(response9.context['Result']), [(self.building11, test_picture_path)])
-        self.assertListEqual(list(response10.context['Result']), [(self.building11, test_picture_path)])
-        self.assertListEqual(list(response11.context['Result']), [(self.building11, test_picture_path)])
-        self.assertListEqual(list(response12.context['Result']), [(self.building11, test_picture_path)])
-        self.assertListEqual(list(response13.context['Result']), [(self.building11, test_picture_path)])
+        self.assertListEqual(list(response1.context['Result']),
+                             [(self.building11, test_picture_path)])
+        self.assertListEqual(list(response2.context['Result']),
+                             [(self.building11, test_picture_path)])
+        self.assertListEqual(list(response3.context['Result']),
+                             [(self.building11, test_picture_path)])
+        self.assertListEqual(list(response4.context['Result']),
+                             [(self.building11, test_picture_path)])
+        self.assertListEqual(list(response5.context['Result']),
+                             [(self.building11, test_picture_path)])
+        self.assertListEqual(list(response6.context['Result']),
+                             [(self.building11, test_picture_path)])
+        self.assertListEqual(list(response7.context['Result']),
+                             [(self.building11, test_picture_path)])
+        self.assertListEqual(list(response8.context['Result']),
+                             [(self.building11, test_picture_path)])
+        self.assertListEqual(list(response9.context['Result']),
+                             [(self.building11, test_picture_path)])
+        self.assertListEqual(list(response10.context['Result']),
+                             [(self.building11, test_picture_path)])
+        self.assertListEqual(list(response11.context['Result']),
+                             [(self.building11, test_picture_path)])
+        self.assertListEqual(list(response12.context['Result']),
+                             [(self.building11, test_picture_path)])
+        self.assertListEqual(list(response13.context['Result']),
+                             [(self.building11, test_picture_path)])
 
     def test3(self):
         """
@@ -205,5 +220,6 @@ class SearchTestCases(TestCase):
                               (self.building8, test_picture_path),
                               (self.building9, test_picture_path)])
         self.assertListEqual(list(response6.context['Result']), [])
-        self.assertListEqual(list(response7.context['Result']), [(self.building11, test_picture_path)])
+        self.assertListEqual(list(response7.context['Result']),
+                             [(self.building11, test_picture_path)])
         self.assertListEqual(list(response8.context['Result']), all_buildings_ordered)
