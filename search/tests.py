@@ -5,6 +5,7 @@ Tests for the functions in the App: search
 from django.test import TestCase, Client
 from details_page.models import Building, Era
 
+test_picture_path = '/static/default-thumbnail.png'
 
 class SearchTestCases(TestCase):
     """
@@ -143,19 +144,19 @@ class SearchTestCases(TestCase):
         response12 = self.client.get('/search/?search_request=' + self.building11.column_order)
         response13 = self.client.get('/search/?search_request=' + self.building11.material)
 
-        self.assertListEqual(list(response1.context['Result']), [(self.building11, None)])
-        self.assertListEqual(list(response2.context['Result']), [(self.building11, None)])
-        self.assertListEqual(list(response3.context['Result']), [(self.building11, None)])
-        self.assertListEqual(list(response4.context['Result']), [(self.building11, None)])
-        self.assertListEqual(list(response5.context['Result']), [(self.building11, None)])
-        self.assertListEqual(list(response6.context['Result']), [(self.building11, None)])
-        self.assertListEqual(list(response7.context['Result']), [(self.building11, None)])
-        self.assertListEqual(list(response8.context['Result']), [(self.building11, None)])
-        self.assertListEqual(list(response9.context['Result']), [(self.building11, None)])
-        self.assertListEqual(list(response10.context['Result']), [(self.building11, None)])
-        self.assertListEqual(list(response11.context['Result']), [(self.building11, None)])
-        self.assertListEqual(list(response12.context['Result']), [(self.building11, None)])
-        self.assertListEqual(list(response13.context['Result']), [(self.building11, None)])
+        self.assertListEqual(list(response1.context['Result']), [(self.building11, test_picture_path)])
+        self.assertListEqual(list(response2.context['Result']), [(self.building11, test_picture_path)])
+        self.assertListEqual(list(response3.context['Result']), [(self.building11, test_picture_path)])
+        self.assertListEqual(list(response4.context['Result']), [(self.building11, test_picture_path)])
+        self.assertListEqual(list(response5.context['Result']), [(self.building11, test_picture_path)])
+        self.assertListEqual(list(response6.context['Result']), [(self.building11, test_picture_path)])
+        self.assertListEqual(list(response7.context['Result']), [(self.building11, test_picture_path)])
+        self.assertListEqual(list(response8.context['Result']), [(self.building11, test_picture_path)])
+        self.assertListEqual(list(response9.context['Result']), [(self.building11, test_picture_path)])
+        self.assertListEqual(list(response10.context['Result']), [(self.building11, test_picture_path)])
+        self.assertListEqual(list(response11.context['Result']), [(self.building11, test_picture_path)])
+        self.assertListEqual(list(response12.context['Result']), [(self.building11, test_picture_path)])
+        self.assertListEqual(list(response13.context['Result']), [(self.building11, test_picture_path)])
 
     def test3(self):
         """
@@ -171,38 +172,38 @@ class SearchTestCases(TestCase):
         response6 = self.client.get('/search/?search_request=Dutschland')
         response7 = self.client.get('/search/?search_request=Kölner DOM')
         response8 = self.client.get('/search/?search_request=')
-        all_buildings_ordered = [(self.building6, None),
-                                 (self.building4, None),
-                                 (self.building5, None),
-                                 (self.building2, None),
-                                 (self.building3, None),
-                                 (self.building10, None),
-                                 (self.building11, None),
-                                 (self.building7, None),
-                                 (self.building1, None),
-                                 (self.building8, None),
-                                 (self.building9, None)]
+        all_buildings_ordered = [(self.building6, test_picture_path),
+                                 (self.building4, test_picture_path),
+                                 (self.building5, test_picture_path),
+                                 (self.building2, test_picture_path),
+                                 (self.building3, test_picture_path),
+                                 (self.building10, test_picture_path),
+                                 (self.building11, test_picture_path),
+                                 (self.building7, test_picture_path),
+                                 (self.building1, test_picture_path),
+                                 (self.building8, test_picture_path),
+                                 (self.building9, test_picture_path)]
         self.assertListEqual(list(response1.context['Result']), all_buildings_ordered)
         self.assertListEqual(list(response2.context['Result']),
-                             [(self.building6, None),
-                              (self.building4, None),
-                              (self.building5, None),
-                              (self.building1, None),
-                              (self.building8, None),
-                              (self.building9, None)
+                             [(self.building6, test_picture_path),
+                              (self.building4, test_picture_path),
+                              (self.building5, test_picture_path),
+                              (self.building1, test_picture_path),
+                              (self.building8, test_picture_path),
+                              (self.building9, test_picture_path)
                               ])
         self.assertListEqual(list(response3.context['Result']), [])
         self.assertListEqual(list(response4.context['Result']),
-                             [(self.building6, None),
-                              (self.building4, None),
-                              (self.building1, None)])
+                             [(self.building6, test_picture_path),
+                              (self.building4, test_picture_path),
+                              (self.building1, test_picture_path)])
         self.assertListEqual(list(response5.context['Result']),
-                             [(self.building6, None),
-                              (self.building4, None),
-                              (self.building5, None),
-                              (self.building1, None),
-                              (self.building8, None),
-                              (self.building9, None)])
+                             [(self.building6, test_picture_path),
+                              (self.building4, test_picture_path),
+                              (self.building5, test_picture_path),
+                              (self.building1, test_picture_path),
+                              (self.building8, test_picture_path),
+                              (self.building9, test_picture_path)])
         self.assertListEqual(list(response6.context['Result']), [])
-        self.assertListEqual(list(response7.context['Result']), [(self.building11, None)])
+        self.assertListEqual(list(response7.context['Result']), [(self.building11, test_picture_path)])
         self.assertListEqual(list(response8.context['Result']), all_buildings_ordered)

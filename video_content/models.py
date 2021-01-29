@@ -55,7 +55,7 @@ class Video(models.Model):
             return Video.DoesNotExist
         except Video.MultipleObjectsReturned:
             # pylint: disable= no-member
-            return self.objects.filter(intro=True).first
+            return self.objects.filter(intro=True)[0]
 
     def get_era(self, wanted_era):
         """

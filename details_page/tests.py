@@ -22,6 +22,7 @@ class ViewsTestCases(TestCase):
         """
         Testing detailed function in views
         """
+        Building.objects.create(name='Test1')
         response = self.client.get('/details_page/1')
         self.assertEqual(response.status_code, 200)
 
