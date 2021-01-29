@@ -32,9 +32,11 @@
                                     {% else %}
                                         <h5 class="card-title" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.title }} · {{ time }}</h5>
 
-                                        <div class="card-text" align="justify">
-                                            {{ building.infos }}
-                                        </div>
+                                        {% if False and not building.infos == None %}
+                                            <div class="card-text historic-title" align="justify">
+                                                {{ building.infos }}
+                                            </div>
+                                        {% endif %}
                                     {% endif %}
                                 </div>
                             {% if is_building %}
@@ -68,11 +70,13 @@
                                             <img src="/media/{{ image.picture }}" style="width: 100%;">
                                         </div>
                                     {% else %}
-                                        <h5 class="card-title" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.title }} · {{ time }}</h5>
+                                        <h5 class="card-title historic-title" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.title }} · {{ time }}</h5>
 
-                                        <div class="card-text" align="justify">
-                                            {{ building.infos }}
-                                        </div>
+                                        {% if False and not building.infos == None %}
+                                            <div class="card-text" align="justify">
+                                                {{ building.infos }}
+                                            </div>
+                                        {% endif %}
                                     {% endif %}
                                 </div>
                             {% if is_building %}
