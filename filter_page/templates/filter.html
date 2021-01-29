@@ -50,42 +50,42 @@
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         {% if forloop.counter == 1 %}
                             {% for city in Cities %}
-                                <a class="dropdown-item" onclick="addParameterToURL('city={{ city.city }}')">{{ city.city }}</a>
+                                <a class="dropdown-item" onclick="addParameterToURL('city={{ city }}')">{{ city }}</a>
                             {% endfor %}
                         {% endif %}
                         {% if forloop.counter == 2 %}
                             {% for region in Regions %}
-                                <a class="dropdown-item" onclick="addParameterToURL('region={{ region.region }}')">{{ region.region }}</a>
+                                <a class="dropdown-item" onclick="addParameterToURL('region={{ region }}')">{{ region }}</a>
                             {% endfor %}
                         {% endif %}
                         {% if forloop.counter == 3 %}
                             {% for country in Countries %}
-                                <a class="dropdown-item" onclick="addParameterToURL('country={{ country.country }}')">{{ country.country }}</a>
+                                <a class="dropdown-item" onclick="addParameterToURL('country={{ country }}')">{{ country }}</a>
                             {% endfor %}
                         {% endif %}
                         {% if forloop.counter == 4 %}
                             {% for era in Eras %}
-                                <a class="dropdown-item" onclick="addParameterToURL('era={{ era.name }}')">{{ era.name }}</a>
+                                <a class="dropdown-item" onclick="addParameterToURL('era={{ era }}')">{{ era }}</a>
                             {% endfor %}
                         {% endif %}
                         {% if forloop.counter == 5 %}
                             {% for architect in Architects %}
-                                <a class="dropdown-item" onclick="addParameterToURL('architect={{ architect.architect }}')">{{ architect.architect }}</a>
+                                <a class="dropdown-item" onclick="addParameterToURL('architect={{ architect }}')">{{ architect }}</a>
                             {% endfor %}
                         {% endif %}
                         {% if forloop.counter == 6 %}
                             {% for builder in Builders %}
-                                <a class="dropdown-item" onclick="addParameterToURL('builder={{ builder.builder }}')">{{ builder.builder }}</a>
+                                <a class="dropdown-item" onclick="addParameterToURL('builder={{ builder }}')">{{ builder }}</a>
                             {% endfor %}
                         {% endif %}
                         {% if forloop.counter == 7 %}
                             {% for design in Designs %}
-                                <a class="dropdown-item" onclick="addParameterToURL('design={{ design.design }}')">{{ design.design }}</a>
+                                <a class="dropdown-item" onclick="addParameterToURL('design={{ design }}')">{{ design }}</a>
                             {% endfor %}
                         {% endif %}
                         {% if forloop.counter == 8 %}
                             {% for column_order in Column_Orders %}
-                                <a class="dropdown-item" onclick="addParameterToURL('column_order={{ column_order.column_order }}')">{{ column_order.column_order }}</a>
+                                <a class="dropdown-item" onclick="addParameterToURL('column_order={{ column_order }}')">{{ column_order }}</a>
                             {% endfor %}
                         {% endif %}
                     </div>

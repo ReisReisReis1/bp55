@@ -17,6 +17,7 @@ class ViewsTestCases(TestCase):
     """
      Testcases for the functions in view
     """
+
     def setUp(self):
         """
         Setting up a client for the tests
@@ -75,6 +76,7 @@ class HistoricDatesModelTests(TestCase):
         self.assertEqual(HistoricDate.objects.get(pk=1).infos, hd.infos)
         self.assertEqual(HistoricDate.objects.get(pk=1).era, hd.era)
 
+
     def test__str__(self):
         """
         Tests for the __str__ method of the model
@@ -86,8 +88,8 @@ class HistoricDatesModelTests(TestCase):
                                          title="Test",
                                          infos="Ein Test Datum",
                                          era=self.an_era)
-        self.assertEqual(str(HistoricDate.objects.get(title="Test")), str(hd.title)+" ("+str(hd.year)+" "
-                         + str(hd.year_BC_or_AD)+")")
+        self.assertEqual(str(HistoricDate.objects.get(title="Test")), str(hd.title) + " (" + str(hd.year) + " "
+                         + str(hd.year_BC_or_AD) + ")")
         # with exacter date
         hd.exacter_date = date(23, 3, 1)
         hd.save()
@@ -99,6 +101,7 @@ class TimelineViewsTest(TestCase):
     """
     Tests for the views.py for the timeline app.
     """
+
     @classmethod
     def setUpTestData(cls):
         """
@@ -106,7 +109,9 @@ class TimelineViewsTest(TestCase):
         :return: None
         """
         cls.client = Client()
-        cls.bronzezeit = Era.objects.create(name="Bronzezeit", year_from=1400, year_from_BC_or_AD="v.Chr.", year_to=1101,
+
+        cls.bronzezeit = Era.objects.create(name="Bronzezeit", year_from=1400, year_from_BC_or_AD="v.Chr.",
+                                            year_to=1101,
                                             year_to_BC_or_AD="v.Chr.", visible_on_video_page=True, color_code="fffff1")
         cls.eisenzeit = Era.objects.create(name="Eisenzeit", year_from=1100, year_from_BC_or_AD="v.Chr.", year_to=701,
                                            year_to_BC_or_AD="v.Chr.", visible_on_video_page=True, color_code="fffff2")
@@ -404,6 +409,7 @@ class TimelineViewsTest(TestCase):
         :return: None / Test results
         """
         b = Building.objects.create(name="Building 1", date_from=100, date_from_BC_or_AD="v.Chr.")
+
         p1 = Picture.objects.create(name="Test", picture=image_mock,
                                     building=b, usable_as_thumbnail=True)
         p2 = Picture.objects.create(name="Test", picture=image_mock2,
@@ -418,6 +424,7 @@ class GetDateAsStingTests(TestCase):
     Tests for class method get_date_as_string(item), witch returns the date in best manner,
     as Sting.
     """
+
     @classmethod
     def setUpTestData(cls):
         """

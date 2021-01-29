@@ -16,6 +16,6 @@ def start(request):
     """
     video = Video.get_intro(Video)
     context = {
-        'video': video
+        'Video': video
     }
     return render(request, 'start.html', context)

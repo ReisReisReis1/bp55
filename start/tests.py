@@ -5,12 +5,14 @@ Tests for functions in the App: start
 from django.test import Client
 from django.test import TestCase
 from video_content.models import Video
+from details_page.models import Era
 
 
 class ViewsTestCases(TestCase):
     """
 
     """
+
     def setUp(self):
         """
         Setting up a client for the tests
@@ -21,8 +23,8 @@ class ViewsTestCases(TestCase):
         """
         Testing start function in views
         """
-        Video.objects.create(title='Test8', video='/media/videos/Intro2.mp2', era='Sonstiges', intro=True)
+        Video.objects.create(title='Test8', video='/media/videos/Intro2.mp2',
+                             era=Era.objects.create(), intro=True)
         response = self.client.get('/start/')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context['video'], Video.get_intro(Video))
-
+        self.assertEqual(response.context['Video'], Video.get_intro(Video))

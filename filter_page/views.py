@@ -6,6 +6,26 @@ from details_page.models import Building, Era
 from timeline.views import get_thumbnails_for_buildings
 
 
+def splitting(lst):
+    """
+    Splits the strings in the list at ; and ,
+    """
+    final_string = []
+    i = 0
+    while i < len(lst):
+        first_split = lst[i].split(';')
+        j = 0
+        while j < len(first_split):
+            second_split = first_split[j].split(',')
+            first_split = first_split[:j] + [s for s in second_split] + \
+                               first_split[j + 1:]
+            j = j + len(second_split)
+        lst = lst[:i] + [s for s in first_split] + lst[i + 1:]
+        i = i + len(first_split)
+
+    return lst
+
+
 def one_dict_set_to_string_list(dictqs):
     """
     This will refactor the dict list queryset to a string list, with the same contents.
@@ -32,7 +52,7 @@ def delete_duplicates(lst):
             result.append(e)
     return result
 
-  
+
 def my_filter(lst, key, value):
     """
     This will execute filtering on a given list, while given key as string.
@@ -131,6 +151,7 @@ def display_building_filter(request):
     # Append Thumbnails
     result = get_thumbnails_for_buildings(result)
 
+
     filter_names = ('Stadt', 'Region', 'Land', 'Epoche', 'Architekt', 'Bauherr', 'Bauform',
                     'Säulenordnung', 'Material', 'Funktion')
     buildings = Building.objects.all()
@@ -141,17 +162,20 @@ def display_building_filter(request):
     # so we will implement duplication deletion in python here for this matter. But later (if no one uses
     # sqlite anymore) it would be better and more efficient to set .distinct() for that.
     eras = delete_duplicates(one_dict_set_to_string_list(eras))
-    countries = buildings.only('country').exclude(country=None).order_by("country").values('country')
+    countries = buildings.only('country').exclude(country=None).order_by("country").values(
+        'country')
     countries = delete_duplicates(one_dict_set_to_string_list(countries))
     regions = buildings.only('region').exclude(region=None).order_by("region").values('region')
     regions = delete_duplicates(one_dict_set_to_string_list(regions))
     cities = buildings.only('city').exclude(city=None).order_by("city").values('city')
     cities = delete_duplicates(one_dict_set_to_string_list(cities))
-    architects = buildings.only('architect').exclude(architect=None).order_by("architect").values('architect')
+    architects = buildings.only('architect').exclude(architect=None).order_by("architect").values(
+        'architect')
     architects = delete_duplicates(one_dict_set_to_string_list(architects))
     builders = buildings.only('builder').exclude(builder=None).order_by("builder").values('builder')
     builders = delete_duplicates(one_dict_set_to_string_list(builders))
-    column_orders = buildings.only('column_order').exclude(column_order=None).order_by("column_order").\
+    column_orders = buildings.only('column_order').exclude(column_order=None).order_by(
+        "column_order"). \
         values('column_order')
     column_orders = delete_duplicates(one_dict_set_to_string_list(column_orders))
     designs = buildings.only('design').exclude(design=None).order_by("design").values('design')
