@@ -47,45 +47,45 @@
                     <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {{ filter }}
                     </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <div class="dropdown-menu pre-scrollable" aria-labelledby="dropdownMenuButton">
                         {% if forloop.counter == 1 %}
                             {% for city in Cities %}
-                                <a class="dropdown-item" onclick="addParameterToURL('city={{ city.city }}')">{{ city.city }}</a>
+                                <a class="dropdown-item" onclick="addParameterToURL('city={{ city }}')">{{ city }}</a>
                             {% endfor %}
                         {% endif %}
                         {% if forloop.counter == 2 %}
                             {% for region in Regions %}
-                                <a class="dropdown-item" onclick="addParameterToURL('region={{ region.region }}')">{{ region.region }}</a>
+                                <a class="dropdown-item" onclick="addParameterToURL('region={{ region }}')">{{ region }}</a>
                             {% endfor %}
                         {% endif %}
                         {% if forloop.counter == 3 %}
                             {% for country in Countries %}
-                                <a class="dropdown-item" onclick="addParameterToURL('country={{ country.country }}')">{{ country.country }}</a>
+                                <a class="dropdown-item" onclick="addParameterToURL('country={{ country }}')">{{ country }}</a>
                             {% endfor %}
                         {% endif %}
                         {% if forloop.counter == 4 %}
                             {% for era in Eras %}
-                                <a class="dropdown-item" onclick="addParameterToURL('era={{ era.name }}')">{{ era.name }}</a>
+                                <a class="dropdown-item" onclick="addParameterToURL('era={{ era }}')">{{ era }}</a>
                             {% endfor %}
                         {% endif %}
                         {% if forloop.counter == 5 %}
                             {% for architect in Architects %}
-                                <a class="dropdown-item" onclick="addParameterToURL('architect={{ architect.architect }}')">{{ architect.architect }}</a>
+                                <a class="dropdown-item" onclick="addParameterToURL('architect={{ architect }}')">{{ architect }}</a>
                             {% endfor %}
                         {% endif %}
                         {% if forloop.counter == 6 %}
                             {% for builder in Builders %}
-                                <a class="dropdown-item" onclick="addParameterToURL('builder={{ builder.builder }}')">{{ builder.builder }}</a>
+                                <a class="dropdown-item" onclick="addParameterToURL('builder={{ builder }}')">{{ builder }}</a>
                             {% endfor %}
                         {% endif %}
                         {% if forloop.counter == 7 %}
                             {% for design in Designs %}
-                                <a class="dropdown-item" onclick="addParameterToURL('design={{ design.design }}')">{{ design.design }}</a>
+                                <a class="dropdown-item" onclick="addParameterToURL('design={{ design }}')">{{ design }}</a>
                             {% endfor %}
                         {% endif %}
                         {% if forloop.counter == 8 %}
                             {% for column_order in Column_Orders %}
-                                <a class="dropdown-item" onclick="addParameterToURL('column_order={{ column_order.column_order }}')">{{ column_order.column_order }}</a>
+                                <a class="dropdown-item" onclick="addParameterToURL('column_order={{ column_order }}')">{{ column_order }}</a>
                             {% endfor %}
                         {% endif %}
                     </div>
@@ -97,7 +97,7 @@
                 Ausgewählte Filter:
                 {% for key,filter_list in Active_Filter.items %}
                     {% for filter in filter_list %}
-                        <a class="btn-filter" id="color-btn-inv" onclick="removeParameterFromURL('{{ key }}={{ filter }}')">{{ filter }}</a><a class="btn-filter-x" id="color-bg-primary" onclick="removeParameterFromURL('{{ key }}={{ filter }}')">X</a>
+                        <a class="btn-filter" id="color-btn-inv" onclick="removeParameterFromURL('{{ key }}={{ filter }}')">{{ filter }}</a><a class="btn-filter-x" id="color-bg-primary" onclick="removeParameterFromURL('{{ key }}={{ filter }}')">&times;</a>
                     {% endfor %}
                 {% endfor %}
         </div>
@@ -114,12 +114,13 @@
             {% endif %}
                 <div class="result-box">
                     <div class="card shadow-sm">
-                        <div class="card-img">
-                            <img src="/media/{{ image.picture }}" style="width: 100%;">
-                        </div>
                         <div class="card-body">
+                            <div class="card-img d-flex justify-content-center align-items-center">
+                                <img src="/media/{{ image.picture }}" style="max-width: 100%; height: 100%">
+                            </div>
+
                             <h5 class="card-title" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.name }}</h5>
-                            {% if not building.description == None %}
+                            {% if False and not building.description == None %}
                                 <p class="card-text" align="justify">{{ building.description }}</p>
                             {% endif %}
                             <a href="{% url 'details_page:detailed' building_id=building.id %}" class="btn" id="color-btn">Mehr erfahren</a>

@@ -6,7 +6,6 @@ from django.test import TestCase, Client
 from django.core.exceptions import ValidationError
 from datetime import date
 from timeline.models import HistoricDate
-from timeline.models import max_year
 from details_page.models import Era, Building, Picture
 from timeline.views import get_date_as_str
 
