@@ -98,7 +98,7 @@ def display_building_filter(request):
     """
 
     # We can filter by this options:
-    # era, country, region, city, architect, builders, column_orders, designs
+    # era, country, region, city, architect, builders, column_orders, designs, material, function
     keys = ["era", "country", "region", "city", "architect", "builder", "column_order", "design",
             "material", "function"]
     q = request.GET
