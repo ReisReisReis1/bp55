@@ -238,24 +238,28 @@
                                     </ol>
 
                                     <div class="carousel-inner">
-                                        {% for image in Bilder %}
-                                            {% if forloop.first %}
-                                                <div class="carousel-item active">
-                                            {% else %}
-                                                <div class="carousel-item">
-                                            {% endif %}
-                                                <img class="d-block w-100" src="/media/{{ image.picture }}">
-                                            </div>
-                                        {% endfor %}
-                                        {% for blueprints in Baupläne %}
-                                            {% if forloop.first and Bilder|length == 0 %}
-                                                <div class="carousel-item active">
-                                            {% else %}
-                                                <div class="carousel-item">
-                                            {% endif %}
-                                                <img class="d-block w-100" src="/media/{{ blueprints.blueprint }}">
-                                            </div>
-                                        {% endfor %}
+                                        {% if Bilder|length == 0 and Baupläne|length == 0 %}
+                                            <img src="{% static "default_image.png"  %}" style="width: 100%;">
+                                        {% else %}
+                                            {% for image in Bilder %}
+                                                {% if forloop.first %}
+                                                    <div class="carousel-item active">
+                                                {% else %}
+                                                    <div class="carousel-item">
+                                                {% endif %}
+                                                    <img class="d-block w-100" src="/media/{{ image.picture }}">
+                                                </div>
+                                            {% endfor %}
+                                            {% for blueprints in Baupläne %}
+                                                {% if forloop.first and Bilder|length == 0 %}
+                                                    <div class="carousel-item active">
+                                                {% else %}
+                                                    <div class="carousel-item">
+                                                {% endif %}
+                                                    <img class="d-block w-100" src="/media/{{ blueprints.blueprint }}">
+                                                </div>
+                                            {% endfor %}
+                                        {% endif %}
                                     </div>
 
                                     <a class="carousel-control-prev" href="#details_images" role="button" data-slide="prev">

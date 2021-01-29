@@ -30,7 +30,11 @@
                     <div class="card shadow-sm">
                         <div class="card-body">
                             <div class="card-img d-flex justify-content-center align-items-center">
-                                <img src="/media/{{ image.picture }}" style="max-width: 100%; height: 100%">
+                                {% if image == None %}
+                                    <img src="{% static "default_image.png"  %}" style="max-width: 100%; height: 100%">
+                                {% else %}
+                                    <img src="/media/{{ image.picture }}" style="max-width: 100%; height: 100%">
+                                {% endif %}
                             </div>
 
                             <h5 class="card-title" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.name }}</h5>
