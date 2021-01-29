@@ -3,10 +3,9 @@ Configurations for the Database-Models in video-contents
 """
 
 from django.db import models
-from details_page.models import Building
+from details_page.models import Building, Era
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db.models import Q
-from details_page.models import Era
 
 
 class Video(models.Model):

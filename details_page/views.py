@@ -3,14 +3,9 @@ Configurations of the different viewable functions and subpages from the App: de
 """
 
 from django.shortcuts import render
-#pylint: disable = import-error, relative beyond-top-level
-from .models import Picture
 # pylint: disable = import-error, relative beyond-top-level
-from .models import Building
-# pylint: disable = import-error, relative beyond-top-level
-from .models import Blueprint
-# pylint: disable = import-error, relative beyond-top-level
-from video_content.models import Timestamp
+from .models import Picture, Building, Blueprint
+from video_content.models import Video, Timestamp
 
 
 def detailed(request, building_id):
@@ -37,10 +32,10 @@ def detailed(request, building_id):
         'Bautypus': Building.get_construction_type(Building, building_id),
         'Bauform': Building.get_design(Building, building_id),
         'Gattung_Funktion':  Building.get_function(Building, building_id),
-        
+
         #'Dimension': Building.get_dimension(Building, id),
         #'Videos': Building.get_videos(Building, id),
-        
+
         'Länge': Building.get_length(Building, building_id),
         'Breite': Building.get_width(Building, building_id),
         'Höhe': Building.get_height(Building, building_id),
