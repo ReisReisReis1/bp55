@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'timeline',
     'start',
     'bootstrap4',
+    'search',
 ]
 
 MIDDLEWARE = [
@@ -57,6 +58,20 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+"""
+Adds the possibility to use external authentication sources (Apache, mod_auth_cas)
+    'django.contrib.auth,middleware.RemoteUserMiddleware',
+AUTHENTICATION_BACKENDS = [
+
+    RemoteUserMiddleware will detect the username in request.META['REMOTE_USER']
+    'django.contrib.auth.backends.RemoteUserBackend'
+    If REMOTE_USER is absent ModelBackend will be used as a fallback
+    'django.contrib.auth.backends.ModelBackend'
+    Djangos user management, such as the views in contrib.admin and the createsuperuser management command,
+    doesn't integrate with remote users. These interfaces work with users stored in the database regardless of
+    ATHENTICATION_BACKENDS
+]
+"""
 
 ROOT_URLCONF = 'bp55_ruins_and_beyond.urls'
 
@@ -113,7 +128,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'de-DE'
 
 TIME_ZONE = 'Europe/Berlin'
 
@@ -129,12 +144,14 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = 'static'
+STATIC_ROOT = os.path.join(BASE_DIR, '/static')
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'assets'),
+    os.path.join(BASE_DIR, 'templates'),
 )
-STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
+
 
 # Media Files
 

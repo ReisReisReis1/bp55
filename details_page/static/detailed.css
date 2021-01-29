@@ -2,3 +2,7 @@
     CSS File for styling on the details pages
 =============================================================================*/
 
+.details-box {
+    padding-top: 15px;
+    border: solid;
+}

@@ -16,33 +16,17 @@ def display(request):
     with a context variable to get Videos sorted in eras
     """
 
-    context = {
-        'Frühzeit': Video.get_era(Video, 'Frühzeit'),
-        'Archaik': Video.get_era(Video, 'Archaik'),
-        'Klassik': Video.get_era(Video, 'Klassik'),
-        'Hellenismus': Video.get_era(Video, 'Hellenismus'),
-        'RömischeKaiserzeit': Video.get_era(Video, 'Römische Kaiserzeit'),
-        'Spätantike': Video.get_era(Video, 'Spätantike'),
-
-        'Era': (Video.get_era(Video, 'Frühzeit'),
-                Video.get_era(Video, 'Archaik'),
-                Video.get_era(Video, 'Klassik'),
-                Video.get_era(Video, 'Hellenismus'),
-                Video.get_era(Video, 'Römische Kaiserzeit'),
-                Video.get_era(Video, 'Spätantike')),
-    }
-
-    return render(request, 'videos.html', context)
-
-    """
-    def getYearOfItemAsSignedInt(era):
-    
-    
+    def get_year_of_item_as_signed_int(era):
+        """
         Inner helper to sorting the years.
+        About the try/except: You can define an Era without an year. This leads to following problem:
+        You can not sort Eras by year if there is one without an year. In line 29 or 31 we try to get the
+        year as an Int. This will raise the TypeError, if this Era don't has a year (or the year is set
+        to None to be exact). Therefore we except this error, and return 2021, which is higher than
+        every year in the Database (limited to max_years (currently 1400)).
         :param era: the era to get the year from
-        :return: the year of the era (beginning year)
-      
-      
+        :return: the year of the era(beginning year)
+        """
         try:
             if era.year_from_BC_or_AD == "v.Chr.":
                 return -1 * int(era.year_from)
@@ -50,11 +34,17 @@ def display(request):
                 return int(era.year_from)
         except TypeError:
             # If era has no year return 2021, so it will be listed last.
-            return 2021
+            return 9999999999999999999
 
-    eras = Era.objects.filter(visible_on_video_page=True)
-    eras = sorted(eras, key=lambda era: getYearOfItemAsSignedInt(era))
-    context = {}
+    eras = Era.objects.filter(visible_on_video_page=True).exclude(year_from=None)
+    eras = sorted(eras, key=lambda era: get_year_of_item_as_signed_int(era))
+    eras_context = {}
+    # Add all eras that do not have an year_from
+    eras = eras + list(Era.objects.filter(year_from=None, visible_on_video_page=True))
     for e in eras:
-        context[e.name] = Video.get_era(Video, e.pk)
-    """
+        eras_context[e] = Video.get_era(Video, e.name)
+    context = {
+        'Era': eras_context,
+    }
+    return render(request, 'videos.html', context)
+

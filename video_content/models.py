@@ -25,7 +25,8 @@ class Video(models.Model):
                              help_text="""Falls das Video in zwei Epochen fällt, kann hier eine zweite
                              hinzugefügt werden. Diese Feld kann auch leer bleiben.""", related_name="+")
     intro = models.BooleanField(default=False, help_text='Ist dieses Video das Intro-Video?')
-    length = models.FloatField(validators=[MinValueValidator(0.0)],  help_text='Länge des Videos')
+    length = models.FloatField(validators=[MinValueValidator(0.0)], help_text='Länge des Videos', default=0.0)
+
     # TODO: Adding timestamps
 
     def __str__(self):
@@ -62,7 +63,7 @@ class Video(models.Model):
     # pylint: disable = too-few-public-methods
 
 
-class Timestamps(models.Model):
+class Timestamp(models.Model):
     """
     Model for timestamps in a video assigned to a building
     """
@@ -71,12 +72,9 @@ class Timestamps(models.Model):
                                  help_text='Zugehöriges Gebäude')
     video = models.ForeignKey(to=Video, on_delete=models.CASCADE, null=False,
                               help_text='Zugehöriges Video')
-    """
-    time = models.FloatField(validators=[MinValueValidator(0.0),
-                                         MaxValueValidator(Video.objects.get(video).length)],
+    time = models.FloatField(validators=[MinValueValidator(0.0)],
                              help_text='Geben Sie hier eine Stelle ein, '
                                        'an dem das gewählte Gebäude erscheint')
-   """
 
     def get_timestamps_by_video(self, vid):
         return self.objects.filter(video=vid)

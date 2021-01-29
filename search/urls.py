@@ -1,6 +1,5 @@
 """
-URL Settings for the APP: details_page
-path('', views.detailed, name='detailed'),
+URL Settings for the APP: timeline
 """
 
 from django.urls import path
@@ -8,7 +7,7 @@ from django.urls import path
 from . import views
 
 # pylint: disable = invalid-name
-app_name = 'details_page'
+app_name = 'search'
 urlpatterns = [
-    path('<int:building_id>/', views.detailed, name='detailed'),
+    path('', views.search, name='search')
 ]

@@ -25,28 +25,12 @@
 }
 
 /*
-    Styling of the element containing the first video and its title of a row
- */
-.video-box-first {
-    width: 25%;
-    padding-right: 5px !important;
-}
-
-/*
     Styling of the element containing a video and its title
  */
 .video-box {
     width: 25%;
     padding-left: 5px !important;
     padding-right: 5px !important;
-}
-
-/*
-    Styling of the element containing the last video and its title of a row
- */
-.video-box-last {
-    width: 25%;
-    padding-left: 5px !important;
 }
 
 /*
