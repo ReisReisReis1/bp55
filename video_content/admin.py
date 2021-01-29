@@ -7,9 +7,21 @@ from django.contrib import admin
 # pylint: disable = import-error, relative-beyond-top-level
 from .models import Video, Timestamp
 
-admin.site.register(Video)
+
+@admin.register(Video)
+class VideoAdmin(admin.ModelAdmin):
+    """
+    Configure the admin model for 'Video'
+    """
+    search_fields = ('title',)
+    ordering = ('title',)
 
 
 @admin.register(Timestamp)
 class TimestampAdmin(admin.ModelAdmin):
+    """
+    Configure the admin model for 'Timestamp'
+    """
+    search_fields = ('video',)
     list_display = ('video', 'building', 'time')
+    ordering = ('video',)

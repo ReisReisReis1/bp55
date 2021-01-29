@@ -1,8 +1,10 @@
 """
 Tests for functions in the App: home
 """
+# pylint: disable=all
 
 from django.test import Client, TestCase
+# pylint: disable=import-error
 from model_bakery import baker
 
 
@@ -28,4 +30,3 @@ class ViewsTestCases(TestCase):
         """
         response = self.client.get('/filter/')
         self.assertEqual(response.status_code, 200)
-

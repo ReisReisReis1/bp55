@@ -17,7 +17,7 @@ def display(request):
     """
 
     eras = Era.objects.filter(visible_on_video_page=True).exclude(year_from=None)
-    eras = sorted(eras, key=lambda era: era.get_year_of_item_as_signed_int(era))
+    eras = sorted(eras, key=lambda era: era.get_year_of_item_as_signed_int())
     eras_context = {}
     # Add all eras that do not have an year_from
     eras = eras + list(Era.objects.filter(year_from=None, visible_on_video_page=True))

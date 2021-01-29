@@ -1,7 +1,7 @@
 """
 Tests for functions in the App: home
 """
-
+# pylint: disable=all
 from django.test import Client
 from django.test import TestCase
 

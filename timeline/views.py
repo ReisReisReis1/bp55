@@ -30,7 +30,7 @@ def get_thumbnails_for_buildings(building_list):
                                               Picture.objects.get(building=building.pk,
                                                                   usable_as_thumbnail=True)))
         except ObjectDoesNotExist:
-            buildings_with_thumbnails.append((building, "/static/default-thumbnail.png"))
+            buildings_with_thumbnails.append((building, None))
         except MultipleObjectsReturned:
             possible_thumbnails = Picture.objects.filter(building=building.pk,
                                                          usable_as_thumbnail=True)

@@ -1,10 +1,11 @@
 """"
 Test for the App: video-content
 """
+# pylint: disable=all
 from django.test import Client, TestCase
+from model_bakery import baker
 from video_content.models import Video, Timestamp
 from details_page.models import Era
-from model_bakery import baker
 
 
 class VideoTestCases(TestCase):
@@ -16,20 +17,40 @@ class VideoTestCases(TestCase):
         """
         Creating Eras to test video model
         """
-        self.frühzeit = Era.objects.create(name='Frühzeit')
-        self.archaik = Era.objects.create(name='Archaik')
-        self.hellenismus = Era.objects.create(name='Hellenismus')
-        self.römisch = Era.objects.create(name='Römische Kaiserzeit')
-        self.klassik = Era.objects.create(name='Klassik')
-        self.spätantike = Era.objects.create(name='Spätantike')
-        self.sonstiges = Era.objects.create(name='Sonstiges')
+        self.frühzeit = Era.objects.create(name='Frühzeit', visible_on_video_page=True,
+                                           year_from=50, year_from_BC_or_AD='v.Chr', year_to=55,
+                                           year_to_BC_or_AD='n.Chr')
+        self.archaik = Era.objects.create(name='Archaik', visible_on_video_page=True,
+                                          year_from=100, year_from_BC_or_AD='n.Chr', year_to=404,
+                                          year_to_BC_or_AD='n.Chr'
+                                          )
+        self.hellenismus = Era.objects.create(name='Hellenismus', visible_on_video_page=True,
+                                              year_from=140, year_from_BC_or_AD='v.Chr', year_to=55,
+                                              year_to_BC_or_AD='v.Chr'
+                                              )
+        self.römisch = Era.objects.create(name='Römische Kaiserzeit', visible_on_video_page=True,
+                                          year_from=580, year_from_BC_or_AD='v.Chr', year_to=580,
+                                          year_to_BC_or_AD='n.Chr'
+                                          )
+        self.klassik = Era.objects.create(name='Klassik', visible_on_video_page=True,
+                                          year_from=50, year_from_BC_or_AD='v.Chr', year_to=55,
+                                          year_to_BC_or_AD='n.Chr'
+                                          )
+        self.spätantike = Era.objects.create(name='Spätantike', visible_on_video_page=True,
+                                             year_from=50, year_from_BC_or_AD='v.Chr', year_to=55,
+                                             year_to_BC_or_AD='n.Chr'
+                                             )
+        self.sonstiges = Era.objects.create(name='Sonstiges', visible_on_video_page=False,
+                                            year_from=0, year_from_BC_or_AD='v.Chr', year_to=0,
+                                            year_to_BC_or_AD='n.Chr'
+                                            )
 
     def test1_get_intro_era(self):
         """
         Testing get_intro  and get_era function
-        Testcase where there is no video
+        Testcases where there is no video
         """
-        self.assertEqual(Video.get_intro(Video), Video.DoesNotExist)
+        self.assertEquals(Video.get_intro(Video), Video.DoesNotExist)
         self.assertEqual(list(Video.get_era(Video, 'Archaik')), list())
         self.assertEqual(list(Video.get_era(Video, 'Frühzeit')), list())
         self.assertEqual(list(Video.get_era(Video, 'Hellenismus')), list())
@@ -53,10 +74,14 @@ class VideoTestCases(TestCase):
         Testing get_intro function
         Testcase where there are more then one intro-videos
         """
-        Video.objects.create(title='Test8', video='/media/videos/Intro2.mp2', era=self.sonstiges,
-                             intro=True)
-        intro = list(Video.objects.filter(intro=True))
-        self.assertEqual(Video.get_intro(Video), intro[0])
+        self.testvideo1 = Video.objects.create(title='Intro1', video='/media/videos/Intro.mp4',
+                                               era=self.sonstiges,
+                                               intro=True)
+        self.testvideo2 = Video.objects.create(title='Test8', video='/media/videos/Intro2.mp2',
+                                               era=self.sonstiges,
+                                               intro=True)
+
+        self.assertEqual(Video.get_intro(Video), self.testvideo1)
 
     def test4_get_era(self):
         """
@@ -237,13 +262,34 @@ class ViewsTestCases(TestCase):
         Setting up objects and a client for the tests
         """
         self.client = Client()
-        self.frühzeit = Era.objects.create(name='Frühzeit')
-        self.archaik = Era.objects.create(name='Archaik')
-        self.hellenismus = Era.objects.create(name='Helenismus')
-        self.römisch = Era.objects.create(name='Römische Kaiserzeit')
-        self.klassik = Era.objects.create(name='Klassik')
-        self.spätantike = Era.objects.create(name='Spätantike')
-        self.sonstiges = Era.objects.create(name='Sonstiges')
+
+        self.frühzeit = Era.objects.create(name='Frühzeit', visible_on_video_page=True,
+                                           year_from=50, year_from_BC_or_AD='v.Chr', year_to=55,
+                                           year_to_BC_or_AD='n.Chr')
+        self.archaik = Era.objects.create(name='Archaik', visible_on_video_page=True,
+                                          year_from=100, year_from_BC_or_AD='n.Chr', year_to=404,
+                                          year_to_BC_or_AD='n.Chr'
+                                          )
+        self.hellenismus = Era.objects.create(name='Hellenismus', visible_on_video_page=True,
+                                              year_from=140, year_from_BC_or_AD='v.Chr', year_to=55,
+                                              year_to_BC_or_AD='v.Chr'
+                                              )
+        self.römisch = Era.objects.create(name='Römische Kaiserzeit', visible_on_video_page=True,
+                                          year_from=580, year_from_BC_or_AD='v.Chr', year_to=580,
+                                          year_to_BC_or_AD='n.Chr'
+                                          )
+        self.klassik = Era.objects.create(name='Klassik', visible_on_video_page=True,
+                                          year_from=50, year_from_BC_or_AD='v.Chr', year_to=55,
+                                          year_to_BC_or_AD='n.Chr'
+                                          )
+        self.spätantike = Era.objects.create(name='Spätantike', visible_on_video_page=True,
+                                             year_from=50, year_from_BC_or_AD='v.Chr', year_to=55,
+                                             year_to_BC_or_AD='n.Chr'
+                                             )
+        self.sonstiges = Era.objects.create(name='Sonstiges', visible_on_video_page=False,
+                                            year_from=0, year_from_BC_or_AD='v.Chr', year_to=0,
+                                            year_to_BC_or_AD='n.Chr'
+                                            )
         Video.objects.create(title='Test1', video='/media/videos/Test1.mp4', era=self.frühzeit)
         Video.objects.create(title='Test2', video='/media/videos/Test2.mp4', era=self.hellenismus)
         Video.objects.create(title='Test3', video='/media/videos/Test3.mp4', era=self.römisch)
