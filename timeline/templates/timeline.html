@@ -27,7 +27,11 @@
                                         <h5 class="card-title" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.name }} · {{ time }}</h5>
 
                                         <div class="card-img">
-                                            <img src="/media/{{ image.picture }}" style="width: 100%;">
+                                            {% if image == None %}
+                                                <img src="{% static "default_image.png"  %}" style="width: 100%;">
+                                            {% else %}
+                                                <img src="/media/{{ image.picture }}" style="width: 100%;">
+                                            {% endif %}
                                         </div>
                                     {% else %}
                                         <h5 class="card-title" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.title }} · {{ time }}</h5>
@@ -67,7 +71,11 @@
                                         <h5 class="card-title" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.name }} · {{ time }}</h5>
 
                                         <div class="card-img">
-                                            <img src="/media/{{ image.picture }}" style="width: 100%;">
+                                            {% if image == None %}
+                                                <img src="{% static "default_image.png"  %}" style="width: 100%;">
+                                            {% else %}
+                                                <img src="/media/{{ image.picture }}" style="width: 100%;">
+                                            {% endif %}
                                         </div>
                                     {% else %}
                                         <h5 class="card-title historic-title" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.title }} · {{ time }}</h5>

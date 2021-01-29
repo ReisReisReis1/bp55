@@ -10,3 +10,4 @@ omit =
     */migrations/*
     */tests.py
     */apps.py
+    */venv/*
