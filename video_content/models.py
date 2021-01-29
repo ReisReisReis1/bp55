@@ -21,7 +21,7 @@ class Video(models.Model):
     video = models.FileField(upload_to='videos/', help_text='Videodatei in .mp4')
     thumbnail = models.ImageField(height_field="height", width_field="width",
                                   help_text="Hier das Vorschaubild zum Video hochladen.",
-                                  upload_to="pics/thumbnails/")
+                                  upload_to="pics/thumbnails/", null=True, default=None)
     width = models.IntegerField(editable=False, default=0)
     height = models.IntegerField(editable=False, default=0)
     era = models.ForeignKey(to=Era, on_delete=models.SET_NULL, null=True,
