@@ -47,6 +47,15 @@ def validate_color_code(code):
 
 
 class Era(models.Model):
+    """
+    Era Model.
+    year_from: Beginning year of era
+    year_from_BC_or_AD: BC or AD for year_from
+    year_to: Ending year of era
+    year_to_BC_or_AD: BC or AD for year_to
+    visible_on_video_page: if the era should be visible on the video page
+    color_code: hex color code for the era
+    """
     name = models.CharField(max_length=100, choices=[
         ('Bronzezeit', 'Bronzezeit'), ('Frühzeit', 'Frühzeit'), ('Archaik', 'Archaik'),
         ('Klassik', 'Klassik'), ('Hellenismus', 'Hellenismus'),
@@ -79,6 +88,10 @@ class Era(models.Model):
                                   default="ffffff", validators=[validate_color_code])
 
     def __str__(self):
+        """
+        Name for Eras for the admin interface.
+        :return: eras name
+        """
         return self.name
 
     def get_year_of_item_as_signed_int(self):
@@ -448,6 +461,18 @@ class Blueprint(models.Model):
 
 
 class Picture(models.Model):
+    """
+    Picture Model: Will be used to save Pictures for all-over the website, except
+    thumbnails in videos and blueprints.
+    name: Name of the Picture
+    description: description for the picture.
+    picture: the actual picture file.
+    width: width of the pic
+    height: height of the pic
+    building: the building it refers to.
+    usable_as_thumbnail: If this picture can be used as thumbnail for the building on the timeline,
+        search and filter results.
+    """
     name = models.CharField(max_length=100,
                             help_text="Titel des Bildes eingeben (max. 100 Zeichen).")
     description = models.TextField(max_length=1000,
@@ -466,6 +491,10 @@ class Picture(models.Model):
                                               wird zufällig eins ausgewählt.""")
 
     def __str__(self):
+        """
+        Name for the admin interface
+        :return: the name of a Picture
+        """
         return self.name
 
     def get_picture_for_building(self, wanted_building):
