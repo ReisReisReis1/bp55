@@ -20,7 +20,7 @@ def get_thumbnails_for_buildings(building_list):
     If there is no thumbnail for a building, it will set and return None for it.
     :param building_list: A list of buildings you want to get thumbnails for.
     :return: Will return an tuple: The building from building_list, along with the thumbnail or
-    default thumbnail.
+    default thumbnail. Or empty list, if building was empty.
     """
     buildings_with_thumbnails = []
     # Search for thumbnails

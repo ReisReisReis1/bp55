@@ -81,6 +81,26 @@ class Era(models.Model):
     def __str__(self):
         return self.name
 
+    def get_year_of_item_as_signed_int(self):
+        """
+        Inner helper to sorting the years.
+        About the try/except: You can define an Era without an year. This leads to following problem:
+        You can not sort Eras by year if there is one without an year. In line 29 or 31 we try to get the
+        year as an Int. This will raise the TypeError, if this Era don't has a year (or the year is set
+        to None to be exact). Therefore we except this error, and return 2021, which is higher than
+        every year in the Database (limited to max_years (currently 1400)).
+        :param era: the era to get the year from
+        :return: the year of the era(beginning year)
+        """
+        try:
+            if self.year_from_BC_or_AD == "v.Chr.":
+                return -1 * int(self.year_from)
+            else:
+                return int(self.year_from)
+        except TypeError:
+            # If era has no year return big int, so it will be listed last.
+            return 9999999999999999999
+
 
 class Building(models.Model):
     """
