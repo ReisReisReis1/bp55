@@ -67,9 +67,9 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.RemoteUserBackend'
     If REMOTE_USER is absent ModelBackend will be used as a fallback
     'django.contrib.auth.backends.ModelBackend'
-    Djangos user management, such as the views in contrib.admin and the createsuperuser management 
+    Djangos user management, such as the views in contrib.admin and the createsuperuser management
     command,
-    doesn't integrate with remote users. These interfaces work with users stored in the database 
+    doesn't integrate with remote users. These interfaces work with users stored in the database
     regardless of ATHENTICATION_BACKENDS
 ]
 """
