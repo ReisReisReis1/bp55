@@ -75,7 +75,8 @@ def get_date_as_str(item):
     :param item: the item to get the date for
     :return: an String with the date
                 (buildings: year number for beginning of the construction,
-                historic dates: exact date (if present), otherwise year number. Each along with BC/AD).
+                historic dates: exact date (if present), otherwise year number.
+                Each along with BC/AD).
     """
     if isinstance(item, tuple):
         # Building is a tuple with its thumbnail, therefore [0] to get the building

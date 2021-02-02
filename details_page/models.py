@@ -183,7 +183,7 @@ class Building(models.Model):
                                  help_text="Architekt des Bauwerks eingeben (max. 100 Zeichen).",
                                  null=True, blank=True, validators=[validate_url_conform_str])
     context = models.CharField(max_length=100,
-                               help_text="""Kontext des Bauwerks eingeben (Haus, Siedlung, 
+                               help_text="""Kontext des Bauwerks eingeben (Haus, Siedlung,
                                öfftl. Platz etc., "max. 100 Zeichen)""",
                                null=True, blank=True)
     builder = models.CharField(max_length=100,
@@ -214,7 +214,7 @@ class Building(models.Model):
     column_order = models.CharField(max_length=100, help_text="Säulenordnung des Gebäudes eingeben "
                                                               "(max. 100 Zeichen).",
                                     null=True, blank=True, validators=[validate_url_conform_str])
-    construction = models.CharField(max_length=100, help_text="""Konstruktion des Bauwerks eingeben 
+    construction = models.CharField(max_length=100, help_text="""Konstruktion des Bauwerks eingeben
                                     (z.B. Massivbau, etc., falls vorhanden, max. 100 Zeichen)""",
                                     null=True, blank=True)
     material = models.CharField(max_length=100,
@@ -486,7 +486,7 @@ class Picture(models.Model):
     height = models.IntegerField(editable=False, default=0)
     building = models.ForeignKey(to=Building, null=True, blank=True, on_delete=models.SET_NULL)
     usable_as_thumbnail = models.BooleanField(default=False,
-                                              help_text="""Anwählen wenn das Bild als Thumbnail 
+                                              help_text="""Anwählen wenn das Bild als Thumbnail
                                               (Vorschaubild) für sein Bauwerk in der Zeitachse,
                                               der Bauwerke-Seite, und in den Suchergebnissen 
                                               erscheinen darf. 

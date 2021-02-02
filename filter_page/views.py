@@ -165,27 +165,36 @@ def display_building_filter(request):
     # But later (if no one uses sqlite anymore)
     # it would be better and more efficient to set .distinct() for that.
     eras = delete_duplicates(one_dict_set_to_string_list(eras))
+
     countries = buildings.only('country').exclude(country=None).order_by("country").values(
         'country')
     countries = delete_duplicates(one_dict_set_to_string_list(countries))
+
     regions = buildings.only('region').exclude(region=None).order_by("region").values('region')
     regions = delete_duplicates(one_dict_set_to_string_list(regions))
+
     cities = buildings.only('city').exclude(city=None).order_by("city").values('city')
     cities = delete_duplicates(one_dict_set_to_string_list(cities))
+
     architects = buildings.only('architect').exclude(architect=None).order_by("architect").values(
         'architect')
     architects = delete_duplicates(one_dict_set_to_string_list(architects))
+
     builders = buildings.only('builder').exclude(builder=None).order_by("builder").values('builder')
     builders = delete_duplicates(one_dict_set_to_string_list(builders))
+
     column_orders = buildings.only('column_order').exclude(column_order=None).order_by(
         "column_order"). \
         values('column_order')
     column_orders = delete_duplicates(one_dict_set_to_string_list(column_orders))
+
     designs = buildings.only('design').exclude(design=None).order_by("design").values('design')
     designs = delete_duplicates(one_dict_set_to_string_list(designs))
+
     material = buildings.only('material').exclude(material=None).order_by("material") \
         .values('material')
     material = delete_duplicates(one_dict_set_to_string_list(material))
+
     function = buildings.only('function').exclude(function=None).order_by("function") \
         .values('function')
     function = delete_duplicates(one_dict_set_to_string_list(function))
