@@ -22,6 +22,7 @@ def get_thumbnails_for_buildings(building_list):
     :return: Will return an tuple: The building from building_list, along with the thumbnail or
     default thumbnail. Or empty list, if building was empty.
     """
+    # pylint: disable = no-member
     buildings_with_thumbnails = []
     # Search for thumbnails
     for building in building_list:
@@ -74,7 +75,8 @@ def get_date_as_str(item):
     :param item: the item to get the date for
     :return: an String with the date
                 (buildings: year number for beginning of the construction,
-                historic dates: exact date (if present), otherwise year number. Each along with BC/AD).
+                historic dates: exact date (if present), otherwise year number.
+                Each along with BC/AD).
     """
     if isinstance(item, tuple):
         # Building is a tuple with its thumbnail, therefore [0] to get the building
@@ -94,11 +96,13 @@ def timeline(request):
     """
 
     # get only buildings with dates set
+    # pylint: disable = no-member
     buildings = Building.objects.exclude(date_from=None)
     buildings = get_thumbnails_for_buildings(buildings)
     # get historic dates (they must have a date (not nullable database field))
     historic_dates = HistoricDate.objects.all()
-    # Make lists from QuerySets because otherwise pythons list concatenation and sorting will no work
+    # Make lists from QuerySets
+    # because otherwise pythons list concatenation and sorting will not work
     items = list(buildings) + list(historic_dates)
     # Sort it with years as key, ascending
     items = sorted(items, key=lambda i: get_year_of_item(i))
