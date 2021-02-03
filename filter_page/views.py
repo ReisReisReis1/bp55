@@ -152,8 +152,8 @@ def display_building_filter(request):
     # Append Thumbnails
     result = get_thumbnails_for_buildings(result)
 
-    filter_names = ('Stadt', 'Region', 'Land', 'Epoche', 'Architekt', 'Bauherr', 'Bauform',
-                    'Säulenordnung', 'Material', 'Funktion')
+    filter_names = ['Stadt', 'Region', 'Land', 'Epoche', 'Architekt', 'Bauherr', 'Bauform',
+                    'Säulenordnung', 'Material', 'Funktion']
     # pylint: disable = no-member
     buildings = Building.objects.all()
     # pylint: disable = no-member
