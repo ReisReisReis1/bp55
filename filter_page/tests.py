@@ -525,7 +525,7 @@ class FilterTestCases(TestCase):
         """
         setup()
         dict_lst = Building.objects.values("region")
-        str_list = ['Berlin', None 'Berlin', 'Berlin', 'Berlin', 'Berlin', 'Kampanien', 'Hessen',
+        str_list = ['Berlin', None, 'Berlin', 'Berlin', 'Berlin', 'Berlin', 'Kampanien', 'Hessen',
                     'Hessen', None, 'Texas']
         self.assertEqual(one_dict_set_to_string_list(dict_lst), str_list)
 
