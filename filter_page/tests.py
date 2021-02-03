@@ -516,7 +516,7 @@ class FilterTestCases(TestCase):
         setup()
         dict_lst = Building.objects.values("country")
         str_list = ['Deutschland', 'Frankreich', 'Turkey', 'Deutschland', 'Deutschland',
-                    'Deutschland', 'Italien', 'Deutschland', 'Deutschland', 'China']
+                    'Deutschland', 'Italien', 'Deutschland', 'Deutschland', None, 'China']
         self.assertEqual(one_dict_set_to_string_list(dict_lst), str_list)
 
     def test_one_dict_set_to_string_list3(self):
@@ -525,8 +525,8 @@ class FilterTestCases(TestCase):
         """
         setup()
         dict_lst = Building.objects.values("region")
-        str_list = ['Berlin', 'Berlin', 'Berlin', 'Berlin', 'Berlin', 'Kampanien', 'Hessen',
-                    'Hessen', 'Texas']
+        str_list = ['Berlin', None 'Berlin', 'Berlin', 'Berlin', 'Berlin', 'Kampanien', 'Hessen',
+                    'Hessen', None, 'Texas']
         self.assertEqual(one_dict_set_to_string_list(dict_lst), str_list)
 
     def test_one_dict_set_to_string_list4(self):
@@ -536,7 +536,7 @@ class FilterTestCases(TestCase):
         setup()
         dict_lst = Building.objects.values("city")
         str_list = ['Berlin', 'Paris', 'Istanbul', 'Berlin', 'Berlin', 'Berlin', 'Pompeji',
-                    'Darmstadt', 'Darmstadt', 'Köln']
+                    'Darmstadt', 'Darmstadt', None, 'Köln']
         self.assertEqual(one_dict_set_to_string_list(dict_lst), str_list)
 
     def test_one_dict_set_to_string_list5(self):
@@ -546,7 +546,7 @@ class FilterTestCases(TestCase):
         setup()
         dict_lst = Building.objects.values("architect")
         str_list = ['Jonathan Otto', 'Jonas Günster', 'Manuel Singer', 'Philipp Krause',
-                    'Simon Gröger', 'Jonathan Otto', 'Laura Buhleier', 'Spock',
+                    'Simon Gröger', 'Jonathan Otto',None, 'Laura Buhleier',None, 'Spock',
                     'Winnie Puuh']
         self.assertEqual(one_dict_set_to_string_list(dict_lst), str_list)
 
@@ -557,7 +557,7 @@ class FilterTestCases(TestCase):
         setup()
         dict_lst = Building.objects.values("builder")
         str_list = ['Ganesha Welsch', 'Michael Wendler', 'Philipp Krause', 'Jonathan Otto',
-                    'Ganesha Welsch', 'Ganesha Welsch', 'Quang Nguyen', 'Ganesha Welsch',
+                    'Ganesha Welsch', 'Ganesha Welsch', None,'Quang Nguyen', 'Ganesha Welsch',
                     'Michael Burnham', 'Tebarts van Elst']
         self.assertEqual(one_dict_set_to_string_list(dict_lst), str_list)
 
@@ -567,7 +567,7 @@ class FilterTestCases(TestCase):
         """
         setup()
         dict_lst = Building.objects.values("column_order")
-        str_list = ['ionisch', 'vier', 'dorisch', 'dorisch', 'ionisch', 'dorisch',
+        str_list = ['ionisch', 'vier', 'dorisch', 'dorisch', 'ionisch', 'dorisch', None, None,
                     'toskanisch', 'klingonisch', 'komposite']
         self.assertEqual(one_dict_set_to_string_list(dict_lst), str_list)
 
@@ -577,8 +577,8 @@ class FilterTestCases(TestCase):
         """
         setup()
         dict_lst = Building.objects.values("design")
-        str_list = ['erniedrigend', 'erstaunlich', 'Großartig', 'erniedrigend',
-                    'neuartig', 'aschig', 'schrumpelig', 'tödlich', 'Prunk']
+        str_list = ['erniedrigend', 'erstaunlich', 'Großartig', 'erniedrigend', 'erniedrigend'
+                    'neuartig', 'aschig', 'schrumpelig',None, 'tödlich', 'Prunk']
         self.assertEqual(one_dict_set_to_string_list(dict_lst), str_list)
 
     def test_one_dict_set_to_string_list9(self):
