@@ -14,9 +14,10 @@ def validate_url_conform_str(string):
     :param string: the input string
     :return: None or ValidationError
     """
-    if "&" in string or "?" in string:
-        raise ValidationError(message="Diese Eingabe darf nicht die Zeichen \"&\" und \"?\" "
-                                      "enthalten.")
+    if ["&", "?", '\'', ' \"'] in string:
+        raise ValidationError(
+            message="Diese Eingabe darf nicht die Zeichen \"&\", \"?\" und alle Art von "
+                    "Anführungszeichen enthalten.")
 
 
 def validate_color_code(code):
@@ -26,7 +27,8 @@ def validate_color_code(code):
     :return: None or ValidationError
     """
     for sign in code:
-        if sign not in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e",
+        if sign not in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d",
+                        "e",
                         "f", "A", "B", "C", "D", "E", "F"]:
             raise ValidationError(message="Bitte einen gültigen Code im Hex-Format einfügen: "
                                           "Nur Hex-Zeichen: 0-9, a-f und A-F.")
@@ -139,7 +141,8 @@ class Building(models.Model):
     """
 
     name = models.CharField(max_length=100,
-                            help_text="Namen des Bauwerks eingeben (max. 100 Zeichen).")
+                            help_text="Namen des Bauwerks eingeben (max. 100 Zeichen).",
+                            validators=[validate_url_conform_str])
     description = models.TextField(max_length=1000,
                                    help_text="Beschreibung des Gebäudes angeben (max. 1000 Zeichen",
                                    null=True, blank=True, editable=False)
@@ -149,9 +152,10 @@ class Building(models.Model):
     region = models.CharField(max_length=100,
                               help_text="Region des Bauwerks eingeben (max. 100 Zeichen).",
                               null=True, blank=True, validators=[validate_url_conform_str])
-    country = models.CharField(max_length=100, help_text="Hier Land des Bauwerks auswählen (Tipp:"
-                                                         "Zum Suchen Kürzel"
-                                                         "auf der Tastatur eingeben).",
+    country = models.CharField(max_length=100,
+                               help_text="Hier Land des Bauwerks auswählen (Tipp:"
+                                         "Zum Suchen Kürzel"
+                                         "auf der Tastatur eingeben).",
                                choices=country_codes.contry_codes_as_tuple_list,
                                default="Griechenland", null=True, blank=True,
                                validators=[validate_url_conform_str])
@@ -184,18 +188,19 @@ class Building(models.Model):
                                  null=True, blank=True, validators=[validate_url_conform_str])
     context = models.CharField(max_length=100,
                                help_text="""Kontext des Bauwerks eingeben (Haus, Siedlung,
-                               öfftl. Platz etc., "max. 100 Zeichen)""",
-                               null=True, blank=True)
+                                   öfftl. Platz etc., "max. 100 Zeichen)""",
+                               null=True, blank=True, validators=[validate_url_conform_str])
     builder = models.CharField(max_length=100,
                                help_text="Bauherren des Bauwerks eingeben (max. 100 Zeichen).",
                                null=True, blank=True, validators=[validate_url_conform_str])
     construction_type = models.CharField(max_length=100,
                                          help_text="Bautyp des Bauwerks eingeben "
                                                    "(max. 100 Zeichen).",
-                                         null=True, blank=True)
+                                         null=True, blank=True,
+                                         validators=[validate_url_conform_str])
     design = models.CharField(max_length=100,
                               help_text="Bauform des Bauwerks angeben. (max. 100 Zeichen)",
-                              null=True, blank=True)
+                              null=True, blank=True, validators=[validate_url_conform_str])
     function = models.CharField(max_length=100,
                                 help_text="Gattung/Funktion des Bauwerks eingeben "
                                           "(max. 100 Zeichen).",
@@ -211,12 +216,15 @@ class Building(models.Model):
         null=True, blank=True)
     area = models.FloatField(help_text="Fläche des Bauwerks eingeben (falls vorhanden, in ha).",
                              null=True, blank=True)
-    column_order = models.CharField(max_length=100, help_text="Säulenordnung des Gebäudes eingeben "
-                                                              "(max. 100 Zeichen).",
-                                    null=True, blank=True, validators=[validate_url_conform_str])
+    column_order = models.CharField(max_length=100,
+                                    help_text="Säulenordnung des Gebäudes eingeben "
+                                              "(max. 100 Zeichen).",
+                                    null=True, blank=True,
+                                    validators=[validate_url_conform_str])
     construction = models.CharField(max_length=100, help_text="""Konstruktion des Bauwerks eingeben
                                     (z.B. Massivbau, etc., falls vorhanden, max. 100 Zeichen)""",
-                                    null=True, blank=True)
+                                    null=True, blank=True,
+                                    validators=[validate_url_conform_str])
     material = models.CharField(max_length=100,
                                 help_text="Material des Bauwerks eingeben (max. 100 Zeichen).",
                                 null=True, blank=True, validators=[validate_url_conform_str])
@@ -479,9 +487,10 @@ class Picture(models.Model):
                                    help_text="Beschreibung des Bildes eingeben "
                                              "(max. 1000 Zeichen).",
                                    null=True, blank=True)
-    picture = models.ImageField(help_text="Auf \"Durchsuchen\" drücken um ein Bild hochzuladen.",
-                                upload_to="pics/",
-                                width_field="width", height_field="height")
+    picture = models.ImageField(
+        help_text="Auf \"Durchsuchen\" drücken um ein Bild hochzuladen.",
+        upload_to="pics/",
+        width_field="width", height_field="height")
     width = models.IntegerField(editable=False, default=0)
     height = models.IntegerField(editable=False, default=0)
     building = models.ForeignKey(to=Building, null=True, blank=True, on_delete=models.SET_NULL)

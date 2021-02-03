@@ -12,6 +12,7 @@ class ViewsTestCases(TestCase):
     """
     Testcases for the functions in view
     """
+
     def setUp(self):
         """
         Setting up a client for the tests
@@ -22,8 +23,8 @@ class ViewsTestCases(TestCase):
         """
         Testing detailed function in views
         """
-        Building.objects.create(name='Test1')
-        response = self.client.get('/details_page/1')
+        building = Building.objects.create(name='Test1', pk=0)
+        response = self.client.get('/details_page/' + str(building.pk) + '/')
         self.assertEqual(response.status_code, 200)
 
 
@@ -33,20 +34,28 @@ class BuildingTestCases(TestCase):
         Setting up objects and a client for the tests
         """
         self.client = Client()
-        test_era = Era.objects.create(name='Frühe Kaiserzeit', year_from=55, year_from_BC_or_AD='v.Chr', year_to=55,
+        test_era = Era.objects.create(name='Frühe Kaiserzeit', year_from=55,
+                                      year_from_BC_or_AD='v.Chr', year_to=55,
                                       year_to_BC_or_AD='v.Chr')
-        Building.objects.create(pk=0, name='', description='', city='', region='', country='', date_from=0,
+        Building.objects.create(pk=0, name='', description='', city='', region='', country='',
+                                date_from=0,
                                 date_from_BC_or_AD='',
-                                date_to=0, date_to_BC_or_AD='', era=test_era, architect='', context='', builder='',
-                                construction_type='', design='', function='', length=0, width=0, height=0,
-                                circumference=0, area=0, column_order='', construction='', material='',
+                                date_to=0, date_to_BC_or_AD='', era=test_era, architect='',
+                                context='', builder='',
+                                construction_type='', design='', function='', length=0, width=0,
+                                height=0,
+                                circumference=0, area=0, column_order='', construction='',
+                                material='',
                                 literature='')
-        Building.objects.create(pk=1, name='Parthenon', description='Das Parthenon in Athen', city='Athen',
+        Building.objects.create(pk=1, name='Parthenon', description='Das Parthenon in Athen',
+                                city='Athen',
                                 region='TestRegion', country='GR-Griechenland',
-                                date_from=447, date_from_BC_or_AD='v.Chr.', date_to=438, date_to_BC_or_AD='v.Chr.',
+                                date_from=447, date_from_BC_or_AD='v.Chr.', date_to=438,
+                                date_to_BC_or_AD='v.Chr.',
                                 era=test_era, architect='Iktinos, Kallikrates', context='Tempel',
                                 builder='Perikles und die Polis Athen', construction_type='Tempel',
-                                design='Peripteros', function='Sakralbau', length=30.88, width=69.5, height=1,
+                                design='Peripteros', function='Sakralbau', length=30.88, width=69.5,
+                                height=1,
                                 circumference=1, area=1, column_order='dorisch, ionischer Fries',
                                 construction='Massivbau', material='penetelischer Marmor',
                                 literature='Muss - Schubert 1988, SEITEN?; Gruben 2001, 173-190; Hellmann 2006, 82-96;')
@@ -232,8 +241,10 @@ class EraModelTests(TestCase):
         Setup for test data
         :return: None
         """
-        cls.testera = Era.objects.create(name="Frühzeit", year_from=1, year_from_BC_or_AD="", year_to=1,
-                                         year_to_BC_or_AD="", visible_on_video_page=True, color_code="ffffff")
+        cls.testera = Era.objects.create(name="Frühzeit", year_from=1, year_from_BC_or_AD="",
+                                         year_to=1,
+                                         year_to_BC_or_AD="", visible_on_video_page=True,
+                                         color_code="ffffff")
 
     def test_response(self):
         """
@@ -246,7 +257,8 @@ class EraModelTests(TestCase):
         self.assertEqual(Era.objects.get(pk=1).year_from_BC_or_AD, self.testera.year_from_BC_or_AD)
         self.assertEqual(Era.objects.get(pk=1).year_to, self.testera.year_to)
         self.assertEqual(Era.objects.get(pk=1).year_to_BC_or_AD, self.testera.year_to_BC_or_AD)
-        self.assertEqual(Era.objects.get(pk=1).visible_on_video_page, self.testera.visible_on_video_page)
+        self.assertEqual(Era.objects.get(pk=1).visible_on_video_page,
+                         self.testera.visible_on_video_page)
         self.assertEqual(Era.objects.get(pk=1).color_code, self.testera.color_code)
 
     def test_validator(self):
@@ -258,12 +270,14 @@ class EraModelTests(TestCase):
                   year_to_BC_or_AD="",
                   visible_on_video_page=True, color_code="fffff")
         self.assertRaises(ValidationError, era.full_clean)
-        self.assertRaisesMessage(ValidationError, "{'color_code': ['Bitte einen gültigen Code im Hex-Format einfügen: "
-                                                  "Muss genau 6 Zeichen lang sein.']}", era.full_clean)
+        self.assertRaisesMessage(ValidationError,
+                                 "{'color_code': ['Bitte einen gültigen Code im Hex-Format einfügen: "
+                                 "Muss genau 6 Zeichen lang sein.']}", era.full_clean)
         era.color_code = "zzzzzz"
         self.assertRaises(ValidationError, era.full_clean)
-        self.assertRaisesMessage(ValidationError, "{'color_code': ['Bitte einen gültigen Code im Hex-Format einfügen: "
-                                                  "Nur Hex-Zeichen: 0-9, a-f und A-F.']}", era.full_clean)
+        self.assertRaisesMessage(ValidationError,
+                                 "{'color_code': ['Bitte einen gültigen Code im Hex-Format einfügen: "
+                                 "Nur Hex-Zeichen: 0-9, a-f und A-F.']}", era.full_clean)
 
     def test__str__(self):
         era = Era.objects.create(name="Archaik", year_from=1, year_from_BC_or_AD="", year_to=1,
@@ -285,23 +299,36 @@ class PictureTests(TestCase):
         :return: None
         """
         cls.client = Client()
-        test_era = Era.objects.create(name='Frühe Kaiserzeit', year_from=55, year_from_BC_or_AD='v.Chr', year_to=55,
+        test_era = Era.objects.create(name='Frühe Kaiserzeit', year_from=55,
+                                      year_from_BC_or_AD='v.Chr', year_to=55,
                                       year_to_BC_or_AD='v.Chr')
-        test_building_1 = Building.objects.create(pk=0, name='', description='', city='', region='', country='', date_from=0,
-                                date_from_BC_or_AD='',
-                                date_to=0, date_to_BC_or_AD='', era=test_era, architect='', context='', builder='',
-                                construction_type='', design='', function='', length=0, width=0, height=0,
-                                circumference=0, area=0, column_order='', construction='', material='',
-                                literature='')
-        test_building_2 = Building.objects.create(pk=1, name='Parthenon', description='Das Parthenon in Athen', city='Athen',
-                                region='TestRegion', country='GR-Griechenland',
-                                date_from=447, date_from_BC_or_AD='v.Chr.', date_to=438, date_to_BC_or_AD='v.Chr.',
-                                era=test_era, architect='Iktinos, Kallikrates', context='Tempel',
-                                builder='Perikles und die Polis Athen', construction_type='Tempel',
-                                design='Peripteros', function='Sakralbau', length=30.88, width=69.5, height=1,
-                                circumference=1, area=1, column_order='dorisch, ionischer Fries',
-                                construction='Massivbau', material='penetelischer Marmor',
-                                literature='Muss - Schubert 1988, SEITEN?; Gruben 2001, 173-190; Hellmann 2006, 82-96;')
+        test_building_1 = Building.objects.create(pk=0, name='', description='', city='', region='',
+                                                  country='', date_from=0,
+                                                  date_from_BC_or_AD='',
+                                                  date_to=0, date_to_BC_or_AD='', era=test_era,
+                                                  architect='', context='', builder='',
+                                                  construction_type='', design='', function='',
+                                                  length=0, width=0, height=0,
+                                                  circumference=0, area=0, column_order='',
+                                                  construction='', material='',
+                                                  literature='')
+        test_building_2 = Building.objects.create(pk=1, name='Parthenon',
+                                                  description='Das Parthenon in Athen',
+                                                  city='Athen',
+                                                  region='TestRegion', country='GR-Griechenland',
+                                                  date_from=447, date_from_BC_or_AD='v.Chr.',
+                                                  date_to=438, date_to_BC_or_AD='v.Chr.',
+                                                  era=test_era, architect='Iktinos, Kallikrates',
+                                                  context='Tempel',
+                                                  builder='Perikles und die Polis Athen',
+                                                  construction_type='Tempel',
+                                                  design='Peripteros', function='Sakralbau',
+                                                  length=30.88, width=69.5, height=1,
+                                                  circumference=1, area=1,
+                                                  column_order='dorisch, ionischer Fries',
+                                                  construction='Massivbau',
+                                                  material='penetelischer Marmor',
+                                                  literature='Muss - Schubert 1988, SEITEN?; Gruben 2001, 173-190; Hellmann 2006, 82-96;')
         cls.p = Picture.objects.create(name='', picture='/media/picture/Test1.jpg',
                                        building=test_building_1, usable_as_thumbnail=False)
         cls.p2 = Picture.objects.create(name='', picture='/media/picture/Test2.jpg',
@@ -331,31 +358,47 @@ class BlueprintTests(TestCase):
     """
     Test for Blueprint Model
     """
+
     def setUp(self):
         """
         Setting up objects and a client for the tests
         """
         self.client = Client()
-        test_era = Era.objects.create(name='Frühe Kaiserzeit', year_from=55, year_from_BC_or_AD='v.Chr', year_to=55,
+        test_era = Era.objects.create(name='Frühe Kaiserzeit', year_from=55,
+                                      year_from_BC_or_AD='v.Chr', year_to=55,
                                       year_to_BC_or_AD='v.Chr')
-        test_building_1 = Building.objects.create(pk=0, name='', description='', city='', region='', country='', date_from=0,
-                                date_from_BC_or_AD='',
-                                date_to=0, date_to_BC_or_AD='', era=test_era, architect='', context='', builder='',
-                                construction_type='', design='', function='', length=0, width=0, height=0,
-                                circumference=0, area=0, column_order='', construction='', material='',
-                                literature='')
-        test_building_2 = Building.objects.create(pk=1, name='Parthenon', description='Das Parthenon in Athen', city='Athen',
-                                region='TestRegion', country='GR-Griechenland',
-                                date_from=447, date_from_BC_or_AD='v.Chr.', date_to=438, date_to_BC_or_AD='v.Chr.',
-                                era=test_era, architect='Iktinos, Kallikrates', context='Tempel',
-                                builder='Perikles und die Polis Athen', construction_type='Tempel',
-                                design='Peripteros', function='Sakralbau', length=30.88, width=69.5, height=1,
-                                circumference=1, area=1, column_order='dorisch, ionischer Fries',
-                                construction='Massivbau', material='penetelischer Marmor',
-                                literature='Muss - Schubert 1988, SEITEN?; Gruben 2001, 173-190; Hellmann 2006, 82-96;')
-        Blueprint.objects.create(name='', blueprint='/media/blueprints/Test2.jpg', width=0, height=0,
+        test_building_1 = Building.objects.create(pk=0, name='', description='', city='', region='',
+                                                  country='', date_from=0,
+                                                  date_from_BC_or_AD='',
+                                                  date_to=0, date_to_BC_or_AD='', era=test_era,
+                                                  architect='', context='', builder='',
+                                                  construction_type='', design='', function='',
+                                                  length=0, width=0, height=0,
+                                                  circumference=0, area=0, column_order='',
+                                                  construction='', material='',
+                                                  literature='')
+        test_building_2 = Building.objects.create(pk=1, name='Parthenon',
+                                                  description='Das Parthenon in Athen',
+                                                  city='Athen',
+                                                  region='TestRegion', country='GR-Griechenland',
+                                                  date_from=447, date_from_BC_or_AD='v.Chr.',
+                                                  date_to=438, date_to_BC_or_AD='v.Chr.',
+                                                  era=test_era, architect='Iktinos, Kallikrates',
+                                                  context='Tempel',
+                                                  builder='Perikles und die Polis Athen',
+                                                  construction_type='Tempel',
+                                                  design='Peripteros', function='Sakralbau',
+                                                  length=30.88, width=69.5, height=1,
+                                                  circumference=1, area=1,
+                                                  column_order='dorisch, ionischer Fries',
+                                                  construction='Massivbau',
+                                                  material='penetelischer Marmor',
+                                                  literature='Muss - Schubert 1988, SEITEN?; Gruben 2001, 173-190; Hellmann 2006, 82-96;')
+        Blueprint.objects.create(name='', blueprint='/media/blueprints/Test2.jpg', width=0,
+                                 height=0,
                                  building=test_building_1)
-        Blueprint.objects.create(name='TestBlueprint1', blueprint='/media/blueprints/Test1.jpg', width=10, height=10,
+        Blueprint.objects.create(name='TestBlueprint1', blueprint='/media/blueprints/Test1.jpg',
+                                 width=10, height=10,
                                  building=test_building_2)
 
     def test1__str__(self):
@@ -375,6 +418,3 @@ class BlueprintTests(TestCase):
                          list(Building.objects.filter(name='Parthenon')))
         self.assertEqual(list(Blueprint.get_blueprint_for_building(Blueprint, 0)),
                          list(Building.objects.filter(name='Parthenon')))
-
-
-
