@@ -577,8 +577,8 @@ class FilterTestCases(TestCase):
         """
         setup()
         dict_lst = Building.objects.values("design")
-        str_list = ['erniedrigend', 'erstaunlich', 'Großartig', 'erniedrigend', 'erniedrigend'
-                    'neuartig', 'aschig', 'schrumpelig',None, 'tödlich', 'Prunk']
+        str_list = ['erniedrigend', 'erstaunlich', 'Großartig', 'erniedrigend', 'erniedrigend',
+                    'neuartig', 'aschig', 'schrumpelig', None, 'tödlich', 'Prunk']
         self.assertEqual(one_dict_set_to_string_list(dict_lst), str_list)
 
     def test_one_dict_set_to_string_list9(self):

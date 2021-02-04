@@ -156,7 +156,7 @@ class Building(models.Model):
                                help_text="Hier Land des Bauwerks auswählen (Tipp:"
                                          "Zum Suchen Kürzel"
                                          "auf der Tastatur eingeben).",
-                               choices=country_codes.contry_codes_as_tuple_list,
+                               choices=country_codes.country_codes_as_tuple_list,
                                default="Griechenland", null=True, blank=True,
                                validators=[validate_url_conform_str])
     date_from = models.PositiveIntegerField(
@@ -187,8 +187,8 @@ class Building(models.Model):
                                  help_text="Architekt des Bauwerks eingeben (max. 100 Zeichen).",
                                  null=True, blank=True, validators=[validate_url_conform_str])
     context = models.CharField(max_length=100,
-                               help_text="""Kontext des Bauwerks eingeben (Haus, Siedlung,
-                                   öfftl. Platz etc., "max. 100 Zeichen)""",
+                               help_text="Kontext des Bauwerks eingeben (Haus, Siedlung, "
+                                         "öfftl. Platz etc., max. 100 Zeichen)",
                                null=True, blank=True, validators=[validate_url_conform_str])
     builder = models.CharField(max_length=100,
                                help_text="Bauherren des Bauwerks eingeben (max. 100 Zeichen).",
@@ -221,8 +221,9 @@ class Building(models.Model):
                                               "(max. 100 Zeichen).",
                                     null=True, blank=True,
                                     validators=[validate_url_conform_str])
-    construction = models.CharField(max_length=100, help_text="""Konstruktion des Bauwerks eingeben
-                                    (z.B. Massivbau, etc., falls vorhanden, max. 100 Zeichen)""",
+    construction = models.CharField(max_length=100, help_text="Konstruktion des Bauwerks eingeben"
+                                                              "(z.B. Massivbau, etc., falls "
+                                                              "vorhanden, max. 100 Zeichen)",
                                     null=True, blank=True,
                                     validators=[validate_url_conform_str])
     material = models.CharField(max_length=100,
@@ -495,12 +496,12 @@ class Picture(models.Model):
     height = models.IntegerField(editable=False, default=0)
     building = models.ForeignKey(to=Building, null=True, blank=True, on_delete=models.SET_NULL)
     usable_as_thumbnail = models.BooleanField(default=False,
-                                              help_text="""Anwählen wenn das Bild als Thumbnail
-                                              (Vorschaubild) für sein Bauwerk in der Zeitachse,
-                                              der Bauwerke-Seite, und in den Suchergebnissen 
-                                              erscheinen darf. 
-                                              Bei mehreren möglichen Vorschaubildern für ein Bauwerk 
-                                              wird zufällig eins ausgewählt.""")
+                                              help_text="Anwählen wenn das Bild als Thumbnail "
+                                              "(Vorschaubild) für sein Bauwerk in der Zeitachse, "
+                                              "der Bauwerke-Seite, und in den Suchergebnissen " 
+                                              "erscheinen darf. Bei mehreren möglichen "
+                                              "Vorschaubildern für ein Bauwerk "
+                                              "wird zufällig eins ausgewählt.")
 
     def __str__(self):
         """

@@ -33,9 +33,9 @@ def one_dict_set_to_string_list(dictqs):
     :return: this values from the inner dicts as a string list
     """
     str_lst = []
-    for d in dictqs:
-        for v in d.values():
-            str_lst.append(v)
+    for dict in dictqs:
+        for value in dict.values():
+            str_lst.append(value)
     return str_lst
 
 
@@ -47,9 +47,9 @@ def delete_duplicates(lst):
     :return: the list without duplicates
     """
     result = []
-    for e in lst:
-        if e not in result:
-            result.append(e)
+    for entry in lst:
+        if entry not in result:
+            result.append(entry)
     return result
 
 
@@ -65,28 +65,31 @@ def my_filter(lst, key, value):
     :param value: the value to filter by.
     :return: the filtered lst, filtered by the value with the key.
     """
+    # Have to do this workaround, cause pylint only allows one return at the end
+    result = lst
     if key == "era":
-        return lst.filter(era__name=value)
+        result = lst.filter(era__name=value)
     elif key == "country":
-        return lst.filter(country=value)
+        result = lst.filter(country=value)
     elif key == "region":
-        return lst.filter(region__icontains=value)
+        result = lst.filter(region__icontains=value)
     elif key == "city":
-        return lst.filter(city__icontains=value)
+        result = lst.filter(city__icontains=value)
     elif key == "architect":
-        return lst.filter(architect__icontains=value)
+        result = lst.filter(architect__icontains=value)
     elif key == "builder":
-        return lst.filter(builder__icontains=value)
+        result = lst.filter(builder__icontains=value)
     elif key == "column_order":
-        return lst.filter(column_order__icontains=value)
+        result = lst.filter(column_order__icontains=value)
     elif key == "design":
-        return lst.filter(design__icontains=value)
+        result = lst.filter(design__icontains=value)
     elif key == "material":
-        return lst.filter(material__icontains=value)
+        result = lst.filter(material__icontains=value)
     elif key == "function":
-        return lst.filter(function__icontains=value)
+        result = lst.filter(function__icontains=value)
     else:
-        return lst
+        result = lst
+    return result
 
 
 def display_building_filter(request):
@@ -101,7 +104,7 @@ def display_building_filter(request):
     # era, country, region, city, architect, builders, column_orders, designs, material, function
     keys = ["era", "country", "region", "city", "architect", "builder", "column_order", "design",
             "material", "function"]
-    q = request.GET
+    urls_parameters = request.GET
     # Set all, to return all.
     # This will take care of returning all Buildings, if no filter is set.
     # pylint: disable = no-member
@@ -109,9 +112,9 @@ def display_building_filter(request):
 
     # If there is something set, it will start filtering here:
     for key in keys:
-        if key in q:
+        if key in urls_parameters:
             # If here the key is in it, it will be filtered by.
-            querys = q.getlist(key)
+            querys = urls_parameters.getlist(key)
             if len(querys) > 1:
                 # Here it is an list with more than one elements.
                 # Therefore we will not update data types.
@@ -212,7 +215,7 @@ def display_building_filter(request):
         'Functions': function,
         'Filter_Result': result,
         'Filter_Names': filter_names,
-        'Active_Filter': dict(q),
+        'Active_Filter': dict(urls_parameters),
     }
 
     return render(request, 'filter.html', context)

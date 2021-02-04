@@ -49,22 +49,24 @@ def get_year_of_item(i):
     as calculated by the called helper.
     """
     # A Building is a tuple with its thumbnail, [0] to get Building
+    result = None
     if isinstance(i, tuple):
         if i[0].date_from_BC_or_AD == "v.Chr.":
-            return -1 * int(i[0].date_from)
+            result = -1 * int(i[0].date_from)
         else:
-            return int(i[0].date_from)
+            result = int(i[0].date_from)
     elif isinstance(i, HistoricDate):
         if i.exacter_date is None:
             if i.year_BC_or_AD == "v.Chr.":
-                return -1 * int(i.year)
+                result = -1 * int(i.year)
             else:
-                return int(i.year)
+                result = int(i.year)
         else:
             if i.year_BC_or_AD == "v.Chr.":
-                return -1 * int(i.exacter_date.year)
+                result = -1 * int(i.exacter_date.year)
             else:
-                return int(i.exacter_date.year)
+                result = int(i.exacter_date.year)
+    return result
 
 
 def get_date_as_str(item):
@@ -78,14 +80,16 @@ def get_date_as_str(item):
                 historic dates: exact date (if present), otherwise year number.
                 Each along with BC/AD).
     """
+    result = None
     if isinstance(item, tuple):
         # Building is a tuple with its thumbnail, therefore [0] to get the building
-        return str(item[0].date_from) + " " + str(item[0].date_from_BC_or_AD)
+        result = str(item[0].date_from) + " " + str(item[0].date_from_BC_or_AD)
     elif isinstance(item, HistoricDate):
         if item.exacter_date is None:
-            return str(item.year) + " " + str(item.year_BC_or_AD)
+            result = str(item.year) + " " + str(item.year_BC_or_AD)
         else:
-            return str(item.exacter_date) + " " + str(item.year_BC_or_AD)
+            result = str(item.exacter_date) + " " + str(item.year_BC_or_AD)
+    return result
 
 
 def timeline(request):
