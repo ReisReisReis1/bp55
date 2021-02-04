@@ -10,7 +10,7 @@ def splitting(lst):
     """
     Splits the strings in the list at ; and ,
     """
-    final_string = []
+
     i = 0
     while i < len(lst):
         first_split = lst[i].split(';')
@@ -18,7 +18,7 @@ def splitting(lst):
         while j < len(first_split):
             second_split = first_split[j].split(',')
             first_split = first_split[:j] + [s for s in second_split] + \
-                               first_split[j + 1:]
+                          first_split[j + 1:]
             j = j + len(second_split)
         lst = lst[:i] + [s for s in first_split] + lst[i + 1:]
         i = i + len(first_split)
@@ -33,9 +33,9 @@ def one_dict_set_to_string_list(dictqs):
     :return: this values from the inner dicts as a string list
     """
     str_lst = []
-    for d in dictqs:
-        for v in d.values():
-            str_lst.append(v)
+    for dict in dictqs:
+        for value in dict.values():
+            str_lst.append(value)
     return str_lst
 
 
@@ -47,9 +47,9 @@ def delete_duplicates(lst):
     :return: the list without duplicates
     """
     result = []
-    for e in lst:
-        if e not in result:
-            result.append(e)
+    for entry in lst:
+        if entry not in result:
+            result.append(entry)
     return result
 
 
@@ -65,28 +65,31 @@ def my_filter(lst, key, value):
     :param value: the value to filter by.
     :return: the filtered lst, filtered by the value with the key.
     """
+    # Have to do this workaround, cause pylint only allows one return at the end
+    result = lst
     if key == "era":
-        return lst.filter(era__name=value)
+        result = lst.filter(era__name=value)
     elif key == "country":
-        return lst.filter(country=value)
+        result = lst.filter(country=value)
     elif key == "region":
-        return lst.filter(region__icontains=value)
+        result = lst.filter(region__icontains=value)
     elif key == "city":
-        return lst.filter(city__icontains=value)
+        result = lst.filter(city__icontains=value)
     elif key == "architect":
-        return lst.filter(architect__icontains=value)
+        result = lst.filter(architect__icontains=value)
     elif key == "builder":
-        return lst.filter(builder__icontains=value)
+        result = lst.filter(builder__icontains=value)
     elif key == "column_order":
-        return lst.filter(column_order__icontains=value)
+        result = lst.filter(column_order__icontains=value)
     elif key == "design":
-        return lst.filter(design__icontains=value)
+        result = lst.filter(design__icontains=value)
     elif key == "material":
-        return lst.filter(material__icontains=value)
+        result = lst.filter(material__icontains=value)
     elif key == "function":
-        return lst.filter(function__icontains=value)
+        result = lst.filter(function__icontains=value)
     else:
-        return lst
+        result = lst
+    return result
 
 
 def display_building_filter(request):
@@ -101,16 +104,17 @@ def display_building_filter(request):
     # era, country, region, city, architect, builders, column_orders, designs, material, function
     keys = ["era", "country", "region", "city", "architect", "builder", "column_order", "design",
             "material", "function"]
-    q = request.GET
+    urls_parameters = request.GET
     # Set all, to return all.
     # This will take care of returning all Buildings, if no filter is set.
+    # pylint: disable = no-member
     result = Building.objects.all()
 
     # If there is something set, it will start filtering here:
     for key in keys:
-        if key in q:
+        if key in urls_parameters:
             # If here the key is in it, it will be filtered by.
-            querys = q.getlist(key)
+            querys = urls_parameters.getlist(key)
             if len(querys) > 1:
                 # Here it is an list with more than one elements.
                 # Therefore we will not update data types.
@@ -118,13 +122,13 @@ def display_building_filter(request):
                 for query in querys:
                     # There are more then one of this filter type (key): Use of OR on the results.
                     # OR means we keep all filterings, just discard duplications.
-                    # Therefore we added up everything here, just need to check, if there are duplications
+                    # Therefore we added up everything here, just need to check,
+                    # if there are duplications
                     if result_for_lst is None:
                         result_for_lst = my_filter(result, key, query)
                     else:
                         # This will add querysets to each other:
                         # (Similar to SQL UNION Statment)
-                        # result_for_lst = result_for_lst.union(my_filter(result, key, query), all=False)
                         result_for_lst = result_for_lst | my_filter(result, key, query)
                 # Set it to the result. We had to work on a temporary var, otherwise
                 # it would be impossible to use an OR logic (for AND it will be easier).
@@ -151,39 +155,50 @@ def display_building_filter(request):
     # Append Thumbnails
     result = get_thumbnails_for_buildings(result)
 
-
-    filter_names = ('Stadt', 'Region', 'Land', 'Epoche', 'Architekt', 'Bauherr', 'Bauform',
-                    'Säulenordnung', 'Material', 'Funktion')
+    filter_names = ['Stadt', 'Region', 'Land', 'Epoche', 'Architekt', 'Bauherr', 'Bauform',
+                    'Säulenordnung', 'Material', 'Funktion']
+    # pylint: disable = no-member
     buildings = Building.objects.all()
-
+    # pylint: disable = no-member
     eras = Era.objects.all().exclude(name=None).order_by("name").values('name')
     # Now we just need to delete all duplicates. We could use .distinct() for that,
-    # but this only works on postgres Databases (what is painful cause we use sqlite for development)
-    # so we will implement duplication deletion in python here for this matter. But later (if no one uses
-    # sqlite anymore) it would be better and more efficient to set .distinct() for that.
+    # but this only works on postgres Databases
+    # (what is painful cause we use sqlite for development)
+    # so we will implement duplication deletion in python here for this matter.
+    # But later (if no one uses sqlite anymore)
+    # it would be better and more efficient to set .distinct() for that.
     eras = delete_duplicates(one_dict_set_to_string_list(eras))
+
     countries = buildings.only('country').exclude(country=None).order_by("country").values(
         'country')
     countries = delete_duplicates(one_dict_set_to_string_list(countries))
+
     regions = buildings.only('region').exclude(region=None).order_by("region").values('region')
     regions = delete_duplicates(one_dict_set_to_string_list(regions))
+
     cities = buildings.only('city').exclude(city=None).order_by("city").values('city')
     cities = delete_duplicates(one_dict_set_to_string_list(cities))
+
     architects = buildings.only('architect').exclude(architect=None).order_by("architect").values(
         'architect')
     architects = delete_duplicates(one_dict_set_to_string_list(architects))
+
     builders = buildings.only('builder').exclude(builder=None).order_by("builder").values('builder')
     builders = delete_duplicates(one_dict_set_to_string_list(builders))
+
     column_orders = buildings.only('column_order').exclude(column_order=None).order_by(
         "column_order"). \
         values('column_order')
     column_orders = delete_duplicates(one_dict_set_to_string_list(column_orders))
+
     designs = buildings.only('design').exclude(design=None).order_by("design").values('design')
     designs = delete_duplicates(one_dict_set_to_string_list(designs))
-    material = buildings.only('material').exclude(material=None).order_by("material")\
+
+    material = buildings.only('material').exclude(material=None).order_by("material") \
         .values('material')
     material = delete_duplicates(one_dict_set_to_string_list(material))
-    function = buildings.only('function').exclude(function=None).order_by("function")\
+
+    function = buildings.only('function').exclude(function=None).order_by("function") \
         .values('function')
     function = delete_duplicates(one_dict_set_to_string_list(function))
 
@@ -200,7 +215,7 @@ def display_building_filter(request):
         'Functions': function,
         'Filter_Result': result,
         'Filter_Names': filter_names,
-        'Active_Filter': dict(q),
+        'Active_Filter': dict(urls_parameters),
     }
 
     return render(request, 'filter.html', context)
