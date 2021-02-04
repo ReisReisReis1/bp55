@@ -73,7 +73,8 @@ class HistoricDatesModelTests(TestCase):
         :return: None / Test results
         """
         hd = HistoricDate.objects.create(year=17, exacter_date=None, year_BC_or_AD="n.Chr.",
-                                         title="Test Datum", infos="Ein Test Datum", era=self.an_era)
+                                         title="Test Datum", infos="Ein Test Datum",
+                                         era=self.an_era)
         self.assertEqual(HistoricDate.objects.get(title="Test Datum"), hd)
         self.assertEqual(HistoricDate.objects.get(pk=1).year, hd.year)
         self.assertEqual(HistoricDate.objects.get(pk=1).exacter_date, hd.exacter_date)
@@ -93,12 +94,14 @@ class HistoricDatesModelTests(TestCase):
                                          title="Test",
                                          infos="Ein Test Datum",
                                          era=self.an_era)
-        self.assertEqual(str(HistoricDate.objects.get(title="Test")), str(hd.title) + " (" + str(hd.year) + " "
+        self.assertEqual(str(HistoricDate.objects.get(title="Test")), str(hd.title)
+                         + " (" + str(hd.year) + " "
                          + str(hd.year_BC_or_AD) + ")")
         # with exacter date
         hd.exacter_date = date(23, 3, 1)
         hd.save()
-        self.assertEqual(str(HistoricDate.objects.get(title="Test")), str(hd.title) + " (" + str(hd.exacter_date)
+        self.assertEqual(str(HistoricDate.objects.get(title="Test")), str(hd.title)
+                         + " (" + str(hd.exacter_date)
                          + " " + str(hd.year_BC_or_AD) + ")")
 
 
@@ -115,17 +118,27 @@ class TimelineViewsTest(TestCase):
         """
         cls.client = Client()
 
-        cls.bronzezeit = Era.objects.create(name="Bronzezeit", year_from=1400, year_from_BC_or_AD="v.Chr.",
+        cls.bronzezeit = Era.objects.create(name="Bronzezeit", year_from=1400,
+                                            year_from_BC_or_AD="v.Chr.",
                                             year_to=1101,
-                                            year_to_BC_or_AD="v.Chr.", visible_on_video_page=True, color_code="fffff1")
-        cls.eisenzeit = Era.objects.create(name="Eisenzeit", year_from=1100, year_from_BC_or_AD="v.Chr.", year_to=701,
-                                           year_to_BC_or_AD="v.Chr.", visible_on_video_page=True, color_code="fffff2")
-        cls.archaik = Era.objects.create(name="Arachik", year_from=700, year_from_BC_or_AD="v.Chr.", year_to=501,
-                                         year_to_BC_or_AD="v.Chr.", visible_on_video_page=True, color_code="fffff3")
-        cls.klassik = Era.objects.create(name="Klassisk", year_from=500, year_from_BC_or_AD="v.Chr.", year_to=337,
-                                         year_to_BC_or_AD="v.Chr.", visible_on_video_page=True, color_code="fffff4")
-        cls.helinismus = Era.objects.create(name="Hellinismus", year_from=336, year_from_BC_or_AD="v.Chr.", year_to=100,
-                                            year_to_BC_or_AD="n.Chr.", visible_on_video_page=True, color_code="fffff5")
+                                            year_to_BC_or_AD="v.Chr.", visible_on_video_page=True,
+                                            color_code="fffff1")
+        cls.eisenzeit = Era.objects.create(name="Eisenzeit", year_from=1100,
+                                           year_from_BC_or_AD="v.Chr.", year_to=701,
+                                           year_to_BC_or_AD="v.Chr.", visible_on_video_page=True,
+                                           color_code="fffff2")
+        cls.archaik = Era.objects.create(name="Arachik", year_from=700, year_from_BC_or_AD="v.Chr.",
+                                         year_to=501,
+                                         year_to_BC_or_AD="v.Chr.", visible_on_video_page=True,
+                                         color_code="fffff3")
+        cls.klassik = Era.objects.create(name="Klassisk", year_from=500,
+                                         year_from_BC_or_AD="v.Chr.", year_to=337,
+                                         year_to_BC_or_AD="v.Chr.", visible_on_video_page=True,
+                                         color_code="fffff4")
+        cls.helinismus = Era.objects.create(name="Hellinismus", year_from=336,
+                                            year_from_BC_or_AD="v.Chr.", year_to=100,
+                                            year_to_BC_or_AD="n.Chr.", visible_on_video_page=True,
+                                            color_code="fffff5")
 
     def test_timeline_empty(self):
         """
