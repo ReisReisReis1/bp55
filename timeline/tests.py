@@ -17,7 +17,6 @@ test_image = (b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x00\x00\x00\x21\xf9\x04
               b'\x02\x4c\x01\x00\x3b')
 image_mock = SimpleUploadedFile('small.img', test_image, content_type='image/gif')
 image_mock2 = SimpleUploadedFile('small.img', test_image, content_type='image/gif')
-print(image_mock.name)
 
 
 class ViewsTestCases(TestCase):

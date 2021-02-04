@@ -6,6 +6,14 @@ from django.test import Client
 from django.test import TestCase
 from django.core.exceptions import ValidationError
 from details_page.models import Era, Picture, Building, Blueprint
+from django.core.files.uploadedfile import SimpleUploadedFile
+
+# Define some temp images for testing
+test_image = (b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x00\x00\x00\x21\xf9\x04'
+              b'\x01\x0a\x00\x01\x00\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02'
+              b'\x02\x4c\x01\x00\x3b')  # this is one white pixel as byte code
+image_mock = SimpleUploadedFile('small.img', test_image, content_type='image/gif')
+image_mock2 = SimpleUploadedFile('small.img', test_image, content_type='image/gif')
 
 
 class ViewsTestCases(TestCase):
@@ -299,26 +307,26 @@ class PictureTests(TestCase):
         :return: None
         """
         cls.client = Client()
-        test_era = Era.objects.create(name='Frühe Kaiserzeit', year_from=55,
+        cls.test_era = Era.objects.create(name='Frühe Kaiserzeit', year_from=55,
                                       year_from_BC_or_AD='v.Chr', year_to=55,
                                       year_to_BC_or_AD='v.Chr')
-        test_building_1 = Building.objects.create(pk=0, name='', description='', city='', region='',
+        cls.test_building_1 = Building.objects.create(pk=0, name='', description='', city='', region='',
                                                   country='', date_from=0,
                                                   date_from_BC_or_AD='',
-                                                  date_to=0, date_to_BC_or_AD='', era=test_era,
+                                                  date_to=0, date_to_BC_or_AD='', era=cls.test_era,
                                                   architect='', context='', builder='',
                                                   construction_type='', design='', function='',
                                                   length=0, width=0, height=0,
                                                   circumference=0, area=0, column_order='',
                                                   construction='', material='',
                                                   literature='')
-        test_building_2 = Building.objects.create(pk=1, name='Parthenon',
+        cls.test_building_2 = Building.objects.create(pk=1, name='Parthenon',
                                                   description='Das Parthenon in Athen',
                                                   city='Athen',
                                                   region='TestRegion', country='GR-Griechenland',
                                                   date_from=447, date_from_BC_or_AD='v.Chr.',
                                                   date_to=438, date_to_BC_or_AD='v.Chr.',
-                                                  era=test_era, architect='Iktinos, Kallikrates',
+                                                  era=cls.test_era, architect='Iktinos, Kallikrates',
                                                   context='Tempel',
                                                   builder='Perikles und die Polis Athen',
                                                   construction_type='Tempel',
@@ -329,10 +337,10 @@ class PictureTests(TestCase):
                                                   construction='Massivbau',
                                                   material='penetelischer Marmor',
                                                   literature='Muss - Schubert 1988, SEITEN?; Gruben 2001, 173-190; Hellmann 2006, 82-96;')
-        cls.p = Picture.objects.create(name='', picture='/media/picture/Test1.jpg',
-                                       building=test_building_1, usable_as_thumbnail=False)
-        cls.p2 = Picture.objects.create(name='', picture='/media/picture/Test2.jpg',
-                                        building=test_building_2, usable_as_thumbnail=False)
+        cls.p = Picture.objects.create(name='', picture=image_mock,
+                                       building=cls.test_building_1, usable_as_thumbnail=False)
+        cls.p2 = Picture.objects.create(name='', picture=image_mock2,
+                                        building=cls.test_building_2, usable_as_thumbnail=False)
 
     def test_response(self):
         """
@@ -342,8 +350,19 @@ class PictureTests(TestCase):
         self.assertEqual(Picture.objects.get(pk=1), self.p)
         self.assertEqual(Picture.objects.get(pk=1).name, self.p.name)
         self.assertEqual(Picture.objects.get(pk=1).picture, self.p.picture)
-        self.assertEqual(Picture.objects.get(pk=1).building, self.b)
+        self.assertEqual(Picture.objects.get(pk=1).building, self.test_building_1)
         self.assertEqual(Picture.objects.get(pk=1).usable_as_thumbnail, self.p.usable_as_thumbnail)
+
+    def test_response_p2(self):
+        """
+        Simple get tests for picture.
+        :return: None / test results
+        """
+        self.assertEqual(Picture.objects.get(pk=2), self.p2)
+        self.assertEqual(Picture.objects.get(pk=2).name, self.p2.name)
+        self.assertEqual(Picture.objects.get(pk=2).picture, self.p2.picture)
+        self.assertEqual(Picture.objects.get(pk=2).building, self.test_building_2)
+        self.assertEqual(Picture.objects.get(pk=2).usable_as_thumbnail, self.p2.usable_as_thumbnail)
 
     def test__str__(self):
         """
@@ -364,42 +383,42 @@ class BlueprintTests(TestCase):
         Setting up objects and a client for the tests
         """
         self.client = Client()
-        test_era = Era.objects.create(name='Frühe Kaiserzeit', year_from=55,
-                                      year_from_BC_or_AD='v.Chr', year_to=55,
-                                      year_to_BC_or_AD='v.Chr')
-        test_building_1 = Building.objects.create(pk=0, name='', description='', city='', region='',
-                                                  country='', date_from=0,
-                                                  date_from_BC_or_AD='',
-                                                  date_to=0, date_to_BC_or_AD='', era=test_era,
-                                                  architect='', context='', builder='',
-                                                  construction_type='', design='', function='',
-                                                  length=0, width=0, height=0,
-                                                  circumference=0, area=0, column_order='',
-                                                  construction='', material='',
-                                                  literature='')
-        test_building_2 = Building.objects.create(pk=1, name='Parthenon',
-                                                  description='Das Parthenon in Athen',
-                                                  city='Athen',
-                                                  region='TestRegion', country='GR-Griechenland',
-                                                  date_from=447, date_from_BC_or_AD='v.Chr.',
-                                                  date_to=438, date_to_BC_or_AD='v.Chr.',
-                                                  era=test_era, architect='Iktinos, Kallikrates',
-                                                  context='Tempel',
-                                                  builder='Perikles und die Polis Athen',
-                                                  construction_type='Tempel',
-                                                  design='Peripteros', function='Sakralbau',
-                                                  length=30.88, width=69.5, height=1,
-                                                  circumference=1, area=1,
-                                                  column_order='dorisch, ionischer Fries',
-                                                  construction='Massivbau',
-                                                  material='penetelischer Marmor',
-                                                  literature='Muss - Schubert 1988, SEITEN?; Gruben 2001, 173-190; Hellmann 2006, 82-96;')
-        Blueprint.objects.create(name='', blueprint='/media/blueprints/Test2.jpg', width=0,
-                                 height=0,
-                                 building=test_building_1)
-        Blueprint.objects.create(name='TestBlueprint1', blueprint='/media/blueprints/Test1.jpg',
-                                 width=10, height=10,
-                                 building=test_building_2)
+        self.test_era = Era.objects.create(name='Frühe Kaiserzeit', year_from=55,
+                                           year_from_BC_or_AD='v.Chr', year_to=55,
+                                           year_to_BC_or_AD='v.Chr')
+        self.test_building_1 = Building.objects.create(pk=0, name='', description='', city='', region='',
+                                                       country='', date_from=0,
+                                                       date_from_BC_or_AD='',
+                                                       date_to=0, date_to_BC_or_AD='', era=self.test_era,
+                                                       architect='', context='', builder='',
+                                                       construction_type='', design='', function='',
+                                                       length=0, width=0, height=0,
+                                                       circumference=0, area=0, column_order='',
+                                                       construction='', material='',
+                                                       literature='')
+        self.test_building_2 = Building.objects.create(pk=1, name='Parthenon',
+                                                       description='Das Parthenon in Athen',
+                                                       city='Athen',
+                                                       region='TestRegion', country='GR-Griechenland',
+                                                       date_from=447, date_from_BC_or_AD='v.Chr.',
+                                                       date_to=438, date_to_BC_or_AD='v.Chr.',
+                                                       era=self.test_era, architect='Iktinos, Kallikrates',
+                                                       context='Tempel',
+                                                       builder='Perikles und die Polis Athen',
+                                                       construction_type='Tempel',
+                                                       design='Peripteros', function='Sakralbau',
+                                                       length=30.88, width=69.5, height=1,
+                                                       circumference=1, area=1,
+                                                       column_order='dorisch, ionischer Fries',
+                                                       construction='Massivbau',
+                                                       material='penetelischer Marmor',
+                                                       literature='Muss - Schubert 1988, SEITEN?; Gruben 2001, 173-190; Hellmann 2006, 82-96;')
+        self.bp1 = Blueprint.objects.create(name='', blueprint=image_mock, width=0,
+                                            height=0,
+                                            building=self.test_building_1)
+        self.bp2 = Blueprint.objects.create(name='TestBlueprint1', blueprint=image_mock2,
+                                            width=10, height=10,
+                                            building=self.test_building_2)
 
     def test1__str__(self):
         """
@@ -415,6 +434,6 @@ class BlueprintTests(TestCase):
         Testing the get_blueprint_for_building function
         """
         self.assertEqual(list(Blueprint.get_blueprint_for_building(Blueprint, 1)),
-                         list(Building.objects.filter(name='Parthenon')))
+                         list(Blueprint.objects.filter(pk=2)))
         self.assertEqual(list(Blueprint.get_blueprint_for_building(Blueprint, 0)),
-                         list(Building.objects.filter(name='Parthenon')))
+                         list(Blueprint.objects.filter(pk=1)))
