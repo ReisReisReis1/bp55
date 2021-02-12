@@ -234,6 +234,10 @@ class Building(models.Model):
                                   null=True, blank=True)
 
     def __str__(self):
+        """
+        Name for the admin interface
+        :return: the name of a Building
+        """
         return str(self.name)
 
     def get_name(self, building_id):
@@ -490,6 +494,10 @@ class Blueprint(models.Model):
     building = models.ForeignKey(to=Building, null=True, blank=True, on_delete=models.SET_NULL)
 
     def __str__(self):
+        """
+        Name for the admin interface
+        :return: the name of a Blueprint
+        """
         return str(self.name)
 
     def get_blueprint_for_building(self, wanted_building):

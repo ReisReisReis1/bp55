@@ -246,6 +246,15 @@ class BuildingTestCases(TestCase):
         self.assertEqual(Building.get_date_ca(Building, 0), False)
         self.assertEqual(Building.get_date_ca(Building, 1), True)
 
+    def test26__str__(self):
+        """
+        Testing the __str__ function
+        """
+        test1 = Building.objects.get(name='').__str__()
+        test2 = Building.objects.get(name='Parthenon').__str__()
+        self.assertEqual(test1, '')
+        self.assertEqual(test2, 'Parthenon')
+
 
 class EraModelTests(TestCase):
     """
