@@ -507,9 +507,9 @@ class Blueprint(models.Model):
 
     def get_blueprint_for_building(self, wanted_building):
         """
-        Getting a list of blueprints for the given building
+        Getting a QuerySet of blueprints for the given building
         :param wanted_building: ID to fetch the correct building
-        :return: list of blueprints for given building or empty list
+        :return: QuerySet of blueprints for given building or empty QuerySet
         """
         # pylint: disable= no-member
         blueprints = self.objects.filter(building=wanted_building)
@@ -559,9 +559,9 @@ class Picture(models.Model):
 
     def get_picture_for_building(self, wanted_building):
         """
-        Getting a List of Pictures for the given building
+        Getting a QuerySet of Pictures for the given building
         :param wanted_building: ID to fetch the correct building
-        :return: list of Pictures for given building or empty list
+        :return: QuerySet of Pictures for given building or empty QuerySet
         """
         # pylint: disable= no-member
         pictures = self.objects.filter(building=wanted_building)
