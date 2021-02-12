@@ -6,8 +6,6 @@ from django.test import TestCase, Client
 # pylint: disable = import-error
 from details_page.models import Building, Era
 
-TEST_PICTURE_PATH = '/static/default-thumbnail.png'
-
 
 class SearchTestCases(TestCase):
     """
@@ -20,7 +18,7 @@ class SearchTestCases(TestCase):
         """
         self.frühzeit = Era.objects.create(name='Frühzeit')
         self.archaik = Era.objects.create(name='Archaik')
-        self.hellenismus = Era.objects.create(name='Helenismus')
+        self.hellenismus = Era.objects.create(name='Hellenismus')
         self.römisch = Era.objects.create(name='Römische Kaiserzeit')
         self.klassik = Era.objects.create(name='Klassik')
         self.spätantike = Era.objects.create(name='Spätantike')
@@ -88,7 +86,7 @@ class SearchTestCases(TestCase):
                                                  country='Deutschland', region='Hessen',
                                                  era=self.klassik, architect='Laura Buhleier',
                                                  context='Essen',
-                                                 builder='Quang Ngyuen',
+                                                 builder='Quang Nguyen',
                                                  construction_type='Gesund', design='schrumpelig',
                                                  function='Ernährung', column_order='',
                                                  material='Trauben', construction='trocknen')
@@ -102,11 +100,11 @@ class SearchTestCases(TestCase):
                                                  material='Stein', construction='Massivbau')
         self.building10 = Building.objects.create(name='Klingon', city='',
                                                   country='', region='',
-                                                  era=self.spätantike, architect='Spock ',
+                                                  era=self.spätantike, architect='Spock',
                                                   context='Planet dert Klingonen',
                                                   builder='Michael Burnham',
                                                   construction_type='', design='tödlich',
-                                                  function='Desytroy', column_order='klingonisch',
+                                                  function='Destroy', column_order='klingonisch',
                                                   material='Planet', construction='Massiv')
         self.building11 = Building.objects.create(name='Kölner Dom', city='Köln',
                                                   country='China', region='Texas',
@@ -147,31 +145,31 @@ class SearchTestCases(TestCase):
         response13 = self.client.get('/search/?search_request=' + self.building11.material)
 
         self.assertListEqual(list(response1.context['Result']),
-                             [(self.building11, test_picture_path)])
+                             [(self.building11, None)])
         self.assertListEqual(list(response2.context['Result']),
-                             [(self.building11, test_picture_path)])
+                             [(self.building11, None)])
         self.assertListEqual(list(response3.context['Result']),
-                             [(self.building11, test_picture_path)])
+                             [(self.building11, None)])
         self.assertListEqual(list(response4.context['Result']),
-                             [(self.building11, test_picture_path)])
+                             [(self.building11, None)])
         self.assertListEqual(list(response5.context['Result']),
-                             [(self.building11, test_picture_path)])
+                             [(self.building11, None)])
         self.assertListEqual(list(response6.context['Result']),
-                             [(self.building11, test_picture_path)])
+                             [(self.building11, None)])
         self.assertListEqual(list(response7.context['Result']),
-                             [(self.building11, test_picture_path)])
+                             [(self.building11, None)])
         self.assertListEqual(list(response8.context['Result']),
-                             [(self.building11, test_picture_path)])
+                             [(self.building11, None)])
         self.assertListEqual(list(response9.context['Result']),
-                             [(self.building11, test_picture_path)])
+                             [(self.building11, None)])
         self.assertListEqual(list(response10.context['Result']),
-                             [(self.building11, test_picture_path)])
+                             [(self.building11, None)])
         self.assertListEqual(list(response11.context['Result']),
-                             [(self.building11, test_picture_path)])
+                             [(self.building11, None)])
         self.assertListEqual(list(response12.context['Result']),
-                             [(self.building11, test_picture_path)])
+                             [(self.building11, None)])
         self.assertListEqual(list(response13.context['Result']),
-                             [(self.building11, test_picture_path)])
+                             [(self.building11, None)])
 
     def test3(self):
         """
@@ -187,39 +185,39 @@ class SearchTestCases(TestCase):
         response6 = self.client.get('/search/?search_request=Dutschland')
         response7 = self.client.get('/search/?search_request=Kölner DOM')
         response8 = self.client.get('/search/?search_request=')
-        all_buildings_ordered = [(self.building6, test_picture_path),
-                                 (self.building4, test_picture_path),
-                                 (self.building5, test_picture_path),
-                                 (self.building2, test_picture_path),
-                                 (self.building3, test_picture_path),
-                                 (self.building10, test_picture_path),
-                                 (self.building11, test_picture_path),
-                                 (self.building7, test_picture_path),
-                                 (self.building1, test_picture_path),
-                                 (self.building8, test_picture_path),
-                                 (self.building9, test_picture_path)]
+        all_buildings_ordered = [(self.building6, None),
+                                 (self.building4, None),
+                                 (self.building5, None),
+                                 (self.building2, None),
+                                 (self.building3, None),
+                                 (self.building10, None),
+                                 (self.building11, None),
+                                 (self.building7, None),
+                                 (self.building1, None),
+                                 (self.building8, None),
+                                 (self.building9, None)]
         self.assertListEqual(list(response1.context['Result']), all_buildings_ordered)
         self.assertListEqual(list(response2.context['Result']),
-                             [(self.building6, test_picture_path),
-                              (self.building4, test_picture_path),
-                              (self.building5, test_picture_path),
-                              (self.building1, test_picture_path),
-                              (self.building8, test_picture_path),
-                              (self.building9, test_picture_path)
+                             [(self.building6, None),
+                              (self.building4, None),
+                              (self.building5, None),
+                              (self.building1, None),
+                              (self.building8, None),
+                              (self.building9, None)
                               ])
         self.assertListEqual(list(response3.context['Result']), [])
         self.assertListEqual(list(response4.context['Result']),
-                             [(self.building6, test_picture_path),
-                              (self.building4, test_picture_path),
-                              (self.building1, test_picture_path)])
+                             [(self.building6, None),
+                              (self.building4, None),
+                              (self.building1, None)])
         self.assertListEqual(list(response5.context['Result']),
-                             [(self.building6, test_picture_path),
-                              (self.building4, test_picture_path),
-                              (self.building5, test_picture_path),
-                              (self.building1, test_picture_path),
-                              (self.building8, test_picture_path),
-                              (self.building9, test_picture_path)])
+                             [(self.building6, None),
+                              (self.building4, None),
+                              (self.building5, None),
+                              (self.building1, None),
+                              (self.building8, None),
+                              (self.building9, None)])
         self.assertListEqual(list(response6.context['Result']), [])
         self.assertListEqual(list(response7.context['Result']),
-                             [(self.building11, test_picture_path)])
+                             [(self.building11, None)])
         self.assertListEqual(list(response8.context['Result']), all_buildings_ordered)

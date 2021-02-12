@@ -3,6 +3,7 @@ Configurations of the different functions and subpages from the App: search
 """
 from django.db.models import Q
 from django.shortcuts import render
+# pylint: disable = no-name-in-module, import-error
 from details_page.models import Building
 from timeline.views import get_thumbnails_for_buildings
 
@@ -35,5 +36,6 @@ def search(request):
     results = get_thumbnails_for_buildings(results)
     context = {
         'Result': results,
+        'Active_Filter': request.GET,
     }
     return render(request, 'search.html', context)

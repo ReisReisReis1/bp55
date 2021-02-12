@@ -21,6 +21,10 @@
     border-width: 2px;
 }
 
+.historic-title {
+    margin-bottom: 0px !important;
+}
+
 .card {
     width: 70%;
 }
@@ -78,7 +82,7 @@
     position: relative;
     z-index: -1;
     margin-top: -100px;
-    height: 250%;
+    height: 230%;
 }
 
 .timeline-center-last {

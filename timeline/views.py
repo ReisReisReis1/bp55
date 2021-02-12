@@ -22,6 +22,7 @@ def get_thumbnails_for_buildings(building_list):
     :return: Will return an tuple: The building from building_list, along with the thumbnail or
     default thumbnail. Or empty list, if building was empty.
     """
+    # pylint: disable = no-member
     buildings_with_thumbnails = []
     # Search for thumbnails
     for building in building_list:
@@ -48,22 +49,24 @@ def get_year_of_item(i):
     as calculated by the called helper.
     """
     # A Building is a tuple with its thumbnail, [0] to get Building
+    result = None
     if isinstance(i, tuple):
         if i[0].date_from_BC_or_AD == "v.Chr.":
-            return -1 * int(i[0].date_from)
+            result = -1 * int(i[0].date_from)
         else:
-            return int(i[0].date_from)
+            result = int(i[0].date_from)
     elif isinstance(i, HistoricDate):
         if i.exacter_date is None:
             if i.year_BC_or_AD == "v.Chr.":
-                return -1 * int(i.year)
+                result = -1 * int(i.year)
             else:
-                return int(i.year)
+                result = int(i.year)
         else:
             if i.year_BC_or_AD == "v.Chr.":
-                return -1 * int(i.exacter_date.year)
+                result = -1 * int(i.exacter_date.year)
             else:
-                return int(i.exacter_date.year)
+                result = int(i.exacter_date.year)
+    return result
 
 
 def get_date_as_str(item):
@@ -74,16 +77,19 @@ def get_date_as_str(item):
     :param item: the item to get the date for
     :return: an String with the date
                 (buildings: year number for beginning of the construction,
-                historic dates: exact date (if present), otherwise year number. Each along with BC/AD).
+                historic dates: exact date (if present), otherwise year number.
+                Each along with BC/AD).
     """
+    result = None
     if isinstance(item, tuple):
         # Building is a tuple with its thumbnail, therefore [0] to get the building
-        return str(item[0].date_from) + " " + str(item[0].date_from_BC_or_AD)
+        result = str(item[0].date_from) + " " + str(item[0].date_from_BC_or_AD)
     elif isinstance(item, HistoricDate):
         if item.exacter_date is None:
-            return str(item.year) + " " + str(item.year_BC_or_AD)
+            result = str(item.year) + " " + str(item.year_BC_or_AD)
         else:
-            return str(item.exacter_date) + " " + str(item.year_BC_or_AD)
+            result = str(item.exacter_date) + " " + str(item.year_BC_or_AD)
+    return result
 
 
 def timeline(request):
@@ -94,11 +100,13 @@ def timeline(request):
     """
 
     # get only buildings with dates set
+    # pylint: disable = no-member
     buildings = Building.objects.exclude(date_from=None)
     buildings = get_thumbnails_for_buildings(buildings)
     # get historic dates (they must have a date (not nullable database field))
     historic_dates = HistoricDate.objects.all()
-    # Make lists from QuerySets because otherwise pythons list concatenation and sorting will no work
+    # Make lists from QuerySets
+    # because otherwise pythons list concatenation and sorting will not work
     items = list(buildings) + list(historic_dates)
     # Sort it with years as key, ascending
     items = sorted(items, key=lambda i: get_year_of_item(i))

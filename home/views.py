@@ -12,4 +12,3 @@ def index(request):
     :return: rendering the subpage based on index.html
     """
     return render(request, 'home/index.html')
-
