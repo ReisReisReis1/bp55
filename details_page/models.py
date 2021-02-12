@@ -477,7 +477,12 @@ class Building(models.Model):
 
 class Blueprint(models.Model):
     """
-    Muss noch gemacht werden
+    name: Name of the blueprint
+    description: description for the blueprint
+    blueprint: the actual blueprint picture file.
+    width: width of the blueprint picture
+    height: height of the blueprint picture
+    building: the building it refers to.
     """
     name = models.CharField(max_length=100,
                             help_text="Titel des Bauplans eingeben (max. 100 Zeichen).")
