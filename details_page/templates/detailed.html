@@ -7,6 +7,16 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="{% static 'detailed.css' %}">
+
+    <script>
+        function stopPopupVideo(id) {
+            var video = document.getElementById("popup-video-" + id);
+            var popup = "popup-" + id;
+            $('#' + popup).on('hidden.bs.modal', function () {
+                video.pause();
+            });
+        }
+    </script>
 </head>
 <body>
 
@@ -259,11 +269,13 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr>
-                            <td>
-                                {{ Name }}
-                            </td>
-                        </tr>
+                        {% if Beschreibung == None or Beschreibung|length == 0%}
+                            <tr>
+                                <td>
+                                    {{ Name }}
+                                </td>
+                            </tr>
+                        {% endif %}
                     </tbody>
                 </table>
 
@@ -272,7 +284,60 @@
                         <tbody>
                             <tr>
                                 <td>
+                                    {{ Name }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
                                     {{ Beschreibung }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                {% endif %}
+
+                {% if not Videos == None and not Videos|length == 0%}
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="row row-no-margin">
+                                        {% for timestamp in Videos %}
+                                            <div class="video-box" data-toggle="modal" data-target="#popup-{{ forloop.counter }}">
+                                                <table class="table table-bordered">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <img src="{% static "videomarketing.png" %}" width="100%">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                {{ timestamp.video.title }}
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <div class="modal" id="popup-{{ forloop.counter }}" data-keyboard="false" onclick="stopPopupVideo({{ forloop.counter }})">
+                                                <div class="modal-dialog modal-xl modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title">{{ timestamp.video.title }}</h4>
+                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <video id="popup-video-{{ forloop.counter }}" width="100%" controls preload="metadata">
+                                                                <source src="{{ timestamp.video.video.url }}#t={{ timestamp.time }}" type="video/mp4">
+                                                                {{ timestamp.title }}
+                                                            </video>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
                                 </td>
                             </tr>
                         </tbody>

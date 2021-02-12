@@ -13,11 +13,3 @@ def index(request):
     """
     return render(request, 'home/index.html')
 
-
-def header(request):
-    """
-    The header of every site of the webpage excluding the homesite
-    :param request: requesting to render the header
-    :return: rendering the header on the site based on header.html
-    """
-    return render(request, 'home/header.html')

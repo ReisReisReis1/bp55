@@ -1,20 +1,28 @@
 """
 Tests for functions in the App: home
 """
+# pylint: disable=all
 
-from django.test import Client
-from django.test import TestCase
+from django.test import Client, TestCase
+# pylint: disable=import-error
+from model_bakery import baker
 
 
 class ViewsTestCases(TestCase):
     """
     Testcases for the functions in view
     """
+
     def setUp(self):
         """
-        Setting up a client for the tests
+        Setting up a client, some buildings and eras for the tests
         """
         self.client = Client()
+        self.test1 = baker.make('details_page.Building')
+        self.test2 = baker.make('details_page.Building')
+        self.test3 = baker.make('details_page.Building')
+        self.test4 = baker.make('details_page.Building')
+        self.test5 = baker.make('details_page.Building')
 
     def test1(self):
         """
