@@ -241,238 +241,368 @@ class Building(models.Model):
         return str(self.name)
 
     def get_name(self, building_id):
+        # pylint: disable= no-member
         """
         :param building_id: ID to fetch the correct building
         :return: name of the building
         """
-        # pylint: disable= no-member
-        building = self.objects.get(pk=building_id)
-        return building.name
+        try:
+            building = self.objects.get(pk=building_id)
+            return building.name
+        except Building.DoesNotExist:
+            return Building.DoesNotExist
+        except Building.MultipleObjectsReturned:
+            return Building.MultipleObjectsReturned
 
     def get_era(self, building_id):
+        # pylint: disable= no-member
         """
         :param building_id: ID to fetch the correct building
         :return: era of the building
         """
-        # pylint: disable= no-member
-        building = self.objects.get(pk=building_id)
-        return building.era
+        try:
+            building = self.objects.get(pk=building_id)
+            return building.era
+        except Building.DoesNotExist:
+            return Building.DoesNotExist
+        except Building.MultipleObjectsReturned:
+            return Building.MultipleObjectsReturned
 
     def get_description(self, building_id):
+        # pylint: disable= no-member
         """
         :param building_id: ID to fetch the correct building
         :return: description of the building
         """
-        # pylint: disable= no-member
-        building = self.objects.get(pk=building_id)
-        return building.description
+        try:
+            building = self.objects.get(pk=building_id)
+            return building.description
+        except Building.DoesNotExist:
+            return Building.DoesNotExist
+        except Building.MultipleObjectsReturned:
+            return Building.MultipleObjectsReturned
 
     def get_city(self, building_id):
+        # pylint: disable= no-member
         """
         :param building_id: ID to fetch the correct building
         :return: city in which the building is located
         """
-        # pylint: disable= no-member
-        building = self.objects.get(pk=building_id)
-        return building.city
+        try:
+            building = self.objects.get(pk=building_id)
+            return building.city
+        except Building.DoesNotExist:
+            return Building.DoesNotExist
+        except Building.MultipleObjectsReturned:
+            return Building.MultipleObjectsReturned
 
     def get_region(self, building_id):
+        # pylint: disable= no-member
         """
         :param building_id: ID to fetch the correct building
         :return: city in which the building is located
         """
-        # pylint: disable= no-member
-        building = self.objects.get(pk=building_id)
-        return building.region
+        try:
+            building = self.objects.get(pk=building_id)
+            return building.region
+        except Building.DoesNotExist:
+            return Building.DoesNotExist
+        except Building.MultipleObjectsReturned:
+            return Building.MultipleObjectsReturned
 
     def get_country(self, building_id):
+        # pylint: disable= no-member
         """
         :param building_id: ID to fetch the correct building
         :return: country in which the building is located
         """
-        # pylint: disable= no-member
-        building = self.objects.get(pk=building_id)
-        return building.country
+        try:
+            building = self.objects.get(pk=building_id)
+            return building.country
+        except Building.DoesNotExist:
+            return Building.DoesNotExist
+        except Building.MultipleObjectsReturned:
+            return Building.MultipleObjectsReturned
 
     def get_date_from(self, building_id):
+        # pylint: disable= no-member
         """
         :param building_id: ID to fetch the correct building
         :return: date on which construction began
         """
-        # pylint: disable= no-member
-        building = self.objects.get(pk=building_id)
-        return building.date_from
+        try:
+            building = self.objects.get(pk=building_id)
+            return building.date_from
+        except Building.DoesNotExist:
+            return Building.DoesNotExist
+        except Building.MultipleObjectsReturned:
+            return Building.MultipleObjectsReturned
 
     def get_date_from_bc_or_ad(self, building_id):
+        # pylint: disable= no-member
         """
         :param building_id: ID to fetch the correct building
         :return: if date_from is BC or AD
         """
-        # pylint: disable= no-member
-        building = self.objects.get(pk=building_id)
-        return building.date_from_BC_or_AD
+        try:
+            building = self.objects.get(pk=building_id)
+            return building.date_from_BC_or_AD
+        except Building.DoesNotExist:
+            return Building.DoesNotExist
+        except Building.MultipleObjectsReturned:
+            return Building.MultipleObjectsReturned
 
     def get_date_to(self, building_id):
+        # pylint: disable= no-member
         """
         :param building_id: ID to fetch the correct building
         :return: date on which construction began
         """
-        # pylint: disable= no-member
-        building = self.objects.get(pk=building_id)
-        return building.date_to
+        try:
+            building = self.objects.get(pk=building_id)
+            return building.date_to
+        except Building.DoesNotExist:
+            return Building.DoesNotExist
+        except Building.MultipleObjectsReturned:
+            return Building.MultipleObjectsReturned
 
     def get_date_to_bc_or_ad(self, building_id):
+        # pylint: disable= no-member
         """
         :param building_id: ID to fetch the correct building
         :return: if date_from is BC or AD
         """
-        # pylint: disable= no-member
-        building = self.objects.get(pk=building_id)
-        return building.date_to_BC_or_AD
+        try:
+            building = self.objects.get(pk=building_id)
+            return building.date_to_BC_or_AD
+        except Building.DoesNotExist:
+            return Building.DoesNotExist
+        except Building.MultipleObjectsReturned:
+            return Building.MultipleObjectsReturned
 
     def get_date_ca(self, building_id):
+        # pylint: disable= no-member
         """
         :param building_id: ID to fetch the correct building
         :return: if the date is an exact specification or not
         """
-        # pylint: disable= no-member
-        building = self.objects.get(pk=building_id)
-        return building.date_ca
+        try:
+            building = self.objects.get(pk=building_id)
+            return building.date_ca
+        except Building.DoesNotExist:
+            return Building.DoesNotExist
+        except Building.MultipleObjectsReturned:
+            return Building.MultipleObjectsReturned
 
     def get_architect(self, building_id):
+        # pylint: disable= no-member
         """
         :param building_id: ID to fetch the correct building
         :return: architect of the building
         """
-        # pylint: disable= no-member
-        building = self.objects.get(pk=building_id)
-        return building.architect
+        try:
+            building = self.objects.get(pk=building_id)
+            return building.architect
+        except Building.DoesNotExist:
+            return Building.DoesNotExist
+        except Building.MultipleObjectsReturned:
+            return Building.MultipleObjectsReturned
 
     def get_context(self, building_id):
+        # pylint: disable= no-member
         """
         :param building_id: ID to fetch the correct building
         :return: context/type of the building
         """
-        # pylint: disable= no-member
-        building = self.objects.get(pk=building_id)
-        return building.context
+        try:
+            building = self.objects.get(pk=building_id)
+            return building.context
+        except Building.DoesNotExist:
+            return Building.DoesNotExist
+        except Building.MultipleObjectsReturned:
+            return Building.MultipleObjectsReturned
 
     def get_builder(self, building_id):
+        # pylint: disable= no-member
         """
         :param building_id: ID to fetch the correct building
         :return: builder of the building
         """
-        # pylint: disable= no-member
-        building = self.objects.get(pk=building_id)
-        return building.builder
+        try:
+            building = self.objects.get(pk=building_id)
+            return building.builder
+        except Building.DoesNotExist:
+            return Building.DoesNotExist
+        except Building.MultipleObjectsReturned:
+            return Building.MultipleObjectsReturned
 
     def get_construction_type(self, building_id):
+        # pylint: disable= no-member
         """
         :param building_id: ID to fetch the correct building
         :return: construction type of the building
         """
-        # pylint: disable= no-member
-        building = self.objects.get(pk=building_id)
-        return building.construction_type
+        try:
+            building = self.objects.get(pk=building_id)
+            return building.construction_type
+        except Building.DoesNotExist:
+            return Building.DoesNotExist
+        except Building.MultipleObjectsReturned:
+            return Building.MultipleObjectsReturned
 
     def get_design(self, building_id):
+        # pylint: disable= no-member
         """
         :param building_id: ID to fetch the correct building
         :return: design/shape of the building
         """
-        # pylint: disable= no-member
-        building = self.objects.get(pk=building_id)
-        return building.design
+        try:
+            building = self.objects.get(pk=building_id)
+            return building.design
+        except Building.DoesNotExist:
+            return Building.DoesNotExist
+        except Building.MultipleObjectsReturned:
+            return Building.MultipleObjectsReturned
 
     def get_function(self, building_id):
+        # pylint: disable= no-member
         """
         :param building_id: ID to fetch the correct building
         :return: function of the building
         """
-        # pylint: disable= no-member
-        building = self.objects.get(pk=building_id)
-        return building.function
+        try:
+            building = self.objects.get(pk=building_id)
+            return building.function
+        except Building.DoesNotExist:
+            return Building.DoesNotExist
+        except Building.MultipleObjectsReturned:
+            return Building.MultipleObjectsReturned
 
     def get_length(self, building_id):
+        # pylint: disable= no-member
         """
         :param building_id: ID to fetch the correct building
         :return: length of the building
         """
-        # pylint: disable= no-member
-        building = self.objects.get(pk=building_id)
-        return building.length
+        try:
+            building = self.objects.get(pk=building_id)
+            return building.length
+        except Building.DoesNotExist:
+            return Building.DoesNotExist
+        except Building.MultipleObjectsReturned:
+            return Building.MultipleObjectsReturned
 
     def get_width(self, building_id):
+        # pylint: disable= no-member
         """
         :param building_id: ID to fetch the correct building
         :return: width of the building
         """
-        # pylint: disable= no-member
-        building = self.objects.get(pk=building_id)
-        return building.width
+        try:
+            building = self.objects.get(pk=building_id)
+            return building.width
+        except Building.DoesNotExist:
+            return Building.DoesNotExist
+        except Building.MultipleObjectsReturned:
+            return Building.MultipleObjectsReturned
 
     def get_height(self, building_id):
+        # pylint: disable= no-member
         """
         :param building_id: ID to fetch the correct building
         :return: height of the building
         """
-        # pylint: disable= no-member
-        building = self.objects.get(pk=building_id)
-        return building.height
+        try:
+            building = self.objects.get(pk=building_id)
+            return building.height
+        except Building.DoesNotExist:
+            return Building.DoesNotExist
+        except Building.MultipleObjectsReturned:
+            return Building.MultipleObjectsReturned
 
     def get_circumference(self, building_id):
+        # pylint: disable= no-member
         """
         :param building_id: ID to fetch the correct building
         :return: circumference of the building
         """
-        # pylint: disable= no-member
-        building = self.objects.get(pk=building_id)
-        return building.circumference
+        try:
+            building = self.objects.get(pk=building_id)
+            return building.circumference
+        except Building.DoesNotExist:
+            return Building.DoesNotExist
+        except Building.MultipleObjectsReturned:
+            return Building.MultipleObjectsReturned
 
     def get_area(self, building_id):
+        # pylint: disable= no-member
         """
         :param building_id: ID to fetch the correct building
         :return: area of the building
         """
-        # pylint: disable= no-member
-        building = self.objects.get(pk=building_id)
-        return building.area
+        try:
+            building = self.objects.get(pk=building_id)
+            return building.area
+        except Building.DoesNotExist:
+            return Building.DoesNotExist
+        except Building.MultipleObjectsReturned:
+            return Building.MultipleObjectsReturned
 
     def get_column_order(self, building_id):
+        # pylint: disable= no-member
         """
         :param building_id: ID to fetch the correct building
         :return: column order of the building
         """
-        # pylint: disable= no-member
-        building = self.objects.get(pk=building_id)
-        return building.column_order
+        try:
+            building = self.objects.get(pk=building_id)
+            return building.column_order
+        except Building.DoesNotExist:
+            return Building.DoesNotExist
+        except Building.MultipleObjectsReturned:
+            return Building.MultipleObjectsReturned
 
     def get_construction(self, building_id):
+        # pylint: disable= no-member
         """
         :param building_id: ID to fetch the correct building
         :return: construction of the building
         """
-        # pylint: disable= no-member
-        building = self.objects.get(pk=building_id)
-        return building.construction
+        try:
+            building = self.objects.get(pk=building_id)
+            return building.construction
+        except Building.DoesNotExist:
+            return Building.DoesNotExist
+        except Building.MultipleObjectsReturned:
+            return Building.MultipleObjectsReturned
 
     def get_material(self, building_id):
+        # pylint: disable= no-member
         """
         :param building_id: ID to fetch the correct building
         :return: material of the building
         """
-        # pylint: disable= no-member
-        building = self.objects.get(pk=building_id)
-        return building.material
+        try:
+            building = self.objects.get(pk=building_id)
+            return building.material
+        except Building.DoesNotExist:
+            return Building.DoesNotExist
+        except Building.MultipleObjectsReturned:
+            return Building.MultipleObjectsReturned
 
     def get_literature(self, building_id):
+        # pylint: disable= no-member
         """
         :param building_id: ID to fetch the correct building
         :return: further literature about the building
         """
-        # pylint: disable= no-member
-        building = self.objects.get(pk=building_id)
-        return building.literature
+        try:
+            building = self.objects.get(pk=building_id)
+            return building.literature
+        except Building.DoesNotExist:
+            return Building.DoesNotExist
+        except Building.MultipleObjectsReturned:
+            return Building.MultipleObjectsReturned
 
 
 class Blueprint(models.Model):
@@ -506,14 +636,19 @@ class Blueprint(models.Model):
         return str(self.name)
 
     def get_blueprint_for_building(self, wanted_building):
+        # pylint: disable= no-member
         """
         Getting a QuerySet of blueprints for the given building
         :param wanted_building: ID to fetch the correct building
         :return: QuerySet of blueprints for given building or empty QuerySet
         """
-        # pylint: disable= no-member
-        blueprints = self.objects.filter(building=wanted_building)
-        return blueprints
+        try:
+            blueprints = self.objects.filter(building=wanted_building)
+            return blueprints
+        except Building.DoesNotExist:
+            return Building.DoesNotExist
+        except Building.MultipleObjectsReturned:
+            return Building.MultipleObjectsReturned
 
 
 class Picture(models.Model):
@@ -558,11 +693,16 @@ class Picture(models.Model):
         return str(self.name)
 
     def get_picture_for_building(self, wanted_building):
+        # pylint: disable= no-member
         """
         Getting a QuerySet of Pictures for the given building
         :param wanted_building: ID to fetch the correct building
         :return: QuerySet of Pictures for given building or empty QuerySet
         """
-        # pylint: disable= no-member
-        pictures = self.objects.filter(building=wanted_building)
-        return pictures
+        try:
+            pictures = self.objects.filter(building=wanted_building)
+            return pictures
+        except Building.DoesNotExist:
+            return Building.DoesNotExist
+        except Building.MultipleObjectsReturned:
+            return Building.MultipleObjectsReturned
