@@ -14,7 +14,7 @@ def validate_url_conform_str(string):
     :param string: the input string
     :return: None or ValidationError
     """
-    if ["&", "?", '\'', ' \"'] in string:
+    if "&" in string or "?" in string or '\'' in string or '\"' in string:
         raise ValidationError(
             message="Diese Eingabe darf nicht die Zeichen \"&\", \"?\" und alle Art von "
                     "Anführungszeichen enthalten.")
@@ -497,11 +497,11 @@ class Picture(models.Model):
     building = models.ForeignKey(to=Building, null=True, blank=True, on_delete=models.SET_NULL)
     usable_as_thumbnail = models.BooleanField(default=False,
                                               help_text="Anwählen wenn das Bild als Thumbnail "
-                                              "(Vorschaubild) für sein Bauwerk in der Zeitachse, "
-                                              "der Bauwerke-Seite, und in den Suchergebnissen " 
-                                              "erscheinen darf. Bei mehreren möglichen "
-                                              "Vorschaubildern für ein Bauwerk "
-                                              "wird zufällig eins ausgewählt.")
+                                                        "(Vorschaubild) für sein Bauwerk in der Zeitachse, "
+                                                        "der Bauwerke-Seite, und in den Suchergebnissen "
+                                                        "erscheinen darf. Bei mehreren möglichen "
+                                                        "Vorschaubildern für ein Bauwerk "
+                                                        "wird zufällig eins ausgewählt.")
 
     def __str__(self):
         """
