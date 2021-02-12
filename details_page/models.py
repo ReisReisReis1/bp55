@@ -238,6 +238,7 @@ class Building(models.Model):
 
     def get_name(self, building_id):
         """
+        :param building_id: ID to fetch the correct building
         :return: name of the building
         """
         # pylint: disable= no-member
@@ -246,6 +247,7 @@ class Building(models.Model):
 
     def get_era(self, building_id):
         """
+        :param building_id: ID to fetch the correct building
         :return: era of the building
         """
         # pylint: disable= no-member
@@ -254,6 +256,7 @@ class Building(models.Model):
 
     def get_description(self, building_id):
         """
+        :param building_id: ID to fetch the correct building
         :return: description of the building
         """
         # pylint: disable= no-member
@@ -262,6 +265,7 @@ class Building(models.Model):
 
     def get_city(self, building_id):
         """
+        :param building_id: ID to fetch the correct building
         :return: city in which the building is located
         """
         # pylint: disable= no-member
@@ -270,6 +274,7 @@ class Building(models.Model):
 
     def get_region(self, building_id):
         """
+        :param building_id: ID to fetch the correct building
         :return: city in which the building is located
         """
         # pylint: disable= no-member
@@ -278,6 +283,7 @@ class Building(models.Model):
 
     def get_country(self, building_id):
         """
+        :param building_id: ID to fetch the correct building
         :return: country in which the building is located
         """
         # pylint: disable= no-member
@@ -286,6 +292,7 @@ class Building(models.Model):
 
     def get_date_from(self, building_id):
         """
+        :param building_id: ID to fetch the correct building
         :return: date on which construction began
         """
         # pylint: disable= no-member
@@ -294,6 +301,7 @@ class Building(models.Model):
 
     def get_date_from_bc_or_ad(self, building_id):
         """
+        :param building_id: ID to fetch the correct building
         :return: if date_from is BC or AD
         """
         # pylint: disable= no-member
@@ -302,6 +310,7 @@ class Building(models.Model):
 
     def get_date_to(self, building_id):
         """
+        :param building_id: ID to fetch the correct building
         :return: date on which construction began
         """
         # pylint: disable= no-member
@@ -310,6 +319,7 @@ class Building(models.Model):
 
     def get_date_to_bc_or_ad(self, building_id):
         """
+        :param building_id: ID to fetch the correct building
         :return: if date_from is BC or AD
         """
         # pylint: disable= no-member
@@ -327,6 +337,7 @@ class Building(models.Model):
 
     def get_architect(self, building_id):
         """
+        :param building_id: ID to fetch the correct building
         :return: architect of the building
         """
         # pylint: disable= no-member
@@ -335,6 +346,7 @@ class Building(models.Model):
 
     def get_context(self, building_id):
         """
+        :param building_id: ID to fetch the correct building
         :return: context/type of the building
         """
         # pylint: disable= no-member
@@ -343,6 +355,7 @@ class Building(models.Model):
 
     def get_builder(self, building_id):
         """
+        :param building_id: ID to fetch the correct building
         :return: builder of the building
         """
         # pylint: disable= no-member
@@ -351,6 +364,7 @@ class Building(models.Model):
 
     def get_construction_type(self, building_id):
         """
+        :param building_id: ID to fetch the correct building
         :return: construction type of the building
         """
         # pylint: disable= no-member
@@ -359,6 +373,7 @@ class Building(models.Model):
 
     def get_design(self, building_id):
         """
+        :param building_id: ID to fetch the correct building
         :return: design/shape of the building
         """
         # pylint: disable= no-member
@@ -367,6 +382,7 @@ class Building(models.Model):
 
     def get_function(self, building_id):
         """
+        :param building_id: ID to fetch the correct building
         :return: function of the building
         """
         # pylint: disable= no-member
@@ -375,6 +391,7 @@ class Building(models.Model):
 
     def get_length(self, building_id):
         """
+        :param building_id: ID to fetch the correct building
         :return: length of the building
         """
         # pylint: disable= no-member
@@ -383,6 +400,7 @@ class Building(models.Model):
 
     def get_width(self, building_id):
         """
+        :param building_id: ID to fetch the correct building
         :return: width of the building
         """
         # pylint: disable= no-member
@@ -391,6 +409,7 @@ class Building(models.Model):
 
     def get_height(self, building_id):
         """
+        :param building_id: ID to fetch the correct building
         :return: height of the building
         """
         # pylint: disable= no-member
@@ -399,6 +418,7 @@ class Building(models.Model):
 
     def get_circumference(self, building_id):
         """
+        :param building_id: ID to fetch the correct building
         :return: circumference of the building
         """
         # pylint: disable= no-member
@@ -407,6 +427,7 @@ class Building(models.Model):
 
     def get_area(self, building_id):
         """
+        :param building_id: ID to fetch the correct building
         :return: area of the building
         """
         # pylint: disable= no-member
@@ -415,6 +436,7 @@ class Building(models.Model):
 
     def get_column_order(self, building_id):
         """
+        :param building_id: ID to fetch the correct building
         :return: column order of the building
         """
         # pylint: disable= no-member
@@ -423,6 +445,7 @@ class Building(models.Model):
 
     def get_construction(self, building_id):
         """
+        :param building_id: ID to fetch the correct building
         :return: construction of the building
         """
         # pylint: disable= no-member
@@ -431,6 +454,7 @@ class Building(models.Model):
 
     def get_material(self, building_id):
         """
+        :param building_id: ID to fetch the correct building
         :return: material of the building
         """
         # pylint: disable= no-member
@@ -439,6 +463,7 @@ class Building(models.Model):
 
     def get_literature(self, building_id):
         """
+        :param building_id: ID to fetch the correct building
         :return: further literature about the building
         """
         # pylint: disable= no-member
@@ -470,7 +495,7 @@ class Blueprint(models.Model):
     def get_blueprint_for_building(self, wanted_building):
         """
         Getting a list of blueprints for the given building
-        :param wanted_building:
+        :param wanted_building: ID to fetch the correct building
         :return: list of blueprints for given building or empty list
         """
         # pylint: disable= no-member
@@ -522,7 +547,7 @@ class Picture(models.Model):
     def get_picture_for_building(self, wanted_building):
         """
         Getting a List of Pictures for the given building
-        :param wanted_building:
+        :param wanted_building: ID to fetch the correct building
         :return: list of Pictures for given building or empty list
         """
         # pylint: disable= no-member
