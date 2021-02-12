@@ -47,7 +47,7 @@ class BuildingTestCases(TestCase):
                                       year_to_BC_or_AD='v.Chr')
         Building.objects.create(pk=0, name='', description='', city='', region='', country='',
                                 date_from=0,
-                                date_from_BC_or_AD='',
+                                date_from_BC_or_AD='', date_ca=False,
                                 date_to=0, date_to_BC_or_AD='', era=test_era, architect='',
                                 context='', builder='',
                                 construction_type='', design='', function='', length=0, width=0,
@@ -59,7 +59,7 @@ class BuildingTestCases(TestCase):
                                 city='Athen',
                                 region='TestRegion', country='GR-Griechenland',
                                 date_from=447, date_from_BC_or_AD='v.Chr.', date_to=438,
-                                date_to_BC_or_AD='v.Chr.',
+                                date_to_BC_or_AD='v.Chr.', date_ca=True,
                                 era=test_era, architect='Iktinos, Kallikrates', context='Tempel',
                                 builder='Perikles und die Polis Athen', construction_type='Tempel',
                                 design='Peripteros', function='Sakralbau', length=30.88, width=69.5,
@@ -239,6 +239,13 @@ class BuildingTestCases(TestCase):
         self.assertEqual(Building.get_description(Building, 0), '')
         self.assertEqual(Building.get_description(Building, 1), 'Das Parthenon in Athen')
 
+    def test25_get_date_ca(self):
+        """
+        Testing get_date_ca
+        """
+        self.assertEqual(Building.get_date_ca(Building, 0), False)
+        self.assertEqual(Building.get_date_ca(Building, 1), True)
+
 
 class EraModelTests(TestCase):
     """
@@ -319,6 +326,7 @@ class PictureTests(TestCase):
                                                       country='', date_from=0,
                                                       date_from_BC_or_AD='',
                                                       date_to=0, date_to_BC_or_AD='',
+                                                      date_ca=False,
                                                       era=cls.test_era,
                                                       architect='', context='', builder='',
                                                       construction_type='', design='', function='',
@@ -333,6 +341,7 @@ class PictureTests(TestCase):
                                                       country='GR-Griechenland',
                                                       date_from=447, date_from_BC_or_AD='v.Chr.',
                                                       date_to=438, date_to_BC_or_AD='v.Chr.',
+                                                      date_ca=True,
                                                       era=cls.test_era,
                                                       architect='Iktinos, Kallikrates',
                                                       context='Tempel',
@@ -401,6 +410,7 @@ class BlueprintTests(TestCase):
                                                        country='', date_from=0,
                                                        date_from_BC_or_AD='',
                                                        date_to=0, date_to_BC_or_AD='',
+                                                       date_ca=False,
                                                        era=self.test_era,
                                                        architect='', context='', builder='',
                                                        construction_type='', design='', function='',
@@ -415,6 +425,7 @@ class BlueprintTests(TestCase):
                                                        country='GR-Griechenland',
                                                        date_from=447, date_from_BC_or_AD='v.Chr.',
                                                        date_to=438, date_to_BC_or_AD='v.Chr.',
+                                                       date_ca=True,
                                                        era=self.test_era,
                                                        architect='Iktinos, Kallikrates',
                                                        context='Tempel',

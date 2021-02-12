@@ -316,6 +316,15 @@ class Building(models.Model):
         building = self.objects.get(pk=building_id)
         return building.date_to_BC_or_AD
 
+    def get_date_ca(self, building_id):
+        """
+        :param building_id: ID to fetch the correct building
+        :return: if the date is an exact specification or not
+        """
+        # pylint: disable= no-member
+        building = self.objects.get(pk=building_id)
+        return building.date_ca
+
     def get_architect(self, building_id):
         """
         :return: architect of the building

@@ -27,6 +27,7 @@ def detailed(request, building_id):
         'Datum_von_BC_oder_AD': Building.get_date_from_bc_or_ad(Building, building_id),
         'Datum_bis': Building.get_date_to(Building, building_id),
         'Datum_bis_BC_oder_AD': Building.get_date_to_bc_or_ad(Building, building_id),
+        'Datum_ca': Building.get_date_ca(Building, building_id),
         'Architekt': Building.get_architect(Building, building_id),
         'Kontext_Lage': Building.get_context(Building, building_id),
         'Bauherr': Building.get_builder(Building, building_id),
