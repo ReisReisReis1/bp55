@@ -1,26 +1,32 @@
 {% load static %}
 {% load bootstrap4 %}
 
-<div class="row row-no-margin" id="color-bg-primary">
+<!DOCTYPE html>
+<html>
+<head>
 
-    <div class = "col text-left">
-        <div style="padding: 45px">
+</head>
+<body>
+    <div class="row row-no-margin" id="color-bg-primary">
 
+        <div class = "col text-left">
+            <div style="padding: 45px">
+
+            </div>
+        </div>
+        <div class = "col align-items-center text-center">
+            <a href="{% url "start:start" %}">
+                <img class="header_logo" src="{% static "logoneu.png" %}">
+            </a>
+        </div>
+        <div class = "col text-right">
+            <div class="row align-items-center justify-content-end" style="height: 100%">
+                <form class="header-search" action="{% url 'search:search' %}" method="get">
+                    <input type="search" class="form-control header-search-input" id="color-bg-secondary" placeholder="Suche" name="search_request">
+                </form>
+            </div>
         </div>
     </div>
-    <div class = "col align-items-center text-center">
-        <a href="{% url "start:start" %}">
-            <img class="header_logo" src="{% static "logoneu.png" %}">
-        </a>
-    </div>
-    <div class = "col text-right">
-        <div class="row align-items-center justify-content-end" style="height: 100%">
-            <form class="header-search" action="{% url 'search:search' %}" method="get">
-                <input type="search" class="form-control header-search-input" id="color-bg-secondary" placeholder="Suche" name="search_request">
-            </form>
-        </div>
-    </div>
-
     <div class="row row-no-margin row-distance-lg" id="color-bg-secondary">
         <div class="container">
             <div class="row">
@@ -29,9 +35,10 @@
                     <a href="{% url "timeline:timeline" %}" class="menu_item" id="color-txt-primary">Zeitachse</a>
                     <a href="{% url "filter_page:filter" %}" class="menu_item" id="color-txt-primary">Bauwerke</a>
                     <a href="{% url "video_content:videos" %}" class="menu_item" id="color-txt-primary">Staffeln</a>
-                     <a href="{% url "material:material" %}" class="menu-item" id="color-txt-primary">Material</a>
-
+                    <a href="{% url "material:material" %}" class="menu_item" id="color-txt-primary">Material</a>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</body>
+</html>
