@@ -1,63 +1,35 @@
 {% load static %}
 {% load bootstrap4 %}
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/topnav.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/default_colors.css' %}">
-    {% bootstrap_css %}
-    {% bootstrap_javascript jquery='slim' %}
+<div class="row row-no-margin" id="color-bg-primary">
 
-    <script>
-        $(function(){
-            // this will get the full URL at the address bar
-            var url = window.location.href;
+    <div class = "col text-left">
+        <div style="padding: 45px">
 
-            // passes on every "a" tag
-            $(".menu_item").each(function() {
-                    // checks if its the same on the address bar
-                if(url == (this.href)) {
-                    $(this).closest("a").addClass("active");
-                }
-            });
-        });
-    </script>
-</head>
-<body>
-    <div class="row row-no-margin" id="color-bg-primary">
-
-        <div class = "col text-left">
-            <div style="padding: 45px">
-
-            </div>
         </div>
-        <div class = "col align-items-center text-center">
-            <a href="{% url "start:start" %}">
-                <img class="header_logo" src="{% static "logoneu.png" %}">
-            </a>
+    </div>
+    <div class = "col align-items-center text-center">
+        <a href="{% url "start:start" %}">
+            <img class="header_logo" src="{% static "logoneu.png" %}">
+        </a>
+    </div>
+    <div class = "col text-right">
+        <div class="row align-items-center justify-content-end" style="height: 100%">
+            <form class="header-search" action="{% url 'search:search' %}" method="get">
+                <input type="search" class="form-control header-search-input" id="color-bg-secondary" placeholder="Suche" name="search_request">
+            </form>
         </div>
-        <div class = "col text-right">
-            <div class="row align-items-center justify-content-end" style="height: 100%">
-                <form class="header-search" action="{% url 'search:search' %}" method="get">
-                    <input type="search" class="form-control header-search-input" id="color-bg-secondary" placeholder="Suche" name="search_request">
-                </form>
+    </div>
+</div>
+<div class="row row-no-margin row-distance-lg" id="color-bg-secondary">
+    <div class="container">
+        <div class="row">
+            <div class = "col align-items-center text-center sub_menu">
+                <a href="{% url "start:start" %}" class="menu_item" id="color-txt-primary">Intro</a>
+                <a href="{% url "timeline:timeline" %}" class="menu_item" id="color-txt-primary">Zeitachse</a>
+                <a href="{% url "filter_page:filter" %}" class="menu_item" id="color-txt-primary">Bauwerke</a>
+                <a href="{% url "video_content:videos" %}" class="menu_item" id="color-txt-primary">Staffeln</a>
             </div>
         </div>
     </div>
-    <div class="row row-no-margin row-distance-lg" id="color-bg-secondary">
-        <div class="container">
-            <div class="row">
-                <div class = "col align-items-center text-center sub_menu">
-                    <a href="{% url "start:start" %}" class="menu_item" id="color-txt-primary">Intro</a>
-                    <a href="{% url "timeline:timeline" %}" class="menu_item" id="color-txt-primary">Zeitachse</a>
-                    <a href="{% url "filter_page:filter" %}" class="menu_item" id="color-txt-primary">Bauwerke</a>
-                    <a href="{% url "video_content:videos" %}" class="menu_item" id="color-txt-primary">Staffeln</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</body>
-</html>
+</div>
