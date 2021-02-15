@@ -1,0 +1,30 @@
+/*============================================================================
+    CSS File for styling on the material page
+=============================================================================*/
+
+.textcenter{
+    margin-left: 15px ;
+    margin-top: 10px;
+}
+
+.borderline{
+  border-style: solid;
+  border-width: thin;
+  border-color: black;
+}
+
+.materialpdf{
+    background-color: #c3c5c0;
+}
+
+.fontcolor{
+    color: black;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.selectionbox{
+    border-color: black;
+    background-color: white;
+}
+
