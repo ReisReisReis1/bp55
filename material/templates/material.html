@@ -1,0 +1,46 @@
+{% load static %}
+{% load bootstrap4 %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'material.css' %}">
+</head>
+<body>
+    {% include './header.html' %}
+
+<div class="container container-page">
+
+    <div class="card">
+        <!-- Download Button Rechts anzeigen lassen -->
+       <div class="d-flex w-100 justify-content-between">
+      <a class="collapsed card-link" data-toggle="collapse" href="#collapseOne" style="width: 100%">
+          <div class="selectionbox">
+          <div class="borderline">
+          <div class="card-header">
+        <p class="fontcolor"> Thema #1 </p>
+      </div>
+          </div>
+              </div>
+      </a>
+           <button class="btn" id="btn-color"; style=" width: 15%; border-color: black" >Download all</button>
+              </div>
+
+
+    <div id="collapseOne" class="collapse">
+        <div class="materialpdf">
+            <div class="borderline">
+      <div class="card-body">
+
+        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+        dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+        Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+          </div>
+      </div>
+    </div>
+  </div>
+        </div>
+
+</div>
+</body>
+</html>
