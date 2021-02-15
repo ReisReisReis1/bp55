@@ -35,7 +35,7 @@
     Primary border color
  */
 #color-border-primary {
-    border-color: lightgray;
+    border: solid lightgray;
 }
 
 /*----------------------------------------------------------------------------

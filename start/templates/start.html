@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    {% include 'default_head.html' %}
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="{% static 'start.css' %}">
 </head>
@@ -13,26 +14,28 @@
     {% include './header.html' %}
 
     <!-- Intro-Video -->
-    <div class="container">
+    <div class="container container-page">
         <div class="row row-distance-sm">
-            <b>{{video.title}}</b>
-        </div>
-        <div class="row row-distance-sm">
-            <video width="100%" controls preload>
-                <source src="{{video.video.url}}" type="video/mp4">
-                <b>{{video.title}}</b>
+            <video width="100%" controls="controls" preload="none" poster="/media/{{ Video.thumbnail }}" oncontextmenu="return false;" controlsList="nodownload">
+                <source src="{{Video.video.url}}" type="video/mp4">
+                <b>{{Video.title}}</b>
             </video>
-        </div>
-        <div class="row row-distance-lg">
-        <!-- Description text for the webapplikation -->
-            Diese Webanwednung soll die Vorlesung 'Klassische Architektur und Städtebau der Antike' begleiten.
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
-            sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
-            At vero eos et accusam et justo duo dolores et ea rebum.
-            Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet,
-            consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-            sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-            Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+            <!-- Description text for the webapplikation -->
+            <p align="justify">Die Vorlesung Architektur und Städtebau der Antike soll in ein zeitgemäßes digitales Format überführt werden.
+            Hierfür möchten wir eine digitale Wissensplattform zur Architekturgeschichte der Antike als Webanwendung aufbauen,
+            mit der die Studierenden auf der Basis des zur Verfügung gestellten Materials die Lehreinheiten selbstbestimmt
+            kombinieren und absolvieren können. Die bislang 13 1,5-stündigen Vorlesungen, die einen chronologischen Überblick
+            über den Wandel der Architektur in der Antike zum Gegenstand haben, werden zu 72 15-minütigen Videos umgewandelt
+                und durch einen Bauwerkskatalog bestehend aus 220 Steckbriefen mit grundlegenden Charakteristiken ergänzt.</p><br>
+            Anhand des Web-Tools Ruins and Beyond! werden diese Daten auf unterschiedlichen Wegen miteinander verknüpft:
+            <ol>
+                <li><a href="{% url "timeline:timeline" %}">Zeitachse</a>: Auf der Zeitachse werden die Einzelbauten mit
+                    ihren Charakteristiken und zugehörigen Vorlesungsvideos über Bild-Buttons abrufbar gemacht.</li>
+                <li><a href="{% url "filter_page:filter" %}">Bauwerke</a>: Im Reiter Bauwerke werden die Gebäude thematisch
+                    abgefragt und zusammengestellt. Auch ermöglicht die Filterfunktion eine gezielte Auswahl bestimmter Gebäudegruppen.</li>
+                <li><a href="{% url "video_content:videos" %}">Staffeln</a>: Im Reiter Staffeln werden alle vorhandenen
+                    Videos in chronologischer Reihenfolge und nach Epoche sortiert aufgelistet</li>
+            </ol>
         </div>
     </div>
 

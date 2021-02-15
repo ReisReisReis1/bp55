@@ -1,7 +1,7 @@
 """
 Tests for the functions in the App: details_page
 """
-
+# pylint: disable=all
 from django.test import Client
 from django.test import TestCase
 from django.core.exceptions import ValidationError
@@ -22,6 +22,7 @@ class ViewsTestCases(TestCase):
         """
         Testing detailed function in views
         """
+        Building.objects.create(name='Test1')
         response = self.client.get('/details_page/1')
         self.assertEqual(response.status_code, 200)
 
