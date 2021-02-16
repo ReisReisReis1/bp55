@@ -10,3 +10,4 @@ class DetailsPageConfig(AppConfig):
     Configurations for this APP
     """
     name = 'details_page'
+    verbose_name = 'Detailseite'

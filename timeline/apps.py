@@ -10,3 +10,4 @@ class TimelineConfig(AppConfig):
     Configurations for this APP
     """
     name = 'timeline'
+    verbose_name = 'Zeitachse'
