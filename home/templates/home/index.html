@@ -4,11 +4,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static './home/index.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/default_colors.css' %}">
-    {% bootstrap_css %}
-    {% bootstrap_javascript jquery='slim' %}
+    {% include '../default_head.html' %}
 </head>
 <body>
 
