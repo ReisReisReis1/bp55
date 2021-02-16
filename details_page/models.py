@@ -473,7 +473,7 @@ class Blueprint(models.Model):
     description = models.TextField(verbose_name='Beschreibung', max_length=1000,
                                    help_text="Beschreibung des Bildes eingeben "
                                              "(max. 1000 Zeichen).",
-                                   null=True, blank=True)
+                                   null=True, blank=True, editable=False)
     blueprint = models.ImageField(
         verbose_name='Bauplan',
         help_text="Auf \"Durchsuchen\" drücken um einen Bauplan hochzuladen.",
@@ -521,7 +521,7 @@ class Picture(models.Model):
     description = models.TextField(verbose_name='Beschreibung', max_length=1000,
                                    help_text="Beschreibung des Bildes eingeben "
                                              "(max. 1000 Zeichen).",
-                                   null=True, blank=True)
+                                   null=True, blank=True, editable=False)
     picture = models.ImageField(
         verbose_name='Bild',
         help_text="Auf \"Durchsuchen\" drücken um ein Bild hochzuladen.",

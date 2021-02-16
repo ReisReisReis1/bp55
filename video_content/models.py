@@ -3,7 +3,7 @@ Configurations for the Database-Models in video-contents
 """
 
 from django.db import models
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db.models import Q
 # pylint: disable=import-error
 from details_page.models import Building, Era
@@ -41,10 +41,6 @@ class Video(models.Model):
                              related_name="+")
     intro = models.BooleanField(verbose_name='Einführung', default=False,
                                 help_text='Ist dieses Video das Intro-Video?')
-    length = models.FloatField(verbose_name='Länge',
-                               validators=[MinValueValidator(0.0, 'Keine Werte kleiner als Null')],
-                               help_text='Länge des Videos',
-                               default=0.0)
 
     def __str__(self):
         """
@@ -95,10 +91,19 @@ class Timestamp(models.Model):
                                  null=True, help_text='Zugehöriges Gebäude')
     video = models.ForeignKey(verbose_name='Video', to=Video, on_delete=models.CASCADE, null=False,
                               help_text='Zugehöriges Video')
-    time = models.FloatField(verbose_name='Zeit',
-                             validators=[MinValueValidator(0.0, 'Keine Werte kleiner als Null')],
-                             help_text='Geben Sie hier eine Stelle ein, '
-                                       'an dem das gewählte Gebäude im Video erscheint')
+    minutes = models.PositiveIntegerField(verbose_name='Minuten',
+                                          help_text='Geben Sie hier die Minuten an, '
+                                                    'an dem das gewählte Gebäude im Video '
+                                                    'erscheint'
+                                                    '(Wird mit den Sekunden verbunden)')
+    seconds = models.PositiveIntegerField(verbose_name='Sekunden',
+                                          validators=[
+                                              MaxValueValidator(60, 'Sekunden können nur zwischen '
+                                                                    '0 und 60 angegeben werden')
+                                          ],
+                                          help_text='Geben sie hier die Sekunden an, an dem das'
+                                                    'Gebäude im Video erscheint'
+                                                    '(Wird mit den Minuten verbunden')
 
     def get_timestamps_by_video(self, vid):
         # pylint: disable= no-member
