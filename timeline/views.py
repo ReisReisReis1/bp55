@@ -8,6 +8,88 @@ from details_page.models import Building, Picture, Era
 from timeline.models import HistoricDate
 
 
+def getting_all_eras_sorted():
+    """
+    Getting all eras sorted into a dictionary, also with new eras,
+    that represent the overlapping eras
+    """
+    # Getting all existing eras
+    all_eras = Era.objects.all()
+    # Its all hardcoded because of possible inconsistent data, sorry
+    # Must try to get every struct and safe it, to sort it in later
+    try:
+        bronzezeit = all_eras.get(name='Bronzezeit')
+    except ObjectDoesNotExist:
+        bronzezeit = None
+    try:
+        eisenzeit = all_eras.get(name='Frühe Eisenzeit')
+    except ObjectDoesNotExist:
+        eisenzeit = None
+    try:
+        archaik = all_eras.get(name='Archaik')
+    except ObjectDoesNotExist:
+        archaik = None
+    try:
+        königszeit = all_eras.get(name='Königszeit')
+    except ObjectDoesNotExist:
+        königszeit = None
+    try:
+        klassik = all_eras.get(name='Klassik')
+    except ObjectDoesNotExist:
+        klassik = None
+    try:
+        republik = all_eras.get(name='Republik')
+    except ObjectDoesNotExist:
+        republik = None
+    try:
+        hellenismus = all_eras.get(name='Hellenismus')
+    except ObjectDoesNotExist:
+        hellenismus = None
+    try:
+        frühe_kaiserzeit = all_eras.get(name='Frühe Kaiserzeit')
+    except ObjectDoesNotExist:
+        frühe_kaiserzeit = None
+    try:
+        mittlere_kaiserzeit = all_eras.get(name='Mittlere Kaiserzeit')
+    except ObjectDoesNotExist:
+        mittlere_kaiserzeit = None
+    try:
+        später_kaiserzeit = all_eras.get(name='Späte Kaiserzeit')
+    except ObjectDoesNotExist:
+        später_kaiserzeit = None
+    try:
+        spätantike = all_eras.get(name='Spätantike')
+    except ObjectDoesNotExist:
+        spätantike = None
+
+    # now sorting the structs into the eras
+    # the keys are the names of the eras
+    # in the overlapping I put both names into the key, sepperated with '_'
+    # in the values are tupels:
+    #                   1. Struct of the era
+    #                   2. Possible second era struct
+    #                   3. if it should be shown in the era legend on the timeline page
+
+    era_dict = {
+        'Bronzezeit': (bronzezeit, None, True),
+        'Frühe Eisenzeit': (eisenzeit, None, True),
+        'Archaik': (archaik, None, True),
+        'Königszeit': (königszeit, None, True),
+        'Königszeit_Klassik': (königszeit, klassik, False),
+        'Klassik': (klassik, None, True),
+        'Klassik_Republik': (klassik, republik, False),
+        'Republik': (republik, None, True),
+        'Republik_Hellenismus': (republik, hellenismus, False),
+        'Hellenismus': (hellenismus, None, True),
+        'Frühe Kaiserzeit': (frühe_kaiserzeit, None, True),
+        'Mittlere Kaiserzeit': (mittlere_kaiserzeit, None, True),
+        'Späte Kaiserzeit': (später_kaiserzeit, None, True),
+        'Spätantike': (spätantike, None, True),
+    }
+
+    return era_dict
+
+
 def sort_into_eras(items):
     """
     Sorting the buildings and historic dates into the suited era using the dates
@@ -141,35 +223,7 @@ def timeline(request):
     :param request: url request to get subpage /timeline
     :return: rendering the subpage based on timeline.html
     """
-    # Getting all existing eras
-    all_eras = Era.objects.all()
-    # Building a dict with all eras and the overlapping eras
-    # (the first era struct, the possible second era struct, if it should be seen on the legend)
-    era_dict = {}
-    for era in all_eras:
-        if era.name == 'Königszeit':
-            era_dict[str(era.name)] = (era, None, True)
-            try:
-                klassik = all_eras.get(name='Klassik')
-                era_dict['Königszeit_Klassik'] = (era, klassik, False)
-            except ObjectDoesNotExist:
-                continue
-        elif era.name == 'Klassik':
-            era_dict[str(era.name)] = (era, None, True)
-            try:
-                republik = all_eras.get(name='Republik')
-                era_dict['Klassik_Republik'] = (era, republik, False)
-            except ObjectDoesNotExist:
-                continue
-        elif era.name == 'Republik':
-            era_dict[str(era.name)] = (era, None, True)
-            try:
-                hellenismus = all_eras.get(name='Hellenismus')
-                era_dict['Republik_Hellenismus'] = (era, hellenismus, False)
-            except ObjectDoesNotExist:
-                continue
-        else:
-            era_dict[str(era.name)] = (era, None, True)
+    era_dict = getting_all_eras_sorted()
 
     # get only buildings with dates set
     # pylint: disable = no-member
