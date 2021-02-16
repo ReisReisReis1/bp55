@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    {% include 'default_head.html' %}
     <link rel="stylesheet" type="text/css" href="{% static 'material.css' %}">
 </head>
 <body>
@@ -12,8 +13,9 @@
 <div class="container container-page">
 
     <div class="card">
-        <!-- Download Button Rechts anzeigen lassen -->
+        <!-- Split the box in topic and download button -->
        <div class="d-flex w-100 justify-content-between">
+           <!-- Collapse box for each topic -->
       <a class="collapsed card-link" data-toggle="collapse" href="#collapseOne" style="width: 100%">
           <div class="selectionbox">
           <div class="borderline">
@@ -26,7 +28,7 @@
            <button class="btn" id="btn-color"; style=" width: 15%; border-color: black" >Download all</button>
               </div>
 
-
+   <!-- Text showing after open the collapse box-->
     <div id="collapseOne" class="collapse">
         <div class="materialpdf">
             <div class="borderline">
