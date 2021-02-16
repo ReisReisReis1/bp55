@@ -17,26 +17,34 @@ class Video(models.Model):
     era: The Era that the video is about
     intro: Checkbox, if it's the entry video or not
     """
-    title = models.CharField(max_length=100, help_text='Titel des Videos')
-    video = models.FileField(upload_to='videos/', help_text='Videodatei in .mp4')
+
+    class Meta:
+        verbose_name = 'Video'
+        verbose_name_plural = 'Videos'
+
+    title = models.CharField(verbose_name='Titel', max_length=100, help_text='Titel des Videos')
+    video = models.FileField(verbose_name='Video', upload_to='videos/',
+                             help_text='Videodatei in .mp4')
     thumbnail = models.ImageField(height_field="height", width_field="width",
                                   help_text="Hier das Vorschaubild zum Video hochladen.",
                                   upload_to="pics/thumbnails/", null=True, default=None)
     width = models.IntegerField(editable=False, default=0)
     height = models.IntegerField(editable=False, default=0)
-    era = models.ForeignKey(to=Era, on_delete=models.SET_NULL, null=True,
+    era = models.ForeignKey(verbose_name='1. Epoche', to=Era, on_delete=models.SET_NULL, null=True,
                             help_text="Epoche des Videos auswählen.",
                             related_name="+")
-    era2 = models.ForeignKey(to=Era, on_delete=models.SET_NULL, blank=True, null=True,
+    era2 = models.ForeignKey(verbose_name='2. Epoche', to=Era, on_delete=models.SET_NULL,
+                             blank=True, null=True,
                              help_text="""Falls das Video in zwei Epochen fällt,
                              kann hier eine zweite
                              hinzugefügt werden. Diese Feld kann auch leer bleiben.""",
                              related_name="+")
-    intro = models.BooleanField(default=False, help_text='Ist dieses Video das Intro-Video?')
-    length = models.FloatField(validators=[MinValueValidator(0.0)], help_text='Länge des Videos',
+    intro = models.BooleanField(verbose_name='Einführung', default=False,
+                                help_text='Ist dieses Video das Intro-Video?')
+    length = models.FloatField(verbose_name='Länge',
+                               validators=[MinValueValidator(0.0, 'Keine Werte kleiner als Null')],
+                               help_text='Länge des Videos',
                                default=0.0)
-
-    # TODO: Adding timestamps
 
     def __str__(self):
         """
@@ -78,11 +86,17 @@ class Timestamp(models.Model):
     """
     Model for timestamps in a video assigned to a building
     """
-    building = models.ForeignKey(to=Building, on_delete=models.SET_NULL, null=True,
-                                 help_text='Zugehöriges Gebäude')
-    video = models.ForeignKey(to=Video, on_delete=models.CASCADE, null=False,
+
+    class Meta:
+        verbose_name = 'Timestamp'
+        verbose_name_plural = 'Timestamps'
+
+    building = models.ForeignKey(verbose_name='Gebäude', to=Building, on_delete=models.SET_NULL,
+                                 null=True, help_text='Zugehöriges Gebäude')
+    video = models.ForeignKey(verbose_name='Video', to=Video, on_delete=models.CASCADE, null=False,
                               help_text='Zugehöriges Video')
-    time = models.FloatField(validators=[MinValueValidator(0.0, 'Keine Werte kleiner als Null')],
+    time = models.FloatField(verbose_name='Zeit',
+                             validators=[MinValueValidator(0.0, 'Keine Werte kleiner als Null')],
                              help_text='Geben Sie hier eine Stelle ein, '
                                        'an dem das gewählte Gebäude im Video erscheint')
 

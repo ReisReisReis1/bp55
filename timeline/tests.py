@@ -8,7 +8,7 @@ from django.test import TestCase, Client
 from datetime import date
 from timeline.models import HistoricDate
 from details_page.models import Era, Building, Picture
-from timeline.views import get_date_as_str
+from timeline.views import get_date_as_str, sort_into_eras
 
 # Define some temp images for testing
 thumbnail_default = None
@@ -17,25 +17,6 @@ test_image = (b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x00\x00\x00\x21\xf9\x04
               b'\x02\x4c\x01\x00\x3b')
 image_mock = SimpleUploadedFile('small.img', test_image, content_type='image/gif')
 image_mock2 = SimpleUploadedFile('small.img', test_image, content_type='image/gif')
-
-
-class ViewsTestCases(TestCase):
-    """
-     Testcases for the functions in view
-    """
-
-    def setUp(self):
-        """
-        Setting up a client for the tests
-        """
-        self.client = Client()
-
-    def test1(self):
-        """
-        Testing timeline function in views
-        """
-        response = self.client.get('/timeline/')
-        self.assertEqual(response.status_code, 200)
 
 
 class HistoricDatesModelTests(TestCase):
@@ -131,14 +112,40 @@ class TimelineViewsTest(TestCase):
                                          year_to=501,
                                          year_to_BC_or_AD="v.Chr.", visible_on_video_page=True,
                                          color_code="fffff3")
-        cls.klassik = Era.objects.create(name="Klassisk", year_from=500,
+        cls.klassik = Era.objects.create(name="Klassik", year_from=500,
                                          year_from_BC_or_AD="v.Chr.", year_to=337,
                                          year_to_BC_or_AD="v.Chr.", visible_on_video_page=True,
                                          color_code="fffff4")
-        cls.helinismus = Era.objects.create(name="Hellinismus", year_from=336,
-                                            year_from_BC_or_AD="v.Chr.", year_to=100,
-                                            year_to_BC_or_AD="n.Chr.", visible_on_video_page=True,
-                                            color_code="fffff5")
+        cls.hellenismus = Era.objects.create(name="Hellenismus", year_from=336,
+                                             year_from_BC_or_AD="v.Chr.", year_to=100,
+                                             year_to_BC_or_AD="n.Chr.", visible_on_video_page=True,
+                                             color_code="fffff5")
+
+    def test_sort_into_eras(self):
+        """
+        Tests the sort_into_eras function in view
+        """
+        b1, b2, b3, b4, h1, h2, h3, h4 = self.setup_some()
+        b1 = (b1, None)
+        b2 = (b2, None)
+        b3 = (b3, None)
+        b4 = (b4, None)
+        test_data = [b1, b2, b3, b4, h1, h2, h3, h4]
+        print(sort_into_eras(test_data))
+        self.assertEqual(sort_into_eras(test_data),
+                         {
+                             'Bronzezeit': [],
+                             'Frühe Eisenzeit': [],
+                             'Archaik': [],
+                             'Königszeit': [],
+                             'Königszeit_Klassik': [],
+                             'Klassik_Republik': [],
+                             'Republik_Hellenismus': [b1, h1, ],
+                             'Frühe Kaiserzeit': [b2, b3, h2, h3, h4],
+                             'Mittlere Kaiserzeit': [b4],
+                             'Späte Kaiserzeit': [],
+                             'Spätantike': [],
+                         })
 
     def test_timeline_empty(self):
         """
