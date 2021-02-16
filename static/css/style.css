@@ -42,3 +42,15 @@ body {
 .row-distance-lg {
     margin-bottom: 100px;
 }
+
+.break-words {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+
+    word-break: break-word;
+
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
