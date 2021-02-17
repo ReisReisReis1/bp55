@@ -257,14 +257,17 @@ class Building(models.Model):
                                   help_text="Literatur zum Gebäude angeben (max. 1000 Zeichen).",
                                   null=True, blank=True)
     links = models.TextField(verbose_name='Links', max_length=1000, help_text="Weiterführende Links zum Gebäude "
-                             "angeben (max. 1000 Zeichen).", null=True, blank=True)
+                             "angeben (max. 1000 Zeichen).", default="", null=True, blank=True)
 
     def __str__(self):
         """
         Name for the admin interface
         :return: the name of a Building
         """
-        return str(self.name)
+        try:
+            return str(self.name)
+        except Building.MultipleObjectsReturned:
+            return Building.MultipleObjectsReturned
 
     def get_name(self, building_id):
         # pylint: disable= no-member
@@ -591,7 +594,7 @@ class Building(models.Model):
             """
             txt = building.links
             # Splitting the txt at ","
-            lst = txt.split(",")
+            lst = txt.split(", ")
             # Getting back all Elements that are not equal(__ne__) to ''
             return list(filter(''.__ne__, lst))
         except Building.DoesNotExist:
