@@ -54,15 +54,15 @@ class Era(models.Model):
         verbose_name_plural = 'Epochen'
 
     name = models.CharField(verbose_name='Name', max_length=100, choices=[
-        ('Bronzezeit', 'Bronzezeit'), ('Frühzeit', 'Frühzeit'), ('Archaik', 'Archaik'),
-        ('Klassik', 'Klassik'), ('Hellenismus', 'Hellenismus'),
-        ('Königszeit', 'Königszeit'), ('Republik', 'Republik'),
+        ('Bronzezeit', 'Bronzezeit'), ('Frühe Eisenzeit', 'Frühe Eisenzeit'),
+        ('Archaik', 'Archaik'), ('Königszeit', 'Königszeit'),
+        ('Klassik', 'Klassik'), ('Republik', 'Republik'), ('Hellenismus', 'Hellenismus'),
         ('Frühe Kaiserzeit', 'Frühe Kaiserzeit'),
         ('Mittlere Kaiserzeit', 'Mittlere Kaiserzeit'),
         ('Späte Kaiserzeit', 'Späte Kaiserzeit'),
         ('Spätantike', 'Spätantike'),
         ('Sonstiges', 'Sonstiges'),
-    ], default='Sonstiges', help_text="Epoche auswählen.", unique=True)
+    ], help_text="Epoche auswählen.", unique=True, null=False, blank=False)
     year_from = models.PositiveIntegerField(verbose_name='Anfangsdatum',
                                             help_text="Jahr des Beginns der Epoche eingeben.",
                                             blank=True, null=True)
