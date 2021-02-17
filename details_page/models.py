@@ -2,6 +2,7 @@
 Configurations for the Database Models for the App 'details_page'
 """
 
+import re
 from django.db import models
 from django.core.exceptions import ValidationError
 # pylint: disable=import-error
@@ -130,6 +131,7 @@ class Building(models.Model):
     date_from_BC_or_AD: BC/AD switcher for date_from
     date_to: date on which construction ended
     date_to_BC_or_AD: BC/AD switcher for date_to
+    date_ca: if the date is exact or an estimation
     architect: architect of the building
     context: context/type of the building
     builder: builder of the building
@@ -145,6 +147,7 @@ class Building(models.Model):
     construction: construction of the building
     material: material of the building
     literature: further literature about the building
+    links: links for further reading
     era: era in which the building was built
     """
 
@@ -253,6 +256,8 @@ class Building(models.Model):
     literature = models.TextField(verbose_name='Literatur', max_length=1000,
                                   help_text="Literatur zum Gebäude angeben (max. 1000 Zeichen).",
                                   null=True, blank=True)
+    links = models.TextField(verbose_name='Links', max_length=1000, help_text="Weiterführende Links zum Gebäude "
+                             "angeben (max. 1000 Zeichen).", null=True, blank=True)
 
     def __str__(self):
         """
@@ -570,6 +575,25 @@ class Building(models.Model):
         try:
             building = self.objects.get(pk=building_id)
             return building.literature
+        except Building.DoesNotExist:
+            return Building.DoesNotExist
+
+    def get_links(self, building_id):
+        # pylint: disable= no-member
+        """
+        :param building_id: ID to fetch the correct building
+        :return: list of links for further reading
+        """
+        try:
+            building = self.objects.get(pk=building_id)
+            """
+            Splits the strings in the list at ; and ,
+            """
+            txt = building.links
+            # Splitting the txt at ","
+            lst = txt.split(",")
+            # Getting back all Elements that are not equal(__ne__) to ''
+            return list(filter(''.__ne__, lst))
         except Building.DoesNotExist:
             return Building.DoesNotExist
 

@@ -54,7 +54,7 @@ class BuildingTestCases(TestCase):
                                 height=0,
                                 circumference=0, area=0, column_order='', construction='',
                                 material='',
-                                literature='')
+                                literature='', links='')
         Building.objects.create(pk=1, name='Parthenon', description='Das Parthenon in Athen',
                                 city='Athen',
                                 region='TestRegion', country='GR-Griechenland',
@@ -67,7 +67,8 @@ class BuildingTestCases(TestCase):
                                 circumference=1, area=1, column_order='dorisch, ionischer Fries',
                                 construction='Massivbau', material='penetelischer Marmor',
                                 literature='Muss - Schubert 1988, SEITEN?; Gruben 2001, 173-190; '
-                                           'Hellmann 2006, 82-96;')
+                                           'Hellmann 2006, 82-96;',
+                                links='www.tu-darmstadt.de')
 
     def test1_get_name(self):
         """
@@ -279,6 +280,14 @@ class BuildingTestCases(TestCase):
         test2 = Building.objects.get(name='Parthenon').__str__()
         self.assertEqual(test1, '')
         self.assertEqual(test2, 'Parthenon')
+
+    def test27_get_links(self):
+        """
+        Testing get_name
+        """
+        self.assertEqual(Building.get_links(Building, 0), list(''))
+        self.assertEqual(Building.get_links(Building, 1), ["www.tu-darmstadt.de"])
+        self.assertEqual(Building.get_links(Building, 3), Building.DoesNotExist)
 
 
 class EraModelTests(TestCase):
