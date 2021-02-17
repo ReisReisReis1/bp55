@@ -8,6 +8,47 @@ from details_page.models import Building, Picture, Era
 from timeline.models import HistoricDate
 
 
+def getting_all_eras_sorted():
+    """
+    Getting all eras sorted into a dictionary, also with new eras,
+    that represent the overlapping eras
+    """
+    # Getting all existing eras
+    all_eras = Era.objects.all()
+    # Hardcoding the order of the eras with overlapping eras
+    era_dict = {
+        'Bronzezeit': (),
+        'Frühe Eisenzeit': (),
+        'Archaik': (),
+        'Königszeit': (),
+        'Königszeit_Klassik': (),
+        'Klassik': (),
+        'Klassik_Republik': (),
+        'Republik': (),
+        'Republik_Hellenismus': (),
+        'Hellenismus': (),
+        'Frühe Kaiserzeit': (),
+        'Mittlere Kaiserzeit': (),
+        'Späte Kaiserzeit': (),
+        'Spätantike': (),
+    }
+    # adding the structs to the eras
+    # the first part of the tupel is the era-struct , the second is a possible second er-struct
+    # and the third is a boolean, if the era should be seen in the legend or not
+    for era in era_dict:
+        era_list = list(all_eras.filter(name=era))
+        if era_list:
+            era_dict[era] = (era_list[0], None, True)
+        else:
+            era_dict[era] = (None, None, True)
+    # the edge cases for the overlapping eras
+    era_dict['Königszeit_Klassik'] = (era_dict['Königszeit'][0], era_dict['Klassik'][0], False)
+    era_dict['Klassik_Republik'] = (era_dict['Klassik'][0], era_dict['Republik'][0], False)
+    era_dict['Republik_Hellenismus'] = (era_dict['Republik'][0], era_dict['Hellenismus'][0], False)
+
+    return era_dict
+
+
 def sort_into_eras(items):
     """
     Sorting the buildings and historic dates into the suited era using the dates
@@ -141,35 +182,7 @@ def timeline(request):
     :param request: url request to get subpage /timeline
     :return: rendering the subpage based on timeline.html
     """
-    # Getting all existing eras
-    all_eras = Era.objects.all()
-    # Building a dict with all eras and the overlapping eras
-    # (the first era struct, the possible second era struct, if it should be seen on the legend)
-    era_dict = {}
-    for era in all_eras:
-        if era.name == 'Königszeit':
-            era_dict[str(era.name)] = (era, None, True)
-            try:
-                klassik = all_eras.get(name='Klassik')
-                era_dict['Königszeit_Klassik'] = (era, klassik, False)
-            except ObjectDoesNotExist:
-                continue
-        elif era.name == 'Klassik':
-            era_dict[str(era.name)] = (era, None, True)
-            try:
-                republik = all_eras.get(name='Republik')
-                era_dict['Klassik_Republik'] = (era, republik, False)
-            except ObjectDoesNotExist:
-                continue
-        elif era.name == 'Republik':
-            era_dict[str(era.name)] = (era, None, True)
-            try:
-                hellenismus = all_eras.get(name='Hellenismus')
-                era_dict['Republik_Hellenismus'] = (era, hellenismus, False)
-            except ObjectDoesNotExist:
-                continue
-        else:
-            era_dict[str(era.name)] = (era, None, True)
+    era_dict = getting_all_eras_sorted()
 
     # get only buildings with dates set
     # pylint: disable = no-member

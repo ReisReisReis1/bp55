@@ -8,7 +8,7 @@ from django.test import TestCase, Client
 from datetime import date
 from timeline.models import HistoricDate
 from details_page.models import Era, Building, Picture
-from timeline.views import get_date_as_str, sort_into_eras
+from timeline.views import get_date_as_str, sort_into_eras, getting_all_eras_sorted
 
 # Define some temp images for testing
 thumbnail_default = None
@@ -104,11 +104,11 @@ class TimelineViewsTest(TestCase):
                                             year_to=1101,
                                             year_to_BC_or_AD="v.Chr.", visible_on_video_page=True,
                                             color_code="fffff1")
-        cls.eisenzeit = Era.objects.create(name="Eisenzeit", year_from=1100,
+        cls.eisenzeit = Era.objects.create(name="Frühe Eisenzeit", year_from=1100,
                                            year_from_BC_or_AD="v.Chr.", year_to=701,
                                            year_to_BC_or_AD="v.Chr.", visible_on_video_page=True,
                                            color_code="fffff2")
-        cls.archaik = Era.objects.create(name="Arachik", year_from=700, year_from_BC_or_AD="v.Chr.",
+        cls.archaik = Era.objects.create(name="Archaik", year_from=700, year_from_BC_or_AD="v.Chr.",
                                          year_to=501,
                                          year_to_BC_or_AD="v.Chr.", visible_on_video_page=True,
                                          color_code="fffff3")
@@ -117,9 +117,52 @@ class TimelineViewsTest(TestCase):
                                          year_to_BC_or_AD="v.Chr.", visible_on_video_page=True,
                                          color_code="fffff4")
         cls.hellenismus = Era.objects.create(name="Hellenismus", year_from=336,
-                                             year_from_BC_or_AD="v.Chr.", year_to=100,
-                                             year_to_BC_or_AD="n.Chr.", visible_on_video_page=True,
+                                             year_from_BC_or_AD="v.Chr.", year_to=30,
+                                             year_to_BC_or_AD="v.Chr.", visible_on_video_page=True,
                                              color_code="fffff5")
+        cls.königszeit = Era.objects.create(name='Königszeit', year_from=620,
+                                            year_from_BC_or_AD='v.Chr', year_to=509,
+                                            year_to_BC_or_AD='v.Chr', visible_on_video_page=True)
+        cls.republik = Era.objects.create(name='Republik', year_from=509,
+                                          year_from_BC_or_AD='v.Chr', year_to=31,
+                                          year_to_BC_or_AD='v.Chr', visible_on_video_page=True)
+        cls.früher_kaiserzeit = Era.objects.create(name='Frühe Kaiserzeit', year_from=31,
+                                                   year_from_BC_or_AD='v.Chr', year_to=68,
+                                                   year_to_BC_or_AD='n.Chr',
+                                                   visible_on_video_page=True)
+        cls.mittlere_kaiserzeit = Era.objects.create(name='Mittlere Kaiserzeit', year_from=68,
+                                                     year_from_BC_or_AD='n.Chr', year_to=192,
+                                                     year_to_BC_or_AD='n.Chr',
+                                                     visible_on_video_page=True)
+        cls.späte_kaiserzeit = Era.objects.create(name='Späte Kaiserzeit', year_from=192,
+                                                   year_from_BC_or_AD='n.Chr', year_to=284,
+                                                   year_to_BC_or_AD='n.Chr',
+                                                   visible_on_video_page=True)
+        cls.spätantike = Era.objects.create(name='Spätantike', year_from=284,
+                                            year_from_BC_or_AD='v.Chr', year_to=565,
+                                            year_to_BC_or_AD='n.Chr', visible_on_video_page=True)
+
+    def test_getting_all_sorted(self):
+        """
+        Testing the getting_all_eras_sorted function in views
+        """
+        self.maxDiff = None
+        self.assertEqual(getting_all_eras_sorted(), {
+            'Bronzezeit': (self.bronzezeit, None, True),
+            'Frühe Eisenzeit': (self.eisenzeit, None, True),
+            'Archaik': (self.archaik, None, True),
+            'Königszeit': (self.königszeit, None, True),
+            'Königszeit_Klassik': (self.königszeit, self.klassik, False),
+            'Klassik': (self.klassik, None, True),
+            'Klassik_Republik': (self.klassik, self.republik, False),
+            'Republik': (self.republik, None, True),
+            'Republik_Hellenismus': (self.republik, self.hellenismus, False),
+            'Hellenismus': (self.hellenismus, None, True),
+            'Frühe Kaiserzeit': (self.früher_kaiserzeit, None, True),
+            'Mittlere Kaiserzeit': (self.mittlere_kaiserzeit, None, True),
+            'Späte Kaiserzeit': (self.späte_kaiserzeit, None, True),
+            'Spätantike': (self.spätantike, None, True),
+        })
 
     def test_sort_into_eras(self):
         """
@@ -463,11 +506,11 @@ class GetDateAsStingTests(TestCase):
                                             year_to=1101,
                                             year_to_BC_or_AD="v.Chr.", visible_on_video_page=True,
                                             color_code="fffff1")
-        cls.eisenzeit = Era.objects.create(name="Eisenzeit", year_from=1100,
+        cls.eisenzeit = Era.objects.create(name="Frühe Eisenzeit", year_from=1100,
                                            year_from_BC_or_AD="v.Chr.", year_to=701,
                                            year_to_BC_or_AD="v.Chr.", visible_on_video_page=True,
                                            color_code="fffff2")
-        cls.archaik = Era.objects.create(name="Arachik", year_from=700, year_from_BC_or_AD="v.Chr.",
+        cls.archaik = Era.objects.create(name="Archaik", year_from=700, year_from_BC_or_AD="v.Chr.",
                                          year_to=501,
                                          year_to_BC_or_AD="v.Chr.", visible_on_video_page=True,
                                          color_code="fffff3")

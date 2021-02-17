@@ -61,8 +61,7 @@ class Era(models.Model):
         ('Späte Kaiserzeit', 'Späte Kaiserzeit'),
         ('Spätantike', 'Spätantike'),
         ('Sonstiges', 'Sonstiges'),
-    ], default='Sonstiges',
-                            help_text="Epoche auswählen.")
+    ], default='Sonstiges', help_text="Epoche auswählen.", unique=True)
     year_from = models.PositiveIntegerField(verbose_name='Anfangsdatum',
                                             help_text="Jahr des Beginns der Epoche eingeben.",
                                             blank=True, null=True)
