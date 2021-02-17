@@ -8,6 +8,10 @@ from django.contrib import admin
 from .models import Video, Timestamp
 
 
+class TimestampInLine(admin.StackedInline):
+    model = Timestamp
+
+
 @admin.register(Video)
 class VideoAdmin(admin.ModelAdmin):
     """
@@ -15,13 +19,6 @@ class VideoAdmin(admin.ModelAdmin):
     """
     search_fields = ('title',)
     ordering = ('title',)
-
-
-@admin.register(Timestamp)
-class TimestampAdmin(admin.ModelAdmin):
-    """
-    Configure the admin model for 'Timestamp'
-    """
-    search_fields = ('video',)
-    list_display = ('video', 'building', 'time')
-    ordering = ('video',)
+    inlines = [
+        TimestampInLine,
+    ]
