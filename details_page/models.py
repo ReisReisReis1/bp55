@@ -251,8 +251,6 @@ class Building(models.Model):
             return building.name
         except Building.DoesNotExist:
             return Building.DoesNotExist
-        except Building.MultipleObjectsReturned:
-            return Building.MultipleObjectsReturned
 
     def get_era(self, building_id):
         # pylint: disable= no-member
@@ -265,8 +263,6 @@ class Building(models.Model):
             return building.era
         except Building.DoesNotExist:
             return Building.DoesNotExist
-        except Building.MultipleObjectsReturned:
-            return Building.MultipleObjectsReturned
 
     def get_description(self, building_id):
         # pylint: disable= no-member
@@ -279,8 +275,6 @@ class Building(models.Model):
             return building.description
         except Building.DoesNotExist:
             return Building.DoesNotExist
-        except Building.MultipleObjectsReturned:
-            return Building.MultipleObjectsReturned
 
     def get_city(self, building_id):
         # pylint: disable= no-member
@@ -293,8 +287,6 @@ class Building(models.Model):
             return building.city
         except Building.DoesNotExist:
             return Building.DoesNotExist
-        except Building.MultipleObjectsReturned:
-            return Building.MultipleObjectsReturned
 
     def get_region(self, building_id):
         # pylint: disable= no-member
@@ -307,8 +299,6 @@ class Building(models.Model):
             return building.region
         except Building.DoesNotExist:
             return Building.DoesNotExist
-        except Building.MultipleObjectsReturned:
-            return Building.MultipleObjectsReturned
 
     def get_country(self, building_id):
         # pylint: disable= no-member
@@ -321,8 +311,6 @@ class Building(models.Model):
             return building.country
         except Building.DoesNotExist:
             return Building.DoesNotExist
-        except Building.MultipleObjectsReturned:
-            return Building.MultipleObjectsReturned
 
     def get_date_from(self, building_id):
         # pylint: disable= no-member
@@ -335,8 +323,6 @@ class Building(models.Model):
             return building.date_from
         except Building.DoesNotExist:
             return Building.DoesNotExist
-        except Building.MultipleObjectsReturned:
-            return Building.MultipleObjectsReturned
 
     def get_date_from_bc_or_ad(self, building_id):
         # pylint: disable= no-member
@@ -349,8 +335,6 @@ class Building(models.Model):
             return building.date_from_BC_or_AD
         except Building.DoesNotExist:
             return Building.DoesNotExist
-        except Building.MultipleObjectsReturned:
-            return Building.MultipleObjectsReturned
 
     def get_date_to(self, building_id):
         # pylint: disable= no-member
@@ -363,8 +347,6 @@ class Building(models.Model):
             return building.date_to
         except Building.DoesNotExist:
             return Building.DoesNotExist
-        except Building.MultipleObjectsReturned:
-            return Building.MultipleObjectsReturned
 
     def get_date_to_bc_or_ad(self, building_id):
         # pylint: disable= no-member
@@ -377,8 +359,6 @@ class Building(models.Model):
             return building.date_to_BC_or_AD
         except Building.DoesNotExist:
             return Building.DoesNotExist
-        except Building.MultipleObjectsReturned:
-            return Building.MultipleObjectsReturned
 
     def get_date_ca(self, building_id):
         # pylint: disable= no-member
@@ -391,8 +371,6 @@ class Building(models.Model):
             return building.date_ca
         except Building.DoesNotExist:
             return Building.DoesNotExist
-        except Building.MultipleObjectsReturned:
-            return Building.MultipleObjectsReturned
 
     def get_architect(self, building_id):
         # pylint: disable= no-member
@@ -405,8 +383,6 @@ class Building(models.Model):
             return building.architect
         except Building.DoesNotExist:
             return Building.DoesNotExist
-        except Building.MultipleObjectsReturned:
-            return Building.MultipleObjectsReturned
 
     def get_context(self, building_id):
         # pylint: disable= no-member
@@ -419,8 +395,6 @@ class Building(models.Model):
             return building.context
         except Building.DoesNotExist:
             return Building.DoesNotExist
-        except Building.MultipleObjectsReturned:
-            return Building.MultipleObjectsReturned
 
     def get_builder(self, building_id):
         # pylint: disable= no-member
@@ -433,8 +407,6 @@ class Building(models.Model):
             return building.builder
         except Building.DoesNotExist:
             return Building.DoesNotExist
-        except Building.MultipleObjectsReturned:
-            return Building.MultipleObjectsReturned
 
     def get_construction_type(self, building_id):
         # pylint: disable= no-member
@@ -447,8 +419,6 @@ class Building(models.Model):
             return building.construction_type
         except Building.DoesNotExist:
             return Building.DoesNotExist
-        except Building.MultipleObjectsReturned:
-            return Building.MultipleObjectsReturned
 
     def get_design(self, building_id):
         # pylint: disable= no-member
@@ -461,8 +431,6 @@ class Building(models.Model):
             return building.design
         except Building.DoesNotExist:
             return Building.DoesNotExist
-        except Building.MultipleObjectsReturned:
-            return Building.MultipleObjectsReturned
 
     def get_function(self, building_id):
         # pylint: disable= no-member
@@ -475,8 +443,6 @@ class Building(models.Model):
             return building.function
         except Building.DoesNotExist:
             return Building.DoesNotExist
-        except Building.MultipleObjectsReturned:
-            return Building.MultipleObjectsReturned
 
     def get_length(self, building_id):
         # pylint: disable= no-member
@@ -489,8 +455,6 @@ class Building(models.Model):
             return building.length
         except Building.DoesNotExist:
             return Building.DoesNotExist
-        except Building.MultipleObjectsReturned:
-            return Building.MultipleObjectsReturned
 
     def get_width(self, building_id):
         # pylint: disable= no-member
@@ -503,8 +467,6 @@ class Building(models.Model):
             return building.width
         except Building.DoesNotExist:
             return Building.DoesNotExist
-        except Building.MultipleObjectsReturned:
-            return Building.MultipleObjectsReturned
 
     def get_height(self, building_id):
         # pylint: disable= no-member
@@ -517,8 +479,6 @@ class Building(models.Model):
             return building.height
         except Building.DoesNotExist:
             return Building.DoesNotExist
-        except Building.MultipleObjectsReturned:
-            return Building.MultipleObjectsReturned
 
     def get_circumference(self, building_id):
         # pylint: disable= no-member
@@ -531,8 +491,6 @@ class Building(models.Model):
             return building.circumference
         except Building.DoesNotExist:
             return Building.DoesNotExist
-        except Building.MultipleObjectsReturned:
-            return Building.MultipleObjectsReturned
 
     def get_area(self, building_id):
         # pylint: disable= no-member
@@ -545,8 +503,6 @@ class Building(models.Model):
             return building.area
         except Building.DoesNotExist:
             return Building.DoesNotExist
-        except Building.MultipleObjectsReturned:
-            return Building.MultipleObjectsReturned
 
     def get_column_order(self, building_id):
         # pylint: disable= no-member
@@ -559,8 +515,6 @@ class Building(models.Model):
             return building.column_order
         except Building.DoesNotExist:
             return Building.DoesNotExist
-        except Building.MultipleObjectsReturned:
-            return Building.MultipleObjectsReturned
 
     def get_construction(self, building_id):
         # pylint: disable= no-member
@@ -573,8 +527,6 @@ class Building(models.Model):
             return building.construction
         except Building.DoesNotExist:
             return Building.DoesNotExist
-        except Building.MultipleObjectsReturned:
-            return Building.MultipleObjectsReturned
 
     def get_material(self, building_id):
         # pylint: disable= no-member
@@ -587,8 +539,6 @@ class Building(models.Model):
             return building.material
         except Building.DoesNotExist:
             return Building.DoesNotExist
-        except Building.MultipleObjectsReturned:
-            return Building.MultipleObjectsReturned
 
     def get_literature(self, building_id):
         # pylint: disable= no-member
@@ -601,8 +551,6 @@ class Building(models.Model):
             return building.literature
         except Building.DoesNotExist:
             return Building.DoesNotExist
-        except Building.MultipleObjectsReturned:
-            return Building.MultipleObjectsReturned
 
 
 class Blueprint(models.Model):
@@ -647,8 +595,6 @@ class Blueprint(models.Model):
             return blueprints
         except Building.DoesNotExist:
             return Building.DoesNotExist
-        except Building.MultipleObjectsReturned:
-            return Building.MultipleObjectsReturned
 
 
 class Picture(models.Model):
@@ -704,5 +650,3 @@ class Picture(models.Model):
             return pictures
         except Building.DoesNotExist:
             return Building.DoesNotExist
-        except Building.MultipleObjectsReturned:
-            return Building.MultipleObjectsReturned
