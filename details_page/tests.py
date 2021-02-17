@@ -47,19 +47,19 @@ class BuildingTestCases(TestCase):
                                       year_to_BC_or_AD='v.Chr')
         Building.objects.create(pk=0, name='', description='', city='', region='', country='',
                                 date_from=0,
-                                date_from_BC_or_AD='',
+                                date_from_BC_or_AD='', date_ca=False,
                                 date_to=0, date_to_BC_or_AD='', era=test_era, architect='',
                                 context='', builder='',
                                 construction_type='', design='', function='', length=0, width=0,
                                 height=0,
                                 circumference=0, area=0, column_order='', construction='',
                                 material='',
-                                literature='')
+                                literature='', links='')
         Building.objects.create(pk=1, name='Parthenon', description='Das Parthenon in Athen',
                                 city='Athen',
                                 region='TestRegion', country='GR-Griechenland',
                                 date_from=447, date_from_BC_or_AD='v.Chr.', date_to=438,
-                                date_to_BC_or_AD='v.Chr.',
+                                date_to_BC_or_AD='v.Chr.', date_ca=True,
                                 era=test_era, architect='Iktinos, Kallikrates', context='Tempel',
                                 builder='Perikles und die Polis Athen', construction_type='Tempel',
                                 design='Peripteros', function='Sakralbau', length=30.88, width=69.5,
@@ -67,7 +67,9 @@ class BuildingTestCases(TestCase):
                                 circumference=1, area=1, column_order='dorisch, ionischer Fries',
                                 construction='Massivbau', material='penetelischer Marmor',
                                 literature='Muss - Schubert 1988, SEITEN?; Gruben 2001, 173-190; '
-                                           'Hellmann 2006, 82-96;')
+                                           'Hellmann 2006, 82-96;',
+                                links='www.tu-darmstadt.de, www.architektur.tu-darmstadt.de')
+        Building.objects.create(pk=2, name='empty')
 
     def test1_get_name(self):
         """
@@ -75,6 +77,8 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_name(Building, 0), '')
         self.assertEqual(Building.get_name(Building, 1), 'Parthenon')
+        self.assertEqual(Building.get_name(Building, 2), 'empty')
+        self.assertEqual(Building.get_name(Building, 3), Building.DoesNotExist)
 
     def test2_get_city(self):
         """
@@ -82,6 +86,8 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_city(Building, 0), '')
         self.assertEqual(Building.get_city(Building, 1), 'Athen')
+        self.assertEqual(Building.get_city(Building, 2), None)
+        self.assertEqual(Building.get_city(Building, 3), Building.DoesNotExist)
 
     def test3_get_region(self):
         """
@@ -89,6 +95,8 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_region(Building, 0), '')
         self.assertEqual(Building.get_region(Building, 1), 'TestRegion')
+        self.assertEqual(Building.get_region(Building, 2), None)
+        self.assertEqual(Building.get_region(Building, 3), Building.DoesNotExist)
 
     def test4_get_country(self):
         """
@@ -96,6 +104,8 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_country(Building, 0), '')
         self.assertEqual(Building.get_country(Building, 1), 'GR-Griechenland')
+        self.assertEqual(Building.get_country(Building, 2), 'Griechenland')
+        self.assertEqual(Building.get_country(Building, 3), Building.DoesNotExist)
 
     def test5_get_date_from(self):
         """
@@ -103,6 +113,8 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_date_from(Building, 0), 0)
         self.assertEqual(Building.get_date_from(Building, 1), 447)
+        self.assertEqual(Building.get_date_from(Building, 2), None)
+        self.assertEqual(Building.get_date_from(Building, 3), Building.DoesNotExist)
 
     def test6_get_date_from_BC_or_AD(self):
         """
@@ -110,6 +122,8 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_date_from_bc_or_ad(Building, 0), '')
         self.assertEqual(Building.get_date_from_bc_or_ad(Building, 1), 'v.Chr.')
+        self.assertEqual(Building.get_date_from_bc_or_ad(Building, 2), 'v.Chr.')
+        self.assertEqual(Building.get_date_from_bc_or_ad(Building, 3), Building.DoesNotExist)
 
     def test7_get_date_to(self):
         """
@@ -117,6 +131,8 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_date_to(Building, 0), 0)
         self.assertEqual(Building.get_date_to(Building, 1), 438)
+        self.assertEqual(Building.get_date_to(Building, 2), None)
+        self.assertEqual(Building.get_date_to(Building, 3), Building.DoesNotExist)
 
     def test8_get_date_to_BC_or_AD(self):
         """
@@ -124,6 +140,8 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_date_to_bc_or_ad(Building, 0), '')
         self.assertEqual(Building.get_date_to_bc_or_ad(Building, 1), 'v.Chr.')
+        self.assertEqual(Building.get_date_to_bc_or_ad(Building, 2), 'v.Chr.')
+        self.assertEqual(Building.get_date_to_bc_or_ad(Building, 3), Building.DoesNotExist)
 
     def test9_get_architect(self):
         """
@@ -131,6 +149,8 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_architect(Building, 0), '')
         self.assertEqual(Building.get_architect(Building, 1), 'Iktinos, Kallikrates')
+        self.assertEqual(Building.get_architect(Building, 2), None)
+        self.assertEqual(Building.get_architect(Building, 3), Building.DoesNotExist)
 
     def test10_get_context(self):
         """
@@ -138,6 +158,8 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_context(Building, 0), '')
         self.assertEqual(Building.get_context(Building, 1), 'Tempel')
+        self.assertEqual(Building.get_context(Building, 2), None)
+        self.assertEqual(Building.get_context(Building, 3), Building.DoesNotExist)
 
     def test11_get_builder(self):
         """
@@ -145,6 +167,8 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_builder(Building, 0), '')
         self.assertEqual(Building.get_builder(Building, 1), 'Perikles und die Polis Athen')
+        self.assertEqual(Building.get_builder(Building, 2), None)
+        self.assertEqual(Building.get_builder(Building, 3), Building.DoesNotExist)
 
     def test12_get_construction_type(self):
         """
@@ -152,6 +176,8 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_construction_type(Building, 0), '')
         self.assertEqual(Building.get_construction_type(Building, 1), 'Tempel')
+        self.assertEqual(Building.get_construction_type(Building, 2), None)
+        self.assertEqual(Building.get_construction_type(Building, 3), Building.DoesNotExist)
 
     def test13_get_design(self):
         """
@@ -159,6 +185,8 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_design(Building, 0), '')
         self.assertEqual(Building.get_design(Building, 1), 'Peripteros')
+        self.assertEqual(Building.get_design(Building, 2), None)
+        self.assertEqual(Building.get_design(Building, 3), Building.DoesNotExist)
 
     def test14_get_function(self):
         """
@@ -166,6 +194,8 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_function(Building, 0), '')
         self.assertEqual(Building.get_function(Building, 1), 'Sakralbau')
+        self.assertEqual(Building.get_function(Building, 2), None)
+        self.assertEqual(Building.get_function(Building, 3), Building.DoesNotExist)
 
     def test15_get_length(self):
         """
@@ -173,6 +203,8 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_length(Building, 0), 0)
         self.assertEqual(Building.get_length(Building, 1), 30.88)
+        self.assertEqual(Building.get_length(Building, 2), None)
+        self.assertEqual(Building.get_length(Building, 3), Building.DoesNotExist)
 
     def test16_get_width(self):
         """
@@ -180,6 +212,8 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_width(Building, 0), 0)
         self.assertEqual(Building.get_width(Building, 1), 69.5)
+        self.assertEqual(Building.get_width(Building, 2), None)
+        self.assertEqual(Building.get_width(Building, 3), Building.DoesNotExist)
 
     def test17_get_height(self):
         """
@@ -187,6 +221,8 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_height(Building, 0), 0)
         self.assertEqual(Building.get_height(Building, 1), 1)
+        self.assertEqual(Building.get_height(Building, 2), None)
+        self.assertEqual(Building.get_height(Building, 3), Building.DoesNotExist)
 
     def test18_get_circumference(self):
         """
@@ -194,6 +230,8 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_circumference(Building, 0), 0)
         self.assertEqual(Building.get_circumference(Building, 1), 1)
+        self.assertEqual(Building.get_circumference(Building, 2), None)
+        self.assertEqual(Building.get_circumference(Building, 3), Building.DoesNotExist)
 
     def test19_get_area(self):
         """
@@ -201,6 +239,8 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_area(Building, 0), 0)
         self.assertEqual(Building.get_area(Building, 1), 1)
+        self.assertEqual(Building.get_area(Building, 2), None)
+        self.assertEqual(Building.get_area(Building, 3), Building.DoesNotExist)
 
     def test20_get_column_order(self):
         """
@@ -208,6 +248,8 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_column_order(Building, 0), '')
         self.assertEqual(Building.get_column_order(Building, 1), 'dorisch, ionischer Fries')
+        self.assertEqual(Building.get_column_order(Building, 2), None)
+        self.assertEqual(Building.get_column_order(Building, 3), Building.DoesNotExist)
 
     def test21_get_construction(self):
         """
@@ -215,6 +257,8 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_construction(Building, 0), '')
         self.assertEqual(Building.get_construction(Building, 1), 'Massivbau')
+        self.assertEqual(Building.get_construction(Building, 2), None)
+        self.assertEqual(Building.get_construction(Building, 3), Building.DoesNotExist)
 
     def test22_get_material(self):
         """
@@ -222,6 +266,8 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_material(Building, 0), '')
         self.assertEqual(Building.get_material(Building, 1), 'penetelischer Marmor')
+        self.assertEqual(Building.get_material(Building, 2), None)
+        self.assertEqual(Building.get_material(Building, 3), Building.DoesNotExist)
 
     def test23_get_literature(self):
         """
@@ -231,6 +277,8 @@ class BuildingTestCases(TestCase):
         self.assertEqual(Building.get_literature(Building, 1),
                          'Muss - Schubert 1988, SEITEN?; Gruben 2001, 173-190; Hellmann 2006, '
                          '82-96;')
+        self.assertEqual(Building.get_literature(Building, 2), None)
+        self.assertEqual(Building.get_literature(Building, 3), Building.DoesNotExist)
 
     def test24_get_description(self):
         """
@@ -238,6 +286,35 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_description(Building, 0), '')
         self.assertEqual(Building.get_description(Building, 1), 'Das Parthenon in Athen')
+        self.assertEqual(Building.get_description(Building, 2), None)
+        self.assertEqual(Building.get_description(Building, 3), Building.DoesNotExist)
+
+    def test25_get_date_ca(self):
+        """
+        Testing get_date_ca
+        """
+        self.assertEqual(Building.get_date_ca(Building, 0), False)
+        self.assertEqual(Building.get_date_ca(Building, 1), True)
+        self.assertEqual(Building.get_date_ca(Building, 2), False)
+        self.assertEqual(Building.get_date_ca(Building, 3), Building.DoesNotExist)
+
+    def test26__str__(self):
+        """
+        Testing the __str__ function
+        """
+        test1 = Building.objects.get(name='').__str__()
+        test2 = Building.objects.get(name='Parthenon').__str__()
+        self.assertEqual(test1, '')
+        self.assertEqual(test2, 'Parthenon')
+
+    def test27_get_links(self):
+        """
+        Testing get_name
+        """
+        self.assertEqual(Building.get_links(Building, 0), list(''))
+        self.assertEqual(Building.get_links(Building, 1), ["www.tu-darmstadt.de", "www.architektur.tu-darmstadt.de"])
+        self.assertEqual(Building.get_links(Building, 2), list(''))
+        self.assertEqual(Building.get_links(Building, 3), Building.DoesNotExist)
 
 
 class EraModelTests(TestCase):
@@ -319,6 +396,7 @@ class PictureTests(TestCase):
                                                       country='', date_from=0,
                                                       date_from_BC_or_AD='',
                                                       date_to=0, date_to_BC_or_AD='',
+                                                      date_ca=False,
                                                       era=cls.test_era,
                                                       architect='', context='', builder='',
                                                       construction_type='', design='', function='',
@@ -333,6 +411,7 @@ class PictureTests(TestCase):
                                                       country='GR-Griechenland',
                                                       date_from=447, date_from_BC_or_AD='v.Chr.',
                                                       date_to=438, date_to_BC_or_AD='v.Chr.',
+                                                      date_ca=True,
                                                       era=cls.test_era,
                                                       architect='Iktinos, Kallikrates',
                                                       context='Tempel',
@@ -401,6 +480,7 @@ class BlueprintTests(TestCase):
                                                        country='', date_from=0,
                                                        date_from_BC_or_AD='',
                                                        date_to=0, date_to_BC_or_AD='',
+                                                       date_ca=False,
                                                        era=self.test_era,
                                                        architect='', context='', builder='',
                                                        construction_type='', design='', function='',
@@ -415,6 +495,7 @@ class BlueprintTests(TestCase):
                                                        country='GR-Griechenland',
                                                        date_from=447, date_from_BC_or_AD='v.Chr.',
                                                        date_to=438, date_to_BC_or_AD='v.Chr.',
+                                                       date_ca=True,
                                                        era=self.test_era,
                                                        architect='Iktinos, Kallikrates',
                                                        context='Tempel',
@@ -453,3 +534,4 @@ class BlueprintTests(TestCase):
                          list(Blueprint.objects.filter(pk=2)))
         self.assertEqual(list(Blueprint.get_blueprint_for_building(Blueprint, 0)),
                          list(Blueprint.objects.filter(pk=1)))
+        self.assertEqual(list(Blueprint.get_blueprint_for_building(Blueprint, 3)), list(Blueprint.objects.filter(pk=3)))
