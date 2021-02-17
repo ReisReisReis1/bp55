@@ -1,8 +1,6 @@
 """
 Tests for functions in the App: timeline
 """
-import tempfile
-
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase, Client
 from datetime import date
@@ -146,11 +144,11 @@ class TimelineViewsTest(TestCase):
         """
         Testing the getting_all_eras_sorted function in views
         """
-        self.maxDiff = None
         self.assertEqual(getting_all_eras_sorted(), {
             'Bronzezeit': (self.bronzezeit, None, True),
             'Frühe Eisenzeit': (self.eisenzeit, None, True),
             'Archaik': (self.archaik, None, True),
+            'Archaik_Königszeit': (self.archaik, self.königszeit, False),
             'Königszeit': (self.königszeit, None, True),
             'Königszeit_Klassik': (self.königszeit, self.klassik, False),
             'Klassik': (self.klassik, None, True),

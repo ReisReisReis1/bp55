@@ -20,6 +20,7 @@ def getting_all_eras_sorted():
         'Bronzezeit': (),
         'Frühe Eisenzeit': (),
         'Archaik': (),
+        'Archaik_Königszeit': (),
         'Königszeit': (),
         'Königszeit_Klassik': (),
         'Klassik': (),
@@ -42,6 +43,7 @@ def getting_all_eras_sorted():
         else:
             era_dict[era] = (None, None, True)
     # the edge cases for the overlapping eras
+    era_dict['Archaik_Königszeit'] = (era_dict['Archaik'][0], era_dict['Königszeit'], False)
     era_dict['Königszeit_Klassik'] = (era_dict['Königszeit'][0], era_dict['Klassik'][0], False)
     era_dict['Klassik_Republik'] = (era_dict['Klassik'][0], era_dict['Republik'][0], False)
     era_dict['Republik_Hellenismus'] = (era_dict['Republik'][0], era_dict['Hellenismus'][0], False)
@@ -56,15 +58,15 @@ def sort_into_eras(items):
     sorted_eras = {
         'Bronzezeit': [],  # 1400 - 1100 v.Chr.
         'Frühe Eisenzeit': [],  # 1100 - 700 v.Chr.
-        'Archaik': [],  # 700 - 500 v.Chr.
-        'Königszeit': [],  # 620 - 500 v.Chr.
+        'Archaik': [],  # 700 - 620 v.Chr.
+        'Archaik_Königszeit': [],  # 620 - 500 v.Chr.
         'Königszeit_Klassik': [],  # 500 - 509 v.Chr.
         'Klassik_Republik': [],  # 509 - 336 v.Chr.
         'Republik_Hellenismus': [],  # 336 - 31 v.Chr.
         'Frühe Kaiserzeit': [],  # 31 v.Chr. - 68 n.Chr.
         'Mittlere Kaiserzeit': [],  # 68 - 192 n.Chr.
-        'Späte Kaiserzeit': [],  # 192 - 284/395 n.Chr.
-        'Spätantike': [],  # 284/395 - 565 n.Chr.
+        'Späte Kaiserzeit': [],  # 192 - 284 n.Chr.
+        'Spätantike': [],  # 284 - 565 n.Chr.
     }
 
     for item in items:
@@ -73,10 +75,10 @@ def sort_into_eras(items):
             sorted_eras['Bronzezeit'].append(item)
         if date in range(-1100, -700):
             sorted_eras['Frühe Eisenzeit'].append(item)
-        if date in range(-700, -500):
+        if date in range(-700, -620):
             sorted_eras['Archaik'].append(item)
         if date in range(-620, -500):
-            sorted_eras['Königszeit'].append(item)
+            sorted_eras['Acrhaik_Königszeit'].append(item)
         if date in range(-500, -509):
             sorted_eras['Königszeit_Klassik'].append(item)
         if date in range(-509, -336):
