@@ -16,13 +16,98 @@
     {% include './header.html' %}
 
     <div class="container container-page">
+        <a href="#Spätantike">Test</a><br>
+
         {%  for item,list in items.items %}
-            {{ item }}: {{ eras|key:item }}<br>
+            {{ item }}: {{ eras|key:item }} - {{ list }}<br>
         {% endfor %}
         <br>
-        {{ eras }}<br>
-        <br>
-        {{ items }}
+
+        {% for item,list in items.items %}
+            <div id="{{ item }}">
+                {% for is_building,building,time,image in list %}
+                    <div class="row justify-content-center row-timeline" id="color-era-1">
+                        <div class="col d-flex justify-content-center">
+                            {% if not forloop.counter|divisibleby:2 %}
+                                <div class="card">
+                                    {% if is_building %}
+                                        <a href="{% url 'details_page:detailed' building_id=building.id %}" class="card-link">
+                                    {% endif %}
+                                        <div class="card-body card-left" style="border-color: #{{ building.era.color_code }}">
+                                            {% if is_building %}
+                                                <h5 class="card-title break-words" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.name }} · {{ time }}</h5>
+
+                                                <div class="card-img">
+                                                    {% if image == None %}
+                                                        <img src="{% static "default_image.png"  %}" style="width: 100%;">
+                                                    {% else %}
+                                                        <img src="/media/{{ image.picture }}" style="width: 100%;">
+                                                    {% endif %}
+                                                </div>
+                                            {% else %}
+                                                <h5 class="card-title historic-title break-words" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.title }} · {{ time }}</h5>
+
+                                                {% if False and not building.infos == None %}
+                                                    <div class="card-text historic-title" align="justify">
+                                                        {{ building.infos }}
+                                                    </div>
+                                                {% endif %}
+                                            {% endif %}
+                                        </div>
+                                    {% if is_building %}
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="col-1">
+                            {% if forloop.first %}
+                                <div class="timeline-center-first" style="background-color: #{{ building.era.color_code }}">
+                            {% elif forloop.last %}
+                                <div class="timeline-center-last" style="background-color: #{{ building.era.color_code }}; border-color: #{{ building.era.color_code }}">
+                            {% else %}
+                                <div class="timeline-center" style="background-color: #{{ building.era.color_code }}">
+                            {% endif %}
+
+                            </div>
+                        </div>
+                        <div class="col d-flex justify-content-center">
+                            {% if forloop.counter|divisibleby:2 %}
+                                <div class="card">
+                                    {% if is_building %}
+                                        <a href="{% url 'details_page:detailed' building_id=building.id %}" class="card-link">
+                                    {% endif %}
+                                        <div class="card-body card-right" style="border-color: #{{ building.era.color_code }}">
+                                            {% if is_building %}
+                                                <h5 class="card-title break-words" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.name }} · {{ time }}</h5>
+
+                                                <div class="card-img">
+                                                    {% if image == None %}
+                                                        <img src="{% static "default_image.png"  %}" style="width: 100%;">
+                                                    {% else %}
+                                                        <img src="/media/{{ image.picture }}" style="width: 100%;">
+                                                    {% endif %}
+                                                </div>
+                                            {% else %}
+                                                <h5 class="card-title historic-title break-words" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.title }} · {{ time }}</h5>
+
+                                                {% if False and not building.infos == None %}
+                                                    <div class="card-text" align="justify">
+                                                        {{ building.infos }}
+                                                    </div>
+                                                {% endif %}
+                                            {% endif %}
+                                        </div>
+                                    {% if is_building %}
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
     </div>
 
 </body>
