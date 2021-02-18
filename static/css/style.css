@@ -14,6 +14,10 @@ body {
     margin-bottom: 100px;
 }
 
+.heading-no-margin {
+    margin-bottom: 0 !important;
+}
+
 /*----------------------------------------------------------------------------
     Add to Bootstrap .row to remove the margin
  */
