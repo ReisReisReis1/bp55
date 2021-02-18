@@ -1,36 +1,20 @@
 """
 Tests for functions in the App: timeline
 """
-# pylint: disable = all
-import tempfile
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase, Client
 from datetime import date
 from timeline.models import HistoricDate
 from details_page.models import Era, Building, Picture
-from timeline.views import get_date_as_str
+from timeline.views import get_date_as_str, sort_into_eras, getting_all_eras_sorted
 
-image_mock = tempfile.NamedTemporaryFile(mode="r", buffering=1, suffix=".png", dir="/tmp")
-image_mock2 = tempfile.NamedTemporaryFile(mode="r", buffering=1, suffix=".png", dir="/tmp")
-thumbnail_default = "/static/default-thumbnail.png"
-
-
-class ViewsTestCases(TestCase):
-    """
-     Testcases for the functions in view
-    """
-
-    def setUp(self):
-        """
-        Setting up a client for the tests
-        """
-        self.client = Client()
-
-    def test1(self):
-        """
-        Testing timeline function in views
-        """
-        response = self.client.get('/timeline/')
-        self.assertEqual(response.status_code, 200)
+# Define some temp images for testing
+thumbnail_default = None
+test_image = (b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x00\x00\x00\x21\xf9\x04'
+              b'\x01\x0a\x00\x01\x00\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02'
+              b'\x02\x4c\x01\x00\x3b')
+image_mock = SimpleUploadedFile('small.img', test_image, content_type='image/gif')
+image_mock2 = SimpleUploadedFile('small.img', test_image, content_type='image/gif')
 
 
 class HistoricDatesModelTests(TestCase):
@@ -89,14 +73,14 @@ class HistoricDatesModelTests(TestCase):
                                          title="Test",
                                          infos="Ein Test Datum",
                                          era=self.an_era)
-        self.assertEqual(str(HistoricDate.objects.get(title="Test")),
-                         str(hd.title) + " (" + str(hd.year) + " "
+        self.assertEqual(str(HistoricDate.objects.get(title="Test")), str(hd.title)
+                         + " (" + str(hd.year) + " "
                          + str(hd.year_BC_or_AD) + ")")
         # with exacter date
         hd.exacter_date = date(23, 3, 1)
         hd.save()
-        self.assertEqual(str(HistoricDate.objects.get(title="Test")),
-                         str(hd.title) + " (" + str(hd.exacter_date)
+        self.assertEqual(str(HistoricDate.objects.get(title="Test")), str(hd.title)
+                         + " (" + str(hd.exacter_date)
                          + " " + str(hd.year_BC_or_AD) + ")")
 
 
@@ -118,26 +102,95 @@ class TimelineViewsTest(TestCase):
                                             year_to=1101,
                                             year_to_BC_or_AD="v.Chr.", visible_on_video_page=True,
                                             color_code="fffff1")
-        cls.eisenzeit = Era.objects.create(name="Eisenzeit", year_from=1100,
+        cls.eisenzeit = Era.objects.create(name="Frühe Eisenzeit", year_from=1100,
                                            year_from_BC_or_AD="v.Chr.", year_to=701,
                                            year_to_BC_or_AD="v.Chr.", visible_on_video_page=True,
                                            color_code="fffff2")
-        cls.archaik = Era.objects.create(name="Arachik", year_from=700, year_from_BC_or_AD="v.Chr.",
+        cls.archaik = Era.objects.create(name="Archaik", year_from=700, year_from_BC_or_AD="v.Chr.",
                                          year_to=501,
                                          year_to_BC_or_AD="v.Chr.", visible_on_video_page=True,
                                          color_code="fffff3")
-        cls.klassik = Era.objects.create(name="Klassisk", year_from=500,
+        cls.klassik = Era.objects.create(name="Klassik", year_from=500,
                                          year_from_BC_or_AD="v.Chr.", year_to=337,
                                          year_to_BC_or_AD="v.Chr.", visible_on_video_page=True,
                                          color_code="fffff4")
-        cls.helinismus = Era.objects.create(name="Hellinismus", year_from=336,
-                                            year_from_BC_or_AD="v.Chr.", year_to=100,
-                                            year_to_BC_or_AD="n.Chr.", visible_on_video_page=True,
-                                            color_code="fffff5")
+        cls.hellenismus = Era.objects.create(name="Hellenismus", year_from=336,
+                                             year_from_BC_or_AD="v.Chr.", year_to=30,
+                                             year_to_BC_or_AD="v.Chr.", visible_on_video_page=True,
+                                             color_code="fffff5")
+        cls.königszeit = Era.objects.create(name='Königszeit', year_from=620,
+                                            year_from_BC_or_AD='v.Chr', year_to=509,
+                                            year_to_BC_or_AD='v.Chr', visible_on_video_page=True)
+        cls.republik = Era.objects.create(name='Republik', year_from=509,
+                                          year_from_BC_or_AD='v.Chr', year_to=31,
+                                          year_to_BC_or_AD='v.Chr', visible_on_video_page=True)
+        cls.früher_kaiserzeit = Era.objects.create(name='Frühe Kaiserzeit', year_from=31,
+                                                   year_from_BC_or_AD='v.Chr', year_to=68,
+                                                   year_to_BC_or_AD='n.Chr',
+                                                   visible_on_video_page=True)
+        cls.mittlere_kaiserzeit = Era.objects.create(name='Mittlere Kaiserzeit', year_from=68,
+                                                     year_from_BC_or_AD='n.Chr', year_to=192,
+                                                     year_to_BC_or_AD='n.Chr',
+                                                     visible_on_video_page=True)
+        cls.späte_kaiserzeit = Era.objects.create(name='Späte Kaiserzeit', year_from=192,
+                                                   year_from_BC_or_AD='n.Chr', year_to=284,
+                                                   year_to_BC_or_AD='n.Chr',
+                                                   visible_on_video_page=True)
+        cls.spätantike = Era.objects.create(name='Spätantike', year_from=284,
+                                            year_from_BC_or_AD='v.Chr', year_to=565,
+                                            year_to_BC_or_AD='n.Chr', visible_on_video_page=True)
+
+    def test_getting_all_sorted(self):
+        """
+        Testing the getting_all_eras_sorted function in views
+        """
+        self.assertEqual(getting_all_eras_sorted(), {
+            'Bronzezeit': (self.bronzezeit, None, True),
+            'Frühe Eisenzeit': (self.eisenzeit, None, True),
+            'Archaik': (self.archaik, None, True),
+            'Archaik_Königszeit': (self.archaik, self.königszeit, False),
+            'Königszeit': (self.königszeit, None, True),
+            'Königszeit_Klassik': (self.königszeit, self.klassik, False),
+            'Klassik': (self.klassik, None, True),
+            'Klassik_Republik': (self.klassik, self.republik, False),
+            'Republik': (self.republik, None, True),
+            'Republik_Hellenismus': (self.republik, self.hellenismus, False),
+            'Hellenismus': (self.hellenismus, None, True),
+            'Frühe Kaiserzeit': (self.früher_kaiserzeit, None, True),
+            'Mittlere Kaiserzeit': (self.mittlere_kaiserzeit, None, True),
+            'Späte Kaiserzeit': (self.späte_kaiserzeit, None, True),
+            'Spätantike': (self.spätantike, None, True),
+        })
+
+    def test_sort_into_eras(self):
+        """
+        Tests the sort_into_eras function in view
+        """
+        b1, b2, b3, b4, h1, h2, h3, h4 = self.setup_some()
+        b1 = (b1, None)
+        b2 = (b2, None)
+        b3 = (b3, None)
+        b4 = (b4, None)
+        test_data = [b1, b2, b3, b4, h1, h2, h3, h4]
+        print(sort_into_eras(test_data))
+        self.assertEqual(sort_into_eras(test_data),
+                         {
+                             'Bronzezeit': [],
+                             'Frühe Eisenzeit': [],
+                             'Archaik': [],
+                             'Königszeit': [],
+                             'Königszeit_Klassik': [],
+                             'Klassik_Republik': [],
+                             'Republik_Hellenismus': [b1, h1, ],
+                             'Frühe Kaiserzeit': [b2, b3, h2, h3, h4],
+                             'Mittlere Kaiserzeit': [b4],
+                             'Späte Kaiserzeit': [],
+                             'Spätantike': [],
+                         })
 
     def test_timeline_empty(self):
         """
-        Test for get all timeline itmes and thumbnails when nothing was added
+        Test for get all timeline items and thumbnails when nothing was added
         :return: None / Test results
         """
         response = self.client.get("/timeline/")
@@ -288,15 +341,15 @@ class TimelineViewsTest(TestCase):
         :return: None / Test results
         """
         b1, b2, b3, b4, hd1, hd2, hd3, hd4 = self.setup_some2()
-        b3.exacter_date = None
-        b3.save()
+        hd3.exacter_date = None
+        hd3.save()
         response = self.client.get("/timeline/")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context["items"], [(True, b1, "100 v.Chr.", thumbnail_default),
                                                      (False, hd1, "0050-01-01 v.Chr.", None),
                                                      (True, b2, "5 v.Chr.", thumbnail_default),
                                                      (False, hd2, "0001-03-01 v.Chr.", None),
-                                                     (False, hd3, "0001-01-05 n.Chr.", None),
+                                                     (False, hd3, "1 n.Chr.", None),
                                                      (True, b3, "10 n.Chr.", thumbnail_default),
                                                      (False, hd4, "0050-05-08 n.Chr.", None),
                                                      (True, b4, "100 n.Chr.", thumbnail_default)])
@@ -357,7 +410,7 @@ class TimelineViewsTest(TestCase):
         :return: None / Test results
         """
         b = Building.objects.create(name="Building 1", date_from=100, date_from_BC_or_AD="v.Chr.")
-        p = Picture.objects.create(name="Test", picture=image_mock.name, building=b,
+        p = Picture.objects.create(name="Test", picture=image_mock, building=b,
                                    usable_as_thumbnail=False)
         response = self.client.get("/timeline/")
         self.assertEqual(response.status_code, 200)
@@ -373,7 +426,7 @@ class TimelineViewsTest(TestCase):
                                    building=b, usable_as_thumbnail=True)
         response = self.client.get("/timeline/")
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context["items"], [(True, "100 v.Chr.", b, p)])
+        self.assertEqual(response.context["items"], [(True, b, "100 v.Chr.", p)])
 
     def test_thumbnail_more_disabled(self):
         """
@@ -451,11 +504,11 @@ class GetDateAsStingTests(TestCase):
                                             year_to=1101,
                                             year_to_BC_or_AD="v.Chr.", visible_on_video_page=True,
                                             color_code="fffff1")
-        cls.eisenzeit = Era.objects.create(name="Eisenzeit", year_from=1100,
+        cls.eisenzeit = Era.objects.create(name="Frühe Eisenzeit", year_from=1100,
                                            year_from_BC_or_AD="v.Chr.", year_to=701,
                                            year_to_BC_or_AD="v.Chr.", visible_on_video_page=True,
                                            color_code="fffff2")
-        cls.archaik = Era.objects.create(name="Arachik", year_from=700, year_from_BC_or_AD="v.Chr.",
+        cls.archaik = Era.objects.create(name="Archaik", year_from=700, year_from_BC_or_AD="v.Chr.",
                                          year_to=501,
                                          year_to_BC_or_AD="v.Chr.", visible_on_video_page=True,
                                          color_code="fffff3")

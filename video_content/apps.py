@@ -10,3 +10,4 @@ class VideoContentConfig(AppConfig):
     Configurations for this APP
     """
     name = 'video_content'
+    verbose_name = 'Staffeln'
