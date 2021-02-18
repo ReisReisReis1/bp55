@@ -2,6 +2,10 @@
     CSS File for styling on the filter page
 =============================================================================*/
 
+.dropdown-item {
+    max-width: 400px;
+}
+
 .dropdown-item:hover {
     cursor: pointer !important;
 }
@@ -24,6 +28,9 @@
     Style of the active filters
  */
 .btn-filter {
+    max-width: 92%;
+    overflow: hidden;
+
     margin-left: 10px;
     margin-bottom: 5px;
     padding-top: 5px;

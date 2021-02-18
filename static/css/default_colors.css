@@ -35,7 +35,7 @@
     Primary border color
  */
 #color-border-primary {
-    border-color: lightgray;
+    border: solid lightgray;
 }
 
 /*----------------------------------------------------------------------------
@@ -82,4 +82,11 @@
  */
 #color-btn-video:hover {
     background-color: lightgray;
+}
+
+/*----------------------------------------------------------------------------
+    Show download button color
+ */
+#color-btn-download {
+    background-color: #f1efec;
 }
