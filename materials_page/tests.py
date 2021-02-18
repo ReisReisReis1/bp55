@@ -35,3 +35,10 @@ class MaterialTestCases(TestCase):
         """
         Testing the get_category function
         """
+        self.assertEqual(list(Material.get_category(Material, 'TestKategorie1')),
+                         list(Material.objects.filter(category='TestKategorie1')))
+        self.assertEqual(list(Material.get_category(Material, 'TestKategorie2')),
+                         list(Material.objects.filter(category='TestKategorie2')))
+        self.assertEqual(list(Material.get_category(Material, '')),
+                         list(Material.objects.filter(category='')))
+

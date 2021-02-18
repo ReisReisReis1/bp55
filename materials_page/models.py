@@ -36,7 +36,8 @@ class Material(models.Model):
         :param wanted_category: the given catgeory
         :return: QuerySet of files with the given category or empty list
         """
-        files = self.objects.get(category=wanted_category)
+        files = self.objects.filter(category=wanted_category)
+        return files
 
 
 
