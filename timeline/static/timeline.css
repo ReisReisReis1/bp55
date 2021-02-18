@@ -2,6 +2,17 @@
     CSS File for styling on the timeline page
 =============================================================================*/
 
+.index {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 10;
+}
+
+.fas::before {
+    content: "\f121";
+}
+
 /*----------------------------------------------------------------------------
     One row in the timeline
  */
@@ -25,7 +36,7 @@
     margin-bottom: 0px !important;
 }
 
-.card {
+.timeline-card {
     width: 70%;
 }
 
@@ -45,7 +56,7 @@
     position: absolute;
     top: 35px;
     width: 0;
-    z-index: 1;
+    z-index: -2;
     right: -130px;
     border: solid;
     border-width: 4px 130px 4px 0;
@@ -68,7 +79,7 @@
     position: absolute;
     top: 35px;
     width: 0;
-    z-index: 1;
+    z-index: -2;
     left: -130px;
     border: solid;
     border-width: 4px 0 4px 130px;
@@ -102,6 +113,14 @@
     border-width: 80px 46px 0 46px;
     border-color: transparent transparent transparent;
     border-top-color: inherit;
+}
+
+.timeline-center-text {
+    writing-mode: vertical-rl;
+    position: absolute;
+    z-index: 1;
+    margin-top: 10px;
+    margin-left: -20px;
 }
 
 .card-link {
