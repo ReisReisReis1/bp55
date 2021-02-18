@@ -15,7 +15,9 @@ def material(request):
     :return: rendering the subpage based on material.html
     with a context variable to get the characteristics
     """
+
     context = {
-        'Dateien_nach_Kategorie': Material.get_category(Material)
+        'Liste_Kategorien': Material.get_list_of_categories(Material),
+        'Dateien_nach_Kategorie': Material.get_objects_by_category(Material),
     }
     return render(request, material.html, context)
