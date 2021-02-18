@@ -11,38 +11,35 @@
     {% include './header.html' %}
 
 <div class="container container-page">
-
     <div class="card">
-        <!-- Split the box in topic and download button -->
+        <!-- Split the box in topic and download  -->
        <div class="d-flex w-100 justify-content-between">
            <!-- Collapse box for each topic -->
-      <a class="collapsed card-link" data-toggle="collapse" href="#collapseOne" style="width: 100%">
-          <div class="selectionbox">
-          <div class="borderline">
-          <div class="card-header">
-        <p class="fontcolor"> Thema #1 </p>
-      </div>
-          </div>
-              </div>
-      </a>
-           <button class="btn" id="btn-color"; style=" width: 15%; border-color: black" >Download all</button>
-              </div>
+            <a class="collapsed card-link" data-toggle="collapse" href="#collapseOne" style="width: 100%; ">
+                <div class="borderline">
+                    <div class="card-header" style="background-color: white" >
+                        <p class="fontcolor"> Thema #1 </p>
+                    </div>
+                </div>
+            </a>
+        <button class="btn; borderline" id="color-btn-download"; style=" width: 15%" >Download all</button>
+    </div>
 
    <!-- Text showing after open the collapse box-->
     <div id="collapseOne" class="collapse">
         <div class="materialpdf">
             <div class="borderline">
-      <div class="card-body">
-
-        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-        dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-        Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-          </div>
-      </div>
-    </div>
-  </div>
+              <div class="card-body">
+                <!-- PDF Liste -->
+                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+                dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+                Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+              </div>
+            </div>
         </div>
+    </div>
 
+</div>
 </div>
 </body>
 </html>

@@ -2,29 +2,29 @@
     CSS File for styling on the material page
 =============================================================================*/
 
-.textcenter{
-    margin-left: 15px ;
-    margin-top: 10px;
-}
-
+/*
+    Styling the border of the box
+*/
 .borderline{
   border-style: solid;
   border-width: thin;
   border-color: black;
 }
 
+/*
+    Styling the background of the opened box
+*/
 .materialpdf{
     background-color: #c3c5c0;
 }
 
+/*
+    Styling the font color and position center
+ */
 .fontcolor{
     color: black;
     text-align: center;
-    margin-top: 10px;
 }
 
-.selectionbox{
-    border-color: black;
-    background-color: white;
-}
+
 
