@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'start',
     'bootstrap4',
     'search',
-    'material'
+    'materials_page',
 ]
 
 MIDDLEWARE = [
