@@ -68,7 +68,8 @@ class BuildingTestCases(TestCase):
                                 construction='Massivbau', material='penetelischer Marmor',
                                 literature='Muss - Schubert 1988, SEITEN?; Gruben 2001, 173-190; '
                                            'Hellmann 2006, 82-96;',
-                                links='www.tu-darmstadt.de, www.architektur.tu-darmstadt.de')
+                                links='www.tu-darmstadt.de, www.architektur.tu-darmstadt.de'
+                                )
         Building.objects.create(pk=2, name='empty')
 
     def test1_get_name(self):
