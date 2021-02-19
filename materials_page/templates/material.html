@@ -8,38 +8,41 @@
     <link rel="stylesheet" type="text/css" href="{% static 'material.css' %}">
 </head>
 <body>
-    {% include './header.html' %}
+{% include './header.html' %}
 
 <div class="container container-page">
-    <div class="card">
-        <!-- Split the box in topic and download  -->
-       <div class="d-flex w-100 justify-content-between">
-           <!-- Collapse box for each topic -->
-            <a class="collapsed card-link" data-toggle="collapse" href="#collapseOne" style="width: 100%; ">
+    {% for category, filelist in Materials.items %}
+        <div class="card">
+            <!-- Split the box in topic and download  -->
+            <div class="d-flex w-100 justify-content-between">
+                <!-- Collapse box for each topic -->
+                <a class="collapsed card-link" data-toggle="collapse" href="#collapse-{{ category }}"
+                   style="width: 100%; ">
+                    <div class="borderline">
+                        <div class="card-header" id="color-bg-card-header">
+                            <p class="fontcolor"> {{ category }} </p>
+                        </div>
+                    </div>
+                </a>
+                <button class="btn; borderline" id="color-btn-download" ; style=" width: 15%">Download all</button>
+            </div>
+
+            <!-- Text showing after open the collapse box-->
+            <div id="collapse-{{ category }}" class="collapse">
                 <div class="borderline">
-                    <div class="card-header" style="background-color: white" >
-                        <p class="fontcolor"> Thema #1 </p>
+                    <div class="card-body bg-light">
+                        <div class="row row-no-margin">
+                            <!-- PDF Liste -->
+                            {% for fileurl in filelist %}
+                                <a href="{{ fileurl }}" target="_blank">
+                                    <img src="{% static "PDF.png" %}", style="width: 10%"> {{ fileurl }} </a>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
-            </a>
-        <button class="btn; borderline" id="color-btn-download"; style=" width: 15%" >Download all</button>
-    </div>
-
-   <!-- Text showing after open the collapse box-->
-    <div id="collapseOne" class="collapse">
-        <div class="materialpdf">
-            <div class="borderline">
-              <div class="card-body">
-                <!-- PDF Liste -->
-                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-                dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-                Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-              </div>
             </div>
         </div>
-    </div>
-
-</div>
+    {% endfor %}
 </div>
 </body>
 </html>

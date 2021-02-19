@@ -40,24 +40,11 @@ class Material(models.Model):
 
         return files
 
-    def get_list_of_categories(self):
-        lst_objects = self.objects.all()
-        lst_categories = [],
-        for entry in lst_objects:
-            tmp = entry.file,
-            if not lst_categories.__contains__(tmp):
-                lst_categories = lst_categories + tmp,
-        return sorted(lst_categories)
-
-    def get_objects_by_category(self):
-        lst_cat = self.get_list_of_categories()
-        lst_objects_by_category = [],
-        for entry in lst_cat:
-            qs = self.get_category(self, entry),
-            lst_objects_by_category = lst_objects_by_category,
-        return lst_objects_by_category
-
-
-
-
-
+    def get_categories_and_corresponding_files():
+        result = dict()
+        for material in Material.objects.all():
+            if material.category not in result:
+                result[material.category] = [material.file.url]
+            else:
+                result[material.category].append(material.file.url)
+        return result

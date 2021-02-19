@@ -2,7 +2,6 @@
 Configurations of the Website subpages from the App: materials_page
 """
 
-
 from django.shortcuts import render
 # pylint: disable = import-error, relative-beyond-top-level
 from .models import Material
@@ -17,7 +16,6 @@ def material(request):
     """
 
     context = {
-        'Liste_Kategorien': Material.get_list_of_categories(Material),
-        'Dateien_nach_Kategorie': Material.get_objects_by_category(Material),
+        'Materials': Material.get_categories_and_corresponding_files(),
     }
-    return render(request, material.html, context)
+    return render(request, "material.html", context)

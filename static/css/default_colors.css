@@ -90,3 +90,10 @@
 #color-btn-download {
     background-color: #f1efec;
 }
+
+/*----------------------------------------------------------------------------
+    Show card-header background
+ */
+#color-bg-card-header{
+    background-color: white;
+}
