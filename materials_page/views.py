@@ -7,6 +7,16 @@ from django.shortcuts import render
 from .models import Material
 
 
+def get_categories_and_corresponding_files():
+    result = dict()
+    for material_entry in Material.objects.all():
+        if material_entry.category not in result:
+            result[material_entry.category] = [material_entry]
+        else:
+            result[material_entry.category] = result[material_entry.category] + [material_entry]
+    return result
+
+
 def material(request):
     """
     Subpage to show the characteristics of a building
@@ -16,6 +26,6 @@ def material(request):
     """
 
     context = {
-        'Materials': Material.get_categories_and_corresponding_files(),
+        'Materials': get_categories_and_corresponding_files(),
     }
     return render(request, "material.html", context)

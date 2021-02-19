@@ -5,23 +5,26 @@ Tests for the functions in the App: materials_page
 from django.test import Client
 from django.test import TestCase
 from materials_page.models import Material
+from materials_page.views import get_categories_and_corresponding_files
 
 
 class MaterialTestCases(TestCase):
     def setUp(self):
         """
-        Setting up objects and a client for the tests
+        Setting up a client for the tests
         """
         self.client = Client()
-        Material.objects.create(name='TestDatei1', file='/media/material/Test1.pdf', category='TestKategorie1')
-        Material.objects.create(name='TestDatei2', file='/media/material/Test2.pdf', category='TestKategorie1')
-        Material.objects.create(name='TestDatei3', file='/media/material/Test3.pdf', category='TestKategorie2')
-        Material.objects.create(name='')
 
     def test1__str__(self):
         """
         Testing the __str__ function
         """
+
+        Material.objects.create(name='TestDatei1', file='/media/material/Test1.pdf', category='TestKategorie1')
+        Material.objects.create(name='TestDatei2', file='/media/material/Test2.pdf', category='TestKategorie1')
+        Material.objects.create(name='TestDatei3', file='/media/material/Test3.pdf', category='TestKategorie2')
+        Material.objects.create(name='')
+
         test1 = Material.objects.get(name='TestDatei1').__str__()
         test2 = Material.objects.get(name='TestDatei2').__str__()
         test3 = Material.objects.get(name='TestDatei3').__str__()
@@ -31,14 +34,27 @@ class MaterialTestCases(TestCase):
         self.assertEqual(test3, 'TestDatei3')
         self.assertEqual(test4, '')
 
-    def test2_get_category(self):
-        """
-        Testing the get_category function
-        """
-        self.assertEqual(list(Material.get_category(Material, 'TestKategorie1')),
-                         list(Material.objects.filter(category='TestKategorie1')))
-        self.assertEqual(list(Material.get_category(Material, 'TestKategorie2')),
-                         list(Material.objects.filter(category='TestKategorie2')))
-        self.assertEqual(list(Material.get_category(Material, '')),
-                         list(Material.objects.filter(category='')))
+    def test2_get_categories_and_corresponding_files(self):
+
+        self.assertEqual(get_categories_and_corresponding_files(), {})
+
+        Material.objects.create(name='TestDatei1', file='/media/material/Test1.pdf', category='TestKategorie1')
+        Material.objects.create(name='TestDatei2', file='/media/material/Test2.pdf', category='TestKategorie1')
+        Material.objects.create(name='TestDatei3', file='/media/material/Test3.pdf', category='TestKategorie2')
+        Material.objects.create(name='')
+
+        self.assertEqual(get_categories_and_corresponding_files()['TestKategorie1'][0].name, 'TestDatei1')
+        self.assertEqual(get_categories_and_corresponding_files()['TestKategorie1'][1].name, 'TestDatei2')
+        self.assertEqual(get_categories_and_corresponding_files()['TestKategorie2'][0].name, 'TestDatei3')
+        self.assertEqual(get_categories_and_corresponding_files()[''][0].name, '')
+        self.assertEqual(get_categories_and_corresponding_files()['TestKategorie1'][0].file, '/media/material/Test1.pdf')
+        self.assertEqual(get_categories_and_corresponding_files()['TestKategorie1'][1].file, '/media/material/Test2.pdf')
+        self.assertEqual(get_categories_and_corresponding_files()['TestKategorie2'][0].file, '/media/material/Test3.pdf')
+        self.assertEqual(get_categories_and_corresponding_files()[''][0].file, '')
+        self.assertEqual(get_categories_and_corresponding_files()['TestKategorie1'][0].category, 'TestKategorie1')
+        self.assertEqual(get_categories_and_corresponding_files()['TestKategorie1'][1].category, 'TestKategorie1')
+        self.assertEqual(get_categories_and_corresponding_files()['TestKategorie2'][0].category, 'TestKategorie2')
+        self.assertEqual(get_categories_and_corresponding_files()[''][0].category, '')
+
+
 
