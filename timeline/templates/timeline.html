@@ -9,6 +9,22 @@
     {% include 'default_head.html' %}
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="{% static 'timeline.css' %}">
+
+    <script>
+        function hideIndex(button_id,index_id) {
+            var button = document.getElementById(button_id);
+
+            if (button.innerHTML === '∧') {
+                button.innerHTML = '∨';
+            }
+            else {
+                button.innerHTML = '∧';
+            }
+
+            var index = document.getElementById(index_id);
+            index.classList.toggle("index-hide")
+        }
+    </script>
 </head>
 
 <body>
@@ -16,17 +32,28 @@
     {% include './header.html' %}
 
     <div class="d-flex justify-content-center index">
-        <div class="card">
-            <div class="card-body">
+        <div class="card" style="width: 300px;">
+            <div class="card-body" onclick='hideIndex("index-button","index-items")' style="cursor: pointer;">
                 <div class="card-title heading-no-margin">
                     <h4 class="heading-no-margin">Legende</h4>
+                    <button type="button" class="close index-button" id="index-button" style="outline: none;">∧</button>
                 </div>
             </div>
-            <ul class="list-group">
+            <ul class="list-group index-hide" id="index-items">
                 {% for era in eras %}
                     {% for era1,era2,display in eras|key:era %}
                         {% if not era1 == None and display %}
-                            <a href="#{{ era }}">
+                            {% if era == "Königszeit" %}
+                                <a href="#Archaik_Königszeit">
+                            {% elif era == "Klassik" %}
+                                <a href="#Königszeit_Klassik">
+                            {% elif era == "Republik" %}
+                                <a href="#Klassik_Republik">
+                            {% elif era == "Hellenismus" %}
+                                <a href="#Republik_Hellenismus">
+                            {% else %}
+                                <a href="#{{ era }}">
+                            {% endif %}
                                 <li class="list-group-item">
                                     <div class="row">
                                         <div class="col-1" style="background-color: #{{ era1.color_code }}; margin-left: 5px;"></div>
@@ -179,5 +206,6 @@
         {% endfor %}
     </div>
 
+    {% include './footer.html' %}
 </body>
 </html>
