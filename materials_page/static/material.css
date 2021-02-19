@@ -15,9 +15,22 @@
     Styling the font color and position center
  */
 .fontcolor{
+    text-decoration: none;
     color: black;
-    text-align: center;
 }
 
+.material-box {
+    cursor: pointer;
+    width: 12.5%;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+}
 
+.material-first-row {
+    margin-bottom: 0px !important;
+}
 
+.material-rest-row {
+    margin-bottom: 0px !important;
+    margin-top: 1rem;
+}

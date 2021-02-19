@@ -8,41 +8,66 @@
     <link rel="stylesheet" type="text/css" href="{% static 'material.css' %}">
 </head>
 <body>
-{% include './header.html' %}
+    {% include './header.html' %}
 
-<div class="container container-page">
-    {% for category, filelist in Materials.items %}
-        <div class="card">
-            <!-- Split the box in topic and download  -->
-            <div class="d-flex w-100 justify-content-between">
-                <!-- Collapse box for each topic -->
-                <a class="collapsed card-link" data-toggle="collapse" href="#collapse-{{ category }}"
-                   style="width: 100%; ">
-                    <div class="borderline">
-                        <div class="card-header" id="color-bg-card-header">
-                            <p class="fontcolor"> {{ category }} </p>
-                        </div>
-                    </div>
-                </a>
-                <button class="btn; borderline" id="color-btn-download" ; style=" width: 15%">Download all</button>
+    <div class="container container-page">
+        {% if Materials|length == 0 %}
+            <div class="row justify-content-center">
+                <h1>Keine Materialien vorhanden</h1>
             </div>
+        {% endif %}
 
-            <!-- Text showing after open the collapse box-->
-            <div id="collapse-{{ category }}" class="collapse">
-                <div class="borderline">
-                    <div class="card-body bg-light">
-                        <div class="row row-no-margin">
-                            <!-- PDF Liste -->
-                            {% for fileurl in filelist %}
-                                <a href="{{ fileurl }}" target="_blank">
-                                    <img src="{% static "PDF.png" %}", style="width: 10%"> {{ fileurl }} </a>
-                            {% endfor %}
+        {% for category, filelist in Materials.items %}
+            <div class="card">
+                <!-- Split the box in topic and download  -->
+                <div class="d-flex w-100 justify-content-between">
+                    <!-- Collapse box for each topic -->
+                    <a class="collapsed card-link" data-toggle="collapse" href="#collapse-{{ category }}" style="width: 100%; ">
+                        <div class="borderline">
+                            <div class="card-header" id="color-bg-card-header">
+                                <h1 class="fontcolor break-words heading-no-margin"> {{ category }} </h1>
+                            </div>
+                        </div>
+                    </a>
+                    <button class="btn borderline" id="color-btn-download" style=" width: 15%">Download all</button>
+                </div>
+
+                <!-- Text showing after open the collapse box-->
+                <div id="collapse-{{ category }}" class="collapse">
+                    <div class="borderline">
+                        <div class="card-body bg-light">
+                            <div class="row row-no-margin">
+                                <!-- PDF Liste -->
+                                {% for file in filelist %}
+                                    <div class="material-box">
+                                        <a href="{{ file.file.url }}" target="_blank">
+                                            {% if forloop.counter <= 8 %}
+                                                    <table class="table table-bordered material-first-row">
+                                                {% else %}
+                                                    <table class="table table-bordered material-rest-row">
+                                                {% endif %}
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <img src="{% static "PDF.png" %}" width="100%">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="break-words fontcolor">
+                                                            {{ file.name }}<br>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </a>
+                                    </div>
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    {% endfor %}
-</div>
+        {% endfor %}
+    </div>
 </body>
 </html>

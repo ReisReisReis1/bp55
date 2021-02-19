@@ -44,7 +44,7 @@ class Material(models.Model):
         result = dict()
         for material in Material.objects.all():
             if material.category not in result:
-                result[material.category] = [material.file.url]
+                result[material.category] = [material]
             else:
-                result[material.category].append(material.file.url)
+                result[material.category].append(material)
         return result
