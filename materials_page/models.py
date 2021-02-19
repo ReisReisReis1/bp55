@@ -30,15 +30,21 @@ class Material(models.Model):
         return str(self.name)
 
     def get_category(self, wanted_category):
-        #pylint: disable= no-member
+        # pylint: disable= no-member
         """
         Getting all files of the given category
-        :param wanted_category: the given catgeory
+        :param wanted_category: the given category
         :return: QuerySet of files with the given category or empty list
         """
         files = self.objects.filter(category=wanted_category)
+
         return files
 
-
-
-
+    def get_categories_and_corresponding_files():
+        result = dict()
+        for material in Material.objects.all():
+            if material.category not in result:
+                result[material.category] = [material]
+            else:
+                result[material.category].append(material)
+        return result
