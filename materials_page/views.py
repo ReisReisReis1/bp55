@@ -1,0 +1,21 @@
+"""
+Configurations of the Website subpages from the App: materials_page
+"""
+
+from django.shortcuts import render
+# pylint: disable = import-error, relative-beyond-top-level
+from .models import Material
+
+
+def material(request):
+    """
+    Subpage to show the characteristics of a building
+    :param request: url request to get materials_page
+    :return: rendering the subpage based on material.html
+    with a context variable to get the characteristics
+    """
+
+    context = {
+        'Materials': Material.get_categories_and_corresponding_files(),
+    }
+    return render(request, "material.html", context)
