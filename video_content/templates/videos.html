@@ -107,17 +107,6 @@
         {% endfor %}
     </div>
 
-    <div>
-        {% for foo, foo1 in Test.items %}
-            {{ foo }}<br>
-            {% for fooNew in foo1 %}
-                {{ fooNew }}
-            {% endfor %}<br>
-
-        {% endfor %}
-
-    </div>
-
     {% include './footer.html' %}
 </body>
 </html>
