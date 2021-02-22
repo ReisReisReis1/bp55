@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     'search',
     'materials_page',
+    'impressum',
 ]
 
 MIDDLEWARE = [
