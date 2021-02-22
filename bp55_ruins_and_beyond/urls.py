@@ -29,6 +29,7 @@ urlpatterns = [
     path('timeline/', include('timeline.urls')),
     path('search/', include('search.urls')),
     path('materials_page/', include('materials_page.urls')),
+    path('impressum_page/', include('impressum_page.urls'))
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
