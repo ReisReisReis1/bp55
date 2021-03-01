@@ -2,6 +2,9 @@
 Tests for the functions in the App: materials_page
 """
 # pylint: disable=all
+import io
+import zipfile
+
 from django.test import Client
 from django.test import TestCase
 from materials_page.models import Material
@@ -35,6 +38,9 @@ class MaterialTestCases(TestCase):
         self.assertEqual(test4, '')
 
     def test2_get_categories_and_corresponding_files(self):
+        """
+        Testing the get_catgeories_and_corresponding_files function
+        """
 
         self.assertEqual(get_categories_and_corresponding_files(), {})
 
@@ -57,8 +63,11 @@ class MaterialTestCases(TestCase):
         self.assertEqual(get_categories_and_corresponding_files()[''][0].category, '')
 
     def test3_get_categories_and_corresponding_zip_files(self):
+        """
+        Testing the get_catgeories_and_corresponding_files function
+        """
 
-        # self.assertEqual(get_categories_and_corresponding_zip_files(), {})
+        self.assertEqual(get_categories_and_corresponding_zip_files(), {})
 
         Material.objects.create(name='TestDatei1', file='C:/Users/Laura Buhleier/Documents/GitHub/media/Test1.pdf',
                                 category='TestKategorie1')
@@ -66,10 +75,25 @@ class MaterialTestCases(TestCase):
                                 category='TestKategorie1')
         Material.objects.create(name='TestDatei3', file='C:/Users/Laura Buhleier/Documents/GitHub/media/Test3.pdf',
                                 category='TestKategorie2')
-        # Material.objects.create(name='')
 
-        # self.assertEqual(get_categories_and_corresponding_zip_files()['TestKategorie1'].open(
-        #                 "/media/material/Test1.pdf"), Material.objects.get(name='TestDatei1'))
+        try:
+            file = io.BytesIO(get_categories_and_corresponding_zip_files()['TestKategorie1'].content)
+            zipped_file = zipfile.ZipFile(file, 'r')
+            self.assertIsNone(zipped_file.testzip())
+            self.assertIn('zipfiles/Test1.pdf', zipped_file.namelist())
+            self.assertIn('zipfiles/Test2.pdf', zipped_file.namelist())
+        finally:
+            zipped_file.close()
+            file.close()
+        try:
+            file = io.BytesIO(get_categories_and_corresponding_zip_files()['TestKategorie2'].content)
+            zipped_file = zipfile.ZipFile(file, 'r')
+            self.assertIsNone(zipped_file.testzip())
+            self.assertIn('zipfiles/Test3.pdf', zipped_file.namelist())
+        finally:
+            zipped_file.close()
+            file.close()
+
 
 
 
