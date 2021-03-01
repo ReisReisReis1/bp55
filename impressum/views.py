@@ -12,8 +12,7 @@ def get_course_link():
     link = first_object.course_link
     # return impressum.first_object
     return link
-
-
+  
 
 def impressum(request):
     """
