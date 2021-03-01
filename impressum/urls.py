@@ -8,7 +8,7 @@ from django.urls import path
 from . import views
 
 # pylint: disable = invalid-name
-app_name = 'materials_page'
+app_name = 'impressum'
 urlpatterns = [
     path('', views.impressum, name='impressum')
 ]

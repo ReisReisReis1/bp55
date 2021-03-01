@@ -87,3 +87,4 @@ def material(request):
         'Zip_Files': get_categories_and_corresponding_zip_files(),
     }
     return render(request, "material.html", context)
+
