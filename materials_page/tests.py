@@ -5,7 +5,7 @@ Tests for the functions in the App: materials_page
 from django.test import Client
 from django.test import TestCase
 from materials_page.models import Material
-from materials_page.views import get_categories_and_corresponding_files
+from materials_page.views import get_categories_and_corresponding_files, get_categories_and_corresponding_zip_files
 
 
 class MaterialTestCases(TestCase):
@@ -55,6 +55,22 @@ class MaterialTestCases(TestCase):
         self.assertEqual(get_categories_and_corresponding_files()['TestKategorie1'][1].category, 'TestKategorie1')
         self.assertEqual(get_categories_and_corresponding_files()['TestKategorie2'][0].category, 'TestKategorie2')
         self.assertEqual(get_categories_and_corresponding_files()[''][0].category, '')
+
+    def test3_get_categories_and_corresponding_zip_files(self):
+
+        # self.assertEqual(get_categories_and_corresponding_zip_files(), {})
+
+        Material.objects.create(name='TestDatei1', file='C:/Users/Laura Buhleier/Documents/GitHub/media/Test1.pdf',
+                                category='TestKategorie1')
+        Material.objects.create(name='TestDatei2', file='C:/Users/Laura Buhleier/Documents/GitHub/media/Test2.pdf',
+                                category='TestKategorie1')
+        Material.objects.create(name='TestDatei3', file='C:/Users/Laura Buhleier/Documents/GitHub/media/Test3.pdf',
+                                category='TestKategorie2')
+        # Material.objects.create(name='')
+
+        # self.assertEqual(get_categories_and_corresponding_zip_files()['TestKategorie1'].open(
+        #                 "/media/material/Test1.pdf"), Material.objects.get(name='TestDatei1'))
+
 
 
 
