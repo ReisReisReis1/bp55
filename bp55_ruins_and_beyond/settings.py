@@ -48,8 +48,8 @@ INSTALLED_APPS = [
     'bootstrap4',
     'search',
     'materials_page',
-    'impressum_page'
-]
+    'impressum',
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

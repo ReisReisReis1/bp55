@@ -132,6 +132,7 @@ class Building(models.Model):
     date_to: date on which construction ended
     date_to_BC_or_AD: BC/AD switcher for date_to
     date_ca: if the date is exact or an estimation
+    date_century: if the given date is just a century-approximation and not an exact year
     architect: architect of the building
     context: context/type of the building
     builder: builder of the building
@@ -398,6 +399,18 @@ class Building(models.Model):
         try:
             building = self.objects.get(pk=building_id)
             return building.date_ca
+        except Building.DoesNotExist:
+            return Building.DoesNotExist
+
+    def get_date_century(self, building_id):
+        # pylint: disable= no-member
+        """
+        :param building_id: ID to fetch the correct building
+        :return: if the date is a century-approximation
+        """
+        try:
+            building = self.objects.get(pk=building_id)
+            return building.date_century
         except Building.DoesNotExist:
             return Building.DoesNotExist
 
