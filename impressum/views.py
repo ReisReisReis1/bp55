@@ -9,7 +9,10 @@ from .models import Impressum
 
 def get_course_link():
     first_object = Impressum.objects.all().first()
-    return impressum.first_object
+    link = first_object.course_link
+    # return impressum.first_object
+    return link
+
 
 
 def impressum(request):
@@ -21,6 +24,6 @@ def impressum(request):
     """
 
     context = {
-        'Kurs_Link': get_course_link()
+         'Kurs_Link': get_course_link()
     }
     return render(request, "impressum.html", context)
