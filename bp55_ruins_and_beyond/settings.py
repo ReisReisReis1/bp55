@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'search',
     'materials_page',
     'impressum',
-
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

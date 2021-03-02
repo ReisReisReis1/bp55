@@ -18,7 +18,7 @@ class Impressum(models.Model):
 
     name = models.CharField(verbose_name='Bezeichnung', max_length=100, help_text='Bezeichnung zur Wiedererkennung')
     course_link = models.CharField(verbose_name='Kurslink', max_length=1000, help_text='Link zum Vorlesungskurs in'
-                                   'Moodle')
+                                    'Moodle')
 
     def __str__(self):
         """
