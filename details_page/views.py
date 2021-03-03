@@ -28,16 +28,13 @@ def detailed(request, building_id):
         'Datum_bis': Building.get_date_to(Building, building_id),
         'Datum_bis_BC_oder_AD': Building.get_date_to_bc_or_ad(Building, building_id),
         'Datum_ca': Building.get_date_ca(Building, building_id),
+        'Datum_Jahrhundert': Building.get_date_ca(Building, building_id),
         'Architekt': Building.get_architect(Building, building_id),
         'Kontext_Lage': Building.get_context(Building, building_id),
         'Bauherr': Building.get_builder(Building, building_id),
         'Bautypus': Building.get_construction_type(Building, building_id),
         'Bauform': Building.get_design(Building, building_id),
         'Gattung_Funktion': Building.get_function(Building, building_id),
-
-        # 'Dimension': Building.get_dimension(Building, id),
-        # 'Videos': Building.get_videos(Building, id),
-
         'Länge': Building.get_length(Building, building_id),
         'Breite': Building.get_width(Building, building_id),
         'Höhe': Building.get_height(Building, building_id),
