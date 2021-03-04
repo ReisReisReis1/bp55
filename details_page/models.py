@@ -425,7 +425,7 @@ class Building(models.Model):
         except Building.DoesNotExist:
             return Building.DoesNotExist
 
-    def get_date_century(self, building_id):
+    def get_year_century(self, building_id):
         # pylint: disable= no-member
         """
         :param building_id: ID to fetch the correct building
@@ -433,7 +433,7 @@ class Building(models.Model):
         """
         try:
             building = self.objects.get(pk=building_id)
-            return building.date_century
+            return building.year_century
         except Building.DoesNotExist:
             return Building.DoesNotExist
 
