@@ -147,7 +147,7 @@ def timeline(request):
     items = list(buildings) + list(historic_dates)
 
     context = {
-        'Eras_Buildings': sorted_eras_with_buildings(items)
+        'Eras_Buildings': sorted_eras_with_buildings(items),
         'Kurs_Link': get_course_link(),
     }
 
