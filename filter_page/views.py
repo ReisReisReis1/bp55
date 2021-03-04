@@ -1,29 +1,23 @@
 """
 Configurations of the different viewable functions and subpages from the App: home
 """
+import re
 from django.shortcuts import render
 from details_page.models import Building, Era
 from timeline.views import get_thumbnails_for_buildings
+from impressum.views import get_course_link
 
 
 def splitting(lst):
     """
     Splits the strings in the list at ; and ,
     """
-
-    i = 0
-    while i < len(lst):
-        first_split = lst[i].split(';')
-        j = 0
-        while j < len(first_split):
-            second_split = first_split[j].split(',')
-            first_split = first_split[:j] + [s for s in second_split] + \
-                          first_split[j + 1:]
-            j = j + len(second_split)
-        lst = lst[:i] + [s for s in first_split] + lst[i + 1:]
-        i = i + len(first_split)
-
-    return lst
+    return_lst = []
+    for s in lst:
+        return_lst.extend(re.split(' , | ,|, |,| ; |; | ;|;| / |/ | /|/', s))
+    # Getting back all Elements that are not equal(__ne__) to '' (empty string)
+    # https://stackoverflow.com/questions/1157106/remove-all-occurrences-of-a-value-from-a-list
+    return list(filter(''.__ne__, return_lst))
 
 
 def one_dict_set_to_string_list(dictqs):
@@ -156,7 +150,7 @@ def display_building_filter(request):
     result = get_thumbnails_for_buildings(result)
 
     filter_names = ['Stadt', 'Region', 'Land', 'Epoche', 'Architekt', 'Bauherr', 'Bauform',
-                    'Säulenordnung', 'Material', 'Funktion']
+                    'Säulenordnung', 'Material', 'Gattung/Funktion']
     # pylint: disable = no-member
     buildings = Building.objects.all()
     # pylint: disable = no-member
@@ -167,40 +161,39 @@ def display_building_filter(request):
     # so we will implement duplication deletion in python here for this matter.
     # But later (if no one uses sqlite anymore)
     # it would be better and more efficient to set .distinct() for that.
-    eras = delete_duplicates(one_dict_set_to_string_list(eras))
+    eras = delete_duplicates(splitting(one_dict_set_to_string_list(eras)))
 
-    countries = buildings.only('country').exclude(country=None).order_by("country").values(
-        'country')
-    countries = delete_duplicates(one_dict_set_to_string_list(countries))
+    countries = buildings.only('country').exclude(country=None).order_by("country")\
+        .values('country')
+    countries = delete_duplicates(splitting(one_dict_set_to_string_list(countries)))
 
     regions = buildings.only('region').exclude(region=None).order_by("region").values('region')
-    regions = delete_duplicates(one_dict_set_to_string_list(regions))
+    regions = delete_duplicates(splitting(one_dict_set_to_string_list(regions)))
 
     cities = buildings.only('city').exclude(city=None).order_by("city").values('city')
-    cities = delete_duplicates(one_dict_set_to_string_list(cities))
+    cities = delete_duplicates(splitting(one_dict_set_to_string_list(cities)))
 
-    architects = buildings.only('architect').exclude(architect=None).order_by("architect").values(
-        'architect')
-    architects = delete_duplicates(one_dict_set_to_string_list(architects))
+    architects = buildings.only('architect').exclude(architect=None).order_by("architect")\
+        .values('architect')
+    architects = delete_duplicates(splitting(one_dict_set_to_string_list(architects)))
 
     builders = buildings.only('builder').exclude(builder=None).order_by("builder").values('builder')
-    builders = delete_duplicates(one_dict_set_to_string_list(builders))
+    builders = delete_duplicates(splitting(one_dict_set_to_string_list(builders)))
 
-    column_orders = buildings.only('column_order').exclude(column_order=None).order_by(
-        "column_order"). \
-        values('column_order')
-    column_orders = delete_duplicates(one_dict_set_to_string_list(column_orders))
+    column_orders = buildings.only('column_order').exclude(column_order=None)\
+        .order_by("column_order").values('column_order')
+    column_orders = delete_duplicates(splitting(one_dict_set_to_string_list(column_orders)))
 
     designs = buildings.only('design').exclude(design=None).order_by("design").values('design')
-    designs = delete_duplicates(one_dict_set_to_string_list(designs))
+    designs = delete_duplicates(splitting(one_dict_set_to_string_list(designs)))
 
     material = buildings.only('material').exclude(material=None).order_by("material") \
         .values('material')
-    material = delete_duplicates(one_dict_set_to_string_list(material))
+    material = delete_duplicates(splitting(one_dict_set_to_string_list(material)))
 
     function = buildings.only('function').exclude(function=None).order_by("function") \
         .values('function')
-    function = delete_duplicates(one_dict_set_to_string_list(function))
+    function = delete_duplicates(splitting(one_dict_set_to_string_list(function)))
 
     context = {
         'Cities': cities,
@@ -216,6 +209,7 @@ def display_building_filter(request):
         'Filter_Result': result,
         'Filter_Names': filter_names,
         'Active_Filter': dict(urls_parameters),
+        'Kurs_Link': get_course_link(),
     }
 
     return render(request, 'filter.html', context)

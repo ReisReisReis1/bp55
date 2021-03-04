@@ -8,6 +8,14 @@ from django.contrib import admin
 from .models import Era, Building, Picture, Blueprint
 
 
+class BlueprintInLine(admin.StackedInline):
+    model = Blueprint
+
+
+class PictureInLine(admin.StackedInline):
+    model = Picture
+
+
 @admin.register(Era)
 class EraAdmin(admin.ModelAdmin):
     """
@@ -24,21 +32,7 @@ class BuildingAdmin(admin.ModelAdmin):
     """
     search_fields = ('name',)
     ordering = ('name',)
-
-
-@admin.register(Picture)
-class PictureAdmin(admin.ModelAdmin):
-    """
-    Configure the admin model for 'Picture'
-    """
-    search_fields = ('name',)
-    ordering = ('name',)
-
-
-@admin.register(Blueprint)
-class BlueprintAdmin(admin.ModelAdmin):
-    """
-    Configure the admin model for 'Blueprint'
-    """
-    search_fields = ('name',)
-    ordering = ('name',)
+    inlines = [
+        BlueprintInLine,
+        PictureInLine,
+    ]

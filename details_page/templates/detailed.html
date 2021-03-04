@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    {% include 'default_head.html' %}
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="{% static 'detailed.css' %}">
 
@@ -15,6 +16,16 @@
             $('#' + popup).on('hidden.bs.modal', function () {
                 video.pause();
             });
+        }
+
+        function startVideoOnTimestamp(id, timestamp) {
+            var video = document.getElementById("popup-video-" + id);
+
+            if (video.readyState != 4) {
+                console.log(video.currentTime)
+                video.currentTime = timestamp * 60;
+                console.log(video.currentTime)
+            }
         }
     </script>
 </head>
@@ -31,7 +42,7 @@
                             <td>
                                 Ort/Region
                             </td>
-                            <td>
+                            <td class="break-words">
                                 {% if Ort != None %}
                                     {{ Ort }}
                                 {% endif %}
@@ -44,7 +55,7 @@
                             <td>
                                 Land
                             </td>
-                            <td>
+                            <td class="break-words">
                                 {% if Land != None %}
                                     {{ Land }}
                                 {% endif %}
@@ -54,7 +65,7 @@
                             <td>
                                 Datierung
                             </td>
-                            <td>
+                            <td class="break-words">
                                 {% if Datum_von != None %}
                                     {{ Datum_von }} {{ Datum_von_BC_oder_AD }}
                                 {% endif %}
@@ -67,7 +78,7 @@
                             <td>
                                 Architekt
                             </td>
-                            <td>
+                            <td class="break-words">
                                 {% if Architekt != None %}
                                     {{ Architekt }}
                                 {% endif %}
@@ -85,7 +96,7 @@
                             <td>
                                 Kontext
                             </td>
-                            <td>
+                            <td class="break-words">
                                 {% if Kontext_Lage != None %}
                                     {{ Kontext_Lage }}
                                 {% endif %}
@@ -95,7 +106,7 @@
                             <td>
                                 Bauherr
                             </td>
-                            <td>
+                            <td class="break-words">
                                 {% if Bauherr != None %}
                                     {{ Bauherr }}
                                 {% endif %}
@@ -113,7 +124,7 @@
                             <td>
                                 Bautypus
                             </td>
-                            <td>
+                            <td class="break-words">
                                 {% if Bautypus != None %}
                                     {{ Bautypus }}
                                 {% endif %}
@@ -123,7 +134,7 @@
                             <td>
                                 Bauform
                             </td>
-                            <td>
+                            <td class="break-words">
                                 {% if Bauform != None %}
                                     {{ Bauform }}
                                 {% endif %}
@@ -133,7 +144,7 @@
                             <td>
                                 Gattung/Funktion
                             </td>
-                            <td>
+                            <td class="break-words">
                                 {% if Gattung_Funktion != None %}
                                     {{ Gattung_Funktion }}
                                 {% endif %}
@@ -151,7 +162,7 @@
                             <td>
                                 Dimension
                             </td>
-                            <td>
+                            <td class="break-words">
                                 {% if Länge != None %}
                                     {{ Länge }}m
                                 {% endif %}
@@ -167,7 +178,7 @@
                             <td>
                                 Säulenordnung
                             </td>
-                            <td>
+                            <td class="break-words">
                                 {% if Säulenordung != None %}
                                     {{ Säulenordung }}
                                 {% endif %}
@@ -177,7 +188,7 @@
                             <td>
                                 Konstruktion
                             </td>
-                            <td>
+                            <td class="break-words">
                                 {% if Konstruktion != None %}
                                     {{ Konstruktion }}
                                 {% endif %}
@@ -187,7 +198,7 @@
                             <td>
                                 Material
                             </td>
-                            <td>
+                            <td class="break-words">
                                 {% if Material != None %}
                                     {{ Material }}
                                 {% endif %}
@@ -205,9 +216,9 @@
                             <td>
                                 Literatur
                             </td>
-                            <td>
+                            <td class="break-words">
                                 {% if Litertur != None %}
-                                    {{ Litertur }}
+                                    <a href=" {{ Links |cut:"['" | cut:"']" }} " target="_blank" >{{ Litertur }} </a>
                                 {% endif %}
                             </td>
                         </tr>
@@ -219,64 +230,82 @@
                     <tbody>
                         <tr>
                             <td>
-                                <div id="details_images" class="carousel slide" data-interval="false">
-                                    <ol class="carousel-indicators">
-                                        {% for image in Bilder %}
-                                            {% if forloop.first %}
-                                                <li data-target="#details_images" class="active"></li>
-                                            {% else %}
-                                                <li data-target="#details_images"></li>
-                                            {% endif %}
-                                        {% endfor %}
-                                        {% for blueprints in Baupläne %}
-                                            {% if forloop.first and Bilder|length == 0%}
-                                                <li data-target="#details_images" class="active"></li>
-                                            {% else %}
-                                                <li data-target="#details_images"></li>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </ol>
-
-                                    <div class="carousel-inner">
+                                {% with image_length=Bilder|length blueprints_length=Baupläne|length %}
+                                    {% if image_length|add:blueprints_length <= 1 %}
                                         {% if Bilder|length == 0 and Baupläne|length == 0 %}
-                                            <img src="{% static "default_image.png"  %}" style="width: 100%;">
-                                        {% else %}
-                                            {% for image in Bilder %}
-                                                {% if forloop.first %}
-                                                    <div class="carousel-item active">
+                                                <img src="{% static "default_image.png"  %}" style="width: 100%;">
+                                            {% else %}
+                                                {% if Baupläne|length == 0 %}
+                                                    {% for image in Bilder %}
+                                                        <img class="d-block w-100" src="/media/{{ image.picture }}">
+                                                    {% endfor %}
                                                 {% else %}
-                                                    <div class="carousel-item">
+                                                    {% for blueprints in Baupläne %}
+                                                        <img class="d-block w-100" src="/media/{{ blueprints.blueprint }}">
+                                                    {% endfor %}
                                                 {% endif %}
-                                                    <img class="d-block w-100" src="/media/{{ image.picture }}">
-                                                </div>
-                                            {% endfor %}
-                                            {% for blueprints in Baupläne %}
-                                                {% if forloop.first and Bilder|length == 0 %}
-                                                    <div class="carousel-item active">
-                                                {% else %}
-                                                    <div class="carousel-item">
-                                                {% endif %}
-                                                    <img class="d-block w-100" src="/media/{{ blueprints.blueprint }}">
-                                                </div>
-                                            {% endfor %}
                                         {% endif %}
-                                    </div>
+                                        {% else %}
+                                        <div id="details_images" class="carousel slide" data-interval="false">
+                                            <ol class="carousel-indicators">
+                                                {% for image in Bilder %}
+                                                    {% if forloop.first %}
+                                                        <li data-target="#details_images" class="active"></li>
+                                                    {% else %}
+                                                        <li data-target="#details_images"></li>
+                                                    {% endif %}
+                                                {% endfor %}
+                                                {% for blueprints in Baupläne %}
+                                                    {% if forloop.first and Bilder|length == 0%}
+                                                        <li data-target="#details_images" class="active"></li>
+                                                    {% else %}
+                                                        <li data-target="#details_images"></li>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </ol>
 
-                                    <a class="carousel-control-prev" href="#details_images" role="button" data-slide="prev">
-                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span class="sr-only">Previous</span>
-                                    </a>
-                                    <a class="carousel-control-next" href="#details_images" role="button" data-slide="next">
-                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span class="sr-only">Next</span>
-                                    </a>
-                                </div>
+                                            <div class="carousel-inner">
+                                                {% if Bilder|length == 0 and Baupläne|length == 0 %}
+                                                    <img src="{% static "default_image.png"  %}" style="width: 100%;">
+                                                {% else %}
+                                                    {% for image in Bilder %}
+                                                        {% if forloop.first %}
+                                                            <div class="carousel-item active">
+                                                        {% else %}
+                                                            <div class="carousel-item">
+                                                        {% endif %}
+                                                            <img class="d-block w-100" src="/media/{{ image.picture }}">
+                                                        </div>
+                                                    {% endfor %}
+                                                    {% for blueprints in Baupläne %}
+                                                        {% if forloop.first and Bilder|length == 0 %}
+                                                            <div class="carousel-item active">
+                                                        {% else %}
+                                                            <div class="carousel-item">
+                                                        {% endif %}
+                                                            <img class="d-block w-100" src="/media/{{ blueprints.blueprint }}">
+                                                        </div>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </div>
+
+                                            <a class="carousel-control-prev" href="#details_images" role="button" data-slide="prev">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="sr-only">Previous</span>
+                                            </a>
+                                            <a class="carousel-control-next" href="#details_images" role="button" data-slide="next">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="sr-only">Next</span>
+                                            </a>
+                                        </div>
+                                    {% endif %}
+                                {% endwith %}
                             </td>
                         </tr>
                         {% if Beschreibung == None or Beschreibung|length == 0%}
                             <tr>
-                                <td>
-                                    {{ Name }}
+                                <td class="break-words">
+                                    <h3 class="heading-no-margin">{{ Name }}</h3>
                                 </td>
                             </tr>
                         {% endif %}
@@ -287,12 +316,12 @@
                     <table class="table table-bordered">
                         <tbody>
                             <tr>
-                                <td>
-                                    {{ Name }}
+                                <td class="break-words">
+                                    <h3 class="heading-no-margin">{{ Name }}</h3>
                                 </td>
                             </tr>
                             <tr>
-                                <td>
+                                <td class="break-words">
                                     {{ Beschreibung }}
                                 </td>
                             </tr>
@@ -307,8 +336,12 @@
                                 <td>
                                     <div class="row row-no-margin">
                                         {% for timestamp in Videos %}
-                                            <div class="video-box" data-toggle="modal" data-target="#popup-{{ forloop.counter }}">
-                                                <table class="table table-bordered">
+                                            <div class="video-box" data-toggle="modal" data-target="#popup-{{ forloop.counter }}" onclick="startVideoOnTimestamp({{ forloop.counter }},{{ timestamp.time }})">
+                                                {% if forloop.counter <= 4 %}
+                                                    <table class="table table-bordered video-first-row">
+                                                {% else %}
+                                                    <table class="table table-bordered video-rest-row">
+                                                {% endif %}
                                                     <tbody>
                                                         <tr>
                                                             <td>
@@ -316,8 +349,8 @@
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td>
-                                                                {{ timestamp.video.title }}
+                                                            <td class="break-words">
+                                                                {{ timestamp.video.title }}<br>
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -332,7 +365,7 @@
                                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <video id="popup-video-{{ forloop.counter }}" width="100%" controls preload="metadata">
+                                                            <video id="popup-video-{{ forloop.counter }}" width="100%" controls preload="none" poster="/media/{{ timestamp.video.thumbnail }}" oncontextmenu="return false;" controlsList="nodownload">
                                                                 <source src="{{ timestamp.video.video.url }}#t={{ timestamp.time }}" type="video/mp4">
                                                                 {{ timestamp.title }}
                                                             </video>
@@ -350,5 +383,7 @@
             </div>
         </div>
     </div>
+
+    {% include './footer.html' %}
 </body>
 </html>

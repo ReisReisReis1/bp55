@@ -1,0 +1,76 @@
+{% load static %}
+{% load bootstrap4 %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    {% include 'default_head.html' %}
+    <link rel="stylesheet" type="text/css" href="{% static 'material.css' %}">
+</head>
+<body>
+    {% include './header.html' %}
+
+    <div class="container container-page">
+        {% if Materials|length == 0 %}
+            <div class="row justify-content-center">
+                <h1>Keine Materialien vorhanden</h1>
+            </div>
+        {% endif %}
+
+        {% for category, filelist in Materials.items %}
+            <div class="card">
+                <!-- Split the box in topic and download  -->
+                <div class="d-flex w-100 justify-content-between">
+                    <!-- Collapse box for each topic -->
+                    <a class="collapsed card-link" data-toggle="collapse" href="#collapse-{{ category |cut:" " }}" style="width: 100%; ">
+                        <div class="borderline">
+                            <div class="card-header" id="color-bg-card-header">
+                                <h1 class="fontcolor break-words heading-no-margin"> {{ category }} </h1>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="{% url "materials_page:download" %}" class="btn borderline" id="color-btn-download" style=" width: 15%">Download all </a>
+
+                </div>
+
+                <!-- Text showing after open the collapse box-->
+                <div id="collapse-{{ category |cut:" " }}" class="collapse">
+                    <div class="borderline">
+                        <div class="card-body bg-light">
+                            <div class="row row-no-margin">
+                                <!-- PDF Liste -->
+                                {% for file in filelist %}
+                                    <div class="material-box">
+                                        <a href="{{ file.file.url }}" target="_blank">
+                                            {% if forloop.counter <= 8 %}
+                                                    <table class="table table-bordered material-first-row">
+                                                {% else %}
+                                                    <table class="table table-bordered material-rest-row">
+                                                {% endif %}
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <img src="{% static "PDF.png" %}" width="100%">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="break-words fontcolor">
+                                                            {{ file.name }}<br>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </a>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+
+</body>
+</html>

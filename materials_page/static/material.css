@@ -1,0 +1,36 @@
+/*============================================================================
+    CSS File for styling on the material page
+=============================================================================*/
+
+/*
+    Styling the border of the box
+*/
+.borderline{
+  border-style: solid;
+  border-width: thin;
+  border-color: black;
+}
+
+/*
+    Styling the font color and position center
+ */
+.fontcolor{
+    text-decoration: none;
+    color: black;
+}
+
+.material-box {
+    cursor: pointer;
+    width: 12.5%;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+}
+
+.material-first-row {
+    margin-bottom: 0px !important;
+}
+
+.material-rest-row {
+    margin-bottom: 0px !important;
+    margin-top: 1rem;
+}

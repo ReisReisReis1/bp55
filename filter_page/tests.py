@@ -8,7 +8,7 @@ from django.test import Client, TestCase
 # pylint: disable=import-error
 from model_bakery import baker
 from details_page.models import Building, Era
-from filter_page.views import one_dict_set_to_string_list, delete_duplicates, my_filter
+from filter_page.views import one_dict_set_to_string_list, delete_duplicates, my_filter, splitting
 
 
 def setup():
@@ -18,7 +18,7 @@ def setup():
     frühzeit = Era.objects.create(name='Frühzeit')
     archaik = Era.objects.create(name='Archaik')
     hellenismus = Era.objects.create(name='Hellenismus')
-    römisch = Era.objects.create(name='Römische Kaiserzeit')
+    römisch = Era.objects.create(name='Kaiserzeit')
     klassik = Era.objects.create(name='Klassik')
     spätantike = Era.objects.create(name='Spätantike')
     sonstiges = Era.objects.create(name='Sonstiges')
@@ -154,7 +154,7 @@ class DisplayTestCases(TestCase):
         self.assertEqual(response.context['Filter_Result'], [])
         self.assertEqual(response.context['Filter_Names'],
                          ['Stadt', 'Region', 'Land', 'Epoche', 'Architekt', 'Bauherr', 'Bauform',
-                          'Säulenordnung', 'Material', 'Funktion'])
+                          'Säulenordnung', 'Material', 'Gattung/Funktion'])
         self.assertEqual(response.context['Active_Filter'], {})
 
     def test3_display_building_filter_criteria(self):
@@ -174,8 +174,8 @@ class DisplayTestCases(TestCase):
         self.assertListEqual(list(response.context['Countries']),
                              ['China', 'Deutschland', 'Frankreich', 'Italien', 'Turkey', ])
         self.assertListEqual(list(response.context['Eras']),
-                             ['Archaik', 'Frühzeit', 'Hellenismus', 'Klassik',
-                              'Römische Kaiserzeit', 'Sonstiges', 'Spätantike'])
+                             ['Archaik', 'Frühzeit', 'Hellenismus',
+                              'Kaiserzeit', 'Klassik', 'Sonstiges', 'Spätantike'])
         self.assertListEqual(list(response.context['Architects']),
                              ['Jonas Günster', 'Jonathan Otto', 'Laura Buhleier', 'Manuel Singer',
                               'Philipp Krause', 'Simon Gröger', 'Spock', 'Winnie Puuh'])
@@ -496,8 +496,23 @@ class DisplayTestCases(TestCase):
 
 class FilterTestCases(TestCase):
     """
-    Testcases for the my_filter, delete_duplicates, one_dict_set_to_string_list functions in view
+    Testcases for the my_filter, delete_duplicates, one_dict_set_to_string_list, splitting
+    functions in view
     """
+    def test_splitting(self):
+        """
+        This tests the splitting method.
+        """
+        self.assertEqual(splitting([]), [])
+        string0 = ['', '', '', '', '']
+        self.assertEqual(splitting(string0), [])
+        string1 = ['test1', 'test2', 'test3', 'test4']
+        self.assertEqual(splitting(string1), string1)
+        string2 = ['test1;test2,test3,test4;', 'test0;test5;test6;test7,test8',
+                   'test9,test10,test11,']
+        self.assertEqual(splitting(string2),
+                         ['test1', 'test2', 'test3', 'test4', 'test0', 'test5', 'test6', 'test7',
+                          'test8', 'test9', 'test10', 'test11'])
 
     def test_one_dict_set_to_string_list(self):
         """
@@ -505,8 +520,8 @@ class FilterTestCases(TestCase):
         """
         setup()
         dict_lst = Era.objects.values("name")
-        str_list = ['Frühzeit', 'Archaik', 'Hellenismus', 'Römische Kaiserzeit', 'Klassik',
-                    'Spätantike', 'Sonstiges']
+        str_list = ['Archaik', 'Frühzeit', 'Hellenismus', 'Kaiserzeit', 'Klassik',
+                    'Sonstiges', 'Spätantike']
         self.assertEqual(one_dict_set_to_string_list(dict_lst), str_list)
 
     def test_one_dict_set_to_string_list2(self):
@@ -546,7 +561,7 @@ class FilterTestCases(TestCase):
         setup()
         dict_lst = Building.objects.values("architect")
         str_list = ['Jonathan Otto', 'Jonas Günster', 'Manuel Singer', 'Philipp Krause',
-                    'Simon Gröger', 'Jonathan Otto',None, 'Laura Buhleier',None, 'Spock',
+                    'Simon Gröger', 'Jonathan Otto', None, 'Laura Buhleier', None, 'Spock',
                     'Winnie Puuh']
         self.assertEqual(one_dict_set_to_string_list(dict_lst), str_list)
 
@@ -557,7 +572,7 @@ class FilterTestCases(TestCase):
         setup()
         dict_lst = Building.objects.values("builder")
         str_list = ['Ganesha Welsch', 'Michael Wendler', 'Philipp Krause', 'Jonathan Otto',
-                    'Ganesha Welsch', 'Ganesha Welsch', None,'Quang Nguyen', 'Ganesha Welsch',
+                    'Ganesha Welsch', 'Ganesha Welsch', None, 'Quang Nguyen', 'Ganesha Welsch',
                     'Michael Burnham', 'Tebarts van Elst']
         self.assertEqual(one_dict_set_to_string_list(dict_lst), str_list)
 
@@ -796,4 +811,3 @@ class FilterTestCases(TestCase):
         qs_unfiltered = Building.objects.all()
         qs_filtered = qs_unfiltered.filter(function__icontains=value)
         self.assertListEqual(list(my_filter(qs_unfiltered, key, value)), list(qs_filtered))
-

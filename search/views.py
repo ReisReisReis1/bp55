@@ -6,6 +6,7 @@ from django.shortcuts import render
 # pylint: disable = no-name-in-module, import-error
 from details_page.models import Building
 from timeline.views import get_thumbnails_for_buildings
+from impressum.views import get_course_link
 
 
 def search(request):
@@ -37,5 +38,6 @@ def search(request):
     context = {
         'Result': results,
         'Active_Filter': request.GET,
+        'Kurs_Link': get_course_link()
     }
     return render(request, 'search.html', context)

@@ -5,8 +5,11 @@ Tests for the functions in the App: details_page
 from django.test import Client
 from django.test import TestCase
 from django.core.exceptions import ValidationError
-from details_page.models import Era, Picture, Building, Blueprint
+from details_page.models import Era, Picture, Building, Blueprint, get_year_as_signed_int, \
+    validate_color_code, validate_url_conform_str
 from django.core.files.uploadedfile import SimpleUploadedFile
+from impressum.models import Impressum
+from impressum.views import get_course_link
 
 # Define some temp images for testing
 test_image = (b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x00\x00\x00\x21\xf9\x04'
@@ -46,20 +49,20 @@ class BuildingTestCases(TestCase):
                                       year_from_BC_or_AD='v.Chr', year_to=55,
                                       year_to_BC_or_AD='v.Chr')
         Building.objects.create(pk=0, name='', description='', city='', region='', country='',
-                                date_from=0,
-                                date_from_BC_or_AD='',
-                                date_to=0, date_to_BC_or_AD='', era=test_era, architect='',
+                                year_from=0,
+                                year_from_BC_or_AD='', year_ca=False, year_century=False,
+                                year_to=0, year_to_BC_or_AD='', era=test_era, architect='',
                                 context='', builder='',
                                 construction_type='', design='', function='', length=0, width=0,
                                 height=0,
                                 circumference=0, area=0, column_order='', construction='',
                                 material='',
-                                literature='')
+                                literature='', links='')
         Building.objects.create(pk=1, name='Parthenon', description='Das Parthenon in Athen',
                                 city='Athen',
                                 region='TestRegion', country='GR-Griechenland',
-                                date_from=447, date_from_BC_or_AD='v.Chr.', date_to=438,
-                                date_to_BC_or_AD='v.Chr.',
+                                year_from=447, year_from_BC_or_AD='v.Chr.', year_to=438,
+                                year_to_BC_or_AD='v.Chr.', year_ca=True, year_century=True,
                                 era=test_era, architect='Iktinos, Kallikrates', context='Tempel',
                                 builder='Perikles und die Polis Athen', construction_type='Tempel',
                                 design='Peripteros', function='Sakralbau', length=30.88, width=69.5,
@@ -67,7 +70,10 @@ class BuildingTestCases(TestCase):
                                 circumference=1, area=1, column_order='dorisch, ionischer Fries',
                                 construction='Massivbau', material='penetelischer Marmor',
                                 literature='Muss - Schubert 1988, SEITEN?; Gruben 2001, 173-190; '
-                                           'Hellmann 2006, 82-96;')
+                                           'Hellmann 2006, 82-96;',
+                                links='www.tu-darmstadt.de, www.architektur.tu-darmstadt.de'
+                                )
+        Building.objects.create(pk=2, name='empty')
 
     def test1_get_name(self):
         """
@@ -75,6 +81,8 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_name(Building, 0), '')
         self.assertEqual(Building.get_name(Building, 1), 'Parthenon')
+        self.assertEqual(Building.get_name(Building, 2), 'empty')
+        self.assertEqual(Building.get_name(Building, 3), Building.DoesNotExist)
 
     def test2_get_city(self):
         """
@@ -82,6 +90,8 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_city(Building, 0), '')
         self.assertEqual(Building.get_city(Building, 1), 'Athen')
+        self.assertEqual(Building.get_city(Building, 2), None)
+        self.assertEqual(Building.get_city(Building, 3), Building.DoesNotExist)
 
     def test3_get_region(self):
         """
@@ -89,6 +99,8 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_region(Building, 0), '')
         self.assertEqual(Building.get_region(Building, 1), 'TestRegion')
+        self.assertEqual(Building.get_region(Building, 2), None)
+        self.assertEqual(Building.get_region(Building, 3), Building.DoesNotExist)
 
     def test4_get_country(self):
         """
@@ -96,34 +108,44 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_country(Building, 0), '')
         self.assertEqual(Building.get_country(Building, 1), 'GR-Griechenland')
+        self.assertEqual(Building.get_country(Building, 2), 'Griechenland')
+        self.assertEqual(Building.get_country(Building, 3), Building.DoesNotExist)
 
-    def test5_get_date_from(self):
+    def test5_get_year_from(self):
         """
         Testing get_name
         """
-        self.assertEqual(Building.get_date_from(Building, 0), 0)
-        self.assertEqual(Building.get_date_from(Building, 1), 447)
+        self.assertEqual(Building.get_year_from(Building, 0), 0)
+        self.assertEqual(Building.get_year_from(Building, 1), 447)
+        self.assertEqual(Building.get_year_from(Building, 2), None)
+        self.assertEqual(Building.get_year_from(Building, 3), Building.DoesNotExist)
 
-    def test6_get_date_from_BC_or_AD(self):
+    def test6_get_year_from_BC_or_AD(self):
         """
         Testing get_name
         """
-        self.assertEqual(Building.get_date_from_bc_or_ad(Building, 0), '')
-        self.assertEqual(Building.get_date_from_bc_or_ad(Building, 1), 'v.Chr.')
+        self.assertEqual(Building.get_year_from_bc_or_ad(Building, 0), '')
+        self.assertEqual(Building.get_year_from_bc_or_ad(Building, 1), 'v.Chr.')
+        self.assertEqual(Building.get_year_from_bc_or_ad(Building, 2), 'n.Chr.')
+        self.assertEqual(Building.get_year_from_bc_or_ad(Building, 3), Building.DoesNotExist)
 
-    def test7_get_date_to(self):
+    def test7_get_year_to(self):
         """
         Testing get_name
         """
-        self.assertEqual(Building.get_date_to(Building, 0), 0)
-        self.assertEqual(Building.get_date_to(Building, 1), 438)
+        self.assertEqual(Building.get_year_to(Building, 0), 0)
+        self.assertEqual(Building.get_year_to(Building, 1), 438)
+        self.assertEqual(Building.get_year_to(Building, 2), None)
+        self.assertEqual(Building.get_year_to(Building, 3), Building.DoesNotExist)
 
-    def test8_get_date_to_BC_or_AD(self):
+    def test8_get_year_to_BC_or_AD(self):
         """
         Testing get_name
         """
-        self.assertEqual(Building.get_date_to_bc_or_ad(Building, 0), '')
-        self.assertEqual(Building.get_date_to_bc_or_ad(Building, 1), 'v.Chr.')
+        self.assertEqual(Building.get_year_to_bc_or_ad(Building, 0), '')
+        self.assertEqual(Building.get_year_to_bc_or_ad(Building, 1), 'v.Chr.')
+        self.assertEqual(Building.get_year_to_bc_or_ad(Building, 2), 'n.Chr.')
+        self.assertEqual(Building.get_year_to_bc_or_ad(Building, 3), Building.DoesNotExist)
 
     def test9_get_architect(self):
         """
@@ -131,6 +153,8 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_architect(Building, 0), '')
         self.assertEqual(Building.get_architect(Building, 1), 'Iktinos, Kallikrates')
+        self.assertEqual(Building.get_architect(Building, 2), None)
+        self.assertEqual(Building.get_architect(Building, 3), Building.DoesNotExist)
 
     def test10_get_context(self):
         """
@@ -138,6 +162,8 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_context(Building, 0), '')
         self.assertEqual(Building.get_context(Building, 1), 'Tempel')
+        self.assertEqual(Building.get_context(Building, 2), None)
+        self.assertEqual(Building.get_context(Building, 3), Building.DoesNotExist)
 
     def test11_get_builder(self):
         """
@@ -145,6 +171,8 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_builder(Building, 0), '')
         self.assertEqual(Building.get_builder(Building, 1), 'Perikles und die Polis Athen')
+        self.assertEqual(Building.get_builder(Building, 2), None)
+        self.assertEqual(Building.get_builder(Building, 3), Building.DoesNotExist)
 
     def test12_get_construction_type(self):
         """
@@ -152,6 +180,8 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_construction_type(Building, 0), '')
         self.assertEqual(Building.get_construction_type(Building, 1), 'Tempel')
+        self.assertEqual(Building.get_construction_type(Building, 2), None)
+        self.assertEqual(Building.get_construction_type(Building, 3), Building.DoesNotExist)
 
     def test13_get_design(self):
         """
@@ -159,6 +189,8 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_design(Building, 0), '')
         self.assertEqual(Building.get_design(Building, 1), 'Peripteros')
+        self.assertEqual(Building.get_design(Building, 2), None)
+        self.assertEqual(Building.get_design(Building, 3), Building.DoesNotExist)
 
     def test14_get_function(self):
         """
@@ -166,6 +198,8 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_function(Building, 0), '')
         self.assertEqual(Building.get_function(Building, 1), 'Sakralbau')
+        self.assertEqual(Building.get_function(Building, 2), None)
+        self.assertEqual(Building.get_function(Building, 3), Building.DoesNotExist)
 
     def test15_get_length(self):
         """
@@ -173,6 +207,8 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_length(Building, 0), 0)
         self.assertEqual(Building.get_length(Building, 1), 30.88)
+        self.assertEqual(Building.get_length(Building, 2), None)
+        self.assertEqual(Building.get_length(Building, 3), Building.DoesNotExist)
 
     def test16_get_width(self):
         """
@@ -180,6 +216,8 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_width(Building, 0), 0)
         self.assertEqual(Building.get_width(Building, 1), 69.5)
+        self.assertEqual(Building.get_width(Building, 2), None)
+        self.assertEqual(Building.get_width(Building, 3), Building.DoesNotExist)
 
     def test17_get_height(self):
         """
@@ -187,6 +225,8 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_height(Building, 0), 0)
         self.assertEqual(Building.get_height(Building, 1), 1)
+        self.assertEqual(Building.get_height(Building, 2), None)
+        self.assertEqual(Building.get_height(Building, 3), Building.DoesNotExist)
 
     def test18_get_circumference(self):
         """
@@ -194,6 +234,8 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_circumference(Building, 0), 0)
         self.assertEqual(Building.get_circumference(Building, 1), 1)
+        self.assertEqual(Building.get_circumference(Building, 2), None)
+        self.assertEqual(Building.get_circumference(Building, 3), Building.DoesNotExist)
 
     def test19_get_area(self):
         """
@@ -201,6 +243,8 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_area(Building, 0), 0)
         self.assertEqual(Building.get_area(Building, 1), 1)
+        self.assertEqual(Building.get_area(Building, 2), None)
+        self.assertEqual(Building.get_area(Building, 3), Building.DoesNotExist)
 
     def test20_get_column_order(self):
         """
@@ -208,6 +252,8 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_column_order(Building, 0), '')
         self.assertEqual(Building.get_column_order(Building, 1), 'dorisch, ionischer Fries')
+        self.assertEqual(Building.get_column_order(Building, 2), None)
+        self.assertEqual(Building.get_column_order(Building, 3), Building.DoesNotExist)
 
     def test21_get_construction(self):
         """
@@ -215,6 +261,8 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_construction(Building, 0), '')
         self.assertEqual(Building.get_construction(Building, 1), 'Massivbau')
+        self.assertEqual(Building.get_construction(Building, 2), None)
+        self.assertEqual(Building.get_construction(Building, 3), Building.DoesNotExist)
 
     def test22_get_material(self):
         """
@@ -222,6 +270,8 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_material(Building, 0), '')
         self.assertEqual(Building.get_material(Building, 1), 'penetelischer Marmor')
+        self.assertEqual(Building.get_material(Building, 2), None)
+        self.assertEqual(Building.get_material(Building, 3), Building.DoesNotExist)
 
     def test23_get_literature(self):
         """
@@ -231,6 +281,8 @@ class BuildingTestCases(TestCase):
         self.assertEqual(Building.get_literature(Building, 1),
                          'Muss - Schubert 1988, SEITEN?; Gruben 2001, 173-190; Hellmann 2006, '
                          '82-96;')
+        self.assertEqual(Building.get_literature(Building, 2), None)
+        self.assertEqual(Building.get_literature(Building, 3), Building.DoesNotExist)
 
     def test24_get_description(self):
         """
@@ -238,6 +290,53 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_description(Building, 0), '')
         self.assertEqual(Building.get_description(Building, 1), 'Das Parthenon in Athen')
+        self.assertEqual(Building.get_description(Building, 2), None)
+        self.assertEqual(Building.get_description(Building, 3), Building.DoesNotExist)
+
+    def test25_get_year_ca(self):
+        """
+        Testing get_year_ca
+        """
+        self.assertEqual(Building.get_year_ca(Building, 0), False)
+        self.assertEqual(Building.get_year_ca(Building, 1), True)
+        self.assertEqual(Building.get_year_ca(Building, 2), False)
+        self.assertEqual(Building.get_year_ca(Building, 3), Building.DoesNotExist)
+
+    def test26__str__(self):
+        """
+        Testing the __str__ function
+        """
+        test1 = Building.objects.get(name='').__str__()
+        test2 = Building.objects.get(name='Parthenon').__str__()
+        self.assertEqual(test1, '')
+        self.assertEqual(test2, 'Parthenon')
+
+    def test27_get_links(self):
+        """
+        Testing get_name
+        """
+        self.assertEqual(Building.get_links(Building, 0), list(''))
+        self.assertEqual(Building.get_links(Building, 1), ["www.tu-darmstadt.de",
+                                                           "www.architektur.tu-darmstadt.de"])
+        self.assertEqual(Building.get_links(Building, 2), list(''))
+        self.assertEqual(Building.get_links(Building, 3), Building.DoesNotExist)
+
+    def test28_get_date_century(self):
+        """
+        Testing get_date_ca
+        """
+        self.assertEqual(Building.get_date_century(Building, 0), False)
+        self.assertEqual(Building.get_date_century(Building, 1), True)
+        self.assertEqual(Building.get_date_century(Building, 2), False)
+        self.assertEqual(Building.get_date_century(Building, 3), Building.DoesNotExist)
+
+    def test29_get_course_link(self):
+        """
+        Testing get_course_link
+        """
+        self.assertEqual(get_course_link(), '')
+        Impressum.objects.create(name="Impressum", course_link="moodle.tu-darmstadt.de")
+        self.assertEqual(get_course_link(), "moodle.tu-darmstadt.de")
 
 
 class EraModelTests(TestCase):
@@ -271,26 +370,6 @@ class EraModelTests(TestCase):
                          self.testera.visible_on_video_page)
         self.assertEqual(Era.objects.get(pk=1).color_code, self.testera.color_code)
 
-    def test_validator(self):
-        """
-        Test the validators for Era.
-        :return: None / Test results
-        """
-        era = Era(name="Archaik", year_from=1, year_from_BC_or_AD="", year_to=1,
-                  year_to_BC_or_AD="",
-                  visible_on_video_page=True, color_code="fffff")
-        self.assertRaises(ValidationError, era.full_clean)
-        self.assertRaisesMessage(ValidationError,
-                                 "{'color_code': ['Bitte einen gültigen Code im Hex-Format "
-                                 "einfügen: "
-                                 "Muss genau 6 Zeichen lang sein.']}", era.full_clean)
-        era.color_code = "zzzzzz"
-        self.assertRaises(ValidationError, era.full_clean)
-        self.assertRaisesMessage(ValidationError,
-                                 "{'color_code': ['Bitte einen gültigen Code im Hex-Format "
-                                 "einfügen: "
-                                 "Nur Hex-Zeichen: 0-9, a-f und A-F.']}", era.full_clean)
-
     def test__str__(self):
         era = Era.objects.create(name="Archaik", year_from=1, year_from_BC_or_AD="", year_to=1,
                                  year_to_BC_or_AD="",
@@ -316,9 +395,10 @@ class PictureTests(TestCase):
                                           year_to_BC_or_AD='v.Chr')
         cls.test_building_1 = Building.objects.create(pk=0, name='', description='', city='',
                                                       region='',
-                                                      country='', date_from=0,
-                                                      date_from_BC_or_AD='',
-                                                      date_to=0, date_to_BC_or_AD='',
+                                                      country='', year_from=0,
+                                                      year_from_BC_or_AD='',
+                                                      year_to=0, year_to_BC_or_AD='',
+                                                      year_ca=False,
                                                       era=cls.test_era,
                                                       architect='', context='', builder='',
                                                       construction_type='', design='', function='',
@@ -331,8 +411,9 @@ class PictureTests(TestCase):
                                                       city='Athen',
                                                       region='TestRegion',
                                                       country='GR-Griechenland',
-                                                      date_from=447, date_from_BC_or_AD='v.Chr.',
-                                                      date_to=438, date_to_BC_or_AD='v.Chr.',
+                                                      year_from=447, year_from_BC_or_AD='v.Chr.',
+                                                      year_to=438, year_to_BC_or_AD='v.Chr.',
+                                                      year_ca=True,
                                                       era=cls.test_era,
                                                       architect='Iktinos, Kallikrates',
                                                       context='Tempel',
@@ -398,9 +479,10 @@ class BlueprintTests(TestCase):
                                            year_to_BC_or_AD='v.Chr')
         self.test_building_1 = Building.objects.create(pk=0, name='', description='', city='',
                                                        region='',
-                                                       country='', date_from=0,
-                                                       date_from_BC_or_AD='',
-                                                       date_to=0, date_to_BC_or_AD='',
+                                                       country='', year_from=0,
+                                                       year_from_BC_or_AD='',
+                                                       year_to=0, year_to_BC_or_AD='',
+                                                       year_ca=False,
                                                        era=self.test_era,
                                                        architect='', context='', builder='',
                                                        construction_type='', design='', function='',
@@ -413,8 +495,9 @@ class BlueprintTests(TestCase):
                                                        city='Athen',
                                                        region='TestRegion',
                                                        country='GR-Griechenland',
-                                                       date_from=447, date_from_BC_or_AD='v.Chr.',
-                                                       date_to=438, date_to_BC_or_AD='v.Chr.',
+                                                       year_from=447, year_from_BC_or_AD='v.Chr.',
+                                                       year_to=438, year_to_BC_or_AD='v.Chr.',
+                                                       year_ca=True,
                                                        era=self.test_era,
                                                        architect='Iktinos, Kallikrates',
                                                        context='Tempel',
@@ -453,3 +536,110 @@ class BlueprintTests(TestCase):
                          list(Blueprint.objects.filter(pk=2)))
         self.assertEqual(list(Blueprint.get_blueprint_for_building(Blueprint, 0)),
                          list(Blueprint.objects.filter(pk=1)))
+        self.assertEqual(list(Blueprint.get_blueprint_for_building(Blueprint, 3)),
+                         list(Blueprint.objects.filter(pk=3)))
+
+
+class ModelFunctionTests(TestCase):
+    """
+    Testing the function oustide of the classes in details_page.models
+    """
+
+    def setUp(self):
+        """
+        Setting up some TestData
+        """
+        self.era1 = Era(name="Archaik", year_from=700, year_from_BC_or_AD="v.Chr.", year_to=500,
+                        year_to_BC_or_AD="v.Chr.",
+                        visible_on_video_page=True, color_code="fffff")
+        self.era2 = Era(name='Klassik', year_from_BC_or_AD='v.Chr.', year_to=337,
+                        year_to_BC_or_AD='v.Chr.')
+        self.era3 = Era(name='Frühzeit')
+        self.building1 = Building(name='Baum in Ganeshas Garten', year_from=100, year_to=50,
+                                  year_from_BC_or_AD='v.Chr.', year_to_BC_or_AD='n.Chr.')
+        self.building2 = Building(name='Baum in Jonathans Garten', year_from=700,
+                                  year_from_BC_or_AD='v.Chr.', year_to_BC_or_AD='v.Chr.')
+        self.building3 = Building(name='Nichts')
+        self.building4 = Building(name='Century', year_from=3, year_to=1, year_century=True,
+                                  year_from_BC_or_AD='v.Chr.', year_to_BC_or_AD='n.Chr.')
+
+    def test_validator_color_code(self):
+        """
+        Test the validators for color codes.
+        :return: None / Test results
+        """
+        string1 = ''
+        string2 = 'zzzzzz'
+        string3 = 'AbCdEf'
+        string4 = '111111111111111'
+        string5 = '01A3f5'
+
+        # Testing with empty string
+        self.assertRaises(ValidationError, validate_color_code, string1)
+        self.assertRaisesMessage(ValidationError, "['Bitte einen gültigen Code im Hex-Format "
+                                                  "einfügen: Muss genau 6 Zeichen lang sein.']")
+
+        # Testing with non-hex-characters
+        self.assertRaises(ValidationError, validate_color_code, string2)
+        self.assertRaisesMessage(ValidationError,
+                                 "['Bitte einen gültigen Code im Hex-Format "
+                                 "einfügen: Nur Hex-Zeichen: 0-9, a-f und A-F.']",
+                                 validate_color_code, string2)
+
+        # Testing with to long string
+        self.assertRaises(ValidationError, validate_color_code, string4)
+        self.assertRaisesMessage(ValidationError,
+                                 "['Bitte einen gültigen Code im Hex-Format "
+                                 "einfügen: Muss genau 6 Zeichen lang sein.']",
+                                 validate_color_code, string4)
+
+        # Testing with two correct strings
+        self.assertEqual(validate_color_code(string3), None)
+        self.assertEqual(validate_color_code(string5), None)
+
+    def test_validate_url_conform_str(self):
+        """
+        Testing validate_url_conform_str
+        """
+        string1 = 'Baum in Ganeshas Garten'
+        string2 = 'Baum+in+Ganeshas+Garten'
+        string3 = 'Baum,in,Ganeshas,Garten.'
+        string4 = 'B+a.u,m:i-n%!Gan€shas#$=9873)}[]``´´§Garten<>|_^°*~@'
+        string5 = 'Baum in Ganeshas Garten?'
+        string6 = 'Baum/in\'Ganeshas\'"Garten@-+#&'
+        # Testing with legal strings
+        self.assertEqual(validate_url_conform_str(string1), None)
+        self.assertEqual(validate_url_conform_str(string2), None)
+        self.assertEqual(validate_url_conform_str(string3), None)
+        self.assertEqual(validate_url_conform_str(string4), None)
+
+        # Testing with illegal strings
+        self.assertRaises(ValidationError, validate_url_conform_str, string5)
+        self.assertRaises(ValidationError, validate_url_conform_str, string6)
+
+    def test_get_year_as_signed_int(self):
+        """
+        Testing the get_year_as_signed_int function
+        """
+        # Testing era with no empty fields
+        self.assertEqual(get_year_as_signed_int(self.era1), [-700, -500])
+
+        # Testing era with one empty field
+        self.assertEqual(get_year_as_signed_int(self.era2), [9999, -337])
+
+        # Testing era with only a name
+        self.assertEqual(get_year_as_signed_int(self.era3),
+                         [9999, 9999])
+
+        # Testing building with no empty fields
+        self.assertEqual(get_year_as_signed_int(self.building1), [-100, 50])
+
+        # Testing building with one empty field
+        self.assertEqual(get_year_as_signed_int(self.building2), [-700, 9999])
+
+        # Testing building with only a name
+        self.assertEqual(get_year_as_signed_int(self.building3),
+                         [9999, 9999])
+
+        # Testing Century
+        self.assertEqual(get_year_as_signed_int(self.building4), [-250, 50])
