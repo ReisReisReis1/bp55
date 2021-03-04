@@ -97,7 +97,7 @@ class VideoTestCases(TestCase):
 
         fruehzeit = Video.objects.filter(era__name='Frühzeit')
         hellenismus = Video.objects.filter(era__name='Hellenismus')
-        roemische = Video.objects.filter(era__name='Römische Kaiserzeit')
+        roemische = Video.objects.filter(era__name='Kaiserzeit')
         spaet = Video.objects.filter(era__name='Spätantike')
         klassik = Video.objects.filter(era__name='Klassik')
         archaik = Video.objects.filter(era__name='Archaik')
@@ -105,7 +105,7 @@ class VideoTestCases(TestCase):
         self.assertEqual(list(Video.get_era(Video, 'Archaik')), list(archaik))
         self.assertEqual(list(Video.get_era(Video, 'Frühzeit')), list(fruehzeit))
         self.assertEqual(list(Video.get_era(Video, 'Hellenismus')), list(hellenismus))
-        self.assertEqual(list(Video.get_era(Video, 'Römische Kaiserzeit')), list(roemische))
+        self.assertEqual(list(Video.get_era(Video, 'Kaiserzeit')), list(roemische))
         self.assertEqual(list(Video.get_era(Video, 'Klassik')), list(klassik))
         self.assertEqual(list(Video.get_era(Video, 'Spätantike')), list(spaet))
 
@@ -145,7 +145,7 @@ class VideoTestCases(TestCase):
         self.building1 = baker.make('details_page.Building')
         self.video1 = baker.make('video_content.Video')
         self.timestamp = Timestamp.objects.create(building=self.building1,
-                                                  video=self.video1, time=5.00)
+                                                  video=self.video1, minutes=5, seconds=5)
         self.assertEqual(list(Timestamp.get_timestamps_by_video(Timestamp, self.video1)),
                          [self.timestamp])
 
@@ -157,7 +157,7 @@ class VideoTestCases(TestCase):
         self.building1 = baker.make('details_page.Building')
         self.video1 = baker.make('video_content.Video')
         self.timestamp = Timestamp.objects.create(building=self.building1,
-                                                  video=self.video1, time=5.00)
+                                                  video=self.video1, minutes=5, seconds=56)
         self.assertEqual(list(Timestamp.get_timestamps_by_building(Timestamp, self.building1)),
                          [self.timestamp])
 
@@ -169,7 +169,7 @@ class VideoTestCases(TestCase):
         self.building1 = baker.make('details_page.Building')
         self.video1 = baker.make('video_content.Video')
         self.timestamp = Timestamp.objects.create(building=self.building1,
-                                                  video=self.video1, time=5.00)
+                                                  video=self.video1, minutes=5, seconds=5)
         self.building2 = baker.make('details_page.Building')
         self.building3 = baker.make('details_page.Building')
         self.building4 = baker.make('details_page.Building')
@@ -179,25 +179,25 @@ class VideoTestCases(TestCase):
         self.video4 = baker.make('video_content.Video')
 
         self.timestamp1 = Timestamp.objects.create(building=self.building4, video=self.video3,
-                                                   time=14.23)
+                                                   minutes=14, seconds=23)
         self.timestamp2 = Timestamp.objects.create(building=self.building2, video=self.video2,
-                                                   time=0.00)
+                                                   minutes=0, seconds =00)
         self.timestamp3 = Timestamp.objects.create(building=self.building1, video=self.video4,
-                                                   time=0.01)
+                                                   minutes=0, seconds=1)
         self.timestamp4 = Timestamp.objects.create(building=self.building3, video=self.video1,
-                                                   time=2.45)
+                                                   minutes=2, seconds=45)
         self.timestamp6 = Timestamp.objects.create(building=self.building3, video=self.video3,
-                                                   time=10.20)
+                                                   minutes=10, seconds=20)
         self.timestamp7 = Timestamp.objects.create(building=self.building2, video=self.video3,
-                                                   time=10.20)
+                                                   minutes=10, seconds=20)
         self.timestamp8 = Timestamp.objects.create(building=self.building2, video=self.video2,
-                                                   time=10.20)
+                                                   minutes=10, seconds=20)
         self.timestamp9 = Timestamp.objects.create(building=self.building4, video=self.video3,
-                                                   time=10.20)
+                                                   minutes=10, seconds=20)
         self.timestamp10 = Timestamp.objects.create(building=self.building2, video=self.video4,
-                                                    time=10.20)
+                                                    minutes=10, seconds=20)
         self.timestamp11 = Timestamp.objects.create(building=self.building3, video=self.video4,
-                                                    time=10.20)
+                                                    minutes=10, seconds=20)
 
         self.assertListEqual(list(Timestamp.get_timestamps_by_video(Timestamp, self.video3)),
                              [self.timestamp1, self.timestamp6, self.timestamp7, self.timestamp9])
@@ -214,7 +214,7 @@ class VideoTestCases(TestCase):
         self.building1 = baker.make('details_page.Building')
         self.video1 = baker.make('video_content.Video')
         self.timestamp = Timestamp.objects.create(building=self.building1,
-                                                  video=self.video1, time=5.00)
+                                                  video=self.video1, minutes=5, seconds=6)
         self.building2 = baker.make('details_page.Building')
         self.building3 = baker.make('details_page.Building')
         self.building4 = baker.make('details_page.Building')
@@ -224,25 +224,25 @@ class VideoTestCases(TestCase):
         self.video4 = baker.make('video_content.Video')
 
         self.timestamp1 = Timestamp.objects.create(building=self.building4, video=self.video3,
-                                                   time=14.23)
+                                                   minutes=14, seconds=23)
         self.timestamp2 = Timestamp.objects.create(building=self.building2, video=self.video2,
-                                                   time=0.00)
+                                                   minutes=0, seconds =00)
         self.timestamp3 = Timestamp.objects.create(building=self.building1, video=self.video4,
-                                                   time=0.01)
+                                                   minutes=0, seconds=1)
         self.timestamp4 = Timestamp.objects.create(building=self.building3, video=self.video1,
-                                                   time=2.45)
+                                                   minutes=2, seconds=45)
         self.timestamp6 = Timestamp.objects.create(building=self.building3, video=self.video3,
-                                                   time=10.20)
+                                                   minutes=10, seconds=20)
         self.timestamp7 = Timestamp.objects.create(building=self.building2, video=self.video3,
-                                                   time=10.20)
+                                                   minutes=10, seconds=20)
         self.timestamp8 = Timestamp.objects.create(building=self.building2, video=self.video2,
-                                                   time=10.20)
+                                                   minutes=10, seconds=20)
         self.timestamp9 = Timestamp.objects.create(building=self.building4, video=self.video3,
-                                                   time=10.20)
+                                                   minutes=10, seconds=20)
         self.timestamp10 = Timestamp.objects.create(building=self.building2, video=self.video4,
-                                                    time=10.20)
+                                                    minutes=10, seconds=20)
         self.timestamp11 = Timestamp.objects.create(building=self.building3, video=self.video4,
-                                                    time=10.20)
+                                                    minutes=10, seconds=20)
 
         self.assertListEqual(list(Timestamp.get_timestamps_by_building(Timestamp, self.building2)),
                              [self.timestamp2, self.timestamp7, self.timestamp8, self.timestamp10])
