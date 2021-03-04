@@ -37,5 +37,6 @@ class ImpressumTestCases(TestCase):
         """
         Testing the get_course_link function
         """
+        self.assertEqual(get_course_link(), '')
         Impressum.objects.create(name='Impressum', course_link='ruinsandbeyond.architektur.tu-darmstadt.de')
         self.assertEqual(get_course_link(), 'ruinsandbeyond.architektur.tu-darmstadt.de')

@@ -6,6 +6,7 @@ from django.shortcuts import render
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 from details_page.models import Building, Picture, Era
 from timeline.models import HistoricDate
+from impressum.views import get_course_link
 
 
 def getting_all_eras_sorted():
@@ -212,6 +213,7 @@ def timeline(request):
     context = {
         'items': sorted_buildings_into_eras,
         'eras': era_dict,
+        'Kurs_Link': get_course_link(),
     }
 
     return render(request, 'timeline.html', context)
