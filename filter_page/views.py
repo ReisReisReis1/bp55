@@ -5,6 +5,7 @@ import re
 from django.shortcuts import render
 from details_page.models import Building, Era
 from timeline.views import get_thumbnails_for_buildings
+from impressum.views import get_course_link
 
 
 def splitting(lst):
@@ -208,6 +209,7 @@ def display_building_filter(request):
         'Filter_Result': result,
         'Filter_Names': filter_names,
         'Active_Filter': dict(urls_parameters),
+        'Kurs_Link': get_course_link()
     }
 
     return render(request, 'filter.html', context)

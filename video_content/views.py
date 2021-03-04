@@ -6,6 +6,7 @@ from django.shortcuts import render
 # pylint: disable = import-error,relative-beyond-top-level
 from details_page.models import Era
 from .models import Video
+from impressum.views import get_course_link
 
 
 def display(request):
@@ -27,5 +28,6 @@ def display(request):
 
     context = {
         'Era': eras_context,
+        'Kurs_Link': get_course_link()
     }
     return render(request, 'videos.html', context)
