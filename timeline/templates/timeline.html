@@ -31,6 +31,8 @@
 
     {% include './header.html' %}
 
+    <a id="color-btn" href="" class="btn btn-lg back-to-top" role="button">∧</a>
+
     <div class="d-flex justify-content-center index">
         <div class="card" style="width: 300px;">
             <div class="card-body" onclick='hideIndex("index-button","index-items")' style="cursor: pointer;">
@@ -83,7 +85,19 @@
                                         {% endif %}
                                             <div class="card-body card-left" style="border-color: #{{ building.era.color_code }}">
                                                 {% if is_building %}
-                                                    <h5 class="card-title break-words" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.name }} · {{ time }}</h5>
+                                                    {% if building.date_century %}
+                                                        {% if building.date_ca %}
+                                                            <h5 class="card-title break-words" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.name }} · Ca. Jh. {{ time }}</h5>
+                                                        {% else %}
+                                                            <h5 class="card-title break-words" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.name }} · Jh. {{ time }}</h5>
+                                                        {% endif %}
+                                                    {% else %}
+                                                        {% if building.date_ca %}
+                                                            <h5 class="card-title break-words" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.name }} · Ca. {{ time }}</h5>
+                                                        {% else %}
+                                                            <h5 class="card-title break-words" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.name }} · {{ time }}</h5>
+                                                        {% endif %}
+                                                    {% endif %}
 
                                                     <div class="card-img">
                                                         {% if image == None %}
@@ -93,7 +107,19 @@
                                                         {% endif %}
                                                     </div>
                                                 {% else %}
-                                                    <h5 class="card-title historic-title break-words" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.title }} · {{ time }}</h5>
+                                                    {% if building.date_century %}
+                                                        {% if building.date_ca %}
+                                                            <h5 class="card-title historic-title break-words" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.title }} · Ca. Jh. {{ time }}</h5>
+                                                        {% else %}
+                                                            <h5 class="card-title historic-title break-words" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.title }} · Jh. {{ time }}</h5>
+                                                        {% endif %}
+                                                    {% else %}
+                                                        {% if building.date_ca %}
+                                                            <h5 class="card-title historic-title break-words" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.title }} · Ca. {{ time }}</h5>
+                                                        {% else %}
+                                                            <h5 class="card-title historic-title break-words" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.title }} · {{ time }}</h5>
+                                                        {% endif %}
+                                                    {% endif %}
 
                                                     {% if False and not building.infos == None %}
                                                         <div class="card-text historic-title" align="justify">
@@ -174,7 +200,19 @@
                                         {% endif %}
                                             <div class="card-body card-right" style="border-color: #{{ building.era.color_code }}">
                                                 {% if is_building %}
-                                                    <h5 class="card-title break-words" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.name }} · {{ time }}</h5>
+                                                    {% if building.date_century %}
+                                                        {% if building.date_ca %}
+                                                            <h5 class="card-title break-words" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.name }} · Ca. Jh. {{ time }}</h5>
+                                                        {% else %}
+                                                            <h5 class="card-title break-words" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.name }} · Jh. {{ time }}</h5>
+                                                        {% endif %}
+                                                    {% else %}
+                                                        {% if building.date_ca %}
+                                                            <h5 class="card-title break-words" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.name }} · Ca. {{ time }}</h5>
+                                                        {% else %}
+                                                            <h5 class="card-title break-words" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.name }} · {{ time }}</h5>
+                                                        {% endif %}
+                                                    {% endif %}
 
                                                     <div class="card-img">
                                                         {% if image == None %}
@@ -184,7 +222,19 @@
                                                         {% endif %}
                                                     </div>
                                                 {% else %}
-                                                    <h5 class="card-title historic-title break-words" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.title }} · {{ time }}</h5>
+                                                    {% if building.date_century %}
+                                                        {% if building.date_ca %}
+                                                            <h5 class="card-title historic-title break-words" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.title }} · Ca. Jh. {{ time }}</h5>
+                                                        {% else %}
+                                                            <h5 class="card-title historic-title break-words" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.title }} · Jh. {{ time }}</h5>
+                                                        {% endif %}
+                                                    {% else %}
+                                                        {% if building.date_ca %}
+                                                            <h5 class="card-title historic-title break-words" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.title }} · Ca. {{ time }}</h5>
+                                                        {% else %}
+                                                            <h5 class="card-title historic-title break-words" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.title }} · {{ time }}</h5>
+                                                        {% endif %}
+                                                    {% endif %}
 
                                                     {% if False and not building.infos == None %}
                                                         <div class="card-text" align="justify">

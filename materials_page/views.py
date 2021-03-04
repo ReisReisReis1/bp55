@@ -31,7 +31,7 @@ def get_categories_and_corresponding_files():
     return result
 
 
-def get_categories_and_corresponding_zip_files():
+def get_categories_and_corresponding_zip_files(request):
     """
     :return: the categories and HttpsResponse for the corresponding zip files in a dictionary
     """
@@ -72,7 +72,7 @@ def get_categories_and_corresponding_zip_files():
             resp['Content-Disposition'] = 'attachment; filename=%s' % zip_filename
             # Add HttpResponse to download zipfile to the dictionary at the place of the category
             material_dict[category_entry] = resp
-    return material_dict
+    return resp
 
 
 def material(request):
@@ -85,7 +85,7 @@ def material(request):
 
     context = {
         'Materials': get_categories_and_corresponding_files(),
-        'Zip_Files': get_categories_and_corresponding_zip_files(),
+        'Zip_Files': get_categories_and_corresponding_zip_files(request),
         'Kurs_Link': get_course_link()
     }
     return render(request, "material.html", context)
