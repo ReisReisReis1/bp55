@@ -132,6 +132,7 @@
 
 .timeline-center-text {
     writing-mode: vertical-rl;
+    white-space: nowrap;
     position: absolute;
     z-index: 1;
     margin-top: 10px;

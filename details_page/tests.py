@@ -47,7 +47,7 @@ class BuildingTestCases(TestCase):
                                       year_to_BC_or_AD='v.Chr')
         Building.objects.create(pk=0, name='', description='', city='', region='', country='',
                                 date_from=0,
-                                date_from_BC_or_AD='', date_ca=False,
+                                date_from_BC_or_AD='', date_ca=False, date_century=False,
                                 date_to=0, date_to_BC_or_AD='', era=test_era, architect='',
                                 context='', builder='',
                                 construction_type='', design='', function='', length=0, width=0,
@@ -59,7 +59,7 @@ class BuildingTestCases(TestCase):
                                 city='Athen',
                                 region='TestRegion', country='GR-Griechenland',
                                 date_from=447, date_from_BC_or_AD='v.Chr.', date_to=438,
-                                date_to_BC_or_AD='v.Chr.', date_ca=True,
+                                date_to_BC_or_AD='v.Chr.', date_ca=True, date_century=True,
                                 era=test_era, architect='Iktinos, Kallikrates', context='Tempel',
                                 builder='Perikles und die Polis Athen', construction_type='Tempel',
                                 design='Peripteros', function='Sakralbau', length=30.88, width=69.5,
@@ -316,6 +316,15 @@ class BuildingTestCases(TestCase):
         self.assertEqual(Building.get_links(Building, 1), ["www.tu-darmstadt.de", "www.architektur.tu-darmstadt.de"])
         self.assertEqual(Building.get_links(Building, 2), list(''))
         self.assertEqual(Building.get_links(Building, 3), Building.DoesNotExist)
+
+    def test28_get_date_century(self):
+        """
+        Testing get_date_ca
+        """
+        self.assertEqual(Building.get_date_century(Building, 0), False)
+        self.assertEqual(Building.get_date_century(Building, 1), True)
+        self.assertEqual(Building.get_date_century(Building, 2), False)
+        self.assertEqual(Building.get_date_century(Building, 3), Building.DoesNotExist)
 
 
 class EraModelTests(TestCase):

@@ -18,12 +18,13 @@
             });
         }
 
-        function startVideoOnTimestamp(id, timestamp) {
+        function startVideoOnTimestamp(id, minutes, seconds) {
             var video = document.getElementById("popup-video-" + id);
+            var timestamp = (minutes * 60) + seconds;
 
-            if (video.readyState != 4) {
+            if (video.readyState !== 4) {
                 console.log(video.currentTime)
-                video.currentTime = timestamp * 60;
+                video.currentTime = timestamp;
                 console.log(video.currentTime)
             }
         }
@@ -66,11 +67,26 @@
                                 Datierung
                             </td>
                             <td class="break-words">
-                                {% if Datum_von != None %}
-                                    {{ Datum_von }} {{ Datum_von_BC_oder_AD }}
-                                {% endif %}
-                                {% if Datum_bis != None %}
-                                    - {{ Datum_bis }} {{ Datum_bis_BC_oder_AD }}
+                                {% if Datum_Jahrhundert %}
+                                    {% if Datum_ca %}
+                                        Ca.
+                                    {% endif %}
+                                    {% if Datum_von != None %}
+                                        {{ Datum_von }}. Jh. {{ Datum_von_BC_oder_AD }}
+                                    {% endif %}
+                                    {% if Datum_bis != None %}
+                                        - {{ Datum_bis }}. Jh. {{ Datum_bis_BC_oder_AD }}
+                                    {% endif %}
+                                {% else %}
+                                    {% if Datum_ca %}
+                                        Ca.
+                                    {% endif %}
+                                    {% if Datum_von != None %}
+                                        {{ Datum_von }} {{ Datum_von_BC_oder_AD }}
+                                    {% endif %}
+                                    {% if Datum_bis != None %}
+                                        - {{ Datum_bis }} {{ Datum_bis_BC_oder_AD }}
+                                    {% endif %}
                                 {% endif %}
                             </td>
                         </tr>
@@ -217,8 +233,20 @@
                                 Literatur
                             </td>
                             <td class="break-words">
-                                {% if Litertur != None %}
-                                    {{ Litertur }}
+                                {% if Literatur != None %}
+                                    {{ Literatur }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Weiterführende Links
+                            </td>
+                            <td class="break-words">
+                                {% if Links != None %}
+                                    {% for link in Links %}
+                                        <a href="{{ link }}" target="_blank">{{ link }}</a><br>
+                                    {% endfor %}
                                 {% endif %}
                             </td>
                         </tr>
@@ -233,19 +261,19 @@
                                 {% with image_length=Bilder|length blueprints_length=Baupläne|length %}
                                     {% if image_length|add:blueprints_length <= 1 %}
                                         {% if Bilder|length == 0 and Baupläne|length == 0 %}
-                                                <img src="{% static "default_image.png"  %}" style="width: 100%;">
-                                            {% else %}
-                                                {% if Baupläne|length == 0 %}
-                                                    {% for image in Bilder %}
-                                                        <img class="d-block w-100" src="/media/{{ image.picture }}">
-                                                    {% endfor %}
-                                                {% else %}
-                                                    {% for blueprints in Baupläne %}
-                                                        <img class="d-block w-100" src="/media/{{ blueprints.blueprint }}">
-                                                    {% endfor %}
-                                                {% endif %}
-                                        {% endif %}
+                                            <img src="{% static "default_image.png"  %}" style="width: 100%;">
                                         {% else %}
+                                            {% if Baupläne|length == 0 %}
+                                                {% for image in Bilder %}
+                                                    <img class="d-block w-100" src="/media/{{ image.picture }}">
+                                                {% endfor %}
+                                            {% else %}
+                                                {% for blueprints in Baupläne %}
+                                                    <img class="d-block w-100" src="/media/{{ blueprints.blueprint }}">
+                                                {% endfor %}
+                                            {% endif %}
+                                        {% endif %}
+                                    {% else %}
                                         <div id="details_images" class="carousel slide" data-interval="false">
                                             <ol class="carousel-indicators">
                                                 {% for image in Bilder %}
@@ -336,7 +364,7 @@
                                 <td>
                                     <div class="row row-no-margin">
                                         {% for timestamp in Videos %}
-                                            <div class="video-box" data-toggle="modal" data-target="#popup-{{ forloop.counter }}" onclick="startVideoOnTimestamp({{ forloop.counter }},{{ timestamp.time }})">
+                                            <div class="video-box" data-toggle="modal" data-target="#popup-{{ forloop.counter }}" onclick="startVideoOnTimestamp({{ forloop.counter }},{{ timestamp.minutes }},{{ timestamp.seconds }})">
                                                 {% if forloop.counter <= 4 %}
                                                     <table class="table table-bordered video-first-row">
                                                 {% else %}
@@ -351,6 +379,7 @@
                                                         <tr>
                                                             <td class="break-words">
                                                                 {{ timestamp.video.title }}<br>
+                                                                {{ timestamp.minutes }} {{ timestamp.seconds }}
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -366,7 +395,7 @@
                                                         </div>
                                                         <div class="modal-body">
                                                             <video id="popup-video-{{ forloop.counter }}" width="100%" controls preload="none" poster="/media/{{ timestamp.video.thumbnail }}" oncontextmenu="return false;" controlsList="nodownload">
-                                                                <source src="{{ timestamp.video.video.url }}#t={{ timestamp.time }}" type="video/mp4">
+                                                                <source src="{{ timestamp.video.video.url }}" type="video/mp4">
                                                                 {{ timestamp.title }}
                                                             </video>
                                                         </div>

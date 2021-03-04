@@ -1,0 +1,17 @@
+{% load static %}
+{% load bootstrap4 %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    {% include 'default_head.html' %}
+    <link rel="stylesheet" type="text/css" href="{% static 'impressum.css'%}">
+<body>
+    {% include './header.html' %}
+    <div class="container container-page">
+     <h1>  Impressum  </h1>
+    </div>
+
+    {% include './footer.html' %}
+</body>
+</html>

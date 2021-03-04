@@ -22,7 +22,7 @@
                 <!-- Split the box in topic and download  -->
                 <div class="d-flex w-100 justify-content-between">
                     <!-- Collapse box for each topic -->
-                    <a class="collapsed card-link" data-toggle="collapse" href="#collapse-{{ category }}" style="width: 100%; ">
+                    <a class="collapsed card-link" data-toggle="collapse" href="#collapse-{{ category |cut:" " }}" style="width: 100%; ">
                         <div class="borderline">
                             <div class="card-header" id="color-bg-card-header">
                                 <h1 class="fontcolor break-words heading-no-margin"> {{ category }} </h1>
@@ -33,7 +33,7 @@
                 </div>
 
                 <!-- Text showing after open the collapse box-->
-                <div id="collapse-{{ category }}" class="collapse">
+                <div id="collapse-{{ category |cut:" " }}" class="collapse">
                     <div class="borderline">
                         <div class="card-body bg-light">
                             <div class="row row-no-margin">
@@ -69,5 +69,7 @@
             </div>
         {% endfor %}
     </div>
+
+
 </body>
 </html>
