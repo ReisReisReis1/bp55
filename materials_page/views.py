@@ -12,6 +12,7 @@ from io import BytesIO
 import zipfile
 import os
 from django.http import HttpResponse
+from impressum.views import get_course_link
 
 
 def get_categories_and_corresponding_files():
@@ -85,6 +86,7 @@ def material(request):
     context = {
         'Materials': get_categories_and_corresponding_files(),
         'Zip_Files': get_categories_and_corresponding_zip_files(),
+        'Kurs_Link': get_course_link()
     }
     return render(request, "material.html", context)
 
