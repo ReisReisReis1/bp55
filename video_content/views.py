@@ -28,6 +28,6 @@ def display(request):
 
     context = {
         'Era': eras_context,
-        'Kurs_Link': get_course_link()
+        'Kurs_Link': get_course_link(),
     }
     return render(request, 'videos.html', context)

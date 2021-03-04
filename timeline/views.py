@@ -213,7 +213,7 @@ def timeline(request):
     context = {
         'items': sorted_buildings_into_eras,
         'eras': era_dict,
-        'Kurs_Link': get_course_link()
+        'Kurs_Link': get_course_link(),
     }
 
     return render(request, 'timeline.html', context)

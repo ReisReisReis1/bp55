@@ -209,7 +209,7 @@ def display_building_filter(request):
         'Filter_Result': result,
         'Filter_Names': filter_names,
         'Active_Filter': dict(urls_parameters),
-        'Kurs_Link': get_course_link()
+        'Kurs_Link': get_course_link(),
     }
 
     return render(request, 'filter.html', context)
