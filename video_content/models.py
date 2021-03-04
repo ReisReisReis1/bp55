@@ -98,8 +98,9 @@ class Timestamp(models.Model):
                                                     '(Wird mit den Sekunden verbunden)')
     seconds = models.PositiveIntegerField(verbose_name='Sekunden',
                                           validators=[
-                                              MaxValueValidator(60, 'Sekunden können nur zwischen '
-                                                                    '0 und 60 angegeben werden')
+                                              MaxValueValidator(59, 'Sekunden können nur zwischen '
+                                                                    '0 und 60 (exklusiv) '
+                                                                    'angegeben werden')
                                           ],
                                           help_text='Geben sie hier die Sekunden an, an dem das'
                                                     'Gebäude im Video erscheint'

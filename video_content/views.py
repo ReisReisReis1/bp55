@@ -4,7 +4,7 @@ Configurations of the Website subpages from the App: video-content
 
 from django.shortcuts import render
 # pylint: disable = import-error,relative-beyond-top-level
-from details_page.models import Era
+from details_page.models import Era, get_year_as_signed_int
 from .models import Video
 
 
@@ -17,7 +17,7 @@ def display(request):
     """
     # pylint: disable = no-member
     eras = Era.objects.filter(visible_on_video_page=True).exclude(year_from=None)
-    eras = sorted(eras, key=lambda er_a: er_a.get_year_of_item_as_signed_int())
+    eras = sorted(eras, key=lambda er_a: get_year_as_signed_int(er_a)[0])
     eras_context = {}
     # Add all eras that do not have an year_from
     # pylint: disable = no-member

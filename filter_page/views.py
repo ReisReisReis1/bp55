@@ -13,8 +13,8 @@ def splitting(lst):
     """
     return_lst = []
     for s in lst:
-        return_lst.extend(re.split(', | ; |;|,', s))
-    # Getting back all Elements that are not equal(__ne__) to ''
+        return_lst.extend(re.split(' , | ,|, |,| ; |; | ;|;| / |/ | /|/', s))
+    # Getting back all Elements that are not equal(__ne__) to '' (empty string)
     # https://stackoverflow.com/questions/1157106/remove-all-occurrences-of-a-value-from-a-list
     return list(filter(''.__ne__, return_lst))
 
@@ -149,7 +149,7 @@ def display_building_filter(request):
     result = get_thumbnails_for_buildings(result)
 
     filter_names = ['Stadt', 'Region', 'Land', 'Epoche', 'Architekt', 'Bauherr', 'Bauform',
-                    'Säulenordnung', 'Material', 'Funktion']
+                    'Säulenordnung', 'Material', 'Gattung/Funktion']
     # pylint: disable = no-member
     buildings = Building.objects.all()
     # pylint: disable = no-member
