@@ -8,6 +8,8 @@ from django.core.exceptions import ValidationError
 from details_page.models import Era, Picture, Building, Blueprint, get_year_as_signed_int, \
     validate_color_code, validate_url_conform_str
 from django.core.files.uploadedfile import SimpleUploadedFile
+from impressum.models import Impressum
+from impressum.views import get_course_link
 
 # Define some temp images for testing
 test_image = (b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x00\x00\x00\x21\xf9\x04'
@@ -48,7 +50,7 @@ class BuildingTestCases(TestCase):
                                       year_to_BC_or_AD='v.Chr')
         Building.objects.create(pk=0, name='', description='', city='', region='', country='',
                                 year_from=0,
-                                year_from_BC_or_AD='', year_ca=False,
+                                year_from_BC_or_AD='', year_ca=False, year_century=False,
                                 year_to=0, year_to_BC_or_AD='', era=test_era, architect='',
                                 context='', builder='',
                                 construction_type='', design='', function='', length=0, width=0,
@@ -60,7 +62,7 @@ class BuildingTestCases(TestCase):
                                 city='Athen',
                                 region='TestRegion', country='GR-Griechenland',
                                 year_from=447, year_from_BC_or_AD='v.Chr.', year_to=438,
-                                year_to_BC_or_AD='v.Chr.', year_ca=True,
+                                year_to_BC_or_AD='v.Chr.', year_ca=True, year_century=True
                                 era=test_era, architect='Iktinos, Kallikrates', context='Tempel',
                                 builder='Perikles und die Polis Athen', construction_type='Tempel',
                                 design='Peripteros', function='Sakralbau', length=30.88, width=69.5,
@@ -318,6 +320,23 @@ class BuildingTestCases(TestCase):
                                                            "www.architektur.tu-darmstadt.de"])
         self.assertEqual(Building.get_links(Building, 2), list(''))
         self.assertEqual(Building.get_links(Building, 3), Building.DoesNotExist)
+
+    def test28_get_date_century(self):
+        """
+        Testing get_date_ca
+        """
+        self.assertEqual(Building.get_date_century(Building, 0), False)
+        self.assertEqual(Building.get_date_century(Building, 1), True)
+        self.assertEqual(Building.get_date_century(Building, 2), False)
+        self.assertEqual(Building.get_date_century(Building, 3), Building.DoesNotExist)
+
+    def test29_get_course_link(self):
+        """
+        Testing get_course_link
+        """
+        self.assertEqual(get_course_link(), '')
+        Impressum.objects.create(name="Impressum", course_link="moodle.tu-darmstadt.de")
+        self.assertEqual(get_course_link(), "moodle.tu-darmstadt.de")
 
 
 class EraModelTests(TestCase):
