@@ -7,6 +7,8 @@ from django.test import TestCase
 from django.core.exceptions import ValidationError
 from details_page.models import Era, Picture, Building, Blueprint
 from django.core.files.uploadedfile import SimpleUploadedFile
+from impressum.models import Impressum
+from impressum.views import get_course_link
 
 # Define some temp images for testing
 test_image = (b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x00\x00\x00\x21\xf9\x04'
@@ -325,6 +327,14 @@ class BuildingTestCases(TestCase):
         self.assertEqual(Building.get_date_century(Building, 1), True)
         self.assertEqual(Building.get_date_century(Building, 2), False)
         self.assertEqual(Building.get_date_century(Building, 3), Building.DoesNotExist)
+
+    def test29_get_course_link(self):
+        """
+        Testing get_course_link
+        """
+        self.assertEqual(get_course_link(), '')
+        Impressum.objects.create(name="Impressum", course_link="moodle.tu-darmstadt.de")
+        self.assertEqual(get_course_link(), "moodle.tu-darmstadt.de")
 
 
 class EraModelTests(TestCase):

@@ -4,8 +4,10 @@ Configurations of the different viewable functions and subpages from the App: de
 
 from django.shortcuts import render
 # pylint: disable = import-error, relative-beyond-top-level
+from impressum.models import Impressum
 from video_content.models import Timestamp
 from .models import Picture, Building, Blueprint
+from impressum.views import get_course_link
 
 
 def detailed(request, building_id):
@@ -48,6 +50,7 @@ def detailed(request, building_id):
         'Bilder': Picture.get_picture_for_building(Picture, building_id),
         'Baupläne': Blueprint.get_blueprint_for_building(Blueprint, building_id),
         'Videos': Timestamp.get_timestamps_by_building(Timestamp, building_id),
+        'Kurs_Link': get_course_link()
     }
 
     return render(request, 'detailed.html', context)
