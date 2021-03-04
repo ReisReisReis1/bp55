@@ -19,6 +19,7 @@ def get_course_link():
         return ''
 
 
+
 def impressum(request):
     """
     Subpage to show the impressum and the moodle_link
