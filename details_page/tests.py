@@ -62,7 +62,7 @@ class BuildingTestCases(TestCase):
                                 city='Athen',
                                 region='TestRegion', country='GR-Griechenland',
                                 year_from=447, year_from_BC_or_AD='v.Chr.', year_to=438,
-                                year_to_BC_or_AD='v.Chr.', year_ca=True, year_century=True
+                                year_to_BC_or_AD='v.Chr.', year_ca=True, year_century=True,
                                 era=test_era, architect='Iktinos, Kallikrates', context='Tempel',
                                 builder='Perikles und die Polis Athen', construction_type='Tempel',
                                 design='Peripteros', function='Sakralbau', length=30.88, width=69.5,
