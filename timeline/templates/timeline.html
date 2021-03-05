@@ -44,16 +44,14 @@
             <ul class="list-group index-hide" id="index-items">
                 {% for era,list in Eras_Buildings.items %}
                     {% with era_model=list|first era_buildings=list|index:1 %}
-                        {% if not era_buildings|length == 0 %}
-                            <a href="#{{ era }}">
-                                <li class="list-group-item">
-                                    <div class="row">
-                                        <div class="col-1" style="background-color: #{{ era_model.color_code }}; margin-left: 5px;"></div>
-                                        <div class="col">{{ era }}</div>
-                                    </div>
-                                </li>
-                            </a>
-                        {% endif %}
+                        <a href="#{{ era }}">
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-1" style="background-color: #{{ era_model.color_code }}; margin-left: 5px;"></div>
+                                    <div class="col">{{ era }}</div>
+                                </div>
+                            </li>
+                        </a>
                     {% endwith %}
                 {% endfor %}
             </ul>
