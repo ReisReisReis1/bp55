@@ -72,7 +72,7 @@ def get_categories_and_corresponding_zip_files(request):
             resp['Content-Disposition'] = 'attachment; filename=%s' % zip_filename
             # Add HttpResponse to download zipfile to the dictionary at the place of the category
             material_dict[category_entry] = resp
-    return resp
+    return material_dict
 
 
 def material(request):

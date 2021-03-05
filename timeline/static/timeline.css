@@ -139,6 +139,10 @@
     margin-left: -20px;
 }
 
+.timeline-center-empty {
+    height: 300px;
+}
+
 .card-link {
     color: inherit !important;
 }

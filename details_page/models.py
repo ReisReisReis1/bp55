@@ -9,6 +9,49 @@ from django.core.exceptions import ValidationError
 from . import country_codes
 
 
+def get_year_as_signed_int(item):
+    """
+    Getting the dates of an era or building as signed int
+    :param item: one object instance of building or era
+    :return: list with two elements: new_list[0] start date, new_list[1] end date
+    """
+    new_list = [0, 0]
+    # Only working with Buildings and Eras, can be changed later if necessary
+    if isinstance(item, Building) or isinstance(item, Era):
+        if item.year_from is not None:
+            # Checking for the item start date if it is before or after the birth of christ
+            if item.year_from_BC_or_AD == 'v.Chr.':
+                date = -1 * int(item.year_from)
+                if isinstance(item, Building) and item.year_century and date != 0:
+                    date = date * 100 + 50
+            else:
+                date = int(item.year_from)
+                if isinstance(item, Building) and item.year_century and date != 0:
+                    date = date * 100 - 50
+
+        else:
+            date = 9999
+        new_list[0] = date
+
+        if item.year_to is not None:
+            # Checking for the item end date if it is before or after the birth of christ
+            if item.year_to_BC_or_AD == 'v.Chr.':
+                date = -1 * int(item.year_to)
+                if isinstance(item, Building) and item.year_century:
+                    date = date * 100 + 50
+            else:
+                date = int(item.year_to)
+                if isinstance(item, Building) and item.year_century:
+                    date = date * 100 - 50
+            # If the item is a building and the date is a century
+            # then we multiply by 100 and subtract 50
+
+        else:
+            date = 9999
+        new_list[1] = date
+    return new_list
+
+
 def validate_url_conform_str(string):
     """
     Validates input for not having "&" and "?" in it.
@@ -17,7 +60,7 @@ def validate_url_conform_str(string):
     """
     if "&" in string or "?" in string or '\'' in string or '\"' in string:
         raise ValidationError(
-            message="Diese Eingabe darf nicht die Zeichen \"&\", \"?\" und alle Art von "
+            message="Diese Eingabe darf nicht die Zeichen \"&\", \"?\" und alle Art von " +
                     "Anführungszeichen enthalten.")
 
 
@@ -29,13 +72,13 @@ def validate_color_code(code):
     """
     for sign in code:
         if sign not in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d",
-                        "e",
-                        "f", "A", "B", "C", "D", "E", "F"]:
-            raise ValidationError(message="Bitte einen gültigen Code im Hex-Format einfügen: "
+                        "e", "f", "A", "B", "C", "D", "E", "F"]:
+            raise ValidationError(message="Bitte einen gültigen Code im Hex-Format einfügen: " +
                                           "Nur Hex-Zeichen: 0-9, a-f und A-F.")
-        if len(code) != 6:
-            raise ValidationError(message="Bitte einen gültigen Code im Hex-Format einfügen: "
-                                          "Muss genau 6 Zeichen lang sein.")
+    if len(code) != 6:
+        raise ValidationError(
+            message="Bitte einen gültigen Code im Hex-Format einfügen: " +
+                    "Muss genau 6 Zeichen lang sein.")
 
 
 class Era(models.Model):
@@ -54,12 +97,10 @@ class Era(models.Model):
         verbose_name_plural = 'Epochen'
 
     name = models.CharField(verbose_name='Name', max_length=100, choices=[
-        ('Bronzezeit', 'Bronzezeit'), ('Frühe Eisenzeit', 'Frühe Eisenzeit'),
-        ('Archaik', 'Archaik'), ('Königszeit', 'Königszeit'),
-        ('Klassik', 'Klassik'), ('Republik', 'Republik'), ('Hellenismus', 'Hellenismus'),
-        ('Frühe Kaiserzeit', 'Frühe Kaiserzeit'),
-        ('Mittlere Kaiserzeit', 'Mittlere Kaiserzeit'),
-        ('Späte Kaiserzeit', 'Späte Kaiserzeit'),
+        ('Bronzezeit', 'Bronzezeit'), ('Frühzeit', 'Frühzeit'),
+        ('Archaik', 'Archaik'),
+        ('Klassik', 'Klassik'), ('Hellenismus', 'Hellenismus'),
+        ('Kaiserzeit', 'Kaiserzeit'),
         ('Spätantike', 'Spätantike'),
         ('Sonstiges', 'Sonstiges'),
     ], help_text="Epoche auswählen.", unique=True, null=False, blank=False)
@@ -75,7 +116,7 @@ class Era(models.Model):
     year_to = models.PositiveIntegerField(verbose_name='Enddatum',
                                           help_text="Jahr des Endes der Epoche eingeben.",
                                           blank=True, null=True)
-    year_to_BC_or_AD = models.CharField(verbose_name='Endatum v.Chr/n.Chr.?', max_length=7,
+    year_to_BC_or_AD = models.CharField(verbose_name='Enddatum v.Chr/n.Chr.?', max_length=7,
                                         help_text="Jahr des Endes: v.Chr. bzw. n.Chr. auswählen.",
                                         choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")],
                                         default="v.Chr.",
@@ -95,28 +136,6 @@ class Era(models.Model):
         """
         return str(self.name)
 
-    def get_year_of_item_as_signed_int(self):
-        """
-        Inner helper to sorting the years.
-        About the try/except: You can define an Era without an year.
-        This leads to following problem:
-        You can not sort Eras by year if there is one without an year.
-        In line 29 or 31 we try to get the
-        year as an Int. This will raise the TypeError,
-        if this Era don't has a year (or the year is setto None to be exact).
-        Therefore we except this error, and return 2021, which is higher than
-        every year in the Database (limited to max_years (currently 1400)).
-        :return: the year of the era(beginning year)
-        """
-        try:
-            if self.year_from_BC_or_AD == "v.Chr.":
-                return -1 * int(self.year_from)
-            else:
-                return int(self.year_from)
-        except TypeError:
-            # If era has no year return big int, so it will be listed last.
-            return 9999999999999999999
-
 
 class Building(models.Model):
     # pylint: disable = too-many-public-methods
@@ -127,12 +146,12 @@ class Building(models.Model):
     city: city in which the building is located
     region: region in which the buildind is located
     country: country in which the building is located
-    date_from: date on which construction began
-    date_from_BC_or_AD: BC/AD switcher for date_from
-    date_to: date on which construction ended
-    date_to_BC_or_AD: BC/AD switcher for date_to
-    date_ca: if the date is exact or an estimation
-    date_century: if the given date is just a century-approximation and not an exact year
+    year_from: date on which construction began
+    year_from_BC_or_AD: BC/AD switcher for date_from
+    year_to: date on which construction ended
+    year_to_BC_or_AD: BC/AD switcher for date_to
+    year_ca: if the date is exact or an estimation
+    year_century: if the given date is just a century-approximation and not an exact year
     architect: architect of the building
     context: context/type of the building
     builder: builder of the building
@@ -175,29 +194,29 @@ class Building(models.Model):
                                choices=country_codes.country_codes_as_tuple_list,
                                default="Griechenland", null=True, blank=True,
                                validators=[validate_url_conform_str])
-    date_from = models.PositiveIntegerField(
+    year_from = models.PositiveIntegerField(
         verbose_name='Baubeginn',
         help_text="Jahr des Baubeginns eingeben. Wenn nicht gesetzt, "
                   "erscheint das Gebäude nicht auf der Zeitachse.",
         null=True, blank=True)
-    date_from_BC_or_AD = models.CharField(verbose_name='Baubeginn v.Chr./n.Chr.?', max_length=7,
+    year_from_BC_or_AD = models.CharField(verbose_name='Baubeginn v.Chr./n.Chr.?', max_length=7,
                                           help_text="Jahr des Baubeginns: v.Chr. bzw. n.Chr. "
                                                     "auswählen.",
                                           choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")],
-                                          default="v.Chr.",
+                                          default="n.Chr.",
                                           null=True, blank=True)
-    date_to = models.PositiveIntegerField(verbose_name='Bauende',
+    year_to = models.PositiveIntegerField(verbose_name='Bauende',
                                           help_text="Jahr des Bauendes eingeben.",
                                           null=True, blank=True)
-    date_to_BC_or_AD = models.CharField(verbose_name='Bauende v.Chr/n.Chr.?', max_length=7,
+    year_to_BC_or_AD = models.CharField(verbose_name='Bauende v.Chr/n.Chr.?', max_length=7,
                                         help_text="Jahr des Bauendes: v.Chr. bzw. n.Chr. "
                                                   "auswählen.",
                                         choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")],
-                                        default="v.Chr.",
+                                        default="n.Chr.",
                                         null=True, blank=True)
-    date_century = models.BooleanField(verbose_name='Jahrhundertangaben?', default=False,
+    year_century = models.BooleanField(verbose_name='Jahrhundertangaben?', default=False,
                                        help_text="Sind die Daten Jahrhundert Angaben?")
-    date_ca = models.BooleanField(verbose_name='ungefähre Datumsangabe?', default=False,
+    year_ca = models.BooleanField(verbose_name='ungefähre Jahresangabe?', default=False,
                                   help_text="ca. zum Datum hinzufügen (für ungenaue Datumsangaben)"
                                             ".")
     era = models.ForeignKey(verbose_name='Epoche', to=Era, on_delete=models.SET_NULL,
@@ -257,8 +276,12 @@ class Building(models.Model):
     literature = models.TextField(verbose_name='Literatur', max_length=1000,
                                   help_text="Literatur zum Gebäude angeben (max. 1000 Zeichen).",
                                   null=True, blank=True)
-    links = models.TextField(verbose_name='Links', max_length=1000, help_text="Weiterführende Links zum Gebäude "
-                             "angeben (max. 1000 Zeichen).", default="", null=True, blank=True)
+    links = models.TextField(verbose_name='Links', max_length=1000,
+                             help_text="Weiterführende Links zum Gebäude "
+                                       "angeben (max. 1000 Zeichen)."
+                                       "Es werden nur Links im folgenden Format erkannt:"
+                                       "https://moodle.tu-darmstadt.de/my/", default="", null=True,
+                             blank=True)
 
     def __str__(self):
         """
@@ -342,67 +365,67 @@ class Building(models.Model):
         except Building.DoesNotExist:
             return Building.DoesNotExist
 
-    def get_date_from(self, building_id):
+    def get_year_from(self, building_id):
         # pylint: disable= no-member
         """
         :param building_id: ID to fetch the correct building
-        :return: date on which construction began
+        :return: year on which construction began
         """
         try:
             building = self.objects.get(pk=building_id)
-            return building.date_from
+            return building.year_from
         except Building.DoesNotExist:
             return Building.DoesNotExist
 
-    def get_date_from_bc_or_ad(self, building_id):
+    def get_year_from_bc_or_ad(self, building_id):
         # pylint: disable= no-member
         """
         :param building_id: ID to fetch the correct building
-        :return: if date_from is BC or AD
+        :return: if year_from is BC or AD
         """
         try:
             building = self.objects.get(pk=building_id)
-            return building.date_from_BC_or_AD
+            return building.year_from_BC_or_AD
         except Building.DoesNotExist:
             return Building.DoesNotExist
 
-    def get_date_to(self, building_id):
+    def get_year_to(self, building_id):
         # pylint: disable= no-member
         """
         :param building_id: ID to fetch the correct building
-        :return: date on which construction began
+        :return: year on which construction began
         """
         try:
             building = self.objects.get(pk=building_id)
-            return building.date_to
+            return building.year_to
         except Building.DoesNotExist:
             return Building.DoesNotExist
 
-    def get_date_to_bc_or_ad(self, building_id):
+    def get_year_to_bc_or_ad(self, building_id):
         # pylint: disable= no-member
         """
         :param building_id: ID to fetch the correct building
-        :return: if date_from is BC or AD
+        :return: if year from is BC or AD
         """
         try:
             building = self.objects.get(pk=building_id)
-            return building.date_to_BC_or_AD
+            return building.year_to_BC_or_AD
         except Building.DoesNotExist:
             return Building.DoesNotExist
 
-    def get_date_ca(self, building_id):
+    def get_year_ca(self, building_id):
         # pylint: disable= no-member
         """
         :param building_id: ID to fetch the correct building
-        :return: if the date is an exact specification or not
+        :return: if the year is an exact specification or not
         """
         try:
             building = self.objects.get(pk=building_id)
-            return building.date_ca
+            return building.year_ca
         except Building.DoesNotExist:
             return Building.DoesNotExist
 
-    def get_date_century(self, building_id):
+    def get_year_century(self, building_id):
         # pylint: disable= no-member
         """
         :param building_id: ID to fetch the correct building
@@ -410,7 +433,7 @@ class Building(models.Model):
         """
         try:
             building = self.objects.get(pk=building_id)
-            return building.date_century
+            return building.year_century
         except Building.DoesNotExist:
             return Building.DoesNotExist
 
