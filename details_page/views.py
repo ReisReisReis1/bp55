@@ -4,10 +4,9 @@ Configurations of the different viewable functions and subpages from the App: de
 
 from django.shortcuts import render
 # pylint: disable = import-error, relative-beyond-top-level
-from impressum.models import Impressum
 from video_content.models import Timestamp
-from .models import Picture, Building, Blueprint
 from impressum.views import get_course_link
+from .models import Picture, Building, Blueprint
 
 
 def detailed(request, building_id):

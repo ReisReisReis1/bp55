@@ -1,9 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="69b3ddc8-cb83-4fd2-9e28-5c469f2739fb" name="Default Changelist" comment="">
+    <list default="true" id="c5f9ee76-1a0d-42c6-bc5e-c52b6df9cbe6" name="Default Changelist" comment="Mainly changing the context of the timeline. It works now dynamically with every era, buildings and historic dates. Also replaced some functions with new functions and changing some attribute names in models.">
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/bp55_ruins_and_beyond.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/details_page/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/details_page/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/details_page/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/details_page/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/details_page/country_codes.py" beforeDir="false" afterPath="$PROJECT_DIR$/details_page/country_codes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/details_page/migrations/0001_initial.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/details_page/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/details_page/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/details_page/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/details_page/tests.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/details_page/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/details_page/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/filter_page/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/filter_page/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/filter_page/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/filter_page/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/home/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/home/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/impressum/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/impressum/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/impressum/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/impressum/tests.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/impressum/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/impressum/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/impressum/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/impressum/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/materials_page/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/materials_page/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/materials_page/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/materials_page/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/materials_page/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/materials_page/tests.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/materials_page/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/materials_page/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/materials_page/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/materials_page/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/search/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/search/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/start/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/start/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/timeline/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/timeline/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/timeline/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/timeline/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/timeline/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/timeline/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/timeline/tests.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/timeline/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/timeline/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/video_content/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/video_content/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/video_content/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/video_content/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/video_content/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/video_content/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/video_content/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/video_content/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/video_content/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,9 +55,19 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
-  <component name="ProjectId" id="1lzHb0yAlGa3vbIg16gFuoWoupm" />
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="ProjectId" id="1nQ1Kkvi2wPQo3GizWrZPmUejpw" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -32,33 +77,279 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/video_content/migrations" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="coverage" />
+  </component>
+  <component name="PyCoverageOptionsProvider">
+    <option name="myBranchCoverage" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Tobi-Studium\PycharmProjects\bp55\video_content\migrations" />
+      <recent name="C:\Users\Tobi-Studium\PycharmProjects\bp55\timeline\migrations" />
+      <recent name="C:\Users\Tobi-Studium\PycharmProjects\bp55\details_page\migrations" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Tobi-Studium\PycharmProjects\bp55\timeline\migrations" />
+      <recent name="C:\Users\Tobi-Studium\PycharmProjects\bp55\video_content\migrations" />
+      <recent name="C:\Users\Tobi-Studium\PycharmProjects\bp55\details_page\migrations" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Django Server.bp55">
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="bp55_ruins_and_beyond" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/video_content" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/video_content/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="manage" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="bp55_ruins_and_beyond" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/manage.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="bp55" type="Python.DjangoServer" factoryName="Django server">
+      <module name="bp55" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="DJANGO_SETTINGS_MODULE" value="bp55_ruins_and_beyond.settings" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <option name="port" value="8000" />
+      <option name="host" value="" />
+      <option name="additionalOptions" value="" />
+      <option name="browserUrl" value="" />
+      <option name="runTestServer" value="false" />
+      <option name="runNoReload" value="false" />
+      <option name="useCustomRunCommand" value="false" />
+      <option name="customRunCommand" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.manage" />
+        <item itemvalue="Python.main" />
+        <item itemvalue="Python.main" />
+        <item itemvalue="Python.manage" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="69b3ddc8-cb83-4fd2-9e28-5c469f2739fb" name="Default Changelist" comment="" />
-      <created>1608593066528</created>
+      <changelist id="c5f9ee76-1a0d-42c6-bc5e-c52b6df9cbe6" name="Default Changelist" comment="" />
+      <created>1611307440868</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1608593066528</updated>
-      <workItem from="1608593068562" duration="149000" />
-      <workItem from="1608724163722" duration="306000" />
-      <workItem from="1611068038940" duration="707000" />
-      <workItem from="1611068941139" duration="2931000" />
-      <workItem from="1611077528990" duration="31000" />
-      <workItem from="1611139418693" duration="6362000" />
-      <workItem from="1611226112594" duration="9141000" />
+      <updated>1611307440868</updated>
+      <workItem from="1611307444288" duration="5767000" />
+      <workItem from="1611334305422" duration="2375000" />
+      <workItem from="1611496619074" duration="608000" />
+      <workItem from="1611561812984" duration="832000" />
+      <workItem from="1611569286866" duration="10303000" />
+      <workItem from="1611648133085" duration="8875000" />
+      <workItem from="1611821020131" duration="10300000" />
+      <workItem from="1611831831663" duration="823000" />
+      <workItem from="1611843649529" duration="7671000" />
+      <workItem from="1611851578645" duration="4094000" />
+      <workItem from="1611907292343" duration="11692000" />
+      <workItem from="1611931863625" duration="9085000" />
+      <workItem from="1612101087678" duration="2005000" />
+      <workItem from="1612103449576" duration="852000" />
+      <workItem from="1612178952973" duration="505000" />
+      <workItem from="1612264463870" duration="2942000" />
+      <workItem from="1612276052061" duration="4865000" />
+      <workItem from="1612292835569" duration="5219000" />
+      <workItem from="1612348549883" duration="447000" />
+      <workItem from="1612357426351" duration="19874000" />
+      <workItem from="1612454288896" duration="149000" />
+      <workItem from="1612535671716" duration="2039000" />
+      <workItem from="1612781560640" duration="4785000" />
+      <workItem from="1612806746299" duration="622000" />
+      <workItem from="1613118205025" duration="17071000" />
+      <workItem from="1613408005434" duration="16252000" />
+      <workItem from="1613475552331" duration="5213000" />
+      <workItem from="1613492113889" duration="12274000" />
+      <workItem from="1613561579358" duration="1389000" />
       <workItem from="1611305766493" duration="5708000" />
+      <workItem from="1613593759252" duration="694000" />
+      <workItem from="1613742072624" duration="2087000" />
+      <workItem from="1613746966410" duration="3095000" />
+      <workItem from="1614165101481" duration="45000" />
+      <workItem from="1614347740418" duration="2406000" />
+      <workItem from="1614679165501" duration="16726000" />
+      <workItem from="1614760447866" duration="5308000" />
+      <workItem from="1614765790089" duration="8000" />
+      <workItem from="1614798115681" duration="16450000" />
+      <workItem from="1614847112344" duration="18248000" />
+      <workItem from="1614934269383" duration="17204000" />
+      <workItem from="1615106413037" duration="5801000" />
     </task>
-    <task id="LOCAL-00001" summary="test">
-      <created>1608593141853</created>
+    <task id="LOCAL-00001" summary="Error Fix for CI">
+      <created>1611310495732</created>
       <option name="number" value="00001" />
       <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
-      <updated>1608593141853</updated>
+      <updated>1611310495732</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Adding timestamp model to admin interface">
+      <created>1611314277686</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1611314277686</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Silly Tobi forgot to change branch, so hear are my tests and some small changes.">
+      <created>1611851303336</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1611851303336</updated>
+    </task>
+    <task id="LOCAL-00004" summary="SOme small changes.">
+      <created>1611909442666</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1611909442666</updated>
+    </task>
+    <task id="LOCAL-00005" summary="fixing code review complains">
+      <created>1611921838964</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1611921838964</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Configure the admin site for every model.&#10;Started to fix pylint complains.&#10;Some small fixes for the Nutzerstudie.">
+      <created>1611938281921</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1611938281922</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Fixing some Pylint complains and startet to write tests for the functions in filter_page.views">
+      <created>1612103643154</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1612103643154</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Pylint complain fixes line too long">
+      <created>1612264609835</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1612264609835</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Hopefully finished tests for filter_page.views and done some more validations in the text feld of building. So there are some NEW MIGRATIONS!!!!">
+      <created>1612381237706</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1612381237706</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Splitting function in filter_page.view is working and is tested. Also changed the validator function validate_url_conform_str in details_page.models">
+      <created>1613119687153</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1613119687153</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Adding german variable names to the admin interface.&#10;Also changed the context variable of the timeline.view and testet the function sort_into_eras a little bit.">
+      <created>1613437197367</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1613437197367</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Inline creation of Blueprint and Picture in Building and Timestamp in Videos. &#10;Also removing length in Video and setting editable=False in the descriptions of blueprint and piucture. ALSO SOME NEW MIGRATIONS!!!">
+      <created>1613492416999</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1613492416999</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Changing the dictionary the frontend needs for the timeline.&#10;Also making eras unique so we have another migrations.">
+      <created>1613503982483</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1613503982483</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Changed the awful code of getting_all_eras_sorted and tested it.">
+      <created>1613508904628</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1613508904628</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Changed name field of era model and corrected a mistake in the views function of timeline">
+      <created>1613587827442</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1613587827442</updated>
+    </task>
+    <task id="LOCAL-00016" summary="New migration for the name field of the era model">
+      <created>1613587936001</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1613587936001</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Mainly changing the context of the timeline. It works now dynamically with every era, buildings and historic dates. Also replaced some functions with new functions and changing some attribute names in models.">
+      <created>1614876864544</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1614876864544</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -69,7 +360,34 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="dev_tobi" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="dev_tobi" />
+                </option>
+              </RecentGroup>
+            </list>
           </value>
         </entry>
       </map>
@@ -77,7 +395,23 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="test" />
-    <option name="LAST_COMMIT_MESSAGE" value="test" />
+    <MESSAGE value="Error Fix for CI" />
+    <MESSAGE value="Adding timestamp model to admin interface" />
+    <MESSAGE value="Silly Tobi forgot to change branch, so hear are my tests and some small changes." />
+    <MESSAGE value="SOme small changes." />
+    <MESSAGE value="fixing code review complains" />
+    <MESSAGE value="Configure the admin site for every model.&#10;Started to fix pylint complains.&#10;Some small fixes for the Nutzerstudie." />
+    <MESSAGE value="Fixing some Pylint complains and startet to write tests for the functions in filter_page.views" />
+    <MESSAGE value="Pylint complain fixes line too long" />
+    <MESSAGE value="Hopefully finished tests for filter_page.views and done some more validations in the text feld of building. So there are some NEW MIGRATIONS!!!!" />
+    <MESSAGE value="Splitting function in filter_page.view is working and is tested. Also changed the validator function validate_url_conform_str in details_page.models" />
+    <MESSAGE value="Adding german variable names to the admin interface.&#10;Also changed the context variable of the timeline.view and testet the function sort_into_eras a little bit." />
+    <MESSAGE value="Inline creation of Blueprint and Picture in Building and Timestamp in Videos. &#10;Also removing length in Video and setting editable=False in the descriptions of blueprint and piucture. ALSO SOME NEW MIGRATIONS!!!" />
+    <MESSAGE value="Changing the dictionary the frontend needs for the timeline.&#10;Also making eras unique so we have another migrations." />
+    <MESSAGE value="Changed the awful code of getting_all_eras_sorted and tested it." />
+    <MESSAGE value="Changed name field of era model and corrected a mistake in the views function of timeline" />
+    <MESSAGE value="New migration for the name field of the era model" />
+    <MESSAGE value="Mainly changing the context of the timeline. It works now dynamically with every era, buildings and historic dates. Also replaced some functions with new functions and changing some attribute names in models." />
+    <option name="LAST_COMMIT_MESSAGE" value="Mainly changing the context of the timeline. It works now dynamically with every era, buildings and historic dates. Also replaced some functions with new functions and changing some attribute names in models." />
   </component>
 </project>

@@ -9,10 +9,16 @@ from .models import Era, Building, Picture, Blueprint
 
 
 class BlueprintInLine(admin.StackedInline):
+    """
+    Model for the possibility to create a blueprint during the creation of an building
+    """
     model = Blueprint
 
 
 class PictureInLine(admin.StackedInline):
+    """
+    Model for the possibility to create a picture during the creation of an building
+    """
     model = Picture
 
 

@@ -1,18 +1,17 @@
 """
 Configurations of the Website subpages from the App: materials_page
 """
-
-
-from django.shortcuts import render
 # pylint: disable = import-error, relative-beyond-top-level
-from .models import Material
+
 from zipfile import ZipFile
 from io import StringIO
 from io import BytesIO
 import zipfile
 import os
+from django.shortcuts import render
 from django.http import HttpResponse
 from impressum.views import get_course_link
+from .models import Material
 
 
 def get_categories_and_corresponding_files():
@@ -50,10 +49,10 @@ def get_categories_and_corresponding_zip_files():
             zip_filename = "%s.zip" % zip_subdir
 
             # Open BytesIO to grab in-memory ZIP contents
-            s = BytesIO()
+            sfp = BytesIO()
 
             # the zip compressor
-            zf = zipfile.ZipFile(s, "w")
+            zipf = zipfile.ZipFile(sfp, "w")
 
             # Add all file sin the list to the zipfile
             for fpath in filenames:
@@ -61,13 +60,13 @@ def get_categories_and_corresponding_zip_files():
                 fdir, fname = os.path.split(fpath)
                 zip_path = os.path.join(zip_subdir, fname)
                 # Add file, at correct path
-                zf.write(fpath, zip_path)
+                zipf.write(fpath, zip_path)
 
             # Must close zip for all contents to be written
-            zf.close()
+            zipf.close()
 
             # Grab ZIP file from in-memory, make response with correct MIME-type
-            resp = HttpResponse(s.getvalue(), content_type="application/x-zip-compressed")
+            resp = HttpResponse(sfp.getvalue(), content_type="application/x-zip-compressed")
             # ..and correct content-disposition
             resp['Content-Disposition'] = 'attachment; filename=%s' % zip_filename
             # Add HttpResponse to download zipfile to the dictionary at the place of the category
@@ -89,4 +88,3 @@ def material(request):
         'Kurs_Link': get_course_link()
     }
     return render(request, "material.html", context)
-

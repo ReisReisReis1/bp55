@@ -6,7 +6,7 @@ from django.db import models
 
 
 class Material(models.Model):
-    # pylint: disable = too-many-public-methods
+    # pylint: disable = too-few-public-methods
     """
     name: short decription of what the file is about
     file: the material file
@@ -14,13 +14,19 @@ class Material(models.Model):
     """
 
     class Meta:
+        """
+        Meta data for the model
+        In this case the singular and plural name that will be seen in the admin interface
+        """
         verbose_name = 'Materialien'
         verbose_name_plural = 'Materialien'
 
-    name = models.CharField(verbose_name='Titel', max_length=1000, help_text='Bezeichnung der Datei')
+    name = models.CharField(verbose_name='Titel', max_length=1000,
+                            help_text='Bezeichnung der Datei')
     file = models.FileField(verbose_name='Datei', upload_to='material/',
                             help_text="Datei hochladen.")
-    category = models.CharField(verbose_name='Kategorie', max_length=100, help_text='Kategorie der Datei')
+    category = models.CharField(verbose_name='Kategorie', max_length=100,
+                                help_text='Kategorie der Datei')
 
     def __str__(self):
         """
