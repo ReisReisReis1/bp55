@@ -128,6 +128,9 @@ In dem **static-Directory** werden mögliche statische Datein gespeichert, die n
 
 **views-File**: Beinhaltet die Funktion, die beim Aufruf der Webseite verwendet wird.
 
+**Nur in der App timeline der Fall**
+**templatetags-File**: Ermöglicht die Verwendung von definierten Funktionen in html-Files.
+
 
 Für genauere Informationen zu den Files und Directories in den einzelnen Apps, stehen Kommentare und Doc-Strings in diesen, die speziefierte Klassen, Funktionen usw. erklären.
 
