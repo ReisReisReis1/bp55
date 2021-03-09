@@ -110,11 +110,14 @@ class HistoricDatesModelTests(TestCase):
         Testing the function get_year_as_signed_int in the historic date
         """
         hd1, hd2, hd3, hd4, hd5, hd6, hd7 = self.setup_historic_dates()
+
         # Getting the default year
         self.assertEqual(hd1.get_year_as_signed_int(), [9999, 9999])
 
         # Exact date
         self.assertEqual(hd2.get_year_as_signed_int(), [2, 9999])
+        hd2.year_BC_or_AD = 'v.Chr.'
+        self.assertEqual(hd2.get_year_as_signed_int(), [-2, 9999])
 
         # Year
         self.assertEqual(hd3.get_year_as_signed_int(), [-100, 9999])
@@ -122,6 +125,8 @@ class HistoricDatesModelTests(TestCase):
 
         # Both exists
         self.assertEqual(hd5.get_year_as_signed_int(), [-1, 9999])
+        hd5.year_BC_or_AD = 'n.Chr.'
+        self.assertEqual(hd5.get_year_as_signed_int(), [1, 9999])
 
         # Year century
         self.assertEqual(hd6.get_year_as_signed_int(), [-50, 9999])
@@ -646,7 +651,7 @@ class TestsCasesSortedBuildings(TestCase):
                          building7, building8, building9, building10, building11]
         test_list = building_list + [hd1, hd2,
                                      hd3, hd4]
-
+        self.maxDiff = None
         response = self.client.get('/timeline/')
         self.assertEqual(response.status_code, 200)
 
@@ -663,7 +668,7 @@ class TestsCasesSortedBuildings(TestCase):
                          (hellenismus, [(True, building5, '1. Jh. v.Chr.', None),
                                         (False, hd1, '27.3.50 v.Chr.', None)]))
         self.assertEqual(sorted_eras_with_buildings(test_list)['Kaiserzeit'],
-                         (kaiserzeit, [(True, building10, '0 n.Chr.', None),
+                         (kaiserzeit, [(True, building10, '0 v.Chr.', None),
                                        (False, hd4, '8.7.50 n.Chr.', None),
                                        (True, building2, '200 n.Chr.', None),
                                        (False, hd3, '3. Jh. n.Chr.', None)]))
@@ -685,7 +690,7 @@ class TestsCasesSortedBuildings(TestCase):
                               hellenismus, [(True, building5, '1. Jh. v.Chr.', None),
                                             (False, hd1, '27.3.50 v.Chr.', None),
                                             ]),
-                          'Kaiserzeit': (kaiserzeit, [(True, building10, '0 n.Chr.', None),
+                          'Kaiserzeit': (kaiserzeit, [(True, building10, '0 v.Chr.', None),
                                                       (False, hd4, '8.7.50 n.Chr.', None),
                                                       (True, building2, '200 n.Chr.', None),
                                                       (False, hd3, '3. Jh. n.Chr.', None)]),
@@ -727,7 +732,7 @@ class TestTimeline(TestCase):
                          (hellenismus, [(True, building5, '1. Jh. v.Chr.', None),
                                         (False, hd1, '27.3.50 v.Chr.', None)]))
         self.assertEqual(response.context['Eras_Buildings']['Kaiserzeit'],
-                         (kaiserzeit, [(True, building10, '0 n.Chr.', None),
+                         (kaiserzeit, [(True, building10, '0 v.Chr.', None),
                                        (False, hd4, '8.7.50 n.Chr.', None),
                                        (True, building2, '200 n.Chr.', None),
                                        (False, hd3, '3. Jh. n.Chr.', None)]))
@@ -749,7 +754,7 @@ class TestTimeline(TestCase):
                               hellenismus, [(True, building5, '1. Jh. v.Chr.', None),
                                             (False, hd1, '27.3.50 v.Chr.', None),
                                             ]),
-                          'Kaiserzeit': (kaiserzeit, [(True, building10, '0 n.Chr.', None),
+                          'Kaiserzeit': (kaiserzeit, [(True, building10, '0 v.Chr.', None),
                                                       (False, hd4, '8.7.50 n.Chr.', None),
                                                       (True, building2, '200 n.Chr.', None),
                                                       (False, hd3, '3. Jh. n.Chr.', None)]),

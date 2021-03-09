@@ -46,7 +46,7 @@ class HistoricDate(models.Model):
                                      help_text="Jahr des Ereignisses: "
                                                "v.Chr. bzw. n.Chr. auswählen.",
                                      choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")],
-                                     default="n.Chr.")
+                                     default="v.Chr.")
     year_century = models.BooleanField(verbose_name='Jahrhundert', default=False,
                                        help_text="Sind die Daten Jahrhundert Angaben?")
     year_ca = models.BooleanField(verbose_name='ungefähres Datum?', default=False,
@@ -59,7 +59,7 @@ class HistoricDate(models.Model):
         verbose_name='Information',
         help_text="Hier eine kurze Beschreibung des historischen Ereignisses einfügen "
                   "(max. 1000 Zeichen).",
-        max_length=1000, editable=False)
+        max_length=1000, editable=True)
     era = models.ForeignKey(verbose_name='Epoche', to=Era, on_delete=models.SET_NULL, null=True,
                             blank=True)
 
@@ -101,13 +101,13 @@ class HistoricDate(models.Model):
         if self.exacter_date is None and self.year is not None:
             century = '. Jh.' if self.year_century else ''
             circa = 'ca. ' if self.year_ca else ''
-            bc_ad = (' ' + str(self.year_BC_or_AD)) if self.year_BC_or_AD is not None else ''
+            bc_ad = ' ' + str(self.year_BC_or_AD) if self.year_BC_or_AD is not None else 'v.Chr.'
             result = circa + str(self.year) + century + bc_ad
         elif self.exacter_date is not None:
             day = str(self.exacter_date.day)
             month = str(self.exacter_date.month)
             year = str(self.exacter_date.year)
-            bc_ad = (' ' + str(self.year_BC_or_AD)) if self.year_BC_or_AD is not None else ''
+            bc_ad = (' ' + str(self.year_BC_or_AD)) if self.year_BC_or_AD is not None else 'v.Chr.'
             result = day + '.' + month + '.' + year + bc_ad
 
         return result

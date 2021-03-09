@@ -72,7 +72,7 @@ class Era(models.Model):
                                           help_text="Jahr des Beginns: v.Chr. bzw. n.Chr. "
                                                     "auswählen.",
                                           choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")],
-                                          default="n.Chr.",
+                                          default="v.Chr.",
                                           null=True, blank=True)
     year_to = models.PositiveIntegerField(verbose_name='Enddatum',
                                           help_text="Jahr des Endes der Epoche eingeben.",
@@ -80,7 +80,7 @@ class Era(models.Model):
     year_to_BC_or_AD = models.CharField(verbose_name='Enddatum v.Chr/n.Chr.?', max_length=7,
                                         help_text="Jahr des Endes: v.Chr. bzw. n.Chr. auswählen.",
                                         choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")],
-                                        default="n.Chr.",
+                                        default="v.Chr.",
                                         null=True, blank=True)
     visible_on_video_page = models.BooleanField(verbose_name='Sichtbar auf Staffelseite?',
                                                 default=True, help_text="""Angeben ob die Epoche
@@ -103,28 +103,21 @@ class Era(models.Model):
         :return: list with two elements: new_list[0] start date, new_list[1] end date
         """
         new_list = [0, 0]
+        date = 9999
         if self.year_from is not None:
             # Checking for the self start date if it is before or after the birth of christ
             if self.year_from_BC_or_AD == 'v.Chr.':
                 date = -1 * int(self.year_from)
             elif self.year_from_BC_or_AD == 'n.Chr.':
                 date = int(self.year_from)
-            else:
-                date = 9999
-        else:
-            date = 9999
         new_list[0] = date
-
+        date = 9999
         if self.year_to is not None:
             # Checking for the self end date if it is before or after the birth of christ
             if self.year_to_BC_or_AD == 'v.Chr.':
                 date = -1 * int(self.year_to)
             elif self.year_to_BC_or_AD == 'n.Chr.':
                 date = int(self.year_to)
-            else:
-                date = 9999
-        else:
-            date = 9999
         new_list[1] = date
         return new_list
 
@@ -139,13 +132,13 @@ class Era(models.Model):
         if self.year_from is not None:
             year_from = str(self.year_from)
             # n.Chr. as default
-            bc_ad_from = (' ' + str(
-                self.year_from_BC_or_AD)) if self.year_from is not None else 'n.Chr.'
+            bc_ad_from = ' ' + str(
+                self.year_from_BC_or_AD) if self.year_from is not None else 'v.Chr.'
             start = year_from + bc_ad_from
             if self.year_to is not None:
                 year_to = str(self.year_to)
-                bc_ad_to = (' ' + str(
-                    self.year_to_BC_or_AD)) if self.year_to_BC_or_AD is not None else 'n.Chr.'
+                bc_ad_to = ' ' + str(
+                    self.year_to_BC_or_AD) if self.year_to_BC_or_AD is not None else 'v.Chr.'
                 end = ' - ' + year_to + bc_ad_to
 
         return start + end
@@ -198,7 +191,7 @@ class Building(models.Model):
                             validators=[validate_url_conform_str])
     description = models.TextField(verbose_name='Beschreibung', max_length=1000,
                                    help_text="Beschreibung des Gebäudes angeben (max. 1000 Zeichen",
-                                   null=True, blank=True, editable=False)
+                                   null=True, blank=True, editable=True)
     city = models.CharField(verbose_name='Stadt', max_length=100,
                             help_text="Stadt des Bauwerks eingeben (max. 100 Zeichen).",
                             null=True, blank=True, validators=[validate_url_conform_str])
@@ -221,7 +214,7 @@ class Building(models.Model):
                                           help_text="Jahr des Baubeginns: v.Chr. bzw. n.Chr. "
                                                     "auswählen.",
                                           choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")],
-                                          default="n.Chr.",
+                                          default="v.Chr.",
                                           null=True, blank=True)
     year_to = models.PositiveIntegerField(verbose_name='Bauende',
                                           help_text="Jahr des Bauendes eingeben.",
@@ -230,7 +223,7 @@ class Building(models.Model):
                                         help_text="Jahr des Bauendes: v.Chr. bzw. n.Chr. "
                                                   "auswählen.",
                                         choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")],
-                                        default="n.Chr.",
+                                        default="v.Chr.",
                                         null=True, blank=True)
     year_century = models.BooleanField(verbose_name='Jahrhundertangaben?', default=False,
                                        help_text="Sind die Daten Jahrhundert Angaben?")
@@ -695,14 +688,14 @@ class Building(models.Model):
         if self.year_from is not None:
             year_from = str(self.year_from)
             # default n.Chr.
-            bc_ad_from = (' ' + str(
-                self.year_from_BC_or_AD)) if self.year_from is not None else 'n.Chr.'
+            bc_ad_from = ' ' + str(
+                self.year_from_BC_or_AD) if self.year_from is not None else 'v.Chr.'
             start = circa + year_from + century + bc_ad_from
             if self.year_to is not None:
                 year_to = str(self.year_to)
                 # default n.Chr.
-                bc_ad_to = (' ' + str(
-                    self.year_to_BC_or_AD)) if self.year_to_BC_or_AD is not None else 'n.Chr.'
+                bc_ad_to = ' ' + str(
+                    self.year_to_BC_or_AD) if self.year_to_BC_or_AD is not None else 'v.Chr.'
                 end = ' - ' + circa + year_to + century + bc_ad_to
 
         return start + end

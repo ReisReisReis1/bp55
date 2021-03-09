@@ -126,7 +126,7 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_year_from_bc_or_ad(Building, 0), '')
         self.assertEqual(Building.get_year_from_bc_or_ad(Building, 1), 'v.Chr.')
-        self.assertEqual(Building.get_year_from_bc_or_ad(Building, 2), 'n.Chr.')
+        self.assertEqual(Building.get_year_from_bc_or_ad(Building, 2), 'v.Chr.')
         self.assertEqual(Building.get_year_from_bc_or_ad(Building, 3), Building.DoesNotExist)
 
     def test7_get_year_to(self):
@@ -144,7 +144,7 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_year_to_bc_or_ad(Building, 0), '')
         self.assertEqual(Building.get_year_to_bc_or_ad(Building, 1), 'v.Chr.')
-        self.assertEqual(Building.get_year_to_bc_or_ad(Building, 2), 'n.Chr.')
+        self.assertEqual(Building.get_year_to_bc_or_ad(Building, 2), 'v.Chr.')
         self.assertEqual(Building.get_year_to_bc_or_ad(Building, 3), Building.DoesNotExist)
 
     def test9_get_architect(self):
@@ -383,10 +383,10 @@ class BuildingTestCases(TestCase):
 
         # Only year_from without year_from_BC_or_AD
         building2 = Building(name='Building2', year_from=100)
-        self.assertEqual(building2.get_year_as_str(), '100 n.Chr.')
-        # with year_from_BC_or_AD
-        building2.year_from_BC_or_AD = 'v.Chr.'
         self.assertEqual(building2.get_year_as_str(), '100 v.Chr.')
+        # with year_from_BC_or_AD
+        building2.year_from_BC_or_AD = 'n.Chr.'
+        self.assertEqual(building2.get_year_as_str(), '100 n.Chr.')
 
         # Only year_to, year_to_Bc_or_AD doesn't matter
         building3 = Building(name='building3', year_to=100)
@@ -395,10 +395,10 @@ class BuildingTestCases(TestCase):
         # With year_to and year_from, but year_to_BC_or_AD is null
         building4 = Building(name='building4', year_from=99, year_to=100,
                              year_from_BC_or_AD='v.Chr.')
-        self.assertEqual(building4.get_year_as_str(), '99 v.Chr. - 100 n.Chr.')
-        # now with year_to_BC_or_AD
-        building4.year_to_BC_or_AD = 'v.Chr.'
         self.assertEqual(building4.get_year_as_str(), '99 v.Chr. - 100 v.Chr.')
+        # now with year_to_BC_or_AD
+        building4.year_to_BC_or_AD = 'n.Chr.'
+        self.assertEqual(building4.get_year_as_str(), '99 v.Chr. - 100 n.Chr.')
 
         # With year_century and ca
         building5 = Building(name='Building5', year_from=1, year_to=1, year_ca=True,
@@ -455,10 +455,10 @@ class EraModelTests(TestCase):
 
         # Only year_from without year_from_BC_or_AD
         era2 = Era(name='Era2', year_from=100)
-        self.assertEqual(era2.get_year_as_str(), '100 n.Chr.')
-        # with year_from_BC_or_AD
-        era2.year_from_BC_or_AD = 'v.Chr.'
         self.assertEqual(era2.get_year_as_str(), '100 v.Chr.')
+        # with year_from_BC_or_AD
+        era2.year_from_BC_or_AD = 'n.Chr.'
+        self.assertEqual(era2.get_year_as_str(), '100 n.Chr.')
 
         # Only year_to, year_to_Bc_or_AD doesn't matter
         era3 = Era(name='Era3', year_to=100)
@@ -466,10 +466,10 @@ class EraModelTests(TestCase):
 
         # With year_to and year_from, but year_to_BC_or_AD is null
         era4 = Era(name='Era4', year_from=99, year_to=100, year_from_BC_or_AD='v.Chr.')
-        self.assertEqual(era4.get_year_as_str(), '99 v.Chr. - 100 n.Chr.')
-        # now with year_to_BC_or_AD
-        era4.year_to_BC_or_AD = 'v.Chr.'
         self.assertEqual(era4.get_year_as_str(), '99 v.Chr. - 100 v.Chr.')
+        # now with year_to_BC_or_AD
+        era4.year_to_BC_or_AD = 'n.Chr.'
+        self.assertEqual(era4.get_year_as_str(), '99 v.Chr. - 100 n.Chr.')
 
     def test_get_year_as_signed_int(self):
         """
