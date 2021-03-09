@@ -23,89 +23,47 @@ Die einzelnen Python-Directory und Python-Packages, die nicht automnatisch beim 
 
 
 |--bp55_ruins_and_beyond <br>
-
 | <br>
-
 |--details_page <br>
-
 |----|--migrations <br>
-
 |----|--static <br>
-
 |----|--templates <br>
-
 |----|--__ init__.py <br>
-
 |----|--admin.py <br>
-
 |----|--apps.py <br>
-
 |----|--country_codes <br>
-
 |----|--models.py <br>
-
 |----|--tests.py <br>
-
 |----|--urls.py <br>
-
 |----|--views.py <br>
-
 | <br>
-
 |--filter_page <br>
-
 |----|... <br>
-
 | <br>
-
 |--home <br>
-
 |----|... <br>
-
 | <br>
-
 |--impressum <br>
-
 |----|... <br>
-
 | <br>
-
 |--materials_page <br>
-
 |----|... <br>
-
 | <br>
-
 |--search <br>
-
 |----|... <br>
-
 | <br>
-
 |--static <br>
-
 |----|... <br>
-
 | <br>
-
 |--templates <br>
-
 |----|... <br>
-
 | <br>
-
 |--timeline <br>
-
 |----|--templatetags <br>
-
 |----|... <br>
-
 | <br>
-
 |--video_content <br>
-
 |----|... <br>
-
 
 ### details_page
 
@@ -552,7 +510,7 @@ Auch hier werden wir nicht ins Detail gehen, nur ein paar Tipps zu Administratio
 ## Contributers:
 - [Duy Quang Ngyuen](https://github.com/ReisShape)
 - [Jonathan Otto](https://github.com/JonaOtto)
-- [Laura Buhleiher](https://github.com/CottlestonPie1)
+- [Laura Buhleier](https://github.com/CottlestonPie1)
 - [Thiemo Ganesha Welsch](https://github.com/ThGaWe)
 - [Tobias Frey](https://github.com/FreyTobias)
 
