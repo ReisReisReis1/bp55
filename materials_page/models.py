@@ -46,7 +46,7 @@ class Material(models.Model):
     """
 
     class Meta:
-        verbose_name = 'Materialien'
+        verbose_name = 'Material'
         verbose_name_plural = 'Materialien'
 
     name = models.CharField(verbose_name='Titel', max_length=1000, help_text='Bezeichnung der Datei')

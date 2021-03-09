@@ -63,7 +63,7 @@ class Era(models.Model):
         ('Klassik', 'Klassik'), ('Hellenismus', 'Hellenismus'),
         ('Kaiserzeit', 'Kaiserzeit'),
         ('Spätantike', 'Spätantike'),
-        ('Sonstiges', 'Sonstiges'),
+        ('Rezeption', 'Rezeption'),
     ], help_text="Epoche auswählen.", unique=True, null=False, blank=False)
     year_from = models.PositiveIntegerField(verbose_name='Anfangsdatum',
                                             help_text="Jahr des Beginns der Epoche eingeben.",

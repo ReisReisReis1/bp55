@@ -29,7 +29,7 @@ class EraAdmin(admin.ModelAdmin):
     """
     search_fields = ('name', )
     ordering = ('name', )
-    list_display = ('name', ('year_from', 'year_from_BC_or_AD', 'year_to', 'year_to_BC_or_AD'))
+    list_display = ('name', 'year_from', 'year_from_BC_or_AD', 'year_to', 'year_to_BC_or_AD')
 
 
 @admin.register(Building)
