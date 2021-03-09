@@ -20,18 +20,17 @@ Die einzelnen Python-Directory und Python-Packages, die nicht automnatisch beim 
 |--bp55_ruins_and_beyond <br>
 | <br>
 |--details_page <br>
-|  |----__ pyache__ <br>
-|  |----migrations <br>
-|  |----static <br>
-|  |----templates <br>
-|  |----__ init__.py <br>
-|  |----admin.py <br>
-|  |----apps.py <br>
-|  |----country_codes <br>
-|  |----models.py <br>
-|  |----tests.py <br>
-|  |----urls.py <br>
-|  |----views.py <br>
+|----|--migrations <br>
+|----|--static <br>
+|----|--templates <br>
+|----|--__ init__.py <br>
+|----|--admin.py <br>
+|----|--apps.py <br>
+|----|--country_codes <br>
+|----|--models.py <br>
+|----|--tests.py <br>
+|----|--urls.py <br>
+|----|--views.py <br>
 | <br>
 |--filter_page <br>
 | <br>
@@ -48,14 +47,16 @@ Die einzelnen Python-Directory und Python-Packages, die nicht automnatisch beim 
 |--templates <br>
 | <br>
 |--timeline <br>
+|----|--templatetags <br>
 | <br>
 |--video_content <br>
+
 
 ### details_page
 Die App details_page ist zuständig für die Darstellung der Detailseite. Auf der Detailseite wird ein  kurzer Steckbrief, sowie Bilder, Grundriss und Videos zu einem betsimmten Gebäude angezeigt. Dafür wurden in models folgende Klassen erzeugt: Era, um die verschiedenen Eras mit ihren jeweiligen Daten darzustellen, Building, die Gebäude mit allen zugehörigen Informationen darstellt, Blueprint, um den Gebäuden einen Grundriss als Bild zuordnen zu können, Picture, um den Gebäuden verschiedene Bilder zuweisen zu können. Für alle Attribute der Klassen wurden getter-Funktionen eingerichtet, um die entsrpechenden Werte auslesen zu können.
 ### filter_page
 Die App filter_page wird verwendet um mit der auf der Bauwerke-Seite vorhandenen Filterfunktion die Gebäude nach bestimmten Attributen zu Filtern. Die Funktionen hierfür sind in der views Datei der App vorhanden. Zur Umsetzung der Filterfunktion wurden die Hilfsfunktionen splitting, one_dict_set_to_string_list und delete_duplicates geschrieben, die Hauptfunktion tragen die Funktionen my_filter und display_building_filter. Die Kommentare dieser Funktionen beschreiben die genaue Umsetzung weiter.
-### home
+### home 
 Die App home dient nur zur Darstellung der Startseite und benötigt daher keine weiteren Klassen oder Funktionen.
 ### impressum
 Die App impressum ist zuständig für die Darstellung der Impressum-Seite und die Verfügbarkeit des Kurslinks auf allen Seiten der Webandwendung. Dafür enthält die Datei models die Klasse Impressum. Diese besitzt nur die Attribute course_link, mit dem der Link zum aktuellen Vorlesungskurs festgehalten werden kann, und name um die Objekte der Klasse Impressum unterscheiden zu können. Hier ist anzumerken, dass durch das Überschreiben der Funktion save, nur ein Objekt dieser Klasse erzeugt werden kann. In views wird eine getter Funktion für das Attribut course_link bereitgestellt. Damit der Kurslink auch auf allen anderen Seiten verfügbar ist, wurde diese Funktion in die views aller anderen Apps importiert.
@@ -71,3 +72,18 @@ Templates enthält die html-Vorlagen für den footer, den header und den default
 Die App timeline wird zur Darstellung des Zeitstrahl benötigt. Dafür enthält models die Klasse HistoricDate, damit neben den Gebäuden auf dem Zeitstrahl auch bedeutende historische Ereignisse dargestellt werden können. Für die Berechnung des Zeitstrahls wurden in views die Hilfsfunktionen get_date_as_str, get_year_of_item und get_thumbnails_for_buildings implementiert. Die Hauptfunktion tragen aber die Funktionen getting_all_eras_sorted, welche die Eras chronologisch anordnet, sort_into_eras, welche anschließend die Gebäude und Ereignisse in das Era-Dictionary einsortiert. Weitere Informationen zu den Funktionen finden sich in den zugehörigen Kommentaren.
 ### video_content
 Die App video_content wird zum Abspielen der Videos benötigt. Hierfür wurden in models die Klassen Video und Timestamp implementiert. Mit der Klasse Videos können Videos hochgeladen werden und mit der Klasse Timestamp können den Videos Timestamps hinzugefügt werden, durch die man direkt zu einer bestimmten Stelle im Video springen kann. Dafür wurden in den Klassen entsprechende getter-Funktionen umgesetzt.
+
+Die Struktur in einer App ist in diesem Projekt immer gleich. 
+**migration-Package** Hier werden die angewandten Modeländerungen gespeichert werden. Es ist wichtig hier den Überblick zu wahren und richtig zu migrieren, damit die Datenbank nicht jedes mal gelöscht werden muss, wenn etwas verändert wurde.
+In dem **static-Directory** werden mögliche statische Datein gespeichert, die nur in dieser App verwendet werden.
+**template-Directory**: Hier werden die Templates, die in einer App verwendet werden gespeichert.
+**__init__-File**: Ist für mögliche Veränderung in der Konfiguration der App zuständig, wird aber auch von Python benötigt.
+**admin-File**: Wird verwendet um das Django-Admin-Interface zu konfigurieren und Modelle aus der App zu registrieren.
+**apps-File**: Konfiguration der App.
+**models-File**: Die Modelle in Django, sind die Datenbankmodelle und erben von der Python-Klasse.
+**test-File**: Für alle Funktionen, die in dem Projekt selbst erstellt wurden, existieren hier Tests.
+**urls-File**: Da es sich um eine Webseite handelt, werden hier die Weiterleitungen zu den Unterseiten in einer Variable gespeichert, ebenso wie der Appname.
+**views-File**: Beinhaltet die Funktion, die beim Aufruf der Webseite verwendet wird.
+
+Für genauere Informationen zu den Files und Directories in den einzelnen Apps, stehen Kommentare und Doc-Strings in diesen, die speziefierte Klassen, Funktionen usw. erklären.
+
