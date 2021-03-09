@@ -501,8 +501,7 @@ Zum Beispiel ist es geboten nach dieser Anleitung:
 Auch hier werden wir nicht ins Detail gehen, nur ein paar Tipps zu Administration eines Servers die wir sammeln konnten:
 
 - Für Logs kann man Logrotate einrichten, um die Menge und Größe von Logs zu beherrschen.
-- SSH Keys erleichtern das ständige Einloggen, ersparen das Passwort dabei. 
-- und: Immer Ruhe bewahren, selbst wenn man sich nicht die Anleitung oben selbst erarbeiten muss, funktioniert das meiste nicht auf anhieb ;)
+- SSH Keys erleichtern das ständige Einloggen, ersparen das Passwort dabei.
 
 ### Einbindung eines SSO
 ***Auch hier: In Arbeit, noch nicht implemtiert, TODO***
