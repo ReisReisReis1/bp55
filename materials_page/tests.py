@@ -4,6 +4,8 @@ Tests for the functions in the App: materials_page
 # pylint: disable=all
 import io
 import zipfile
+from django.core.files.uploadedfile import SimpleUploadedFile
+
 
 from django.test import Client
 from django.test import TestCase
@@ -68,6 +70,7 @@ class MaterialTestCases(TestCase):
         """
 
         self.assertEqual(get_categories_and_corresponding_zip_files(), {})
+
 
         Material.objects.create(name='TestDatei1', file='C:/Users/Laura Buhleier/Documents/GitHub/media/Test1.pdf',
                                 category='TestKategorie1')

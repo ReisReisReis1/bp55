@@ -7,6 +7,7 @@ from django.shortcuts import render
 from video_content.models import Video
 from impressum.views import get_course_link
 
+
 def start(request):
     """
     Subpage start
@@ -16,7 +17,7 @@ def start(request):
     """
     video = Video.get_intro(Video)
     context = {
-        'Video': video
-        'Kurs_Link': get_course_link()
+        'Video': video,
+        'Kurs_Link': get_course_link(),
     }
     return render(request, 'start.html', context)
