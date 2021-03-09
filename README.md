@@ -33,23 +33,32 @@ Die einzelnen Python-Directory und Python-Packages, die nicht automnatisch beim 
 |----|--views.py <br>
 | <br>
 |--filter_page <br>
+|----|... <br>
 | <br>
 |--home <br>
+|----|... <br>
 | <br>
 |--impressum <br>
+|----|... <br>
 | <br>
 |--materials_page <br>
+|----|... <br>
 | <br>
 |--search <br>
+|----|... <br>
 | <br>
 |--static <br>
+|----|... <br>
 | <br>
 |--templates <br>
+|----|... <br>
 | <br>
 |--timeline <br>
 |----|--templatetags <br>
+|----|... <br>
 | <br>
 |--video_content <br>
+|----|... <br>
 
 
 ### details_page
