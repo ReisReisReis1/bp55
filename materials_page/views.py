@@ -31,6 +31,7 @@ def get_categories_and_corresponding_files():
     return result
 
 
+
 def get_categories_and_corresponding_zip_files(category):
     """
     :return: the categories and HttpsResponse for the corresponding zip files in a dictionary
@@ -82,7 +83,9 @@ def material(request, category):
 
     context = {
         'Materials': get_categories_and_corresponding_files(),
+
         'Zip_Files': get_categories_and_corresponding_zip_files(category),
+
         'Kurs_Link': get_course_link()
     }
     return render(request, "material.html", context)

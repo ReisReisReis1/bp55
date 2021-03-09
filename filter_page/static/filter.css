@@ -13,14 +13,14 @@
 /*----------------------------------------------------------------------------
     Style for the 'Mehr erfahren' buttons
  */
-.btn {
+.card-body .btn {
     width: 100%;
 }
 
 /*
     Remove shadow of 'Mehr erfahren' buttons after they get clicked
  */
-.btn:focus {
+.card-body .btn:focus {
     box-shadow: none !important;
 }
 
