@@ -3,13 +3,14 @@ Configurations for the Database-Models in video-contents
 """
 
 from django.db import models
-from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.validators import  MaxValueValidator
 from django.db.models import Q
 # pylint: disable=import-error
 from details_page.models import Building, Era
 
 
 class Video(models.Model):
+    # pylint: disable = too-few-public-methods
     """
     Set a model for video
     title: Name of the video
@@ -19,6 +20,10 @@ class Video(models.Model):
     """
 
     class Meta:
+        """
+        Meta data for the model
+        In this case the singular and plural name that will be seen in the admin interface
+        """
         verbose_name = 'Video'
         verbose_name_plural = 'Videos'
 
@@ -84,6 +89,10 @@ class Timestamp(models.Model):
     """
 
     class Meta:
+        """
+        Meta data for the model
+        In this case the singular and plural name that will be seen in the admin interface
+        """
         verbose_name = 'Timestamp'
         verbose_name_plural = 'Timestamps'
 
@@ -98,8 +107,9 @@ class Timestamp(models.Model):
                                                     '(Wird mit den Sekunden verbunden)')
     seconds = models.PositiveIntegerField(verbose_name='Sekunden',
                                           validators=[
-                                              MaxValueValidator(60, 'Sekunden können nur zwischen '
-                                                                    '0 und 60 angegeben werden')
+                                              MaxValueValidator(59, 'Sekunden können nur zwischen '
+                                                                    '0 und 60 (exklusiv) '
+                                                                    'angegeben werden')
                                           ],
                                           help_text='Geben sie hier die Sekunden an, an dem das'
                                                     'Gebäude im Video erscheint'

@@ -8,15 +8,14 @@ from .models import Impressum
 
 
 def get_course_link():
-    try:
-        first_object = Impressum.objects.all().first()
-        if first_object is None:
-            return ''
-        else:
-            link = first_object.course_link
-            return link
-    except Impressum.DoesNotExist:
-        return ''
+    """
+    Getting the link to the moodle course
+    """
+    link = ''
+    first_object = Impressum.objects.all()
+    if first_object.first() is not None and first_object.first().course_link is not None:
+        link = first_object.first().course_link
+    return link
 
 
 def impressum(request):

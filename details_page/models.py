@@ -2,7 +2,6 @@
 Configurations for the Database Models for the App 'details_page'
 """
 
-import re
 from django.db import models
 from django.core.exceptions import ValidationError
 # pylint: disable=import-error
@@ -17,7 +16,7 @@ def validate_url_conform_str(string):
     """
     if "&" in string or "?" in string or '\'' in string or '\"' in string:
         raise ValidationError(
-            message="Diese Eingabe darf nicht die Zeichen \"&\", \"?\" und alle Art von "
+            message="Diese Eingabe darf nicht die Zeichen \"&\", \"?\" und alle Art von " +
                     "Anführungszeichen enthalten.")
 
 
@@ -29,16 +28,17 @@ def validate_color_code(code):
     """
     for sign in code:
         if sign not in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d",
-                        "e",
-                        "f", "A", "B", "C", "D", "E", "F"]:
-            raise ValidationError(message="Bitte einen gültigen Code im Hex-Format einfügen: "
+                        "e", "f", "A", "B", "C", "D", "E", "F"]:
+            raise ValidationError(message="Bitte einen gültigen Code im Hex-Format einfügen: " +
                                           "Nur Hex-Zeichen: 0-9, a-f und A-F.")
-        if len(code) != 6:
-            raise ValidationError(message="Bitte einen gültigen Code im Hex-Format einfügen: "
-                                          "Muss genau 6 Zeichen lang sein.")
+    if len(code) != 6:
+        raise ValidationError(
+            message="Bitte einen gültigen Code im Hex-Format einfügen: " +
+                    "Muss genau 6 Zeichen lang sein.")
 
 
 class Era(models.Model):
+    # pylint : disable= too-few-public-methods
     """
     Era Model.
     year_from: Beginning year of era
@@ -50,16 +50,18 @@ class Era(models.Model):
     """
 
     class Meta:
+        """
+        Meta data for the model
+        In this case the singular and plural name that will be seen in the admin interface
+        """
         verbose_name = 'Epoche'
         verbose_name_plural = 'Epochen'
 
     name = models.CharField(verbose_name='Name', max_length=100, choices=[
         ('Bronzezeit', 'Bronzezeit'), ('Frühe Eisenzeit', 'Frühe Eisenzeit'),
-        ('Archaik', 'Archaik'), ('Königszeit', 'Königszeit'),
-        ('Klassik', 'Klassik'), ('Republik', 'Republik'), ('Hellenismus', 'Hellenismus'),
-        ('Frühe Kaiserzeit', 'Frühe Kaiserzeit'),
-        ('Mittlere Kaiserzeit', 'Mittlere Kaiserzeit'),
-        ('Späte Kaiserzeit', 'Späte Kaiserzeit'),
+        ('Archaik', 'Archaik'),
+        ('Klassik', 'Klassik'), ('Hellenismus', 'Hellenismus'),
+        ('Kaiserzeit', 'Kaiserzeit'),
         ('Spätantike', 'Spätantike'),
         ('Sonstiges', 'Sonstiges'),
     ], help_text="Epoche auswählen.", unique=True, null=False, blank=False)
@@ -75,7 +77,7 @@ class Era(models.Model):
     year_to = models.PositiveIntegerField(verbose_name='Enddatum',
                                           help_text="Jahr des Endes der Epoche eingeben.",
                                           blank=True, null=True)
-    year_to_BC_or_AD = models.CharField(verbose_name='Endatum v.Chr/n.Chr.?', max_length=7,
+    year_to_BC_or_AD = models.CharField(verbose_name='Enddatum v.Chr/n.Chr.?', max_length=7,
                                         help_text="Jahr des Endes: v.Chr. bzw. n.Chr. auswählen.",
                                         choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")],
                                         default="v.Chr.",
@@ -95,31 +97,55 @@ class Era(models.Model):
         """
         return str(self.name)
 
-    def get_year_of_item_as_signed_int(self):
+    def get_year_as_signed_int(self):
         """
-        Inner helper to sorting the years.
-        About the try/except: You can define an Era without an year.
-        This leads to following problem:
-        You can not sort Eras by year if there is one without an year.
-        In line 29 or 31 we try to get the
-        year as an Int. This will raise the TypeError,
-        if this Era don't has a year (or the year is setto None to be exact).
-        Therefore we except this error, and return 2021, which is higher than
-        every year in the Database (limited to max_years (currently 1400)).
-        :return: the year of the era(beginning year)
+        Getting the dates of an era as signed int
+        :return: list with two elements: new_list[0] start date, new_list[1] end date
         """
-        try:
-            if self.year_from_BC_or_AD == "v.Chr.":
-                return -1 * int(self.year_from)
-            else:
-                return int(self.year_from)
-        except TypeError:
-            # If era has no year return big int, so it will be listed last.
-            return 9999999999999999999
+        new_list = [0, 0]
+        date = 9999
+        if self.year_from is not None:
+            # Checking for the self start date if it is before or after the birth of christ
+            if self.year_from_BC_or_AD == 'v.Chr.':
+                date = -1 * int(self.year_from)
+            elif self.year_from_BC_or_AD == 'n.Chr.':
+                date = int(self.year_from)
+        new_list[0] = date
+        date = 9999
+        if self.year_to is not None:
+            # Checking for the self end date if it is before or after the birth of christ
+            if self.year_to_BC_or_AD == 'v.Chr.':
+                date = -1 * int(self.year_to)
+            elif self.year_to_BC_or_AD == 'n.Chr.':
+                date = int(self.year_to)
+        new_list[1] = date
+        return new_list
+
+    def get_year_as_str(self):
+        """
+        Getting the start year as string
+        Building a  string with the years that are not null, for both, year_from and year_to
+        :return: The
+        """
+        start = ''
+        end = ''
+        if self.year_from is not None:
+            year_from = str(self.year_from)
+            # n.Chr. as default
+            bc_ad_from = ' ' + str(
+                self.year_from_BC_or_AD) if self.year_from is not None else 'v.Chr.'
+            start = year_from + bc_ad_from
+            if self.year_to is not None:
+                year_to = str(self.year_to)
+                bc_ad_to = ' ' + str(
+                    self.year_to_BC_or_AD) if self.year_to_BC_or_AD is not None else 'v.Chr.'
+                end = ' - ' + year_to + bc_ad_to
+
+        return start + end
 
 
 class Building(models.Model):
-    # pylint: disable = too-many-public-methods
+    # pylint: disable = too-many-public-methods, no-member
     """
     Database model for buildings. Will be used in detail page, but also in timeline and filter page.
     name: name of the building
@@ -127,12 +153,12 @@ class Building(models.Model):
     city: city in which the building is located
     region: region in which the buildind is located
     country: country in which the building is located
-    date_from: date on which construction began
-    date_from_BC_or_AD: BC/AD switcher for date_from
-    date_to: date on which construction ended
-    date_to_BC_or_AD: BC/AD switcher for date_to
-    date_ca: if the date is exact or an estimation
-    date_century: if the given date is just a century-approximation and not an exact year
+    year_from: date on which construction began
+    year_from_BC_or_AD: BC/AD switcher for date_from
+    year_to: date on which construction ended
+    year_to_BC_or_AD: BC/AD switcher for date_to
+    year_ca: if the date is exact or an estimation
+    year_century: if the given date is just a century-approximation and not an exact year
     architect: architect of the building
     context: context/type of the building
     builder: builder of the building
@@ -153,6 +179,10 @@ class Building(models.Model):
     """
 
     class Meta:
+        """
+        Meta data for the model
+        In this case the singular and plural name that will be seen in the admin interface
+        """
         verbose_name = 'Gebäude'
         verbose_name_plural = 'Gebäude'
 
@@ -161,43 +191,43 @@ class Building(models.Model):
                             validators=[validate_url_conform_str])
     description = models.TextField(verbose_name='Beschreibung', max_length=1000,
                                    help_text="Beschreibung des Gebäudes angeben (max. 1000 Zeichen",
-                                   null=True, blank=True, editable=False)
+                                   null=True, blank=True, editable=True)
     city = models.CharField(verbose_name='Stadt', max_length=100,
-                            help_text="Stadt des Bauweks eingeben (max. 100 Zeichen).",
+                            help_text="Stadt des Bauwerks eingeben (max. 100 Zeichen).",
                             null=True, blank=True, validators=[validate_url_conform_str])
     region = models.CharField(verbose_name='Region', max_length=100,
                               help_text="Region des Bauwerks eingeben (max. 100 Zeichen).",
                               null=True, blank=True, validators=[validate_url_conform_str])
     country = models.CharField(verbose_name='Land', max_length=100,
                                help_text="Hier Land des Bauwerks auswählen (Tipp:"
-                                         "Zum Suchen Kürzel"
+                                         "Zum Suchen Kürzel "
                                          "auf der Tastatur eingeben).",
                                choices=country_codes.country_codes_as_tuple_list,
                                default="Griechenland", null=True, blank=True,
                                validators=[validate_url_conform_str])
-    date_from = models.PositiveIntegerField(
+    year_from = models.PositiveIntegerField(
         verbose_name='Baubeginn',
         help_text="Jahr des Baubeginns eingeben. Wenn nicht gesetzt, "
-                  "erscheint das Gebäude nicht auf der Zeitachse.",
+                  "erscheint das Gebäude am Ende der Zeitachse.",
         null=True, blank=True)
-    date_from_BC_or_AD = models.CharField(verbose_name='Baubeginn v.Chr./n.Chr.?', max_length=7,
+    year_from_BC_or_AD = models.CharField(verbose_name='Baubeginn v.Chr./n.Chr.?', max_length=7,
                                           help_text="Jahr des Baubeginns: v.Chr. bzw. n.Chr. "
                                                     "auswählen.",
                                           choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")],
                                           default="v.Chr.",
                                           null=True, blank=True)
-    date_to = models.PositiveIntegerField(verbose_name='Bauende',
+    year_to = models.PositiveIntegerField(verbose_name='Bauende',
                                           help_text="Jahr des Bauendes eingeben.",
                                           null=True, blank=True)
-    date_to_BC_or_AD = models.CharField(verbose_name='Bauende v.Chr/n.Chr.?', max_length=7,
+    year_to_BC_or_AD = models.CharField(verbose_name='Bauende v.Chr/n.Chr.?', max_length=7,
                                         help_text="Jahr des Bauendes: v.Chr. bzw. n.Chr. "
                                                   "auswählen.",
                                         choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")],
                                         default="v.Chr.",
                                         null=True, blank=True)
-    date_century = models.BooleanField(verbose_name='Jahrhundertangaben?', default=False,
+    year_century = models.BooleanField(verbose_name='Jahrhundertangaben?', default=False,
                                        help_text="Sind die Daten Jahrhundert Angaben?")
-    date_ca = models.BooleanField(verbose_name='ungefähre Datumsangabe?', default=False,
+    year_ca = models.BooleanField(verbose_name='ungefähre Jahresangabe?', default=False,
                                   help_text="ca. zum Datum hinzufügen (für ungenaue Datumsangaben)"
                                             ".")
     era = models.ForeignKey(verbose_name='Epoche', to=Era, on_delete=models.SET_NULL,
@@ -257,8 +287,12 @@ class Building(models.Model):
     literature = models.TextField(verbose_name='Literatur', max_length=1000,
                                   help_text="Literatur zum Gebäude angeben (max. 1000 Zeichen).",
                                   null=True, blank=True)
-    links = models.TextField(verbose_name='Links', max_length=1000, help_text="Weiterführende Links zum Gebäude "
-                             "angeben (max. 1000 Zeichen).", default="", null=True, blank=True)
+    links = models.TextField(verbose_name='Links', max_length=1000,
+                             help_text="Weiterführende Links zum Gebäude "
+                                       "angeben (max. 1000 Zeichen)."
+                                       "Es werden nur Links im folgenden Format erkannt:"
+                                       "https://moodle.tu-darmstadt.de/my/", default="", null=True,
+                             blank=True)
 
     def __str__(self):
         """
@@ -292,7 +326,7 @@ class Building(models.Model):
             building = self.objects.get(pk=building_id)
             return building.era
         except Building.DoesNotExist:
-            return Building.DoesNotExist
+            raise Building.DoesNotExist
 
     def get_description(self, building_id):
         # pylint: disable= no-member
@@ -342,63 +376,63 @@ class Building(models.Model):
         except Building.DoesNotExist:
             return Building.DoesNotExist
 
-    def get_date_from(self, building_id):
+    def get_year_from(self, building_id):
         # pylint: disable= no-member
         """
         :param building_id: ID to fetch the correct building
-        :return: date on which construction began
+        :return: year on which construction began
         """
         try:
             building = self.objects.get(pk=building_id)
-            return building.date_from
+            return building.year_from
         except Building.DoesNotExist:
             return Building.DoesNotExist
 
-    def get_date_from_bc_or_ad(self, building_id):
+    def get_year_from_bc_or_ad(self, building_id):
         # pylint: disable= no-member
         """
         :param building_id: ID to fetch the correct building
-        :return: if date_from is BC or AD
+        :return: if year_from is BC or AD
         """
         try:
             building = self.objects.get(pk=building_id)
-            return building.date_from_BC_or_AD
+            return building.year_from_BC_or_AD
         except Building.DoesNotExist:
             return Building.DoesNotExist
 
-    def get_date_to(self, building_id):
+    def get_year_to(self, building_id):
         # pylint: disable= no-member
         """
         :param building_id: ID to fetch the correct building
-        :return: date on which construction began
+        :return: year on which construction began
         """
         try:
             building = self.objects.get(pk=building_id)
-            return building.date_to
+            return building.year_to
         except Building.DoesNotExist:
             return Building.DoesNotExist
 
-    def get_date_to_bc_or_ad(self, building_id):
+    def get_year_to_bc_or_ad(self, building_id):
         # pylint: disable= no-member
         """
         :param building_id: ID to fetch the correct building
-        :return: if date_from is BC or AD
+        :return: if year from is BC or AD
         """
         try:
             building = self.objects.get(pk=building_id)
-            return building.date_to_BC_or_AD
+            return building.year_to_BC_or_AD
         except Building.DoesNotExist:
             return Building.DoesNotExist
 
-    def get_date_ca(self, building_id):
+    def get_year_ca(self, building_id):
         # pylint: disable= no-member
         """
         :param building_id: ID to fetch the correct building
-        :return: if the date is an exact specification or not
+        :return: if the year is an exact specification or not
         """
         try:
             building = self.objects.get(pk=building_id)
-            return building.date_ca
+            return building.year_ca
         except Building.DoesNotExist:
             return Building.DoesNotExist
 
@@ -410,7 +444,7 @@ class Building(models.Model):
         """
         try:
             building = self.objects.get(pk=building_id)
-            return building.date_century
+            return building.year_century
         except Building.DoesNotExist:
             return Building.DoesNotExist
 
@@ -602,9 +636,7 @@ class Building(models.Model):
         """
         try:
             building = self.objects.get(pk=building_id)
-            """
-            Splits the strings in the list at ; and ,
-            """
+            # Splits the strings in the list at ; and ,
             txt = building.links
             # Splitting the txt at ","
             lst = txt.split(", ")
@@ -613,8 +645,76 @@ class Building(models.Model):
         except Building.DoesNotExist:
             return Building.DoesNotExist
 
+    def get_year_as_signed_int(self):
+        """
+        Getting the dates of an building as signed int
+        :return: list with two elements: new_list[0] start date, new_list[1] end date
+        """
+        new_list = [0, 0]
+        date = 9999
+        if self.year_from is not None:
+            # Checking for the self start date if it is before or after the birth of christ
+            if self.year_from_BC_or_AD == 'v.Chr.':
+                date = -1 * int(self.year_from)
+                if self.year_century and date != 0:
+                    date = date * 100 + 50
+            elif self.year_from_BC_or_AD == 'n.Chr.':
+                date = int(self.year_from)
+                if self.year_century and date != 0:
+                    date = date * 100 - 50
+        new_list[0] = date
+        date = 9999
+        if self.year_to is not None:
+            # Checking for the self end date if it is before or after the birth of christ
+            if self.year_to_BC_or_AD == 'v.Chr.':
+                date = -1 * int(self.year_to)
+                if self.year_century and self.year_to != 0:
+                    date = date * 100 + 50
+            elif self.year_to_BC_or_AD == 'n.Chr.':
+                date = int(self.year_to)
+                if self.year_century and date != 0:
+                    date = date * 100 - 50
+        new_list[1] = date
+        return new_list
+
+    def get_year_as_str(self):
+        """
+        Getting the start year plus end year as string
+        """
+        century = '. Jh.' if self.year_century else ''
+        circa = 'ca. ' if self.year_ca else ''
+        start = ''
+        end = ''
+        if self.year_from is not None:
+            year_from = str(self.year_from)
+            # default n.Chr.
+            bc_ad_from = ' ' + str(
+                self.year_from_BC_or_AD) if self.year_from is not None else 'v.Chr.'
+            start = circa + year_from + century + bc_ad_from
+            if self.year_to is not None:
+                year_to = str(self.year_to)
+                # default n.Chr.
+                bc_ad_to = ' ' + str(
+                    self.year_to_BC_or_AD) if self.year_to_BC_or_AD is not None else 'v.Chr.'
+                end = ' - ' + circa + year_to + century + bc_ad_to
+
+        return start + end
+
+    def get_thumbnail(self):
+        """
+        Getting the thumbnail for this building
+        """
+        try:
+            thumbnail = Picture.objects.get(building=self.pk, usable_as_thumbnail=True)
+        except Picture.DoesNotExist:
+            thumbnail = None
+        except Picture.MultipleObjectsReturned:
+            thumbnail = Picture.objects.filter(building=self.pk, usable_as_thumbnail=True)[0]
+        return thumbnail
+
 
 class Blueprint(models.Model):
+    # pylint : disable = too-few-public-methods
     """
     name: Name of the blueprint
     description: description for the blueprint
@@ -625,6 +725,11 @@ class Blueprint(models.Model):
     """
 
     class Meta:
+        # pylint : disable = too-few-public-methods
+        """
+        Meta data for the model
+        In this case the singular and plural name that will be seen in the admin interface
+        """
         verbose_name = 'Bauplan'
         verbose_name_plural = 'Baupläne'
 
@@ -666,6 +771,7 @@ class Blueprint(models.Model):
 
 
 class Picture(models.Model):
+    # pylint : disable= too-few-public-methods
     """
     Picture Model: Will be used to save Pictures for all-over the website, except
     thumbnails in videos and blueprints.
@@ -680,6 +786,11 @@ class Picture(models.Model):
     """
 
     class Meta:
+        # pylint: disable = too-few-public-methods
+        """
+        Meta data for the model
+        In this case the singular and plural name that will be seen in the admin interface
+        """
         verbose_name = 'Bild'
         verbose_name_plural = 'Bilder'
 
