@@ -230,6 +230,7 @@ Wir verwenden hier PostgreSQL.
 5. Dem erstellten Nutzer Rechte und Besitz an der erstellten Datenbank geben
 
 	<code>$ GRANT ALL PRIVILEGES ON DATABASE "ruinsandbeyond" TO ruinsandbeyond;</code>
+	
 	<code>$ ALTER DATABASE ruinsandbeyond OWNER TO ruinsandbeyond;</code>
 	
 	Tipp: Nun nochmal <code>\l</code> ausführen, um zu sehen ob für die Datenbank "ruinsandbeyond" nun auch der Besitzer "ruinsandbeyond" eingetragen wurde.
@@ -447,6 +448,7 @@ Die nötigen Schritte für eine Apache2 Konfiguration:
 	2. Und für die mod_wsgi benötigen wir nicht nur die Konfiguration (die schon da ist), sondern auch eine .load Datei, die auch aktiviert werden muss. Wir müssen also <code>/etc/apache2/mods-available/wsgi.conf</code> und <code>/etc/apache2/mods-available/wsgi.load</code> verlinken in den entsprechenden enabled-Ordner:
 	
 		<code># ln -s /etc/apache2/mods-available/wsgi.conf /etc/apache2/mods-enabled/wsgi.conf</code>
+		
 		<code># ln -s /etc/apache2/mods-available/wsgi.load /etc/apache2/mods-enabled/wsgi.load</code>
 		
 		Ggf. könnten diese Links schon existieren, dann geben die Befehle Fehler aus, dass die Dateien schon existieren würden. Das wäre dann an der Stelle nicht schlimm, Hauptsache die Links existieren. 
