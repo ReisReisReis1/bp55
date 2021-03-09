@@ -1,0 +1,37 @@
+"""
+Configurations for the Database Models for the App 'materials_page'
+"""
+from django.core.exceptions import ValidationError
+from django.db import models
+
+
+def validate_pdf_extension(filename):
+    import os
+    ext = os.path.splitext(filename.name)[1]
+    if ext != ".pdf":
+        raise ValidationError("Es sind nur Datein mit Endung .pdf erlaubt.")
+
+
+class Material(models.Model):
+    # pylint: disable = too-many-public-methods
+    """
+    name: short decription of what the file is about
+    file: the material file
+    category: category of the file
+    """
+
+    class Meta:
+        verbose_name = 'Materialien'
+        verbose_name_plural = 'Materialien'
+
+    name = models.CharField(verbose_name='Titel', max_length=1000, help_text='Bezeichnung der Datei')
+    file = models.FileField(verbose_name='Datei', upload_to='material/',
+                            help_text="Datei hochladen.", validators=[validate_pdf_extension])
+    category = models.CharField(verbose_name='Kategorie', max_length=100, help_text='Kategorie der Datei')
+
+    def __str__(self):
+        """
+        Name for the admin interface
+        :return: the name of a Building
+        """
+        return str(self.name)

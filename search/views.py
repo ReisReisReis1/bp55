@@ -3,8 +3,10 @@ Configurations of the different functions and subpages from the App: search
 """
 from django.db.models import Q
 from django.shortcuts import render
+# pylint: disable = no-name-in-module, import-error
 from details_page.models import Building
 from timeline.views import get_thumbnails_for_buildings
+from impressum.views import get_course_link
 
 
 def search(request):
@@ -26,12 +28,16 @@ def search(request):
                                       Q(construction_type__icontains=search_request) | \
                                       Q(design__icontains=search_request) | \
                                       Q(function__icontains=search_request) | \
-                                      Q(column_order__icontains=search_request))
+                                      Q(column_order__icontains=search_request) | \
+                                      Q(material__icontains=search_request) | \
+                                      Q(construction__icontains=search_request))
     # order results alphabetically:
     results = results.order_by("name")
     # adding thumbnails:
     results = get_thumbnails_for_buildings(results)
     context = {
         'Result': results,
+        'Active_Filter': request.GET,
+        'Kurs_Link': get_course_link()
     }
     return render(request, 'search.html', context)

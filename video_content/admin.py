@@ -7,5 +7,18 @@ from django.contrib import admin
 # pylint: disable = import-error, relative-beyond-top-level
 from .models import Video, Timestamp
 
-admin.site.register(Video)
-admin.site.register(Timestamp)
+
+class TimestampInLine(admin.StackedInline):
+    model = Timestamp
+
+
+@admin.register(Video)
+class VideoAdmin(admin.ModelAdmin):
+    """
+    Configure the admin model for 'Video'
+    """
+    search_fields = ('title',)
+    ordering = ('title',)
+    inlines = [
+        TimestampInLine,
+    ]

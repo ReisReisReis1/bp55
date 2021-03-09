@@ -1,0 +1,28 @@
+{% load static %}
+{% load bootstrap4 %}
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="{%  static 'favicon.ico' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/topnav.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bottomnav.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/default_colors.css' %}">
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='slim' %}
+
+    <script>
+        $(function(){
+            // this will get the full URL at the address bar
+            var url = window.location.href;
+
+            // passes on every "a" tag
+            $(".menu_item").each(function() {
+                    // checks if its the same on the address bar
+                if(url == (this.href)) {
+                    $(this).closest("a").addClass("active");
+                }
+            });
+        });
+    </script>
+</head>

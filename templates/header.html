@@ -4,27 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/topnav.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/default_colors.css' %}">
-    {% bootstrap_css %}
-    {% bootstrap_javascript jquery='slim' %}
 
-    <script>
-        $(function(){
-            // this will get the full URL at the address bar
-            var url = window.location.href;
-
-            // passes on every "a" tag
-            $(".menu_item").each(function() {
-                    // checks if its the same on the address bar
-                if(url == (this.href)) {
-                    $(this).closest("a").addClass("active");
-                }
-            });
-        });
-    </script>
 </head>
 <body>
     <div class="row row-no-margin" id="color-bg-primary">
@@ -55,6 +35,7 @@
                     <a href="{% url "timeline:timeline" %}" class="menu_item" id="color-txt-primary">Zeitachse</a>
                     <a href="{% url "filter_page:filter" %}" class="menu_item" id="color-txt-primary">Bauwerke</a>
                     <a href="{% url "video_content:videos" %}" class="menu_item" id="color-txt-primary">Staffeln</a>
+                    <a href="{% url "materials_page:material" %}" class="menu_item" id="color-txt-primary">Material</a>
                 </div>
             </div>
         </div>
