@@ -82,6 +82,7 @@ class BuildingTestCases(TestCase):
         self.assertEqual(Building.get_name(Building, 0), '')
         self.assertEqual(Building.get_name(Building, 1), 'Parthenon')
         self.assertEqual(Building.get_name(Building, 2), 'empty')
+        self.assertRaises(Building.DoesNotExist, Building.get_name, Building, 3)
         self.assertEqual(Building.get_name(Building, 3), Building.DoesNotExist)
 
     def test2_get_city(self):
@@ -320,14 +321,14 @@ class BuildingTestCases(TestCase):
         self.assertEqual(Building.get_links(Building, 2), list(''))
         self.assertEqual(Building.get_links(Building, 3), Building.DoesNotExist)
 
-    def test28_get_date_century(self):
+    def test28_get_year_century(self):
         """
         Testing get_date_ca
         """
-        self.assertEqual(Building.get_date_century(Building, 0), False)
-        self.assertEqual(Building.get_date_century(Building, 1), True)
-        self.assertEqual(Building.get_date_century(Building, 2), False)
-        self.assertEqual(Building.get_date_century(Building, 3), Building.DoesNotExist)
+        self.assertEqual(Building.get_year_century(Building, 0), False)
+        self.assertEqual(Building.get_year_century(Building, 1), True)
+        self.assertEqual(Building.get_year_century(Building, 2), False)
+        self.assertEqual(Building.get_year_century(Building, 3), Building.DoesNotExist)
 
     def test29_get_course_link(self):
         """
