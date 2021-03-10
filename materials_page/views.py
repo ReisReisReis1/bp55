@@ -2,7 +2,6 @@
 Configurations of the Website subpages from the App: materials_page
 """
 
-
 from django.shortcuts import render
 # pylint: disable = import-error, relative-beyond-top-level
 from .models import Material
@@ -23,16 +22,15 @@ def get_categories_and_corresponding_files():
     # Add all the existing categories and material-files in one dictionary
     for material_entry in Material.objects.all():
         # If the category is not already in the dictionary, add category and file as first element
-        if material_entry.get_category not in result:
-            result[material_entry.get_category] = [material_entry]
+        if material_entry.get_category() not in result:
+            result[material_entry.get_category()] = [material_entry]
         # If the category is already in the dictionary, add file to this category
         else:
-            result[material_entry.get_category] = result[material_entry.get_category] + [material_entry]
+            result[material_entry.get_category()] = result[material_entry.get_category()] + [material_entry]
     return result
 
 
-
-def get_categories_and_corresponding_zip_files(category):
+def get_categories_and_corresponding_zip_files(request, category):
     """
     :return: the categories and HttpsResponse for the corresponding zip files in a dictionary
     """
@@ -72,7 +70,7 @@ def get_categories_and_corresponding_zip_files(category):
     return resp
 
 
-def material(request, category):
+def material(request):
     """
     Subpage to show the characteristics of a building
     :param request: url request to get materials_page
@@ -83,10 +81,6 @@ def material(request, category):
 
     context = {
         'Materials': get_categories_and_corresponding_files(),
-
-        'Zip_Files': get_categories_and_corresponding_zip_files(category),
-
         'Kurs_Link': get_course_link()
     }
     return render(request, "material.html", context)
-
