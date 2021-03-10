@@ -57,8 +57,6 @@ class MaterialTestCases(TestCase):
         Material.objects.create(name='TestDatei3', file='/media/material/Test3.pdf', category=test2)
         Material.objects.create(name='', category=test3)
 
-        # print(get_categories_and_corresponding_files())
-
         self.assertEqual(get_categories_and_corresponding_files()['TestKategorie1'][0].name, 'TestDatei1')
         self.assertEqual(get_categories_and_corresponding_files()['TestKategorie1'][1].name, 'TestDatei2')
         self.assertEqual(get_categories_and_corresponding_files()['TestKategorie2'][0].name, 'TestDatei3')
@@ -113,15 +111,27 @@ class MaterialTestCases(TestCase):
         test2 = Category.objects.create(name='TestKategorie2')
         test3 = Category.objects.create(name='')
 
+        test4 = Category.objects.create(name='TestKategorie3')
+        test5 = Category.objects.create(name='TestKategorie3')
+
         testmat1 = Material.objects.create(name='TestDatei1', file='/media/material/Test1.pdf', category=test1)
         testmat2 = Material.objects.create(name='TestDatei2', file='/media/material/Test2.pdf', category=test1)
         testmat3 = Material.objects.create(name='TestDatei3', file='/media/material/Test3.pdf', category=test2)
         testmat4 = Material.objects.create(name='', category=test3)
 
+        testmat5 = Material.objects.create(name='TestDatei5', category=test4)
+        testmat6 = Material.objects.create(name='TestDatei6', category=test4)
+        testmat7 = Material.objects.create(name='TestDatei7', category=test5)
+        testmat8 = Material.objects.create(name='TestDatai8',)
+
         self.assertEqual(testmat1.get_category(), 'TestKategorie1')
         self.assertEqual(testmat2.get_category(), 'TestKategorie1')
         self.assertEqual(testmat3.get_category(), 'TestKategorie2')
         self.assertEqual(testmat4.get_category(), '')
+        self.assertEqual(testmat5.get_category(), 'TestKategorie3')
+        self.assertEqual(testmat6.get_category(), 'TestKategorie3')
+        self.assertEqual(testmat7.get_category(), 'TestKategorie3')
+        self.assertEqual(testmat8.get_category(), 'Sonstiges')
 
 
 class CategoryTestCases(TestCase):

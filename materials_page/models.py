@@ -6,7 +6,7 @@ from django.db import models
 
 
 class Category(models.Model):
-    # pylint: disable = too-many-public-methods
+    # pylint: disable = too-few-public-methods
     """
     name: the catgeorys name
     """
@@ -26,7 +26,7 @@ class Category(models.Model):
 
 
 class Material(models.Model):
-    # pylint: disable = too-many-public-methods
+    # pylint: disable = too-few-public-methods
     """
     name: short decription of what the file is about
     file: the material file
@@ -54,11 +54,9 @@ class Material(models.Model):
         """
         :return: category name
         """
-        try:
+        if self.category is not None:
             return self.category.name
-        except Category.DoesNotExist:
-            return Category.DoesNotExist
-        except Category.MultipleObjectsReturned:
-            Category.MultipleObjectsReturned
+        else:
+            return 'Sonstiges'
 
 
