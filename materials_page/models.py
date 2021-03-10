@@ -24,18 +24,6 @@ class Category(models.Model):
         """
         return str(self.name)
 
-    def get_name(self, category_name):
-        # pylint: disable= no-member
-        """
-        :param category_name:  name to fetch the correct category
-        :return: name of the category
-        """
-        try:
-            category = self.objects.get(name=category_name),
-            return category.name
-        except Category.DoesNotExist:
-            Category.DoesNotExist
-
 
 class Material(models.Model):
     # pylint: disable = too-many-public-methods
@@ -70,5 +58,7 @@ class Material(models.Model):
             return self.category.name
         except Category.DoesNotExist:
             return Category.DoesNotExist
+        except Category.MultipleObjectsReturned:
+            Category.MultipleObjectsReturned
 
 
