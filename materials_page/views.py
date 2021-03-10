@@ -44,7 +44,7 @@ def get_categories_and_corresponding_zip_files(request, category):
         filenames = filenames + [material_entry.file.path]
 
         # Folder name in ZIP archive which contains the above files
-        zip_subdir = 'zipfiles'
+        zip_subdir = category
         zip_filename = "%s.zip" % zip_subdir
 
         # Open BytesIO to grab in-memory ZIP contents
