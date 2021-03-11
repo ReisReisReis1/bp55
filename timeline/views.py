@@ -84,10 +84,9 @@ def get_thumbnails_for_buildings(building_list):
     return buildings_with_thumbnails
 
 
-# Inner helper method for items
 def get_start_year_of_item(i):
     """
-    Inner function used the call of helpers for the two different classes
+    Method used the call of helpers for the two different classes
     :param i: the item to call the helper for
     :return: the year of an Historic Date, or the date_from of an Building, as Signed int,
     as calculated by the called helper.

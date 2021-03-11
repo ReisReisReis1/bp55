@@ -311,7 +311,7 @@ class TimelineViewsTest(TestCase):
                           'Archaik': (self.archaik, []),
                           'Klassik': (self.klassik, []),
                           'Hellenismus': (
-                          self.hellenismus, [(True, b, "100 v.Chr.", thumbnail_default)]),
+                              self.hellenismus, [(True, b, "100 v.Chr.", thumbnail_default)]),
                           'Kaiserzeit': (self.kaiserzeit, []),
                           'Spätantike': (self.spätantike, [])}
                          )
@@ -429,14 +429,13 @@ class TimelineViewsTest(TestCase):
             cls.b4 = Building.objects.create(name="Building 4", year_from=100,
                                              year_from_BC_or_AD="n.Chr.")
             cls.b1ca = Building.objects.create(name="Building 1", year_from=100,
-                                             year_from_BC_or_AD="v.Chr.", year_ca=True)
+                                               year_from_BC_or_AD="v.Chr.", year_ca=True)
             cls.b2jh = Building.objects.create(name="Building 2", year_from=5,
-                                             year_from_BC_or_AD="v.Chr.",
-                                             year_century=True)
+                                               year_from_BC_or_AD="v.Chr.",
+                                               year_century=True)
             cls.b2jhca = Building.objects.create(name="Building 2", year_from=5,
-                                             year_from_BC_or_AD="v.Chr.",
-                                             year_century=True, year_ca=True)
-
+                                                 year_from_BC_or_AD="v.Chr.",
+                                                 year_century=True, year_ca=True)
 
             cls.hd1 = HistoricDate.objects.create(year=50, exacter_date=date(50, 3, 27),
                                                   year_BC_or_AD="v.Chr.",
@@ -459,22 +458,21 @@ class TimelineViewsTest(TestCase):
                                                   infos="Ein Test Datum",
                                                   era=cls.klassik)
             cls.hd5ca = HistoricDate.objects.create(year=50, exacter_date=None,
-                                                  year_BC_or_AD="v.Chr.",
-                                                  title="Historic Date 1",
-                                                  infos="Ein Test Datum",
-                                                  era=cls.bronzezeit, year_ca=True)
+                                                    year_BC_or_AD="v.Chr.",
+                                                    title="Historic Date 1",
+                                                    infos="Ein Test Datum",
+                                                    era=cls.bronzezeit, year_ca=True)
             cls.hd5jh = HistoricDate.objects.create(year=50, exacter_date=None,
-                                                  year_BC_or_AD="v.Chr.",
-                                                  title="Historic Date 1",
-                                                  infos="Ein Test Datum",
-                                                  era=cls.bronzezeit, year_century=True)
+                                                    year_BC_or_AD="v.Chr.",
+                                                    title="Historic Date 1",
+                                                    infos="Ein Test Datum",
+                                                    era=cls.bronzezeit, year_century=True)
             cls.hd5jhca = HistoricDate.objects.create(year=50, exacter_date=None,
-                                                  year_BC_or_AD="v.Chr.",
-                                                  title="Historic Date 1",
-                                                  infos="Ein Test Datum",
-                                                  era=cls.bronzezeit, year_ca=True,
-                                                  year_century=True)
-
+                                                      year_BC_or_AD="v.Chr.",
+                                                      title="Historic Date 1",
+                                                      infos="Ein Test Datum",
+                                                      era=cls.bronzezeit, year_ca=True,
+                                                      year_century=True)
 
         def test_getDates(self):
             """
@@ -503,6 +501,7 @@ class GetStartYearOfItemTests(TestCase):
     Tests for the get_start_year_of_item(i) method.
     ;return: None/Test results
     """
+
     @classmethod
     def setUpTestData(cls):
         """
@@ -543,14 +542,13 @@ class GetStartYearOfItemTests(TestCase):
         cls.b4 = Building.objects.create(name="Building 4", year_from=100,
                                          year_from_BC_or_AD="n.Chr.")
         cls.b1ca = Building.objects.create(name="Building 1", year_from=100,
-                                         year_from_BC_or_AD="v.Chr.", year_ca=True)
+                                           year_from_BC_or_AD="v.Chr.", year_ca=True)
         cls.b2jh = Building.objects.create(name="Building 2", year_from=5,
-                                         year_from_BC_or_AD="v.Chr.",
-                                         year_century=True)
+                                           year_from_BC_or_AD="v.Chr.",
+                                           year_century=True)
         cls.b2jhca = Building.objects.create(name="Building 2", year_from=5,
-                                         year_from_BC_or_AD="v.Chr.",
-                                         year_century=True, year_ca=True)
-
+                                             year_from_BC_or_AD="v.Chr.",
+                                             year_century=True, year_ca=True)
 
         cls.hd1 = HistoricDate.objects.create(year=50, exacter_date=date(50, 3, 27),
                                               year_BC_or_AD="v.Chr.",
@@ -573,21 +571,21 @@ class GetStartYearOfItemTests(TestCase):
                                               infos="Ein Test Datum",
                                               era=cls.klassik)
         cls.hd5ca = HistoricDate.objects.create(year=50, exacter_date=None,
-                                              year_BC_or_AD="v.Chr.",
-                                              title="Historic Date 1",
-                                              infos="Ein Test Datum",
-                                              era=cls.bronzezeit, year_ca=True)
+                                                year_BC_or_AD="v.Chr.",
+                                                title="Historic Date 1",
+                                                infos="Ein Test Datum",
+                                                era=cls.bronzezeit, year_ca=True)
         cls.hd5jh = HistoricDate.objects.create(year=50, exacter_date=None,
-                                              year_BC_or_AD="v.Chr.",
-                                              title="Historic Date 1",
-                                              infos="Ein Test Datum",
-                                              era=cls.bronzezeit, year_century=True)
+                                                year_BC_or_AD="v.Chr.",
+                                                title="Historic Date 1",
+                                                infos="Ein Test Datum",
+                                                era=cls.bronzezeit, year_century=True)
         cls.hd5jhca = HistoricDate.objects.create(year=50, exacter_date=None,
-                                              year_BC_or_AD="v.Chr.",
-                                              title="Historic Date 1",
-                                              infos="Ein Test Datum",
-                                              era=cls.bronzezeit, year_ca=True,
-                                              year_century=True)
+                                                  year_BC_or_AD="v.Chr.",
+                                                  title="Historic Date 1",
+                                                  infos="Ein Test Datum",
+                                                  era=cls.bronzezeit, year_ca=True,
+                                                  year_century=True)
 
     def test_get_start_year_of_item(self):
         """
