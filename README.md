@@ -9,7 +9,170 @@ Dieses Projekt ist unter der [GNU General Public License v3.0](https://www.gnu.o
 
 **Umsetzung**: Sofern der Nutzende noch nicht über den Single-Sign-On der TU-Darmstadt eingeloggt ist, wird er zunächst auf die Login-Seite geleitet, um sich dort anzumelden. Dies stellt die Einhaltung der Urheberrechte sicher und dass nur die gedachte Zielgruppe auf die Inhalte zugreifen kann. Anschließend gelangt man auf die Intro-Seite. Diese enthält ein Intro-Video und einen Beschreibungstext. Das Intro-Video gibt einen Einstieg in die Vorlesung, welche durch die Webanwendung begleitet wird und somit auch das Thema dieser präsentiert. Der Beschreibungstext enthält eine Beschreibung aller verfügbaren Funktionalitäten der Unterseiten, damit Nutzende sich schnell und einfach zurecht finden. Auf jeder Seite, mit Ausnahme der Login-Seite, wird eine Menüleiste angezeigt, die Verlinkungen zu den Unterseiten "Intro", "Zeitachse", "Bauwerke", "Staffel" und "Materialien" bereitstellt. Auf der Zeitachse werden ausgewählte Gebäude und Ereignisse von ca. 1400 v.Chr. bis ca. 600 n.Chr. chronologisch aufgeführt. Dabei werden Bauwerke mit Titel, Datierung und einem Vorschaubild, sowie Ereignisse mit Bezeichnung und Datierung dargestellt. Durch Auswahl eines Bauwerks wird man auf die zugehörige Detailseite geleitet. Auf der Detailseite werden Informationen, Bilder und Grundrisse zu dem jeweiligen Gebäude angezeigt mit der Möglichkeit Videos anzusehen, in denen das Bauwerk behandelt wird. Auf der „Bauwerke“-Seite wird die Möglichkeit geboten, die Gebäude nach bestimmten Kategorien zu filtern. Die Ergebnisse werden daraufhin tabellarisch angezeigt und enthalten ebenfalls eine Verlinkung zur Detailseite. Mittels der Suchfunktion, die auf jeder Unterseite angezeigt wird, kann nach den Attributen "Name", "Stadt", "Region", "Land", "Epoche", "Architekt", "Kontext", "Bauherr", "Bautypus", "Bauform", "Funktion" und "Säulen-ordnung" der Gebäude gesucht werden. Die Ergebnisse werden ähnlich wie bei der Filterfunktion tabellarisch aufgelistet. Die "Staffel"-Unterseite enthält alle Vorlesungsvideos, chronologisch nach Epochen geordnet. Nutzende können hier für eine bessere Übersichtlichkeit, Epochen mit vielen Videos aus- und einklappen. Wählt der Nutzende ein Video aus, wird es in einem Pop-Up geöffnet. Zu jedem Video ist auf der Seite, und im Pop-Up zunächst nur ein aussagekräftiges Vorschaubild zu sehen. Auf der "Materialien" Seite werden weitere in Kategorien eingeteilte Vorlesungsinhalte zum Download angeboten.
 
-**Verwendete Technologien**: Unsere Webanwendung basiert auf [Python](https://python.org) und als Framework wird [Django](https://djangoproject.com) verwendet. Die Videos, Bilder und PDF’s werden auf einem Server des Rechnerpools des Fachbereichs Architektur hinterlegt und mittels [PostgreSQL](https://postgresql.org) verwaltet. Auf dem Server läuft der Webserver [Apache](https://httpd.apache.org) auf dem Betriebssystem Debian.
+**Verwendete Technologien**: Unsere Webanwendung basiert auf [Python](https://python.org) und als Framework wird [Django](https://djangoproject.com) verwendet. 
+Die Videos, Bilder und PDF’s werden auf einem Server des Rechnerpools des Fachbereichs Architektur hinterlegt und mittels [PostgreSQL](https://postgresql.org) verwaltet. 
+Auf dem Server läuft der Webserver [Apache2](https://httpd.apache.org) auf dem Betriebssystem [Debian](https://www.debian.org/).
+
+Es wurde sich an dieser [Dokumentation](https://docs.djangoproject.com/en/3.1/) orientiert. 
+
+## Projektstruktur:
+
+Das Projekt ist in Apps, typische Django Struktur, unterteilt. Die Apps stellen in diesem Projekt jeweils eine Unterseite der Webseite dar und existieren als Python-Packages. Die Python-Directories werden verwendet um Template- und Static-Files, welche in mehreren Apps benötigt werden, ohne Komplikationen erreichbar zu machen.
+
+Die einzelnen Python-Directory und Python-Packages, die nicht automnatisch beim Start von Django automatisch erstellt werden, werden in der folgenden Struktur erklärt.
+
+
+|--bp55_ruins_and_beyond <br>
+
+| <br>
+
+|--details_page <br>
+
+|----|--migrations <br>
+
+|----|--static <br>
+
+|----|--templates <br>
+
+|----|--__ init__.py <br>
+
+|----|--admin.py <br>
+
+|----|--apps.py <br>
+
+|----|--country_codes <br>
+
+|----|--models.py <br>
+
+|----|--tests.py <br>
+
+|----|--urls.py <br>
+
+|----|--views.py <br>
+
+| <br>
+
+|--filter_page <br>
+
+|----|... <br>
+
+| <br>
+
+|--home <br>
+
+|----|... <br>
+
+| <br>
+
+|--impressum <br>
+
+|----|... <br>
+
+| <br>
+
+|--materials_page <br>
+
+|----|... <br>
+
+| <br>
+
+|--search <br>
+
+|----|... <br>
+
+| <br>
+
+|--static <br>
+
+|----|... <br>
+
+| <br>
+
+|--templates <br>
+
+|----|... <br>
+
+| <br>
+
+|--timeline <br>
+
+|----|--templatetags <br>
+
+|----|... <br>
+
+| <br>
+
+|--video_content <br>
+
+|----|... <br>
+
+
+### details_page
+
+Die App details_page ist zuständig für die Darstellung der Detailseite. Auf der Detailseite wird ein  kurzer Steckbrief, sowie Bilder, Grundriss und Videos zu einem betsimmten Gebäude angezeigt. Dafür wurden in models folgende Klassen erzeugt: Era, um die verschiedenen Eras mit ihren jeweiligen Daten darzustellen, Building, die Gebäude mit allen zugehörigen Informationen darstellt, Blueprint, um den Gebäuden einen Grundriss als Bild zuordnen zu können, Picture, um den Gebäuden verschiedene Bilder zuweisen zu können. Für alle Attribute der Klassen wurden getter-Funktionen eingerichtet, um die entsrpechenden Werte auslesen zu können.
+
+### filter_page
+
+Die App filter_page wird verwendet um mit der auf der Bauwerke-Seite vorhandenen Filterfunktion die Gebäude nach bestimmten Attributen zu Filtern. Die Funktionen hierfür sind in der views Datei der App vorhanden. Zur Umsetzung der Filterfunktion wurden die Hilfsfunktionen splitting, one_dict_set_to_string_list und delete_duplicates geschrieben, die Hauptfunktion tragen die Funktionen my_filter und display_building_filter. Die Kommentare dieser Funktionen beschreiben die genaue Umsetzung weiter.
+
+### home 
+
+Die App home dient nur zur Darstellung der Startseite und benötigt daher keine weiteren Klassen oder Funktionen.
+
+### impressum
+
+Die App impressum ist zuständig für die Darstellung der Impressum-Seite und die Verfügbarkeit des Kurslinks auf allen Seiten der Webandwendung. Dafür enthält die Datei models die Klasse Impressum. Diese besitzt nur die Attribute course_link, mit dem der Link zum aktuellen Vorlesungskurs festgehalten werden kann, und name um die Objekte der Klasse Impressum unterscheiden zu können. Hier ist anzumerken, dass durch das Überschreiben der Funktion save, nur ein Objekt dieser Klasse erzeugt werden kann. In views wird eine getter Funktion für das Attribut course_link bereitgestellt. Damit der Kurslink auch auf allen anderen Seiten verfügbar ist, wurde diese Funktion in die views aller anderen Apps importiert.
+
+### materials_page
+
+Mithilfe der App materials_page wird die Darstellung der Materialien-Seite umgesetzt. Dafür enthält models die Klasse Material. Dateien können mit Hilfe des Attributs file hinzugefügt werden und mit dem Attribut category können die Dateien verschiedenen Kategorien zugeordnet werden. Um die Dateien gesammelt und sortiert nach Kategorien ausgeben zu können kann mit der Funktion get_categories_and_corresponding_files() ein Dictionary erzeugt werden. Die Funktion get_catgeories_and_corresponding_zip_files funktioniert ähnlich, gibt die Dateien einer Kategorie des Dictionarys aber nicht einzeln aus, sondern in einem zip-Ordner. Beide Funktionen ermöglichen das herunterladen der Dateien.
+
+### search
+
+Die App search ist für die Suchfunktion der Website zuständig. Dafür wird in views die Funktion search ausgeführt, die die Attributre aller Gebäude nach dem entsprechenden Suchwort filtert.
+
+### static
+
+Static enthält alle statischen Dateien der Website, wie z.B. feste Bilder und Darstellungen, die nicht verändert werden sollen.
+
+### templates
+
+Templates enthält die html-Vorlagen für den footer, den header und den default_head, damit diese auf allen Seiten einheitlich dargestellt und umgesetzt werden können.
+
+### timeline
+
+Die App timeline wird zur Darstellung des Zeitstrahl benötigt. Dafür enthält models die Klasse HistoricDate, damit neben den Gebäuden auf dem Zeitstrahl auch bedeutende historische Ereignisse dargestellt werden können. Für die Berechnung des Zeitstrahls wurden in views die Hilfsfunktionen get_date_as_str, get_year_of_item und get_thumbnails_for_buildings implementiert. Die Hauptfunktion tragen aber die Funktionen getting_all_eras_sorted, welche die Eras chronologisch anordnet, sort_into_eras, welche anschließend die Gebäude und Ereignisse in das Era-Dictionary einsortiert. Weitere Informationen zu den Funktionen finden sich in den zugehörigen Kommentaren.
+
+### video_content
+
+Die App video_content wird zum Abspielen der Videos benötigt. Hierfür wurden in models die Klassen Video und Timestamp implementiert. Mit der Klasse Videos können Videos hochgeladen werden und mit der Klasse Timestamp können den Videos Timestamps hinzugefügt werden, durch die man direkt zu einer bestimmten Stelle im Video springen kann. Dafür wurden in den Klassen entsprechende getter-Funktionen umgesetzt.
+
+
+Die Struktur in einer App ist in diesem Projekt immer gleich. 
+
+**migration-Package** Hier werden die angewandten Modeländerungen gespeichert werden. Es ist wichtig hier den Überblick zu wahren und richtig zu migrieren, damit die Datenbank nicht jedes mal gelöscht werden muss, wenn etwas verändert wurde.
+
+In dem **static-Directory** werden mögliche statische Datein gespeichert, die nur in dieser App verwendet werden.
+
+**template-Directory**: Hier werden die Templates, die in einer App verwendet werden gespeichert.
+
+**__init__-File**: Ist für mögliche Veränderung in der Konfiguration der App zuständig, wird aber auch von Python benötigt.
+
+**admin-File**: Wird verwendet um das Django-Admin-Interface zu konfigurieren und Modelle aus der App zu registrieren.
+
+**apps-File**: Konfiguration der App.
+
+**models-File**: Die Modelle in Django, sind die Datenbankmodelle und erben von der Python-Klasse.
+
+**test-File**: Für alle Funktionen, die in dem Projekt selbst erstellt wurden, existieren hier Tests.
+
+**urls-File**: Da es sich um eine Webseite handelt, werden hier die Weiterleitungen zu den Unterseiten in einer Variable gespeichert, ebenso wie der Appname.
+
+**views-File**: Beinhaltet die Funktion, die beim Aufruf der Webseite verwendet wird.
+
+
+Für genauere Informationen zu den Files und Directories in den einzelnen Apps, stehen Kommentare und Doc-Strings in diesen, die speziefierte Klassen, Funktionen usw. erklären.
+
 
 ## Installation
 
@@ -366,7 +529,7 @@ Zum Beispiel ist es geboten nach dieser Anleitung:
 ### HTTPS Konfiguration
 *Wir planen das zuerst mal mit Let's Encrypts Certbot auszuprobieren. Die installation ist ziemlich straight-foreward, und erfolgt aus mittels snap, und dem Certbot snap Package. Da dieses nicht mehr in unsere Zeit der Zuständigkeit des Projektes fiel, können wir hier nicht wirklich sagen, ob und wie das funktioniert, aber dazu gibt es haufenweise Dokumentation im Netz. Ansonsten müssten wir für die Uni über den Verein zur Förderung des deutschen Forschungsnetzes ein Zertifikat beantragen, was langwierige Papierarbeit nach sich zieht und dauert. Alles andere ist leider noch*
 
-**In Arbeit, noch nicht implemtiert, TODO**
+***In Arbeit, noch nicht implemtiert, TODO***
 
 > Auch dazu Infos hier: 
 > 
@@ -379,8 +542,17 @@ Zum Beispiel ist es geboten nach dieser Anleitung:
 
 Auch hier werden wir nicht ins Detail gehen, nur ein paar Tipps zu Administration eines Servers die wir sammeln konnten:
 
-- 
+- Für Logs kann man Logrotate einrichten, um die Menge und Größe von Logs zu beherrschen.
+- SSH Keys erleichtern das ständige Einloggen, ersparen das Passwort dabei. 
+- und: Immer Ruhe bewahren, selbst wenn man sich nicht die Anleitung oben selbst erarbeiten muss, funktioniert das meiste nicht auf anhieb ;)
 
 ### Einbindung eines SSO
-**Auch hier: In Arbeit, noch nicht implemtiert, TODO**
-			
+***Auch hier: In Arbeit, noch nicht implemtiert, TODO***
+
+## Contributers:
+- [Duy Quang Ngyuen](https://github.com/ReisShape)
+- [Jonathan Otto](https://github.com/JonaOtto)
+- [Laura Buhleiher](https://github.com/CottlestonPie1)
+- [Thiemo Ganesha Welsch](https://github.com/ThGaWe)
+- [Tobias Frey](https://github.com/FreyTobias)
+
