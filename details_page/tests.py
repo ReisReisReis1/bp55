@@ -37,6 +37,7 @@ class ViewsTestCases(TestCase):
         building = Building.objects.create(name='Test1', pk=0)
         response = self.client.get('/details_page/' + str(building.pk) + '/')
         self.assertEqual(response.status_code, 200)
+        print()
 
 
 class BuildingTestCases(TestCase):
@@ -48,7 +49,7 @@ class BuildingTestCases(TestCase):
         test_era = Era.objects.create(name='Frühe Kaiserzeit', year_from=55,
                                       year_from_BC_or_AD='v.Chr', year_to=55,
                                       year_to_BC_or_AD='v.Chr')
-        Building.objects.create(pk=0, name='', description='', city='', region='', country='',
+        building1 = Building.objects.create(pk=0, name='', description='', city='', region='', country='',
                                 year_from=0,
                                 year_from_BC_or_AD='', year_ca=False, year_century=False,
                                 year_to=0, year_to_BC_or_AD='', era=test_era, architect='',
@@ -58,7 +59,7 @@ class BuildingTestCases(TestCase):
                                 circumference=0, area=0, column_order='', construction='',
                                 material='',
                                 literature='', links='')
-        Building.objects.create(pk=1, name='Parthenon', description='Das Parthenon in Athen',
+        building2 = Building.objects.create(pk=1, name='Parthenon', description='Das Parthenon in Athen',
                                 city='Athen',
                                 region='TestRegion', country='GR-Griechenland',
                                 year_from=447, year_from_BC_or_AD='v.Chr.', year_to=438,
@@ -73,7 +74,7 @@ class BuildingTestCases(TestCase):
                                            'Hellmann 2006, 82-96;',
                                 links='www.tu-darmstadt.de, www.architektur.tu-darmstadt.de'
                                 )
-        Building.objects.create(pk=2, name='empty')
+        building3 = Building.objects.create(pk=2, name='empty')
 
     def test1_get_name(self):
         """
@@ -406,6 +407,110 @@ class BuildingTestCases(TestCase):
                              year_century=True, year_from_BC_or_AD='v.Chr.',
                              year_to_BC_or_AD='n.Chr.')
         self.assertEqual(building5.get_year_as_str(), 'ca. 1. Jh. v.Chr. - ca. 1. Jh. n.Chr.')
+
+    def test_views(self):
+        # era1, building1, building2, building3 = setUp(self)
+        response1 = self.client.get('/details_page/' + '0' + '/')
+        self.assertEqual(response1.status_code, 200)
+        self.assertEqual(response1.context['Name'], '')
+        # self.assertEqual(response1.context['Era'], )
+        self.assertEqual(response1.context['Beschreibung'], '')
+        self.assertEqual(response1.context['Ort'], '')
+        self.assertEqual(response1.context['Region'], '')
+        self.assertEqual(response1.context['Land'], '')
+        self.assertEqual(response1.context['Datum_von'], 0)
+        self.assertEqual(response1.context['Datum_von_BC_oder_AD'], '')
+        self.assertEqual(response1.context['Datum_bis'], 0)
+        self.assertEqual(response1.context['Datum_bis_BC_oder_AD'], '')
+        self.assertEqual(response1.context['Datum_ca'], False)
+        self.assertEqual(response1.context['Datum_Jahrhundert'], False)
+        self.assertEqual(response1.context['Architekt'], '')
+        self.assertEqual(response1.context['Kontext_Lage'], '')
+        self.assertEqual(response1.context['Bauherr'], '')
+        self.assertEqual(response1.context['Bautypus'], '')
+        self.assertEqual(response1.context['Bauform'], '')
+        self.assertEqual(response1.context['Gattung_Funktion'], '')
+        self.assertEqual(response1.context['Länge'], 0)
+        self.assertEqual(response1.context['Breite'], 0)
+        self.assertEqual(response1.context['Höhe'], 0)
+        self.assertEqual(response1.context['Umfang'], 0)
+        self.assertEqual(response1.context['Fläche'], 0)
+        self.assertEqual(response1.context['Säulenordung'], '')
+        self.assertEqual(response1.context['Konstruktion'], '')
+        self.assertEqual(response1.context['Material'], '')
+        self.assertEqual(response1.context['Litertur'], '')
+        self.assertEqual(response1.context['Links'], [])
+        self.assertEqual(list(response1.context['Bilder']), list(Picture.objects.filter(pk=0)))
+        self.assertEqual(list(response1.context['Baupläne']), list(Blueprint.objects.filter(pk=0)))
+
+        response2 = self.client.get('/details_page/' + '1' + '/')
+        self.assertEqual(response2.status_code, 200)
+        self.assertEqual(response2.context['Name'], 'Parthenon')
+        # self.assertEqual(response1.context['Era'], )
+        self.assertEqual(response2.context['Beschreibung'], 'Das Parthenon in Athen')
+        self.assertEqual(response2.context['Ort'], 'Athen')
+        self.assertEqual(response2.context['Region'], 'TestRegion')
+        self.assertEqual(response2.context['Land'], 'GR-Griechenland')
+        self.assertEqual(response2.context['Datum_von'], 447)
+        self.assertEqual(response2.context['Datum_von_BC_oder_AD'], 'v.Chr.')
+        self.assertEqual(response2.context['Datum_bis'], 438)
+        self.assertEqual(response2.context['Datum_bis_BC_oder_AD'], 'v.Chr.')
+        self.assertEqual(response2.context['Datum_ca'], True)
+        self.assertEqual(response2.context['Datum_Jahrhundert'], True)
+        self.assertEqual(response2.context['Architekt'], 'Iktinos, Kallikrates')
+        self.assertEqual(response2.context['Kontext_Lage'], 'Tempel')
+        self.assertEqual(response2.context['Bauherr'], 'Perikles und die Polis Athen')
+        self.assertEqual(response2.context['Bautypus'], 'Tempel')
+        self.assertEqual(response2.context['Bauform'], 'Peripteros')
+        self.assertEqual(response2.context['Gattung_Funktion'], 'Sakralbau')
+        self.assertEqual(response2.context['Länge'], 30.88)
+        self.assertEqual(response2.context['Breite'], 69.5)
+        self.assertEqual(response2.context['Höhe'], 1)
+        self.assertEqual(response2.context['Umfang'], 1)
+        self.assertEqual(response2.context['Fläche'], 1)
+        self.assertEqual(response2.context['Säulenordung'], 'dorisch, ionischer Fries')
+        self.assertEqual(response2.context['Konstruktion'], 'Massivbau')
+        self.assertEqual(response2.context['Material'], 'penetelischer Marmor')
+        self.assertEqual(response2.context['Litertur'], 'Muss - Schubert 1988, SEITEN?; Gruben 2001, 173-190; '
+                         'Hellmann 2006, 82-96;')
+        self.assertEqual(response2.context['Links'], ['www.tu-darmstadt.de', 'www.architektur.tu-darmstadt.de'])
+        self.assertEqual(list(response2.context['Bilder']), list(Picture.objects.filter(pk=1)))
+        self.assertEqual(list(response2.context['Baupläne']), list(Blueprint.objects.filter(pk=1)))
+
+        response3 = self.client.get('/details_page/' + '2' + '/')
+        self.assertEqual(response3.status_code, 200)
+        self.assertEqual(response3.context['Name'], 'empty')
+        # self.assertEqual(response1.context['Era'], )
+        self.assertEqual(response3.context['Beschreibung'], None)
+        self.assertEqual(response3.context['Ort'], None)
+        self.assertEqual(response3.context['Region'], None)
+        self.assertEqual(response3.context['Land'], 'Griechenland')
+        self.assertEqual(response3.context['Datum_von'], None)
+        self.assertEqual(response3.context['Datum_von_BC_oder_AD'], 'v.Chr.')
+        self.assertEqual(response3.context['Datum_bis'], None)
+        self.assertEqual(response3.context['Datum_bis_BC_oder_AD'], 'v.Chr.')
+        self.assertEqual(response3.context['Datum_ca'], False)
+        self.assertEqual(response3.context['Datum_Jahrhundert'], False)
+        self.assertEqual(response3.context['Architekt'], None)
+        self.assertEqual(response3.context['Kontext_Lage'], None)
+        self.assertEqual(response3.context['Bauherr'], None)
+        self.assertEqual(response3.context['Bautypus'], None)
+        self.assertEqual(response3.context['Bauform'], None)
+        self.assertEqual(response3.context['Gattung_Funktion'], None)
+        self.assertEqual(response3.context['Länge'], None)
+        self.assertEqual(response3.context['Breite'], None)
+        self.assertEqual(response3.context['Höhe'], None)
+        self.assertEqual(response3.context['Umfang'], None)
+        self.assertEqual(response3.context['Fläche'], None)
+        self.assertEqual(response3.context['Säulenordung'], None)
+        self.assertEqual(response3.context['Konstruktion'], None)
+        self.assertEqual(response3.context['Material'], None)
+        self.assertEqual(response3.context['Litertur'], None)
+        self.assertEqual(response3.context['Links'], [])
+        self.assertEqual(list(response3.context['Bilder']), list(Picture.objects.filter(pk=0)))
+        self.assertEqual(list(response3.context['Baupläne']), list(Blueprint.objects.filter(pk=0)))
+
+        # self.assertRaises(Building.DoesNotExist, self.client.get(), '/details_page/3/')
 
 
 class EraModelTests(TestCase):
