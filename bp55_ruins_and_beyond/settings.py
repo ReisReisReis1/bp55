@@ -27,7 +27,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY',
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG', "") != 'False'
 
-ALLOWED_HOSTS = ["dmz-48.architektur.tu-darmstadt.de", '127.0.0.1']
+ALLOWED_HOSTS = ["ruinsandbeyond.architektur.tu-darmstadt.de", '127.0.0.1']
 
 
 # Application definition

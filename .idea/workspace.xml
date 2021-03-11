@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="69b3ddc8-cb83-4fd2-9e28-5c469f2739fb" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/details_page/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/details_page/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/details_page/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/details_page/tests.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bp55_ruins_and_beyond/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/bp55_ruins_and_beyond/settings.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,7 +21,6 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="ProjectId" id="1lzHb0yAlGa3vbIg16gFuoWoupm" />
   <component name="ProjectViewState">
@@ -58,7 +58,28 @@
       <option name="project" value="LOCAL" />
       <updated>1608593141853</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Updated README.md.">
+      <created>1615286205169</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1615286205169</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Refactored some lines, for cleaner code and better pylint results.">
+      <created>1615457336949</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1615457336949</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Basic Settings for Single Sign On.">
+      <created>1615458018317</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1615458018317</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -78,6 +99,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="test" />
-    <option name="LAST_COMMIT_MESSAGE" value="test" />
+    <MESSAGE value="Updated README.md." />
+    <MESSAGE value="Refactored some lines, for cleaner code and better pylint results." />
+    <MESSAGE value="Basic Settings for Single Sign On." />
+    <option name="LAST_COMMIT_MESSAGE" value="Basic Settings for Single Sign On." />
   </component>
 </project>
