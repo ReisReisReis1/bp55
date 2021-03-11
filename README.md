@@ -197,9 +197,9 @@ oder als .zip über dieses GitHub herunterladen, und z.B. per <code>scp</code> a
 
 Nun loggt man sich per ssh auf dem Server ein:
 
-<code>$ ssh NUTZERNAME@SERVER_URL</code>
+<code>$ ssh NUTZERNAME@SERVER_DOMAIN</code>
 
-Beide Angaben auf euren Server anpassen. <code>SERVER_URL</code> werden wir weiterhin als Platzhalter für die URL eures Servers nutzen.
+Beide Angaben auf euren Server anpassen. <code>SERVER_DOMAIN</code> werden wir weiterhin als Platzhalter für die Domain eures Servers nutzen.
 
 Mit <code>exit</code> kann man sich wieder ausloggen.
 
@@ -262,7 +262,7 @@ Wir verwenden hier PostgreSQL.
 	- In ALLOWED_HOSTS muss die URL des Servers eingetragen werden (wir nutzen hier den Platzhalter von oben):
 		
 		```python:
-		ALLOWED_HOSTS = [SERVER_URL]
+		ALLOWED_HOSTS = [SERVER_DOMAIN]
 		```
 		
 	- DEBUG auf False setzten:
@@ -334,9 +334,9 @@ Wir verwenden hier PostgreSQL.
 	
 - Die erstellte Virtual Environment nutzen und einrichten:
 	
-	Mit <code>$ source venv/bin/activate</code> aktiviert man die Virtual Environment. Nun kann man die benötigten Python-Abhängigkeiten installieren. Benötigt werden alle Pakete die in Requirements.txt genannt werden: Django, psycopg2, django-bootstrap4, selenium, model-bakery und Pillow. Installieren:
+	Mit <code>$ source venv/bin/activate</code> aktiviert man die Virtual Environment. Nun kann man die benötigten Python-Abhängigkeiten installieren. Benötigt werden alle Pakete die in Requirements.txt genannt werden: Django, psycopg2, django-bootstrap4, selenium, model-bakery und Pillow. Diese findet man in dem Dokument Requirements.txt, und daraus kann auch einfach mit pip installiert werden:
 	
-	<code># pip install Django psycopg2 django-bootstrap4 selenium model-bakery Pillow</code>
+	<code># pip install -r Requirements.txt</code>
 	
 	Tipp: Mit <code>deactivate</code> kann man die Virtual Enviroment wieder deaktivieren. Da sie aber ab jetzt noch viel gebraucht wird, sollte man dies jetzt nicht tun.
 	   
@@ -387,7 +387,7 @@ Die nötigen Schritte für eine Apache2 Konfiguration:
 	
 	```
 	<VirtualHost *:80>
-		ServerName SERVER_URL
+		ServerName SERVER_DOMAIN
 	
 		#ServerAdmin webmaster@localhost
 	
@@ -421,9 +421,9 @@ Die nötigen Schritte für eine Apache2 Konfiguration:
 		# WSGI Application will be served here with python.
 		# Everything that is not static or media will be serverd here.
 		# First two lines: to set wsgi to run in daemon mode, wich is better
-		WSGIDaemonProcess SERVER_URL python-home=/opt/bp55/venv python-path=/opt/bp55
-		WSGIProcessGroup SERVER_URL
-		WSGIScriptAlias / /opt/bp55/bp55_ruins_and_beyond/wsgi.py process-group=SERVER_URL
+		WSGIDaemonProcess SERVER_DOMAIN python-home=/opt/bp55/venv python-path=/opt/bp55
+		WSGIProcessGroup SERVER_DOMAIN
+		WSGIScriptAlias / /opt/bp55/bp55_ruins_and_beyond/wsgi.py process-group=SERVER_DOMAIN
 		<Directory /opt/bp55/bp55_ruins_and_beyond>
 			<Files wsgi.py>
 				Require all granted
@@ -436,25 +436,21 @@ Die nötigen Schritte für eine Apache2 Konfiguration:
 	
 	Ein paar wesentliche Punkte:
 	- DocumentRoot wird keine benötigt (Kann sogar schädlich sein, falls hier falsch verwendet).
-	- Server Namen auf die jeweilige SERVER_URL setzen.
+	- Server Namen auf die jeweilige SERVER_DOMAIN setzen.
 	- Je für Media und Static wird ein Alias zu dem Pfad angelegt, und man erlaubt Apache drauf zuzugreifen.
 	- Für unser Python Projekt werden die mod_wsgi Einstellungen gesetzt, und ebenfalls der Zugriff erlaubt.
 		
 		> Siehe: https://docs.djangoproject.com/en/3.1/howto/deployment/wsgi/modwsgi/
 	- Notiz: Diese Konfiguration ist nur für HTTP (Port 80), für Notizen zu HTTPS siehe Abschnitt "HTTPS Konfiguration". Dies erfordert die Freigabe des Ports 80 ins Internet (das war bei unserem als Webserver gedachtem Server schon so vorgefertigt).
 	
-4. Nun haben wir alle Konfigurationen getätigt, doch sie sind noch nicht aktiviert. Um sie zu aktivieren müssten diese Dateien je in die <code>/etc/apache2/*-enabled/</code> Ordner. Das gilt sowohl für <code>sites</code> also auch <code>mods</code>. Das löst man üblicherweise so, dass man symbolische Links in den enabled-Ordnern plaziert, die auch die entsprechenden Dateien aus den available-Ordnern zeigen.
+4. Nun haben wir alle Konfigurationen getätigt, doch sie sind noch nicht aktiviert. Um sie zu aktivieren müssten diese Dateien je in die <code>/etc/apache2/*-enabled/</code> Ordner. Das gilt sowohl für <code>sites</code> also auch <code>mods</code>. Das löst man üblicherweise so, dass man symbolische Links in den enabled-Ordnern plaziert, die auch die entsprechenden Dateien aus den available-Ordnern zeigen. Das kann man manuell machen, oder dafür die apache2 Werkzeuge verwenden:
 	1. Das also zuerst für die Konfiguration von eben:
 		
-		<code># ln -s /etc/apache2/sites-available/ruinsandbeyond.conf /etc/apache2/sites-enabled/ruinsandbeyond.conf</code>
+		<code># a2ensite ruinsandbeyond</code>
 		
-	2. Und für die mod_wsgi benötigen wir nicht nur die Konfiguration (die schon da ist), sondern auch eine .load Datei, die auch aktiviert werden muss. Wir müssen also <code>/etc/apache2/mods-available/wsgi.conf</code> und <code>/etc/apache2/mods-available/wsgi.load</code> verlinken in den entsprechenden enabled-Ordner:
+	2. Und für die mod_wsgi benötigen wir nicht nur die Konfiguration (die schon da ist), sondern auch eine .load Datei, die auch aktiviert werden muss. Wir müssen also <code>/etc/apache2/mods-available/wsgi.conf</code> und <code>/etc/apache2/mods-available/wsgi.load</code> verlinken in den entsprechenden enabled-Ordner. Auch dazu gibt es ein praktisches Werkzeug:
 	
-		<code># ln -s /etc/apache2/mods-available/wsgi.conf /etc/apache2/mods-enabled/wsgi.conf</code>
-		
-		<code># ln -s /etc/apache2/mods-available/wsgi.load /etc/apache2/mods-enabled/wsgi.load</code>
-		
-		Ggf. könnten diese Links schon existieren, dann geben die Befehle Fehler aus, dass die Dateien schon existieren würden. Das wäre dann an der Stelle nicht schlimm, Hauptsache die Links existieren. 
+		<code># a2enmod wsgi</code> 
 		
 	3. Final einmal den Server neu starten: 
 	
@@ -490,9 +486,66 @@ Zum Beispiel ist es geboten nach dieser Anleitung:
 - HTTPS zu aktivieren (siehe nächster Abschnitt).
 
 ### HTTPS Konfiguration
-*Wir planen das zuerst mal mit Let's Encrypts Certbot auszuprobieren. Die installation ist ziemlich straight-foreward, und erfolgt aus mittels snap, und dem Certbot snap Package. Da dieses nicht mehr in unsere Zeit der Zuständigkeit des Projektes fiel, können wir hier nicht wirklich sagen, ob und wie das funktioniert, aber dazu gibt es haufenweise Dokumentation im Netz. Ansonsten müssten wir für die Uni über den Verein zur Förderung des deutschen Forschungsnetzes ein Zertifikat beantragen, was langwierige Papierarbeit nach sich zieht und dauert. Alles andere ist leider noch*
+Wir haben uns weil es schneller und einfacher ist darauf verständigt, den Certbot von [Let's Encrypt](https://letsencrypt.org/) zu verwenden.
+Diesen installiert man wie folgt aus einem snap Paket:
+- Snap installieren:
+	
+	<code># apt-get install snapd</code>
+	
+	<code># snap install core</code>
+	
+	<code># snap refresh core</code>
 
-***In Arbeit, noch nicht implemtiert, TODO***
+- Let's Encrypts Certbot installieren:
+ 
+	<code># snap install --classic certbot</code>
+	
+- Executable richtig verlinken:
+	
+	<code># ln -s /snap/bin/certbot /usr/local/bin/certbot</code>
+	
+Nun kann man Zertifikate bekommen:
+
+<code>certbot --apache -d SERVER_DOMAIN</code>
+
+Natürlich muss die Server Domain wieder entsprechend angepasst werden. In diesem Falle verwenden wir wie oben gesagt Apache2. 
+
+Man kann auch nur die Zertifikate bekommen (und nicht die apache Konfiguration ändern lassen) wenn man die Option <code>--certonly</code> verwendet.
+
+Wir mussten dann noch unsere Websiten Konfiguration anpassen. Dies betrifft die oben erstellte Datei <code>/etc/apache2/sites-available/ruinsandbeyond.conf</code>:
+
+```
+# Set old http to redirect to https
+<VirtualHost *:80>
+   # redirect all http requests to https site
+    ServerName ruinsandbeyond.architektur.tu-darmstadt.de
+    Redirect permanent / https://SERVER_DOMAIN
+</VirtualHost>
+
+<IfModule mod_ssl.c>
+   <VirtualHost *:443>
+   
+    ############## SSL STUFF ###############
+ 
+        # SSL Engine Switch:
+        # Enable/Disable SSL for this virtual host.
+        SSLEngine on
+ 
+        # Path to cert and its key:
+        SSLCertificateFile    /etc/letsencrypt/live/SERVER_DOMAIN/fullchain.pem
+        SSLCertificateKeyFile /etc/letsencrypt/live/SERVER_DOMAIN/privkey.pem
+
+	# ...
+	# ...
+	# [Configuration like before here]
+	# ...
+	# ...
+	
+    </VirtualHost>
+</IfModule>
+```
+
+Dabei leitet man sinnvollerweise alles von http nach https um, und setzt den Pfad zu dem Zertifikat und seinem Schlüssel (wird von Certbot ausgegeben, folgt aber in der Regel der Form oben.
 
 > Auch dazu Infos hier: 
 > 
@@ -509,6 +562,7 @@ Auch hier werden wir nicht ins Detail gehen, nur ein paar Tipps zu Administratio
 - SSH Keys erleichtern das ständige Einloggen, ersparen das Passwort dabei.
 
 ### Einbindung eines SSO
+
 ***Auch hier: In Arbeit, noch nicht implemtiert, TODO***
 
 ## Contributers:
