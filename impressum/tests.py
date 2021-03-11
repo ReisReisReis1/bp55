@@ -5,6 +5,7 @@ Tests for the functions in the App: impressum
 from django.test import Client, TestCase
 from impressum.views import get_course_link
 from impressum.models import Impressum
+from django.core.exceptions import ValidationError
 
 
 class ImpressumTestCases(TestCase):
@@ -27,16 +28,14 @@ class ImpressumTestCases(TestCase):
         test1 = impressum1.__str__()
         self.assertEqual(test1, 'Impressum')
 
-    """
     def test2_save(self):
+        """
         Testing the save function
+        """
         Impressum.objects.create(name='Impressum',
                                  course_link='ruinsandbeyond.architektur.tu-darmstadt.de')
+        # self.assertRaises(ValidationError, Impressum.objects.create(), name='', course_link='')
         # self.assertEqual(Impressum.objects.create(name='', course_link=''), ValidationError)
-        # self.assertEqual(Impressum.objects.create(name='Impressum2', 
-        # course_link='moodle.tu-darmstadt.de'),
-        # ValidationError)
-    """
 
     def test3_get_course_link(self):
         """
@@ -46,3 +45,10 @@ class ImpressumTestCases(TestCase):
         Impressum.objects.create(name='Impressum',
                                  course_link='ruinsandbeyond.architektur.tu-darmstadt.de')
         self.assertEqual(get_course_link(), 'ruinsandbeyond.architektur.tu-darmstadt.de')
+
+    def test_views(self):
+        Impressum.objects.create(name='Impressum',
+                                 course_link='ruinsandbeyond.architektur.tu-darmstadt.de')
+        response = self.client.get('/impressum/')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['Kurs_Link'], 'ruinsandbeyond.architektur.tu-darmstadt.de')
