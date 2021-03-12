@@ -4,6 +4,7 @@ Configurations of the different viewable functions and subpages from the App: ho
 import re
 from django.shortcuts import render
 from details_page.models import Building, Era
+from start.views import login_required
 from timeline.views import get_thumbnails_for_buildings
 from impressum.views import get_course_link
 
@@ -85,7 +86,8 @@ def my_filter(lst, key, value):
         result = lst
     return result
 
-
+# Hier einkommentieren für SSO:
+#@login_required
 def display_building_filter(request):
     """
     Subpage "Gebäudefilter" with context

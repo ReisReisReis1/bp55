@@ -5,6 +5,7 @@ Configurations of the Website subpages from the App: materials_page
 
 from django.shortcuts import render
 # pylint: disable = import-error, relative-beyond-top-level
+from start.views import login_required
 from .models import Material
 from zipfile import ZipFile
 from io import StringIO
@@ -31,6 +32,8 @@ def get_categories_and_corresponding_files():
     return result
 
 
+# Hier einkommentieren für SSO:
+#@login_required
 def get_categories_and_corresponding_zip_files(request):
     """
     :return: the categories and HttpsResponse for the corresponding zip files in a dictionary
@@ -75,6 +78,8 @@ def get_categories_and_corresponding_zip_files(request):
     return material_dict
 
 
+# Hier einkommentieren für SSO:
+#@login_required
 def material(request):
     """
     Subpage to show the characteristics of a building

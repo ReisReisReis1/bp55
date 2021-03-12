@@ -5,10 +5,13 @@ Configurations of the Website subpages from the App: video-content
 from django.shortcuts import render
 # pylint: disable = import-error,relative-beyond-top-level
 from details_page.models import Era, get_year_as_signed_int
+from start.views import login_required
 from .models import Video
 from impressum.views import get_course_link
 
 
+# Hier einkommentieren für SSO:
+#@login_required
 def display(request):
     """
     Subpage to show all videos sorted into fitting era

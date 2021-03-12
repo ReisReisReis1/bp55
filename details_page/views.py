@@ -8,8 +8,11 @@ from impressum.models import Impressum
 from video_content.models import Timestamp
 from .models import Picture, Building, Blueprint
 from impressum.views import get_course_link
+from start.views import login_required
 
 
+# Hier einkommentieren für SSO:
+#@login_required
 def detailed(request, building_id):
     """
     Subpage to show the characteristics of a building
