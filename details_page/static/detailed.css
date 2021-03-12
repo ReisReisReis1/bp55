@@ -2,11 +2,17 @@
     CSS File for styling on the details pages
 =============================================================================*/
 
+/*----------------------------------------------------------------------------
+    Styling of the container with all the details
+ */
 .details-box {
     padding-top: 15px;
     border: solid;
 }
 
+/*
+    Styling of the video containers
+ */
 .video-box {
     cursor: pointer;
     width: 25%;
@@ -14,7 +20,9 @@
     padding-right: 5px !important;
 }
 
-
+/*----------------------------------------------------------------------------
+    Styling of the left arrow in image carousel
+ */
 .carousel .carousel-control-prev-icon {
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
     width: 3rem;
@@ -22,6 +30,9 @@
     filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));
 }
 
+/*
+    Styling of the right arrow in image carousel
+ */
 .carousel .carousel-control-next-icon {
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
     width: 3rem;
@@ -29,16 +40,25 @@
     filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));
 }
 
+/*
+    Styling of the current image indicator in image carousel
+ */
 .carousel .carousel-indicators li {
     filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));
     width: 40px;
     height: 5px;
 }
 
+/*----------------------------------------------------------------------------
+    Removes the margin of the first row of videos
+ */
 .video-first-row {
     margin-bottom: 0px !important;
 }
 
+/*
+    Adds a margin over every other row of videos
+ */
 .video-rest-row {
     margin-bottom: 0px !important;
     margin-top: 1rem;

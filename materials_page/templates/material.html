@@ -41,6 +41,7 @@
                                 <!-- PDF Liste -->
                                 {% for file in filelist %}
                                     <div class="material-box">
+                                        <!-- Add box for every PDF file -->
                                         <a href="{{ file.file.url }}" target="_blank">
                                             {% if forloop.counter <= 8 %}
                                                     <table class="table table-bordered material-first-row">
@@ -50,11 +51,13 @@
                                                 <tbody>
                                                     <tr>
                                                         <td>
+                                                            <!-- PDF icon -->
                                                             <img src="{% static "PDF.png" %}" width="100%">
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td class="break-words fontcolor">
+                                                            <!-- File name -->
                                                             {{ file.name }}<br>
                                                         </td>
                                                     </tr>
