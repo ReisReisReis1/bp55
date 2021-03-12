@@ -4,3 +4,4 @@ django-bootstrap4==2.3.1
 selenium
 model-bakery
 Pillow
+django-cas-client

@@ -5,10 +5,12 @@ from django.db.models import Q
 from django.shortcuts import render
 # pylint: disable = no-name-in-module, import-error
 from details_page.models import Building
-from timeline.views import get_thumbnails_for_buildings
+from start.views import login_required
 from impressum.views import get_course_link
 
 
+# Hier einkommentieren für SSO:
+#@login_required
 def search(request):
     """
     Function to search in buildings
@@ -34,7 +36,7 @@ def search(request):
     # order results alphabetically:
     results = results.order_by("name")
     # adding thumbnails:
-    results = get_thumbnails_for_buildings(results)
+    results = [(result, result.get_thumbnail()) for result in results]
     context = {
         'Result': results,
         'Active_Filter': request.GET,

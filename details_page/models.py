@@ -2,54 +2,10 @@
 Configurations for the Database Models for the App 'details_page'
 """
 
-import re
 from django.db import models
 from django.core.exceptions import ValidationError
 # pylint: disable=import-error
 from . import country_codes
-
-
-def get_year_as_signed_int(item):
-    """
-    Getting the dates of an era or building as signed int
-    :param item: one object instance of building or era
-    :return: list with two elements: new_list[0] start date, new_list[1] end date
-    """
-    new_list = [0, 0]
-    # Only working with Buildings and Eras, can be changed later if necessary
-    if isinstance(item, Building) or isinstance(item, Era):
-        if item.year_from is not None:
-            # Checking for the item start date if it is before or after the birth of christ
-            if item.year_from_BC_or_AD == 'v.Chr.':
-                date = -1 * int(item.year_from)
-                if isinstance(item, Building) and item.year_century and date != 0:
-                    date = date * 100 + 50
-            else:
-                date = int(item.year_from)
-                if isinstance(item, Building) and item.year_century and date != 0:
-                    date = date * 100 - 50
-
-        else:
-            date = 9999
-        new_list[0] = date
-
-        if item.year_to is not None:
-            # Checking for the item end date if it is before or after the birth of christ
-            if item.year_to_BC_or_AD == 'v.Chr.':
-                date = -1 * int(item.year_to)
-                if isinstance(item, Building) and item.year_century:
-                    date = date * 100 + 50
-            else:
-                date = int(item.year_to)
-                if isinstance(item, Building) and item.year_century:
-                    date = date * 100 - 50
-            # If the item is a building and the date is a century
-            # then we multiply by 100 and subtract 50
-
-        else:
-            date = 9999
-        new_list[1] = date
-    return new_list
 
 
 def validate_url_conform_str(string):
@@ -82,6 +38,7 @@ def validate_color_code(code):
 
 
 class Era(models.Model):
+    # pylint : disable= too-few-public-methods
     """
     Era Model.
     year_from: Beginning year of era
@@ -93,16 +50,20 @@ class Era(models.Model):
     """
 
     class Meta:
+        """
+        Meta data for the model
+        In this case the singular and plural name that will be seen in the admin interface
+        """
         verbose_name = 'Epoche'
         verbose_name_plural = 'Epochen'
 
     name = models.CharField(verbose_name='Name', max_length=100, choices=[
-        ('Bronzezeit', 'Bronzezeit'), ('Frühzeit', 'Frühzeit'),
+        ('Bronzezeit', 'Bronzezeit'), ('Frühe Eisenzeit', 'Frühe Eisenzeit'),
         ('Archaik', 'Archaik'),
         ('Klassik', 'Klassik'), ('Hellenismus', 'Hellenismus'),
         ('Kaiserzeit', 'Kaiserzeit'),
         ('Spätantike', 'Spätantike'),
-        ('Sonstiges', 'Sonstiges'),
+        ('Rezeption', 'Rezeption'),
     ], help_text="Epoche auswählen.", unique=True, null=False, blank=False)
     year_from = models.PositiveIntegerField(verbose_name='Anfangsdatum',
                                             help_text="Jahr des Beginns der Epoche eingeben.",
@@ -136,9 +97,55 @@ class Era(models.Model):
         """
         return str(self.name)
 
+    def get_year_as_signed_int(self):
+        """
+        Getting the dates of an era as signed int
+        :return: list with two elements: new_list[0] start date, new_list[1] end date
+        """
+        new_list = [0, 0]
+        date = 9999
+        if self.year_from is not None:
+            # Checking for the self start date if it is before or after the birth of christ
+            if self.year_from_BC_or_AD == 'v.Chr.':
+                date = -1 * int(self.year_from)
+            elif self.year_from_BC_or_AD == 'n.Chr.':
+                date = int(self.year_from)
+        new_list[0] = date
+        date = 9999
+        if self.year_to is not None:
+            # Checking for the self end date if it is before or after the birth of christ
+            if self.year_to_BC_or_AD == 'v.Chr.':
+                date = -1 * int(self.year_to)
+            elif self.year_to_BC_or_AD == 'n.Chr.':
+                date = int(self.year_to)
+        new_list[1] = date
+        return new_list
+
+    def get_year_as_str(self):
+        """
+        Getting the start year as string
+        Building a  string with the years that are not null, for both, year_from and year_to
+        :return: The
+        """
+        start = ''
+        end = ''
+        if self.year_from is not None:
+            year_from = str(self.year_from)
+            # n.Chr. as default
+            bc_ad_from = ' ' + str(
+                self.year_from_BC_or_AD) if self.year_from is not None else 'v.Chr.'
+            start = year_from + bc_ad_from
+            if self.year_to is not None:
+                year_to = str(self.year_to)
+                bc_ad_to = ' ' + str(
+                    self.year_to_BC_or_AD) if self.year_to_BC_or_AD is not None else 'v.Chr.'
+                end = ' - ' + year_to + bc_ad_to
+
+        return start + end
+
 
 class Building(models.Model):
-    # pylint: disable = too-many-public-methods
+    # pylint: disable = too-many-public-methods, no-member
     """
     Database model for buildings. Will be used in detail page, but also in timeline and filter page.
     name: name of the building
@@ -172,6 +179,10 @@ class Building(models.Model):
     """
 
     class Meta:
+        """
+        Meta data for the model
+        In this case the singular and plural name that will be seen in the admin interface
+        """
         verbose_name = 'Gebäude'
         verbose_name_plural = 'Gebäude'
 
@@ -180,16 +191,16 @@ class Building(models.Model):
                             validators=[validate_url_conform_str])
     description = models.TextField(verbose_name='Beschreibung', max_length=1000,
                                    help_text="Beschreibung des Gebäudes angeben (max. 1000 Zeichen",
-                                   null=True, blank=True, editable=False)
+                                   null=True, blank=True, editable=True)
     city = models.CharField(verbose_name='Stadt', max_length=100,
-                            help_text="Stadt des Bauweks eingeben (max. 100 Zeichen).",
+                            help_text="Stadt des Bauwerks eingeben (max. 100 Zeichen).",
                             null=True, blank=True, validators=[validate_url_conform_str])
     region = models.CharField(verbose_name='Region', max_length=100,
                               help_text="Region des Bauwerks eingeben (max. 100 Zeichen).",
                               null=True, blank=True, validators=[validate_url_conform_str])
     country = models.CharField(verbose_name='Land', max_length=100,
                                help_text="Hier Land des Bauwerks auswählen (Tipp:"
-                                         "Zum Suchen Kürzel"
+                                         "Zum Suchen Kürzel "
                                          "auf der Tastatur eingeben).",
                                choices=country_codes.country_codes_as_tuple_list,
                                default="Griechenland", null=True, blank=True,
@@ -197,13 +208,13 @@ class Building(models.Model):
     year_from = models.PositiveIntegerField(
         verbose_name='Baubeginn',
         help_text="Jahr des Baubeginns eingeben. Wenn nicht gesetzt, "
-                  "erscheint das Gebäude nicht auf der Zeitachse.",
+                  "erscheint das Gebäude am Ende der Zeitachse.",
         null=True, blank=True)
     year_from_BC_or_AD = models.CharField(verbose_name='Baubeginn v.Chr./n.Chr.?', max_length=7,
                                           help_text="Jahr des Baubeginns: v.Chr. bzw. n.Chr. "
                                                     "auswählen.",
                                           choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")],
-                                          default="n.Chr.",
+                                          default="v.Chr.",
                                           null=True, blank=True)
     year_to = models.PositiveIntegerField(verbose_name='Bauende',
                                           help_text="Jahr des Bauendes eingeben.",
@@ -212,7 +223,7 @@ class Building(models.Model):
                                         help_text="Jahr des Bauendes: v.Chr. bzw. n.Chr. "
                                                   "auswählen.",
                                         choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")],
-                                        default="n.Chr.",
+                                        default="v.Chr.",
                                         null=True, blank=True)
     year_century = models.BooleanField(verbose_name='Jahrhundertangaben?', default=False,
                                        help_text="Sind die Daten Jahrhundert Angaben?")
@@ -291,7 +302,7 @@ class Building(models.Model):
         try:
             return str(self.name)
         except Building.MultipleObjectsReturned:
-            return Building.MultipleObjectsReturned
+            raise Building.MultipleObjectsReturned
 
     def get_name(self, building_id):
         # pylint: disable= no-member
@@ -303,7 +314,7 @@ class Building(models.Model):
             building = self.objects.get(pk=building_id)
             return building.name
         except Building.DoesNotExist:
-            return Building.DoesNotExist
+            raise Building.DoesNotExist
 
     def get_era(self, building_id):
         # pylint: disable= no-member
@@ -315,7 +326,7 @@ class Building(models.Model):
             building = self.objects.get(pk=building_id)
             return building.era
         except Building.DoesNotExist:
-            return Building.DoesNotExist
+            raise Building.DoesNotExist
 
     def get_description(self, building_id):
         # pylint: disable= no-member
@@ -327,7 +338,7 @@ class Building(models.Model):
             building = self.objects.get(pk=building_id)
             return building.description
         except Building.DoesNotExist:
-            return Building.DoesNotExist
+            raise Building.DoesNotExist
 
     def get_city(self, building_id):
         # pylint: disable= no-member
@@ -339,7 +350,7 @@ class Building(models.Model):
             building = self.objects.get(pk=building_id)
             return building.city
         except Building.DoesNotExist:
-            return Building.DoesNotExist
+            raise Building.DoesNotExist
 
     def get_region(self, building_id):
         # pylint: disable= no-member
@@ -351,7 +362,7 @@ class Building(models.Model):
             building = self.objects.get(pk=building_id)
             return building.region
         except Building.DoesNotExist:
-            return Building.DoesNotExist
+            raise Building.DoesNotExist
 
     def get_country(self, building_id):
         # pylint: disable= no-member
@@ -363,7 +374,7 @@ class Building(models.Model):
             building = self.objects.get(pk=building_id)
             return building.country
         except Building.DoesNotExist:
-            return Building.DoesNotExist
+            raise Building.DoesNotExist
 
     def get_year_from(self, building_id):
         # pylint: disable= no-member
@@ -375,7 +386,7 @@ class Building(models.Model):
             building = self.objects.get(pk=building_id)
             return building.year_from
         except Building.DoesNotExist:
-            return Building.DoesNotExist
+            raise Building.DoesNotExist
 
     def get_year_from_bc_or_ad(self, building_id):
         # pylint: disable= no-member
@@ -387,7 +398,7 @@ class Building(models.Model):
             building = self.objects.get(pk=building_id)
             return building.year_from_BC_or_AD
         except Building.DoesNotExist:
-            return Building.DoesNotExist
+            raise Building.DoesNotExist
 
     def get_year_to(self, building_id):
         # pylint: disable= no-member
@@ -399,7 +410,7 @@ class Building(models.Model):
             building = self.objects.get(pk=building_id)
             return building.year_to
         except Building.DoesNotExist:
-            return Building.DoesNotExist
+            raise Building.DoesNotExist
 
     def get_year_to_bc_or_ad(self, building_id):
         # pylint: disable= no-member
@@ -411,7 +422,7 @@ class Building(models.Model):
             building = self.objects.get(pk=building_id)
             return building.year_to_BC_or_AD
         except Building.DoesNotExist:
-            return Building.DoesNotExist
+            raise Building.DoesNotExist
 
     def get_year_ca(self, building_id):
         # pylint: disable= no-member
@@ -423,7 +434,7 @@ class Building(models.Model):
             building = self.objects.get(pk=building_id)
             return building.year_ca
         except Building.DoesNotExist:
-            return Building.DoesNotExist
+            raise Building.DoesNotExist
 
     def get_year_century(self, building_id):
         # pylint: disable= no-member
@@ -435,7 +446,7 @@ class Building(models.Model):
             building = self.objects.get(pk=building_id)
             return building.year_century
         except Building.DoesNotExist:
-            return Building.DoesNotExist
+            raise Building.DoesNotExist
 
     def get_architect(self, building_id):
         # pylint: disable= no-member
@@ -447,7 +458,7 @@ class Building(models.Model):
             building = self.objects.get(pk=building_id)
             return building.architect
         except Building.DoesNotExist:
-            return Building.DoesNotExist
+            raise Building.DoesNotExist
 
     def get_context(self, building_id):
         # pylint: disable= no-member
@@ -459,7 +470,7 @@ class Building(models.Model):
             building = self.objects.get(pk=building_id)
             return building.context
         except Building.DoesNotExist:
-            return Building.DoesNotExist
+            raise Building.DoesNotExist
 
     def get_builder(self, building_id):
         # pylint: disable= no-member
@@ -471,7 +482,7 @@ class Building(models.Model):
             building = self.objects.get(pk=building_id)
             return building.builder
         except Building.DoesNotExist:
-            return Building.DoesNotExist
+            raise Building.DoesNotExist
 
     def get_construction_type(self, building_id):
         # pylint: disable= no-member
@@ -483,7 +494,7 @@ class Building(models.Model):
             building = self.objects.get(pk=building_id)
             return building.construction_type
         except Building.DoesNotExist:
-            return Building.DoesNotExist
+            raise Building.DoesNotExist
 
     def get_design(self, building_id):
         # pylint: disable= no-member
@@ -495,7 +506,7 @@ class Building(models.Model):
             building = self.objects.get(pk=building_id)
             return building.design
         except Building.DoesNotExist:
-            return Building.DoesNotExist
+            raise Building.DoesNotExist
 
     def get_function(self, building_id):
         # pylint: disable= no-member
@@ -507,7 +518,7 @@ class Building(models.Model):
             building = self.objects.get(pk=building_id)
             return building.function
         except Building.DoesNotExist:
-            return Building.DoesNotExist
+            raise Building.DoesNotExist
 
     def get_length(self, building_id):
         # pylint: disable= no-member
@@ -519,7 +530,7 @@ class Building(models.Model):
             building = self.objects.get(pk=building_id)
             return building.length
         except Building.DoesNotExist:
-            return Building.DoesNotExist
+            raise Building.DoesNotExist
 
     def get_width(self, building_id):
         # pylint: disable= no-member
@@ -531,7 +542,7 @@ class Building(models.Model):
             building = self.objects.get(pk=building_id)
             return building.width
         except Building.DoesNotExist:
-            return Building.DoesNotExist
+            raise Building.DoesNotExist
 
     def get_height(self, building_id):
         # pylint: disable= no-member
@@ -543,7 +554,7 @@ class Building(models.Model):
             building = self.objects.get(pk=building_id)
             return building.height
         except Building.DoesNotExist:
-            return Building.DoesNotExist
+            raise Building.DoesNotExist
 
     def get_circumference(self, building_id):
         # pylint: disable= no-member
@@ -555,7 +566,7 @@ class Building(models.Model):
             building = self.objects.get(pk=building_id)
             return building.circumference
         except Building.DoesNotExist:
-            return Building.DoesNotExist
+            raise Building.DoesNotExist
 
     def get_area(self, building_id):
         # pylint: disable= no-member
@@ -567,7 +578,7 @@ class Building(models.Model):
             building = self.objects.get(pk=building_id)
             return building.area
         except Building.DoesNotExist:
-            return Building.DoesNotExist
+            raise Building.DoesNotExist
 
     def get_column_order(self, building_id):
         # pylint: disable= no-member
@@ -579,7 +590,7 @@ class Building(models.Model):
             building = self.objects.get(pk=building_id)
             return building.column_order
         except Building.DoesNotExist:
-            return Building.DoesNotExist
+            raise Building.DoesNotExist
 
     def get_construction(self, building_id):
         # pylint: disable= no-member
@@ -591,7 +602,7 @@ class Building(models.Model):
             building = self.objects.get(pk=building_id)
             return building.construction
         except Building.DoesNotExist:
-            return Building.DoesNotExist
+            raise Building.DoesNotExist
 
     def get_material(self, building_id):
         # pylint: disable= no-member
@@ -603,7 +614,7 @@ class Building(models.Model):
             building = self.objects.get(pk=building_id)
             return building.material
         except Building.DoesNotExist:
-            return Building.DoesNotExist
+            raise Building.DoesNotExist
 
     def get_literature(self, building_id):
         # pylint: disable= no-member
@@ -615,7 +626,7 @@ class Building(models.Model):
             building = self.objects.get(pk=building_id)
             return building.literature
         except Building.DoesNotExist:
-            return Building.DoesNotExist
+            raise Building.DoesNotExist
 
     def get_links(self, building_id):
         # pylint: disable= no-member
@@ -625,19 +636,85 @@ class Building(models.Model):
         """
         try:
             building = self.objects.get(pk=building_id)
-            """
-            Splits the strings in the list at ; and ,
-            """
+            # Splits the strings in the list at ; and ,
             txt = building.links
             # Splitting the txt at ","
             lst = txt.split(", ")
             # Getting back all Elements that are not equal(__ne__) to ''
             return list(filter(''.__ne__, lst))
         except Building.DoesNotExist:
-            return Building.DoesNotExist
+            raise Building.DoesNotExist
+
+    def get_year_as_signed_int(self):
+        """
+        Getting the dates of an building as signed int
+        :return: list with two elements: new_list[0] start date, new_list[1] end date
+        """
+        new_list = [0, 0]
+        date = 9999
+        if self.year_from is not None:
+            # Checking for the self start date if it is before or after the birth of christ
+            if self.year_from_BC_or_AD == 'v.Chr.':
+                date = -1 * int(self.year_from)
+                if self.year_century and date != 0:
+                    date = date * 100 + 50
+            elif self.year_from_BC_or_AD == 'n.Chr.':
+                date = int(self.year_from)
+                if self.year_century and date != 0:
+                    date = date * 100 - 50
+        new_list[0] = date
+        date = 9999
+        if self.year_to is not None:
+            # Checking for the self end date if it is before or after the birth of christ
+            if self.year_to_BC_or_AD == 'v.Chr.':
+                date = -1 * int(self.year_to)
+                if self.year_century and self.year_to != 0:
+                    date = date * 100 + 50
+            elif self.year_to_BC_or_AD == 'n.Chr.':
+                date = int(self.year_to)
+                if self.year_century and date != 0:
+                    date = date * 100 - 50
+        new_list[1] = date
+        return new_list
+
+    def get_year_as_str(self):
+        """
+        Getting the start year plus end year as string
+        """
+        century = '. Jh.' if self.year_century else ''
+        circa = 'ca. ' if self.year_ca else ''
+        start = ''
+        end = ''
+        if self.year_from is not None:
+            year_from = str(self.year_from)
+            # default n.Chr.
+            bc_ad_from = ' ' + str(
+                self.year_from_BC_or_AD) if self.year_from is not None else 'v.Chr.'
+            start = circa + year_from + century + bc_ad_from
+            if self.year_to is not None:
+                year_to = str(self.year_to)
+                # default n.Chr.
+                bc_ad_to = ' ' + str(
+                    self.year_to_BC_or_AD) if self.year_to_BC_or_AD is not None else 'v.Chr.'
+                end = ' - ' + circa + year_to + century + bc_ad_to
+
+        return start + end
+
+    def get_thumbnail(self):
+        """
+        Getting the thumbnail for this building
+        """
+        try:
+            thumbnail = Picture.objects.get(building=self.id, usable_as_thumbnail=True)
+        except Picture.DoesNotExist:
+            thumbnail = None
+        except Picture.MultipleObjectsReturned:
+            thumbnail = Picture.objects.filter(building=self.id, usable_as_thumbnail=True)[0]
+        return thumbnail
 
 
 class Blueprint(models.Model):
+    # pylint : disable = too-few-public-methods
     """
     name: Name of the blueprint
     description: description for the blueprint
@@ -648,6 +725,11 @@ class Blueprint(models.Model):
     """
 
     class Meta:
+        # pylint : disable = too-few-public-methods
+        """
+        Meta data for the model
+        In this case the singular and plural name that will be seen in the admin interface
+        """
         verbose_name = 'Bauplan'
         verbose_name_plural = 'Baupläne'
 
@@ -681,14 +763,12 @@ class Blueprint(models.Model):
         :param wanted_building: ID to fetch the correct building
         :return: QuerySet of blueprints for given building or empty QuerySet
         """
-        try:
-            blueprints = self.objects.filter(building=wanted_building)
-            return blueprints
-        except Building.DoesNotExist:
-            return Building.DoesNotExist
+        blueprints = self.objects.filter(building=wanted_building)
+        return blueprints
 
 
 class Picture(models.Model):
+    # pylint : disable= too-few-public-methods
     """
     Picture Model: Will be used to save Pictures for all-over the website, except
     thumbnails in videos and blueprints.
@@ -703,6 +783,11 @@ class Picture(models.Model):
     """
 
     class Meta:
+        # pylint: disable = too-few-public-methods
+        """
+        Meta data for the model
+        In this case the singular and plural name that will be seen in the admin interface
+        """
         verbose_name = 'Bild'
         verbose_name_plural = 'Bilder'
 
@@ -744,8 +829,5 @@ class Picture(models.Model):
         :param wanted_building: ID to fetch the correct building
         :return: QuerySet of Pictures for given building or empty QuerySet
         """
-        try:
-            pictures = self.objects.filter(building=wanted_building)
-            return pictures
-        except Building.DoesNotExist:
-            return Building.DoesNotExist
+        pictures = self.objects.filter(building=wanted_building)
+        return pictures
