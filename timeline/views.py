@@ -3,7 +3,9 @@ Configurations of the different viewable functions and subpages from the App: ti
 """
 # pylint: disable = no-name-in-module, import-error
 from django.shortcuts import render
-from details_page.models import Building, Era
+from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
+from details_page.models import Building, Picture, Era, get_year_as_signed_int
+from start.views import login_required
 from timeline.models import HistoricDate
 from impressum.views import get_course_link
 
@@ -51,6 +53,8 @@ def sorted_eras_with_buildings(items):
     return era_dict
 
 
+# Hier einkommentieren für SSO:
+#@login_required
 def timeline(request):
     """
     Subpage "Zeitachse"

@@ -6,9 +6,12 @@ from django.shortcuts import render
 # pylint: disable = import-error, relative-beyond-top-level
 from video_content.models import Timestamp
 from impressum.views import get_course_link
+from start.views import login_required
 from .models import Picture, Building, Blueprint
 
 
+# Hier einkommentieren für SSO:
+#@login_required
 def detailed(request, building_id):
     """
     Subpage to show the characteristics of a building
