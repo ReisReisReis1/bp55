@@ -1,6 +1,7 @@
 """
 Configurations of the different viewable functions and subpages from the App: home
 """
+# pylint: disable = no-name-in-module, import-error
 import re
 from django.shortcuts import render
 from details_page.models import Building, Era
@@ -14,8 +15,8 @@ def splitting(lst):
     Splits the strings in the list at ; and ,
     """
     return_lst = []
-    for s in lst:
-        return_lst.extend(re.split(' , | ,|, |,| ; |; | ;|;| / |/ | /|/', s))
+    for string1 in lst:
+        return_lst.extend(re.split(' , | ,|, |,| ; |; | ;|;| / |/ | /|/', string1))
     # Getting back all Elements that are not equal(__ne__) to '' (empty string)
     # https://stackoverflow.com/questions/1157106/remove-all-occurrences-of-a-value-from-a-list
     return list(filter(''.__ne__, return_lst))
@@ -149,7 +150,7 @@ def display_building_filter(request):
     # order results alphabetically
     result = result.order_by("name")
     # Append Thumbnails
-    result = get_thumbnails_for_buildings(result)
+    result = [(res, res.get_thumbnail()) for res in result]
 
     filter_names = ['Stadt', 'Region', 'Land', 'Epoche', 'Architekt', 'Bauherr', 'Bauform',
                     'Säulenordnung', 'Material', 'Gattung/Funktion']

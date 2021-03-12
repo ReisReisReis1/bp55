@@ -37,7 +37,7 @@ def search(request):
     # order results alphabetically:
     results = results.order_by("name")
     # adding thumbnails:
-    results = get_thumbnails_for_buildings(results)
+    results = [(result, result.get_thumbnail()) for result in results]
     context = {
         'Result': results,
         'Active_Filter': request.GET,
