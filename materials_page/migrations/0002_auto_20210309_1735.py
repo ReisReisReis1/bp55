@@ -2,6 +2,7 @@
 
 from django.db import migrations, models
 import django.db.models.deletion
+import materials_page.models
 
 
 class Migration(migrations.Migration):
@@ -26,5 +27,16 @@ class Migration(migrations.Migration):
             model_name='material',
             name='category',
             field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='materials_page.category', verbose_name='Kategorie'),
+        ),
+        migrations.AlterModelOptions(
+            name='material',
+            options={'verbose_name': 'Materialien', 'verbose_name_plural': 'Materialien'},
+        ),
+        migrations.AlterField(
+            model_name='material',
+            name='file',
+            field=models.FileField(help_text='Datei hochladen.', upload_to='material/',
+                                   validators=[materials_page.models.validate_pdf_extension],
+                                   verbose_name='Datei'),
         ),
     ]

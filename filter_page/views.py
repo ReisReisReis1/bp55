@@ -6,7 +6,6 @@ import re
 from django.shortcuts import render
 from details_page.models import Building, Era
 from start.views import login_required
-from timeline.views import get_thumbnails_for_buildings
 from impressum.views import get_course_link
 
 
