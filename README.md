@@ -83,7 +83,7 @@ Die App impressum ist zuständig für die Darstellung der Impressum-Seite und di
 
 ### materials_page
 
-Mithilfe der App materials_page wird die Darstellung der Materialien-Seite umgesetzt. Dafür enthält models die Klasse Material. Dateien können mit Hilfe des Attributs file hinzugefügt werden und mit dem Attribut category können die Dateien verschiedenen Kategorien zugeordnet werden. Um die Dateien gesammelt und sortiert nach Kategorien ausgeben zu können kann mit der Funktion get_categories_and_corresponding_files() ein Dictionary erzeugt werden. Die Funktion get_catgeories_and_corresponding_zip_files funktioniert ähnlich, gibt die Dateien einer Kategorie des Dictionarys aber nicht einzeln aus, sondern in einem zip-Ordner. Beide Funktionen ermöglichen das herunterladen der Dateien.
+Mithilfe der App materials_page wird die Darstellung der Materialien-Seite umgesetzt. Dafür enthält models die Klassen Material und Category. Dateien können mit Hilfe des Attributs file hinzugefügt werden und mit dem Attribut category können die Dateien verschiedenen Kategorien zugeordnet werden. Um die Dateien gesammelt und sortiert nach Kategorien ausgeben zu können kann mit der Funktion get_categories_and_corresponding_files() ein Dictionary erzeugt werden. Die Funktion get_catgeories_and_corresponding_zip_files gibt für eine übergebene Kategorie die zugehörigen Dateien als zip-File zurück. Dieses wird dann direkt heruntergeladen.
 
 ### search
 
@@ -563,7 +563,11 @@ Auch hier werden wir nicht ins Detail gehen, nur ein paar Tipps zu Administratio
 
 ### Einbindung eines SSO
 
-***Auch hier: In Arbeit, noch nicht implemtiert, TODO***
+Informationen zur Einrichtung des SSO auf dem Server empfehlen wir die Project-Description des django-cas-client:
+https://pypi.org/project/django-cas-client/
+
+Zur Integration des SSOs in das Projekt wird der Decorator <code> def login_required(func): </code> benötigt. Damit wird überprüft, ob der Nutzer eingeloggt ist und festgelegt, wohin dieser umgeleitet werden soll, wenn das nicht der Fall ist.
+Mit Hilfe dieses decorators können dann alle views mit <code> @login_required </code> über den SSO-Login vor unbefugtem Zugriff geschützt werden.
 
 ## Contributers:
 - [Duy Quang Ngyuen](https://github.com/ReisShape)
