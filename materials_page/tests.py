@@ -77,6 +77,8 @@ class MaterialTestCases(TestCase):
 
         self.assertEqual(get_categories_and_corresponding_zip_files(), {})
 
+        Material.objects.create(name='TestDatei1',
+                                file='C:/Users/Laura Buhleier/Documents/GitHub/media/Test1.pdf',
         Material.objects.create(name='TestDatei1', file='C:/Users/Laura Buhleier/Documents/GitHub/media/Test1.pdf',
                                 category='TestKategorie1')
         Material.objects.create(name='TestDatei2', file='C:/Users/Laura Buhleier/Documents/GitHub/media/Test2.pdf',
@@ -182,11 +184,3 @@ class CategoryTestCases(TestCase):
 
         self.assertEqual('TestKategorie1', test1)
         self.assertEqual('', test2)
-
-
-
-
-
-
-
-

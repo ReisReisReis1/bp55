@@ -408,6 +408,7 @@ class BuildingTestCases(TestCase):
                              year_to_BC_or_AD='n.Chr.')
         self.assertEqual(building5.get_year_as_str(), 'ca. 1. Jh. v.Chr. - ca. 1. Jh. n.Chr.')
 
+
     def test_views(self):
         # era1, building1, building2, building3 = setUp(self)
         response1 = self.client.get('/details_page/' + '0' + '/')
@@ -511,6 +512,35 @@ class BuildingTestCases(TestCase):
         self.assertEqual(list(response3.context['Baupläne']), list(Blueprint.objects.filter(pk=0)))
 
         # self.assertRaises(Building.DoesNotExist, self.client.get(), '/details_page/3/')
+
+    def test_get_thumbnail(self):
+        """
+        Testing the model function get_thumbnail in the building model
+        """
+        bu1 = Building.objects.create(name='Building1', year_from=100, year_from_BC_or_AD='v.Chr.')
+        bu2 = Building.objects.create(name='Building2', year_from=100, year_to=100,
+                                      year_from_BC_or_AD='v.Chr.',
+                                      year_to_BC_or_AD='n.Chr.')
+        pic1 = Picture.objects.create(name='Picture1', picture=image_mock, building=bu2,
+                                      usable_as_thumbnail=False)
+        bu3 = Building.objects.create(name='Building3')
+        pic2 = Picture.objects.create(name='Picture2', picture=image_mock, building=bu3,
+                                      usable_as_thumbnail=True)
+        bu4 = Building.objects.create(name='Building4')
+        pic3 = Picture.objects.create(name='Picture3', picture=image_mock2, building=bu4,
+                                      usable_as_thumbnail=True)
+        pic4 = Picture.objects.create(name='Picture4', picture=image_mock, building=bu4,
+                                      usable_as_thumbnail=True)
+
+        # No picture
+        self.assertEqual(bu1.get_thumbnail(), None)
+        # One picture, but not a thumbnail
+        self.assertEqual(bu2.get_thumbnail(), None)
+        # One picture that is the thumbnail
+        self.assertEqual(bu3.get_thumbnail(), pic2)
+        # Two pictures that could be a thumbnail
+        self.assertEqual(bu4.get_thumbnail(), pic3)
+
 
 
 class EraModelTests(TestCase):

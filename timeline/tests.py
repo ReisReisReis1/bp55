@@ -625,6 +625,7 @@ class TestsCasesSortedBuildings(TestCase):
         hellenismus = Era.objects.create(name="Hellenismus", year_from=337,
                                          year_from_BC_or_AD="v.Chr.", year_to=30,
                                          year_to_BC_or_AD="v.Chr.", visible_on_video_page=True,
+
                                          color_code="fffff5")
         kaiserzeit = Era.objects.create(name='Kaiserzeit', year_from=30,
                                         year_from_BC_or_AD='n.Chr.', year_to=284,

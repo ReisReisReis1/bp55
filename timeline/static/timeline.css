@@ -132,10 +132,15 @@
 
 .timeline-center-text {
     writing-mode: vertical-rl;
+    white-space: nowrap;
     position: absolute;
     z-index: 1;
     margin-top: 10px;
     margin-left: -20px;
+}
+
+.timeline-center-empty {
+    height: 300px;
 }
 
 .card-link {

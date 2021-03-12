@@ -13,3 +13,5 @@ urlpatterns = [
     path("", views.material, name="material"),
     path('<str:category>/', views.material, name='material'),
 ]
+    path('<str:category>/', views.material, name='material'),
+]
