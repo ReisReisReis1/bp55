@@ -5,9 +5,13 @@ from django.db.models import Q
 from django.shortcuts import render
 # pylint: disable = no-name-in-module, import-error
 from details_page.models import Building
+from start.views import login_required
+from timeline.views import get_thumbnails_for_buildings
 from impressum.views import get_course_link
 
 
+# Hier einkommentieren für SSO:
+#@login_required
 def search(request):
     """
     Function to search in buildings

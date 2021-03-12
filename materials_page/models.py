@@ -1,8 +1,15 @@
 """
 Configurations for the Database Models for the App 'materials_page'
 """
-
+from django.core.exceptions import ValidationError
 from django.db import models
+
+
+def validate_pdf_extension(filename):
+    import os
+    ext = os.path.splitext(filename.name)[1]
+    if ext != ".pdf":
+        raise ValidationError("Es sind nur Datein mit Endung .pdf erlaubt.")
 
 
 class Category(models.Model):
@@ -56,7 +63,7 @@ class Material(models.Model):
     name = models.CharField(verbose_name='Titel', max_length=1000,
                             help_text='Bezeichnung der Datei')
     file = models.FileField(verbose_name='Datei', upload_to='material/',
-                            help_text="Datei hochladen.")
+                            help_text="Datei hochladen.", validators=[validate_pdf_extension])
     category = models.ForeignKey(verbose_name='Kategorie', to=Category, null=True, blank=True,
                                  on_delete=models.SET_NULL)
 

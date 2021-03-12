@@ -427,8 +427,8 @@ class TimelineViewsTest(TestCase):
                           'Hellenismus': (self.hellenismus, [(True, bu1, "100 v.Chr.", pic1)]),
                           'Kaiserzeit': (self.kaiserzeit, []),
                           'Spätantike': (self.spätantike, [])}
-                         )
-
+                        )
+       
 
 def setup():
     # pylint: disable = no-member
@@ -625,7 +625,6 @@ class TestsCasesSortedBuildings(TestCase):
         hellenismus = Era.objects.create(name="Hellenismus", year_from=337,
                                          year_from_BC_or_AD="v.Chr.", year_to=30,
                                          year_to_BC_or_AD="v.Chr.", visible_on_video_page=True,
-
                                          color_code="fffff5")
         kaiserzeit = Era.objects.create(name='Kaiserzeit', year_from=30,
                                         year_from_BC_or_AD='n.Chr.', year_to=284,
@@ -652,6 +651,7 @@ class TestsCasesSortedBuildings(TestCase):
                          building7, building8, building9, building10, building11]
         test_list = building_list + [hd1, hd2,
                                      hd3, hd4]
+
         self.maxDiff = None
         response = self.client.get('/timeline/')
         self.assertEqual(response.status_code, 200)

@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c5f9ee76-1a0d-42c6-bc5e-c52b6df9cbe6" name="Default Changelist" comment="Fixing mainly the pylint complaints and pushing the test coverage.&#10;In the process of writing tests, fixing some minor mistakes.">
+    <list default="true" id="69b3ddc8-cb83-4fd2-9e28-5c469f2739fb" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/details_page/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/details_page/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/details_page/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/details_page/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/details_page/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/details_page/tests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timeline/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/timeline/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timeline/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/timeline/tests.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bp55_ruins_and_beyond/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/bp55_ruins_and_beyond/settings.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -264,77 +261,29 @@
       <option name="project" value="LOCAL" />
       <updated>1612381237706</updated>
     </task>
-    <task id="LOCAL-00010" summary="Splitting function in filter_page.view is working and is tested. Also changed the validator function validate_url_conform_str in details_page.models">
-      <created>1613119687153</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
+    <task id="LOCAL-00002" summary="Updated README.md.">
+      <created>1615286205169</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
       <option name="project" value="LOCAL" />
-      <updated>1613119687153</updated>
+      <updated>1615286205169</updated>
     </task>
-    <task id="LOCAL-00011" summary="Adding german variable names to the admin interface.&#10;Also changed the context variable of the timeline.view and testet the function sort_into_eras a little bit.">
-      <created>1613437197367</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
+    <task id="LOCAL-00003" summary="Refactored some lines, for cleaner code and better pylint results.">
+      <created>1615457336949</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
       <option name="project" value="LOCAL" />
-      <updated>1613437197367</updated>
+      <updated>1615457336949</updated>
     </task>
-    <task id="LOCAL-00012" summary="Inline creation of Blueprint and Picture in Building and Timestamp in Videos. &#10;Also removing length in Video and setting editable=False in the descriptions of blueprint and piucture. ALSO SOME NEW MIGRATIONS!!!">
-      <created>1613492416999</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
+    <task id="LOCAL-00004" summary="Basic Settings for Single Sign On.">
+      <created>1615458018317</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
       <option name="project" value="LOCAL" />
-      <updated>1613492416999</updated>
+      <updated>1615458018317</updated>
     </task>
-    <task id="LOCAL-00013" summary="Changing the dictionary the frontend needs for the timeline.&#10;Also making eras unique so we have another migrations.">
-      <created>1613503982483</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1613503982483</updated>
-    </task>
-    <task id="LOCAL-00014" summary="Changed the awful code of getting_all_eras_sorted and tested it.">
-      <created>1613508904628</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1613508904628</updated>
-    </task>
-    <task id="LOCAL-00015" summary="Changed name field of era model and corrected a mistake in the views function of timeline">
-      <created>1613587827442</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1613587827442</updated>
-    </task>
-    <task id="LOCAL-00016" summary="New migration for the name field of the era model">
-      <created>1613587936001</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1613587936001</updated>
-    </task>
-    <task id="LOCAL-00017" summary="Mainly changing the context of the timeline. It works now dynamically with every era, buildings and historic dates. Also replaced some functions with new functions and changing some attribute names in models.">
-      <created>1614876864544</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1614876864544</updated>
-    </task>
-    <task id="LOCAL-00018" summary="Fixing mainly the pylint complaints and pushing the test coverage.&#10;In the process of writing tests, fixing some minor mistakes.">
-      <created>1615112326778</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1615112326778</updated>
-    </task>
-    <task id="LOCAL-00019" summary="Fixing mainly the pylint complaints and pushing the test coverage.&#10;In the process of writing tests, fixing some minor mistakes.">
-      <created>1615112354805</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1615112354805</updated>
-    </task>
-    <option name="localTasksCounter" value="20" />
+    <option name="localTasksCounter" value="5" />
+
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -380,24 +329,10 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Error Fix for CI" />
-    <MESSAGE value="Adding timestamp model to admin interface" />
-    <MESSAGE value="Silly Tobi forgot to change branch, so hear are my tests and some small changes." />
-    <MESSAGE value="SOme small changes." />
-    <MESSAGE value="fixing code review complains" />
-    <MESSAGE value="Configure the admin site for every model.&#10;Started to fix pylint complains.&#10;Some small fixes for the Nutzerstudie." />
-    <MESSAGE value="Fixing some Pylint complains and startet to write tests for the functions in filter_page.views" />
-    <MESSAGE value="Pylint complain fixes line too long" />
-    <MESSAGE value="Hopefully finished tests for filter_page.views and done some more validations in the text feld of building. So there are some NEW MIGRATIONS!!!!" />
-    <MESSAGE value="Splitting function in filter_page.view is working and is tested. Also changed the validator function validate_url_conform_str in details_page.models" />
-    <MESSAGE value="Adding german variable names to the admin interface.&#10;Also changed the context variable of the timeline.view and testet the function sort_into_eras a little bit." />
-    <MESSAGE value="Inline creation of Blueprint and Picture in Building and Timestamp in Videos. &#10;Also removing length in Video and setting editable=False in the descriptions of blueprint and piucture. ALSO SOME NEW MIGRATIONS!!!" />
-    <MESSAGE value="Changing the dictionary the frontend needs for the timeline.&#10;Also making eras unique so we have another migrations." />
-    <MESSAGE value="Changed the awful code of getting_all_eras_sorted and tested it." />
-    <MESSAGE value="Changed name field of era model and corrected a mistake in the views function of timeline" />
-    <MESSAGE value="New migration for the name field of the era model" />
-    <MESSAGE value="Mainly changing the context of the timeline. It works now dynamically with every era, buildings and historic dates. Also replaced some functions with new functions and changing some attribute names in models." />
-    <MESSAGE value="Fixing mainly the pylint complaints and pushing the test coverage.&#10;In the process of writing tests, fixing some minor mistakes." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixing mainly the pylint complaints and pushing the test coverage.&#10;In the process of writing tests, fixing some minor mistakes." />
+    <MESSAGE value="test" />
+    <MESSAGE value="Updated README.md." />
+    <MESSAGE value="Refactored some lines, for cleaner code and better pylint results." />
+    <MESSAGE value="Basic Settings for Single Sign On." />
+    <option name="LAST_COMMIT_MESSAGE" value="Basic Settings for Single Sign On." />
   </component>
 </project>
