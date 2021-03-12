@@ -17,7 +17,7 @@ def key(dictionary, index):
     :param index: Index of desired element
     :return: Dictionary element which is stored under given key/index
     """
-    return [dictionary.get(index)]
+    return dictionary.get(index)
 
 @register.filter
 def index(list, i):

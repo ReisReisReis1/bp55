@@ -4,6 +4,8 @@ Tests for the functions in the App: materials_page
 # pylint: disable=all
 import io
 import zipfile
+from django.core.files.uploadedfile import SimpleUploadedFile
+
 
 from django.test import Client
 from django.test import TestCase
@@ -87,6 +89,7 @@ class MaterialTestCases(TestCase):
 
         Material.objects.create(name='TestDatei1',
                                 file='C:/Users/Laura Buhleier/Documents/GitHub/media/Test1.pdf',
+        Material.objects.create(name='TestDatei1', file='C:/Users/Laura Buhleier/Documents/GitHub/media/Test1.pdf',
                                 category='TestKategorie1')
         Material.objects.create(name='TestDatei2',
                                 file='C:/Users/Laura Buhleier/Documents/GitHub/media/Test2.pdf',

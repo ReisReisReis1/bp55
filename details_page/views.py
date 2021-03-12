@@ -39,7 +39,7 @@ def detailed(request, building_id):
         'Säulenordung': Building.get_column_order(Building, building_id),
         'Konstruktion': Building.get_construction(Building, building_id),
         'Material': Building.get_material(Building, building_id),
-        'Litertur': Building.get_literature(Building, building_id),
+        'Literatur': Building.get_literature(Building, building_id),
         'Links': Building.get_links(Building, building_id),
         'Bilder': Picture.get_picture_for_building(Picture, building_id),
         'Baupläne': Blueprint.get_blueprint_for_building(Blueprint, building_id),
