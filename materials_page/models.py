@@ -13,7 +13,7 @@ def validate_pdf_extension(filename):
 
 
 class Category(models.Model):
-    # pylint: disable = too-many-public-methods
+    # pylint: disable = too-few-public-methods
     """
     name: the catgeorys name
     """
@@ -31,18 +31,6 @@ class Category(models.Model):
         """
         return str(self.name)
 
-    def get_name(self, category_name):
-        # pylint: disable= no-member
-        """
-        :param category_name:  name to fetch the correct category
-        :return: name of the category
-        """
-        try:
-            category = self.objects.get(name=category_name),
-            return category.name
-        except Category.DoesNotExist:
-            Category.DoesNotExist
-
 
 class Material(models.Model):
     # pylint: disable = too-few-public-methods
@@ -53,15 +41,10 @@ class Material(models.Model):
     """
 
     class Meta:
-        """
-        Meta data for the model
-        In this case the singular and plural name that will be seen in the admin interface
-        """
-        verbose_name = 'Materialien'
+        verbose_name = 'Material'
         verbose_name_plural = 'Materialien'
 
-    name = models.CharField(verbose_name='Titel', max_length=1000,
-                            help_text='Bezeichnung der Datei')
+    name = models.CharField(verbose_name='Titel', max_length=1000, help_text='Bezeichnung der Datei')
     file = models.FileField(verbose_name='Datei', upload_to='material/',
                             help_text="Datei hochladen.", validators=[validate_pdf_extension])
     category = models.ForeignKey(verbose_name='Kategorie', to=Category, null=True, blank=True,
@@ -78,9 +61,9 @@ class Material(models.Model):
         """
         :return: category name
         """
-        try:
+        if self.category is not None:
             return self.category.name
-        except Category.DoesNotExist:
-            return Category.DoesNotExist
+        else:
+            return 'Sonstiges'
 
 
