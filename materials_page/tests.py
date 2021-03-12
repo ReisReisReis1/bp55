@@ -137,28 +137,24 @@ class MaterialTestCases(TestCase):
 
     def test_views(self):
         test1 = Category.objects.create(name='TestKategorie1')
-
         test2 = Category.objects.create(name='TestKategorie2')
-
         test3 = Category.objects.create(name='')
-
         test4 = Category.objects.create(name='TestKategorie3')
         test5 = Category.objects.create(name='TestKategorie3')
 
         Material.objects.create(name='TestDatei1', file='/media/material/Test1.pdf', category=test1)
-        response = self.client.get('/materials_page/')
-        print(response)
         Material.objects.create(name='TestDatei2', file='/media/material/Test2.pdf', category=test1)
         Material.objects.create(name='TestDatei3', file='/media/material/Test3.pdf', category=test2)
         Material.objects.create(name='', category=test3)
-
         response = self.client.get('/materials_page/')
         print(response)
+        response = self.client.get('/materials_page/TestKategorie1/')
+        print(response)
 
-        testmat5 = Material.objects.create(name='TestDatei5', category=test4)
-        testmat6 = Material.objects.create(name='TestDatei6', category=test4)
-        testmat7 = Material.objects.create(name='TestDatei7', category=test5)
-        testmat8 = Material.objects.create(name='TestDatai8', )
+        Material.objects.create(name='TestDatei5', category=test4)
+        Material.objects.create(name='TestDatei6', category=test4)
+        Material.objects.create(name='TestDatei7', category=test5)
+        Material.objects.create(name='TestDatai8', )
 
         # response = self.client.get('/materials_page/')
         # self.assertEqual(response.status_code, 200)
