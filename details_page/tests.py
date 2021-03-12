@@ -4,8 +4,8 @@ Tests for the functions in the App: details_page
 # pylint: disable=all
 from django.test import Client
 from django.test import TestCase
-from django.core.exceptions import ValidationError
-from details_page.models import Era, Picture, Building, Blueprint, get_year_as_signed_int, \
+from django.core.exceptions import ValidationError, ObjectDoesNotExist
+from details_page.models import Era, Picture, Building, Blueprint, \
     validate_color_code, validate_url_conform_str
 from django.core.files.uploadedfile import SimpleUploadedFile
 from impressum.models import Impressum
@@ -126,7 +126,7 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_year_from_bc_or_ad(Building, 0), '')
         self.assertEqual(Building.get_year_from_bc_or_ad(Building, 1), 'v.Chr.')
-        self.assertEqual(Building.get_year_from_bc_or_ad(Building, 2), 'n.Chr.')
+        self.assertEqual(Building.get_year_from_bc_or_ad(Building, 2), 'v.Chr.')
         self.assertEqual(Building.get_year_from_bc_or_ad(Building, 3), Building.DoesNotExist)
 
     def test7_get_year_to(self):
@@ -144,7 +144,7 @@ class BuildingTestCases(TestCase):
         """
         self.assertEqual(Building.get_year_to_bc_or_ad(Building, 0), '')
         self.assertEqual(Building.get_year_to_bc_or_ad(Building, 1), 'v.Chr.')
-        self.assertEqual(Building.get_year_to_bc_or_ad(Building, 2), 'n.Chr.')
+        self.assertEqual(Building.get_year_to_bc_or_ad(Building, 2), 'v.Chr.')
         self.assertEqual(Building.get_year_to_bc_or_ad(Building, 3), Building.DoesNotExist)
 
     def test9_get_architect(self):
@@ -208,7 +208,6 @@ class BuildingTestCases(TestCase):
         self.assertEqual(Building.get_length(Building, 0), 0)
         self.assertEqual(Building.get_length(Building, 1), 30.88)
         self.assertEqual(Building.get_length(Building, 2), None)
-        self.assertEqual(Building.get_length(Building, 3), Building.DoesNotExist)
 
     def test16_get_width(self):
         """
@@ -338,44 +337,187 @@ class BuildingTestCases(TestCase):
         Impressum.objects.create(name="Impressum", course_link="moodle.tu-darmstadt.de")
         self.assertEqual(get_course_link(), "moodle.tu-darmstadt.de")
 
+    def test_get_year_as_signed_int(self):
+        """
+        Testing the model function get_year_as_signed_int in the building model
+        """
+        building1 = Building(name='Baum in Ganeshas Garten', year_from=100, year_to=50,
+                             year_from_BC_or_AD='v.Chr.', year_to_BC_or_AD='v.Chr.')
+        building2 = Building(name='Baum in Jonathans Garten', year_from=700,
+                             year_from_BC_or_AD='v.Chr.', year_to_BC_or_AD='n.Chr.')
+        building3 = Building(name='Nichts')
+        building4 = Building(name='Century', year_from=3, year_to=1, year_century=True,
+                             year_from_BC_or_AD='v.Chr.', year_to_BC_or_AD='v.Chr.')
+        building5 = Building(name='Century2', year_from=5, year_from_BC_or_AD='n.Chr.',
+                             year_century=True, year_to=6, year_to_BC_or_AD='n.Chr.')
+
+        # Testing building with no empty fields
+        self.assertEqual(building1.get_year_as_signed_int(), [-100, -50])
+        building1.year_from_BC_or_AD = building1.year_to_BC_or_AD = 'n.Chr.'
+        self.assertEqual(building1.get_year_as_signed_int(), [100, 50])
+
+        # Testing building with year_to is empty
+        self.assertEqual(building2.get_year_as_signed_int(), [-700, 9999])
+        # and with year_from is empty
+        building2.year_to = 100
+        building2.year_from = None
+        self.assertEqual(building2.get_year_as_signed_int(), [9999, 100])
+
+        # Testing building with only a name
+        self.assertEqual(building3.get_year_as_signed_int(), [9999, 9999])
+
+        # Testing Century for buildings
+        self.assertEqual(building4.get_year_as_signed_int(), [-250, -50])
+        self.assertEqual(building5.get_year_as_signed_int(), [450, 550])
+        building4.year_to = building4.year_from = building5.year_to = building5.year_from = 0
+        self.assertEqual(building4.get_year_as_signed_int(), [0, 0])
+        self.assertEqual(building5.get_year_as_signed_int(), [0, 0])
+
+    def test_get_year_as_str(self):
+        """
+        testing the model function get_year_as_str in the building model
+        """
+        # No years at all
+        building1 = Building(name='Building1')
+        self.assertEqual(building1.get_year_as_str(), '')
+
+        # Only year_from without year_from_BC_or_AD
+        building2 = Building(name='Building2', year_from=100)
+        self.assertEqual(building2.get_year_as_str(), '100 v.Chr.')
+        # with year_from_BC_or_AD
+        building2.year_from_BC_or_AD = 'n.Chr.'
+        self.assertEqual(building2.get_year_as_str(), '100 n.Chr.')
+
+        # Only year_to, year_to_Bc_or_AD doesn't matter
+        building3 = Building(name='building3', year_to=100)
+        self.assertEqual(building3.get_year_as_str(), '')
+
+        # With year_to and year_from, but year_to_BC_or_AD is null
+        building4 = Building(name='building4', year_from=99, year_to=100,
+                             year_from_BC_or_AD='v.Chr.')
+        self.assertEqual(building4.get_year_as_str(), '99 v.Chr. - 100 v.Chr.')
+        # now with year_to_BC_or_AD
+        building4.year_to_BC_or_AD = 'n.Chr.'
+        self.assertEqual(building4.get_year_as_str(), '99 v.Chr. - 100 n.Chr.')
+
+        # With year_century and ca
+        building5 = Building(name='Building5', year_from=1, year_to=1, year_ca=True,
+                             year_century=True, year_from_BC_or_AD='v.Chr.',
+                             year_to_BC_or_AD='n.Chr.')
+        self.assertEqual(building5.get_year_as_str(), 'ca. 1. Jh. v.Chr. - ca. 1. Jh. n.Chr.')
+
+    def test_get_thumbnail(self):
+        """
+        Testing the model function get_thumbnail in the building model
+        """
+        bu1 = Building.objects.create(name='Building1', year_from=100, year_from_BC_or_AD='v.Chr.')
+        bu2 = Building.objects.create(name='Building2', year_from=100, year_to=100,
+                                      year_from_BC_or_AD='v.Chr.',
+                                      year_to_BC_or_AD='n.Chr.')
+        pic1 = Picture.objects.create(name='Picture1', picture=image_mock, building=bu2,
+                                      usable_as_thumbnail=False)
+        bu3 = Building.objects.create(name='Building3')
+        pic2 = Picture.objects.create(name='Picture2', picture=image_mock, building=bu3,
+                                      usable_as_thumbnail=True)
+        bu4 = Building.objects.create(name='Building4')
+        pic3 = Picture.objects.create(name='Picture3', picture=image_mock2, building=bu4,
+                                      usable_as_thumbnail=True)
+        pic4 = Picture.objects.create(name='Picture4', picture=image_mock, building=bu4,
+                                      usable_as_thumbnail=True)
+
+        # No picture
+        self.assertEqual(bu1.get_thumbnail(), None)
+        # One picture, but not a thumbnail
+        self.assertEqual(bu2.get_thumbnail(), None)
+        # One picture that is the thumbnail
+        self.assertEqual(bu3.get_thumbnail(), pic2)
+        # Two pictures that could be a thumbnail
+        self.assertEqual(bu4.get_thumbnail(), pic3)
+
 
 class EraModelTests(TestCase):
     """
     Tests for Era Model.
     """
 
-    @classmethod
-    def setUpTestData(cls):
-        """
-        Setup for test data
-        :return: None
-        """
-        cls.testera = Era.objects.create(name="Frühzeit", year_from=1, year_from_BC_or_AD="",
-                                         year_to=1,
-                                         year_to_BC_or_AD="", visible_on_video_page=True,
-                                         color_code="ffffff")
-
     def test_response(self):
         """
         Simple response and get tests on object
         :return: None / Test results
         """
-        self.assertEqual(Era.objects.get(pk=1), self.testera)
-        self.assertEqual(Era.objects.get(pk=1).name, self.testera.name)
-        self.assertEqual(Era.objects.get(pk=1).year_from, self.testera.year_from)
-        self.assertEqual(Era.objects.get(pk=1).year_from_BC_or_AD, self.testera.year_from_BC_or_AD)
-        self.assertEqual(Era.objects.get(pk=1).year_to, self.testera.year_to)
-        self.assertEqual(Era.objects.get(pk=1).year_to_BC_or_AD, self.testera.year_to_BC_or_AD)
+        testera = Era.objects.create(name="Frühzeit", year_from=1, year_from_BC_or_AD="",
+                                     year_to=1,
+                                     year_to_BC_or_AD="", visible_on_video_page=True,
+                                     color_code="ffffff")
+        self.assertEqual(Era.objects.get(pk=1), testera)
+        self.assertEqual(Era.objects.get(pk=1).name, testera.name)
+        self.assertEqual(Era.objects.get(pk=1).year_from, testera.year_from)
+        self.assertEqual(Era.objects.get(pk=1).year_from_BC_or_AD, testera.year_from_BC_or_AD)
+        self.assertEqual(Era.objects.get(pk=1).year_to, testera.year_to)
+        self.assertEqual(Era.objects.get(pk=1).year_to_BC_or_AD, testera.year_to_BC_or_AD)
         self.assertEqual(Era.objects.get(pk=1).visible_on_video_page,
-                         self.testera.visible_on_video_page)
-        self.assertEqual(Era.objects.get(pk=1).color_code, self.testera.color_code)
+                         testera.visible_on_video_page)
+        self.assertEqual(Era.objects.get(pk=1).color_code, testera.color_code)
 
     def test__str__(self):
+        """
+        Testing the model function __str__ in the model era
+        """
+        testera = Era.objects.create(name="Frühzeit", year_from=1, year_from_BC_or_AD="",
+                                     year_to=1,
+                                     year_to_BC_or_AD="", visible_on_video_page=True,
+                                     color_code="ffffff")
         era = Era.objects.create(name="Archaik", year_from=1, year_from_BC_or_AD="", year_to=1,
                                  year_to_BC_or_AD="",
                                  visible_on_video_page=True, color_code="fffff")
-        self.assertEqual(str(Era.objects.get(pk=1)), self.testera.name)
+        self.assertEqual(str(Era.objects.get(pk=1)), testera.name)
         self.assertEqual(str(Era.objects.get(pk=2)), era.name)
+
+    def test_get_year_as_string(self):
+        """
+        Testing the model function get_year_as_str
+        """
+        # No years at all
+        era1 = Era(name='Era1')
+        self.assertEqual(era1.get_year_as_str(), '')
+
+        # Only year_from without year_from_BC_or_AD
+        era2 = Era(name='Era2', year_from=100)
+        self.assertEqual(era2.get_year_as_str(), '100 v.Chr.')
+        # with year_from_BC_or_AD
+        era2.year_from_BC_or_AD = 'n.Chr.'
+        self.assertEqual(era2.get_year_as_str(), '100 n.Chr.')
+
+        # Only year_to, year_to_Bc_or_AD doesn't matter
+        era3 = Era(name='Era3', year_to=100)
+        self.assertEqual(era3.get_year_as_str(), '')
+
+        # With year_to and year_from, but year_to_BC_or_AD is null
+        era4 = Era(name='Era4', year_from=99, year_to=100, year_from_BC_or_AD='v.Chr.')
+        self.assertEqual(era4.get_year_as_str(), '99 v.Chr. - 100 v.Chr.')
+        # now with year_to_BC_or_AD
+        era4.year_to_BC_or_AD = 'n.Chr.'
+        self.assertEqual(era4.get_year_as_str(), '99 v.Chr. - 100 n.Chr.')
+
+    def test_get_year_as_signed_int(self):
+        """
+        Testing the model function get_year_as_signed_int from the era model
+        """
+        era1 = Era(name="Archaik", year_from=700, year_from_BC_or_AD="v.Chr.", year_to=500,
+                   year_to_BC_or_AD="v.Chr.",
+                   visible_on_video_page=True, color_code="fffff")
+        era2 = Era(name='Klassik', year_from_BC_or_AD='v.Chr.', year_to=337,
+                   year_to_BC_or_AD='v.Chr.')
+        era3 = Era(name='Frühzeit')
+
+        # Testing era with no empty fields
+        self.assertEqual(era1.get_year_as_signed_int(), [-700, -500])
+
+        # Testing era with one empty field
+        self.assertEqual(era2.get_year_as_signed_int(), [9999, -337])
+
+        # Testing era with only a name
+        self.assertEqual(era3.get_year_as_signed_int(), [9999, 9999])
 
 
 class PictureTests(TestCase):
@@ -545,24 +687,6 @@ class ModelFunctionTests(TestCase):
     Testing the function oustide of the classes in details_page.models
     """
 
-    def setUp(self):
-        """
-        Setting up some TestData
-        """
-        self.era1 = Era(name="Archaik", year_from=700, year_from_BC_or_AD="v.Chr.", year_to=500,
-                        year_to_BC_or_AD="v.Chr.",
-                        visible_on_video_page=True, color_code="fffff")
-        self.era2 = Era(name='Klassik', year_from_BC_or_AD='v.Chr.', year_to=337,
-                        year_to_BC_or_AD='v.Chr.')
-        self.era3 = Era(name='Frühzeit')
-        self.building1 = Building(name='Baum in Ganeshas Garten', year_from=100, year_to=50,
-                                  year_from_BC_or_AD='v.Chr.', year_to_BC_or_AD='n.Chr.')
-        self.building2 = Building(name='Baum in Jonathans Garten', year_from=700,
-                                  year_from_BC_or_AD='v.Chr.', year_to_BC_or_AD='v.Chr.')
-        self.building3 = Building(name='Nichts')
-        self.building4 = Building(name='Century', year_from=3, year_to=1, year_century=True,
-                                  year_from_BC_or_AD='v.Chr.', year_to_BC_or_AD='n.Chr.')
-
     def test_validator_color_code(self):
         """
         Test the validators for color codes.
@@ -616,30 +740,3 @@ class ModelFunctionTests(TestCase):
         # Testing with illegal strings
         self.assertRaises(ValidationError, validate_url_conform_str, string5)
         self.assertRaises(ValidationError, validate_url_conform_str, string6)
-
-    def test_get_year_as_signed_int(self):
-        """
-        Testing the get_year_as_signed_int function
-        """
-        # Testing era with no empty fields
-        self.assertEqual(get_year_as_signed_int(self.era1), [-700, -500])
-
-        # Testing era with one empty field
-        self.assertEqual(get_year_as_signed_int(self.era2), [9999, -337])
-
-        # Testing era with only a name
-        self.assertEqual(get_year_as_signed_int(self.era3),
-                         [9999, 9999])
-
-        # Testing building with no empty fields
-        self.assertEqual(get_year_as_signed_int(self.building1), [-100, 50])
-
-        # Testing building with one empty field
-        self.assertEqual(get_year_as_signed_int(self.building2), [-700, 9999])
-
-        # Testing building with only a name
-        self.assertEqual(get_year_as_signed_int(self.building3),
-                         [9999, 9999])
-
-        # Testing Century
-        self.assertEqual(get_year_as_signed_int(self.building4), [-250, 50])
