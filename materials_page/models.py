@@ -22,7 +22,8 @@ class Category(models.Model):
         verbose_name = 'Kategorie'
         verbose_name_plural = 'Kategorien'
 
-    name = models.CharField(verbose_name='Titel', max_length=1000, help_text='Bezeichnung der Kategorie')
+    name = models.CharField(verbose_name='Titel', max_length=1000,
+                            help_text='Bezeichnung der Kategorie', default="Sonstiges")
 
     def __str__(self):
         """
