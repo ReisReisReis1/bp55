@@ -5,7 +5,6 @@ Configurations of the Website subpages from the App: materials_page
 from start.views import login_required
 from .models import Material
 
-
 from django.shortcuts import render
 # pylint: disable = import-error, relative-beyond-top-level
 from .models import Material
@@ -34,10 +33,10 @@ def get_categories_and_corresponding_files():
     return result
 
 
+
 # Hier einkommentieren für SSO:
 #@login_required
 def get_categories_and_corresponding_zip_files(request, category):
-
     """
     :return: the categories and HttpsResponse for the corresponding zip files in a dictionary
     """
