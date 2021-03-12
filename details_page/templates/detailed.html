@@ -10,22 +10,32 @@
     <link rel="stylesheet" type="text/css" href="{% static 'detailed.css' %}">
 
     <script>
+        // Function to pause video if popup gets closed
+        // id: ID of video which needs to stop
         function stopPopupVideo(id) {
+            // Get correct video element
             var video = document.getElementById("popup-video-" + id);
+            // Define id of popup element
             var popup = "popup-" + id;
+            // Pause correct video
             $('#' + popup).on('hidden.bs.modal', function () {
                 video.pause();
             });
         }
 
+        // Function to start video on specific timestamp
+        // id: Video ID of video which gets started
+        // minutes: Minutes on which video gets started
+        // seconds: Seconds on which video gets started
         function startVideoOnTimestamp(id, minutes, seconds) {
+            // Get correct video element
             var video = document.getElementById("popup-video-" + id);
+            // Calculate timestamp in seconds
             var timestamp = (minutes * 60) + seconds;
 
+            // Set time of video on timestamp if it wasn't already started
             if (video.readyState !== 4) {
-                console.log(video.currentTime)
                 video.currentTime = timestamp;
-                console.log(video.currentTime)
             }
         }
     </script>
@@ -37,6 +47,7 @@
     <div class="container container-page">
         <div class="row details-box" style="border-color: #{{ Era.color_code }}">
             <div class="col">
+                <!-- Create table of all details of the building -->
                 <table class="table table-bordered">
                     <tbody>
                         <tr>
@@ -254,6 +265,7 @@
                 </table>
             </div>
             <div class="col">
+                <!-- Add images, blueprints and name of building -->
                 <table class="table table-bordered">
                     <tbody>
                         <tr>
@@ -261,8 +273,10 @@
                                 {% with image_length=Bilder|length blueprints_length=Baupläne|length %}
                                     {% if image_length|add:blueprints_length <= 1 %}
                                         {% if Bilder|length == 0 and Baupläne|length == 0 %}
+                                            <!-- Add default image if there are no images/blueprints -->
                                             <img src="{% static "default_image.png"  %}" style="width: 100%;">
                                         {% else %}
+                                            <!-- Add image/blueprint if there is only one image/blueprint -->
                                             {% if Baupläne|length == 0 %}
                                                 {% for image in Bilder %}
                                                     <img class="d-block w-100" src="/media/{{ image.picture }}">
@@ -274,8 +288,10 @@
                                             {% endif %}
                                         {% endif %}
                                     {% else %}
+                                        <!-- Add image carousel if there are more than one images/blueprints -->
                                         <div id="details_images" class="carousel slide" data-interval="false">
                                             <ol class="carousel-indicators">
+                                                <!-- Add element for images to carousel -->
                                                 {% for image in Bilder %}
                                                     {% if forloop.first %}
                                                         <li data-target="#details_images" class="active"></li>
@@ -283,6 +299,7 @@
                                                         <li data-target="#details_images"></li>
                                                     {% endif %}
                                                 {% endfor %}
+                                                <!-- Add element for blueprints to carousel -->
                                                 {% for blueprints in Baupläne %}
                                                     {% if forloop.first and Bilder|length == 0%}
                                                         <li data-target="#details_images" class="active"></li>
@@ -296,6 +313,7 @@
                                                 {% if Bilder|length == 0 and Baupläne|length == 0 %}
                                                     <img src="{% static "default_image.png"  %}" style="width: 100%;">
                                                 {% else %}
+                                                    <!-- Add images to carousel -->
                                                     {% for image in Bilder %}
                                                         {% if forloop.first %}
                                                             <div class="carousel-item active">
@@ -305,6 +323,7 @@
                                                             <img class="d-block w-100" src="/media/{{ image.picture }}">
                                                         </div>
                                                     {% endfor %}
+                                                    <!-- Add blueprints to carousel -->
                                                     {% for blueprints in Baupläne %}
                                                         {% if forloop.first and Bilder|length == 0 %}
                                                             <div class="carousel-item active">
@@ -317,6 +336,7 @@
                                                 {% endif %}
                                             </div>
 
+                                            <!-- Add carousel controls -->
                                             <a class="carousel-control-prev" href="#details_images" role="button" data-slide="prev">
                                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                                 <span class="sr-only">Previous</span>
@@ -330,6 +350,7 @@
                                 {% endwith %}
                             </td>
                         </tr>
+                        <!-- Add name of building -->
                         {% if Beschreibung == None or Beschreibung|length == 0%}
                             <tr>
                                 <td class="break-words">
@@ -340,16 +361,19 @@
                     </tbody>
                 </table>
 
+                <!-- Add name and description of building -->
                 {% if not Beschreibung == None and not Beschreibung|length == 0%}
                     <table class="table table-bordered">
                         <tbody>
                             <tr>
                                 <td class="break-words">
+                                    <!-- Add name -->
                                     <h3 class="heading-no-margin">{{ Name }}</h3>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="break-words">
+                                    <!-- Add description -->
                                     {{ Beschreibung }}
                                 </td>
                             </tr>
@@ -357,12 +381,14 @@
                     </table>
                 {% endif %}
 
+                <!-- Add videos in which the building occurs -->
                 {% if not Videos == None and not Videos|length == 0%}
                     <table class="table table-bordered">
                         <tbody>
                             <tr>
                                 <td>
                                     <div class="row row-no-margin">
+                                        <!-- Iterate through videos -->
                                         {% for timestamp in Videos %}
                                             <div class="video-box" data-toggle="modal" data-target="#popup-{{ forloop.counter }}" onclick="startVideoOnTimestamp({{ forloop.counter }},{{ timestamp.minutes }},{{ timestamp.seconds }})">
                                                 {% if forloop.counter <= 4 %}
@@ -373,11 +399,13 @@
                                                     <tbody>
                                                         <tr>
                                                             <td>
+                                                                <!-- Add video icon -->
                                                                 <img src="{% static "videomarketing.png" %}" width="100%">
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td class="break-words">
+                                                                <!-- Add title of video -->
                                                                 {{ timestamp.video.title }}<br>
                                                             </td>
                                                         </tr>
@@ -385,13 +413,16 @@
                                                 </table>
                                             </div>
 
+                                            <!-- Add popup in which the video gets played -->
                                             <div class="modal" id="popup-{{ forloop.counter }}" data-keyboard="false" onclick="stopPopupVideo({{ forloop.counter }})">
                                                 <div class="modal-dialog modal-xl modal-dialog-centered">
                                                     <div class="modal-content">
+                                                        <!-- Header of popup -->
                                                         <div class="modal-header">
                                                             <h4 class="modal-title">{{ timestamp.video.title }}</h4>
                                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                         </div>
+                                                        <!-- Body of popup which contains the video -->
                                                         <div class="modal-body">
                                                             <video id="popup-video-{{ forloop.counter }}" width="100%" controls preload="none" poster="/media/{{ timestamp.video.thumbnail }}" oncontextmenu="return false;" controlsList="nodownload">
                                                                 <source src="{{ timestamp.video.video.url }}" type="video/mp4">

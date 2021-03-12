@@ -1,6 +1,9 @@
 """
 Configurations of the Website subpages from the App: materials_page
 """
+# pylint: disable = import-error, relative-beyond-top-level
+from start.views import login_required
+from .models import Material
 
 from django.shortcuts import render
 # pylint: disable = import-error, relative-beyond-top-level
@@ -30,6 +33,9 @@ def get_categories_and_corresponding_files():
     return result
 
 
+
+# Hier einkommentieren für SSO:
+#@login_required
 def get_categories_and_corresponding_zip_files(request, category):
     """
     :return: the categories and HttpsResponse for the corresponding zip files in a dictionary
@@ -43,7 +49,7 @@ def get_categories_and_corresponding_zip_files(request, category):
         filenames = filenames + [material_entry.file.path]
 
         # Folder name in ZIP archive which contains the above files
-        zip_subdir = 'zipfiles'
+        zip_subdir = category
         zip_filename = "%s.zip" % zip_subdir
 
         # Open BytesIO to grab in-memory ZIP contents
@@ -74,7 +80,6 @@ def material(request):
     """
     Subpage to show the characteristics of a building
     :param request: url request to get materials_page
-    :param category: name of the category to return only elements of this category
     :return: rendering the subpage based on material.html
     with a context variable to get the characteristics
     """

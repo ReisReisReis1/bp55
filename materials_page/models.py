@@ -1,12 +1,19 @@
 """
 Configurations for the Database Models for the App 'materials_page'
 """
-
+from django.core.exceptions import ValidationError
 from django.db import models
 
 
+def validate_pdf_extension(filename):
+    import os
+    ext = os.path.splitext(filename.name)[1]
+    if ext != ".pdf":
+        raise ValidationError("Es sind nur Datein mit Endung .pdf erlaubt.")
+
+
 class Category(models.Model):
-    # pylint: disable = too-many-public-methods
+    # pylint: disable = too-few-public-methods
     """
     name: the catgeorys name
     """
@@ -24,21 +31,9 @@ class Category(models.Model):
         """
         return str(self.name)
 
-    def get_name(self, category_name):
-        # pylint: disable= no-member
-        """
-        :param category_name:  name to fetch the correct category
-        :return: name of the category
-        """
-        try:
-            category = self.objects.get(name=category_name),
-            return category.name
-        except Category.DoesNotExist:
-            Category.DoesNotExist
-
 
 class Material(models.Model):
-    # pylint: disable = too-many-public-methods
+    # pylint: disable = too-few-public-methods
     """
     name: short decription of what the file is about
     file: the material file
@@ -46,12 +41,12 @@ class Material(models.Model):
     """
 
     class Meta:
-        verbose_name = 'Materialien'
+        verbose_name = 'Material'
         verbose_name_plural = 'Materialien'
 
     name = models.CharField(verbose_name='Titel', max_length=1000, help_text='Bezeichnung der Datei')
     file = models.FileField(verbose_name='Datei', upload_to='material/',
-                            help_text="Datei hochladen.")
+                            help_text="Datei hochladen.", validators=[validate_pdf_extension])
     category = models.ForeignKey(verbose_name='Kategorie', to=Category, null=True, blank=True,
                                  on_delete=models.SET_NULL)
 
@@ -66,9 +61,9 @@ class Material(models.Model):
         """
         :return: category name
         """
-        try:
+        if self.category is not None:
             return self.category.name
-        except Category.DoesNotExist:
-            return Category.DoesNotExist
+        else:
+            return 'Sonstiges'
 
 

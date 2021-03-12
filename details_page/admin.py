@@ -9,10 +9,16 @@ from .models import Era, Building, Picture, Blueprint
 
 
 class BlueprintInLine(admin.StackedInline):
+    """
+    Model for the possibility to create a blueprint during the creation of an building
+    """
     model = Blueprint
 
 
 class PictureInLine(admin.StackedInline):
+    """
+    Model for the possibility to create a picture during the creation of an building
+    """
     model = Picture
 
 
@@ -21,8 +27,9 @@ class EraAdmin(admin.ModelAdmin):
     """
     Configure the admin model for 'Era'
     """
-    search_fields = ('name',)
-    ordering = ('name',)
+    search_fields = ('name', )
+    ordering = ('name', )
+    list_display = ('name', 'year_from', 'year_from_BC_or_AD', 'year_to', 'year_to_BC_or_AD')
 
 
 @admin.register(Building)
@@ -32,6 +39,7 @@ class BuildingAdmin(admin.ModelAdmin):
     """
     search_fields = ('name',)
     ordering = ('name',)
+    list_display = ('name', 'era', 'city',)
     inlines = [
         BlueprintInLine,
         PictureInLine,
