@@ -27,8 +27,8 @@ def one_dict_set_to_string_list(dictqs):
     :return: this values from the inner dicts as a string list
     """
     str_lst = []
-    for dict in dictqs:
-        for value in dict.values():
+    for dictionary in dictqs:
+        for value in dictionary.values():
             str_lst.append(value)
     return str_lst
 

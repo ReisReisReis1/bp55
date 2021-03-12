@@ -705,11 +705,11 @@ class Building(models.Model):
         Getting the thumbnail for this building
         """
         try:
-            thumbnail = Picture.objects.get(building=self.pk, usable_as_thumbnail=True)
+            thumbnail = Picture.objects.get(building=self.id, usable_as_thumbnail=True)
         except Picture.DoesNotExist:
             thumbnail = None
         except Picture.MultipleObjectsReturned:
-            thumbnail = Picture.objects.filter(building=self.pk, usable_as_thumbnail=True)[0]
+            thumbnail = Picture.objects.filter(building=self.id, usable_as_thumbnail=True)[0]
         return thumbnail
 
 

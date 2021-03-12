@@ -499,6 +499,7 @@ class FilterTestCases(TestCase):
     Testcases for the my_filter, delete_duplicates, one_dict_set_to_string_list, splitting
     functions in view
     """
+
     def test_splitting(self):
         """
         This tests the splitting method.
@@ -513,6 +514,11 @@ class FilterTestCases(TestCase):
         self.assertEqual(splitting(string2),
                          ['test1', 'test2', 'test3', 'test4', 'test0', 'test5', 'test6', 'test7',
                           'test8', 'test9', 'test10', 'test11'])
+        string3 = ['test1 , test2 ,test3, test4,test5', 'test6 ; test7 ;test8; test9;test10',
+                   'test11 / test12 /test13/ test14/test15']
+        self.assertEqual(splitting(string3),
+                         ['test1', 'test2', 'test3', 'test4', 'test5', 'test6', 'test7', 'test8',
+                          'test9', 'test10', 'test11', 'test12', 'test13', 'test14', 'test15'])
 
     def test_one_dict_set_to_string_list(self):
         """
