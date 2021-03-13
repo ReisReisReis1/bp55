@@ -28,4 +28,4 @@ jobs:
         pip install -r Requirements.txt
     - name: Run Tests
       run: |
-        py manage.py test
+        python3 manage.py test
