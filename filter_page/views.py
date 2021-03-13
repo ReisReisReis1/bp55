@@ -86,9 +86,11 @@ def my_filter(lst, key, value):
         result = lst
     return result
 
+
 # Hier einkommentieren für SSO:
 #@login_required
 def display_building_filter(request):
+    # pylint: disable=too-many-locals
     """
     Subpage "Gebäudefilter" with context
     :param request: url request to get subpage /filter

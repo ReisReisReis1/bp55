@@ -439,7 +439,7 @@ class BuildingTestCases(TestCase):
         self.assertEqual(response1.context['Säulenordung'], '')
         self.assertEqual(response1.context['Konstruktion'], '')
         self.assertEqual(response1.context['Material'], '')
-        self.assertEqual(response1.context['Litertur'], '')
+        self.assertEqual(response1.context['Literatur'], '')
         self.assertEqual(response1.context['Links'], [])
         self.assertEqual(list(response1.context['Bilder']), list(Picture.objects.filter(pk=0)))
         self.assertEqual(list(response1.context['Baupläne']), list(Blueprint.objects.filter(pk=0)))
@@ -472,7 +472,7 @@ class BuildingTestCases(TestCase):
         self.assertEqual(response2.context['Säulenordung'], 'dorisch, ionischer Fries')
         self.assertEqual(response2.context['Konstruktion'], 'Massivbau')
         self.assertEqual(response2.context['Material'], 'penetelischer Marmor')
-        self.assertEqual(response2.context['Litertur'], 'Muss - Schubert 1988, SEITEN?; Gruben 2001, 173-190; '
+        self.assertEqual(response2.context['Literatur'], 'Muss - Schubert 1988, SEITEN?; Gruben 2001, 173-190; '
                          'Hellmann 2006, 82-96;')
         self.assertEqual(response2.context['Links'], ['www.tu-darmstadt.de', 'www.architektur.tu-darmstadt.de'])
         self.assertEqual(list(response2.context['Bilder']), list(Picture.objects.filter(pk=1)))
@@ -506,7 +506,7 @@ class BuildingTestCases(TestCase):
         self.assertEqual(response3.context['Säulenordung'], None)
         self.assertEqual(response3.context['Konstruktion'], None)
         self.assertEqual(response3.context['Material'], None)
-        self.assertEqual(response3.context['Litertur'], None)
+        self.assertEqual(response3.context['Literatur'], None)
         self.assertEqual(response3.context['Links'], [])
         self.assertEqual(list(response3.context['Bilder']), list(Picture.objects.filter(pk=0)))
         self.assertEqual(list(response3.context['Baupläne']), list(Blueprint.objects.filter(pk=0)))
@@ -815,7 +815,7 @@ class ModelFunctionTests(TestCase):
         self.assertRaises(ValidationError, validate_color_code, string2)
         self.assertRaisesMessage(ValidationError,
                                  "['Bitte einen gültigen Code im Hex-Format "
-                                 "einfügen: Nur Hex-Zeichen: 0-9, a-f und A-F.']",
+                                 "einfügen: Nur Hex-Zeichen: 0-9, a-func und A-F.']",
                                  validate_color_code, string2)
 
         # Testing with to long string

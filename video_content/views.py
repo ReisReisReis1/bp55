@@ -3,7 +3,7 @@ Configurations of the Website subpages from the App: video-content
 """
 
 from django.shortcuts import render
-# pylint: disable = import-error,relative-beyond-top-level, no-name
+# pylint: disable = import-error,relative-beyond-top-level, no-name-in-module
 from details_page.models import Era
 from start.views import login_required
 from impressum.views import get_course_link

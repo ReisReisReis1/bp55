@@ -3,8 +3,7 @@ Configurations of the different viewable functions and subpages from the App: ti
 """
 # pylint: disable = no-name-in-module, import-error
 from django.shortcuts import render
-from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
-from details_page.models import Building, Picture, Era
+from details_page.models import Building, Era
 from start.views import login_required
 from timeline.models import HistoricDate
 from impressum.views import get_course_link

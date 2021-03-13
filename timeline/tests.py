@@ -1,6 +1,7 @@
 """
 Tests for functions in the App: timeline
 """
+# pylint: disable=no-name-in-module, import-error
 from datetime import date
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase, Client
@@ -10,12 +11,12 @@ from timeline.views import sorted_eras_with_buildings
 from details_page.models import Era, Building, Picture
 
 # Define some temp images for testing
-Thumbnail_Default = None
-Test_Image = (b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x00\x00\x00\x21\xf9\x04'
+THUMBNAIL_DEFAULT = None
+TEST_IMAGE = (b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x00\x00\x00\x21\xf9\x04'
               b'\x01\x0a\x00\x01\x00\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02'
               b'\x02\x4c\x01\x00\x3b')
-image_mock = SimpleUploadedFile('small.img', Test_Image, content_type='image/gif')
-image_mock2 = SimpleUploadedFile('small.img', Test_Image, content_type='image/gif')
+image_mock = SimpleUploadedFile('small.img', TEST_IMAGE, content_type='image/gif')
+image_mock2 = SimpleUploadedFile('small.img', TEST_IMAGE, content_type='image/gif')
 
 
 class HistoricDatesModelTests(TestCase):
@@ -293,7 +294,7 @@ class TimelineViewsTest(TestCase):
                           'Archaik': (self.archaik, []),
                           'Klassik': (self.klassik, []),
                           'Hellenismus':
-                              (self.hellenismus, [(True, bu1, "100 v.Chr.", Thumbnail_Default)]),
+                              (self.hellenismus, [(True, bu1, "100 v.Chr.", THUMBNAIL_DEFAULT)]),
                           'Kaiserzeit': (self.kaiserzeit, []),
                           'Spätantike': (self.spätantike, [])}
                          )
@@ -314,7 +315,7 @@ class TimelineViewsTest(TestCase):
                           'Archaik': (self.archaik, []),
                           'Klassik': (self.klassik, []),
                           'Hellenismus':
-                              (self.hellenismus, [(True, bu1, "100 v.Chr.", Thumbnail_Default)]),
+                              (self.hellenismus, [(True, bu1, "100 v.Chr.", THUMBNAIL_DEFAULT)]),
                           'Kaiserzeit': (self.kaiserzeit, []),
                           'Spätantike': (self.spätantike, [])}
                          )
@@ -357,7 +358,7 @@ class TimelineViewsTest(TestCase):
                           'Archaik': (self.archaik, []),
                           'Klassik': (self.klassik, []),
                           'Hellenismus': (
-                              self.hellenismus, [(True, bu1, "100 v.Chr.", Thumbnail_Default)]),
+                              self.hellenismus, [(True, bu1, "100 v.Chr.", THUMBNAIL_DEFAULT)]),
                           'Kaiserzeit': (self.kaiserzeit, []),
                           'Spätantike': (self.spätantike, [])}
                          )
@@ -427,11 +428,11 @@ class TimelineViewsTest(TestCase):
                           'Hellenismus': (self.hellenismus, [(True, bu1, "100 v.Chr.", pic1)]),
                           'Kaiserzeit': (self.kaiserzeit, []),
                           'Spätantike': (self.spätantike, [])}
-                        )
-       
+                         )
+
 
 def setup():
-    # pylint: disable = no-member
+    # pylint: disable = no-member, too-many-locals
     """
     Setting up all eras, some buildings and some historic dates
     """
@@ -640,6 +641,7 @@ class TestsCasesSortedBuildings(TestCase):
                           'Kaiserzeit': (kaiserzeit, [])})
 
     def test3_sorted_eras_with_buildings(self):
+        # pylint: disable = too-many-locals
         """
         Testing with all eras and many buildings and historic dates
         """
@@ -652,7 +654,6 @@ class TestsCasesSortedBuildings(TestCase):
         test_list = building_list + [hd1, hd2,
                                      hd3, hd4]
 
-        self.maxDiff = None
         response = self.client.get('/timeline/')
         self.assertEqual(response.status_code, 200)
 
@@ -710,6 +711,7 @@ class TestTimeline(TestCase):
     """
 
     def test(self):
+        # pylint: disable = too-many-locals
         """
         We need only one test, because we testet the other functions enough
         """

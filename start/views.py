@@ -3,17 +3,17 @@ Configurations of the different functions and subpages from the App: start
 """
 
 from django.shortcuts import render
+from django.http import HttpResponseRedirect
 # pylint: disable = import-error, no-name-in-module
 from video_content.models import Video
 from impressum.views import get_course_link
-from django.http import HttpResponseRedirect
 
 
-def login_required(f):
+def login_required(func):
     """
     Decorator method for view-method to make sure a user is either logged in,
     or the user will redirected to /login (CAS Login).
-    :param f: The function that requires a login, is decorated with this.
+    :param func: The function that requires a login, is decorated with this.
     :return: The wrapper function which than will decide what to do.
     """
     def wrapper(*args, **kwargs):
@@ -29,7 +29,7 @@ def login_required(f):
         # If the current user is not logged in: Redirect to /login.
         if not request.user.is_authenticated:
             return HttpResponseRedirect("/login")
-        return f(*args, **kwargs)
+        return func(*args, **kwargs)
     return wrapper
 
 

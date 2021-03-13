@@ -3,7 +3,7 @@ Configurations of the different viewable functions and subpages from the App: de
 """
 
 from django.shortcuts import render
-# pylint: disable = import-error, relative-beyond-top-level
+# pylint: disable = import-error, relative-beyond-top-level, no-name-in-module
 from video_content.models import Timestamp
 from impressum.views import get_course_link
 from start.views import login_required
