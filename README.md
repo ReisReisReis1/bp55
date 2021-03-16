@@ -131,6 +131,9 @@ In dem **static-Directory** werden mögliche statische Datein gespeichert, die n
 **Nur in der App timeline der Fall**
 **templatetags-File**: Ermöglicht die Verwendung von definierten Funktionen in html-Files.
 
+**Nur in der App details_page der Fall**
+**country_codes**: Enthält alle Codes für alle Länder.
+
 
 Für genauere Informationen zu den Files und Directories in den einzelnen Apps, stehen Kommentare und Doc-Strings in diesen, die speziefierte Klassen, Funktionen usw. erklären.
 
