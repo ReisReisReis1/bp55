@@ -1,11 +1,13 @@
 """
 Configurations for the Database Models for the App 'timeline'
 """
+# pylint: disable = no-name-in-module, import-error
 from django.db import models
 from details_page.models import Era
 
 
 class HistoricDate(models.Model):
+    # pylint: disable = too-few-public-methods, no-member
     """
     Database model for historic dates, that will be used in the timeline.
     year: the year for the historic happening, set negative ones for B.C. and positive ones for A.D.
@@ -14,12 +16,17 @@ class HistoricDate(models.Model):
     """
 
     class Meta:
+        """
+        Meta data for the model
+        In this case the singular and plural name that will be seen in the admin interface
+        """
         verbose_name = 'Historisches Datum'
         verbose_name_plural = 'Historische Daten'
 
-    year = models.PositiveIntegerField(verbose_name='Jahr', default=9999, help_text=
-    "Hier das Jahr des Ereignisses einfügen. "
-    "Falls es ein genaueres Datum gibt, wird diese angezeigt.")
+    year = models.PositiveIntegerField(verbose_name='Jahr', help_text=
+                                        "Hier das Jahr des Ereignisses einfügen. "
+                                        "Falls es ein genaueres Datum gibt, wird diese angezeigt.",
+                                       null=True, blank=True)
     exacter_date = models.DateField(verbose_name='Exaktes Datum', null=True, blank=True,
                                     help_text="Falls das Ereignis ein genaueres Datum hat, "
                                               "hier eingeben. "
@@ -39,7 +46,7 @@ class HistoricDate(models.Model):
                                      help_text="Jahr des Ereignisses: "
                                                "v.Chr. bzw. n.Chr. auswählen.",
                                      choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")],
-                                     default="n.Chr.")
+                                     default="v.Chr.")
     year_century = models.BooleanField(verbose_name='Jahrhundert', default=False,
                                        help_text="Sind die Daten Jahrhundert Angaben?")
     year_ca = models.BooleanField(verbose_name='ungefähres Datum?', default=False,
@@ -52,7 +59,7 @@ class HistoricDate(models.Model):
         verbose_name='Information',
         help_text="Hier eine kurze Beschreibung des historischen Ereignisses einfügen "
                   "(max. 1000 Zeichen).",
-        max_length=1000, editable=False)
+        max_length=1000, editable=True)
     era = models.ForeignKey(verbose_name='Epoche', to=Era, on_delete=models.SET_NULL, null=True,
                             blank=True)
 
@@ -60,33 +67,47 @@ class HistoricDate(models.Model):
         """
         Giving back the Historic date with titel and the date or year
         """
-        if self.exacter_date is None:
-            century = '. Jh. ' if self.year_century else ' '
-            ca = 'ca. ' if self.year_ca else ''
-            return str(self.title) + " (" + ca + str(self.year) + century + str(
-                self.year_BC_or_AD) + ")"
-        else:
-            return str(self.title) + " (" + str(self.exacter_date.day) + '.' + str(
-                self.exacter_date.month) + '.' + str(
-                self.exacter_date.year) + " " + str(self.year_BC_or_AD) + ")"
+        return_string = str(self.title) + " (" + self.get_year_as_str() + ")"
+        return return_string
 
     def get_year_as_signed_int(self):
         """
         Getting the year of a historic date as signed int
         :return: year as signed int or the year of the exact date as signed int
         """
-        if self.exacter_date is None:
+        result = 9999
+        if self.exacter_date is None and self.year is not None:
             if self.year_BC_or_AD == "v.Chr.":
                 result = -1 * int(self.year)
                 if self.year_century and result != 0:
                     result = result * 100 + 50
-            else:
+            elif self.year_BC_or_AD == 'n.Chr.':
                 result = int(self.year)
                 if self.year_century and result != 0:
                     result = result * 100 - 50
-        else:  # Getting only year of the exact date
+        elif self.exacter_date is not None:  # Getting only year of the exact date
             if self.year_BC_or_AD == "v.Chr.":
                 result = -1 * int(self.exacter_date.year)
-            else:
+            elif self.year_BC_or_AD == 'n.Chr.':
                 result = int(self.exacter_date.year)
+
+        return [result, 9999]
+
+    def get_year_as_str(self):
+        """
+        Getting the year as string
+        """
+        result = ''
+        if self.exacter_date is None and self.year is not None:
+            century = '. Jh.' if self.year_century else ''
+            circa = 'ca. ' if self.year_ca else ''
+            bc_ad = ' ' + str(self.year_BC_or_AD) if self.year_BC_or_AD is not None else 'v.Chr.'
+            result = circa + str(self.year) + century + bc_ad
+        elif self.exacter_date is not None:
+            day = str(self.exacter_date.day)
+            month = str(self.exacter_date.month)
+            year = str(self.exacter_date.year)
+            bc_ad = (' ' + str(self.year_BC_or_AD)) if self.year_BC_or_AD is not None else 'v.Chr.'
+            result = day + '.' + month + '.' + year + bc_ad
+
         return result

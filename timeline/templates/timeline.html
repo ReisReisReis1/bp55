@@ -11,9 +11,14 @@
     <link rel="stylesheet" type="text/css" href="{% static 'timeline.css' %}">
 
     <script>
+        // Function to toggle hide the index button
+        // button_id: ID of the toggle button
+        // index_id: ID of the index
         function hideIndex(button_id,index_id) {
+            // Get correct button element
             var button = document.getElementById(button_id);
 
+            // Change icon
             if (button.innerHTML === '∧') {
                 button.innerHTML = '∨';
             }
@@ -21,7 +26,9 @@
                 button.innerHTML = '∧';
             }
 
+            // Get index element
             var index = document.getElementById(index_id);
+            // Toggle hide index element
             index.classList.toggle("index-hide")
         }
     </script>
@@ -31,178 +38,257 @@
 
     {% include './header.html' %}
 
+    <!-- Get 'back to top' button -->
+    <a id="color-btn" href="" class="btn btn-lg back-to-top" role="button">∧</a>
+
+    <!-- Create index -->
     <div class="d-flex justify-content-center index">
         <div class="card" style="width: 300px;">
+            <!-- Index header -->
             <div class="card-body" onclick='hideIndex("index-button","index-items")' style="cursor: pointer;">
                 <div class="card-title heading-no-margin">
                     <h4 class="heading-no-margin">Legende</h4>
                     <button type="button" class="close index-button" id="index-button" style="outline: none;">∧</button>
                 </div>
             </div>
+            <!-- Index body with all eras -->
             <ul class="list-group index-hide" id="index-items">
-                {% for era in eras %}
-                    {% for era1,era2,display in eras|key:era %}
-                        {% if not era1 == None and display %}
-                            {% if era == "Königszeit" %}
-                                <a href="#Archaik_Königszeit">
-                            {% elif era == "Klassik" %}
-                                <a href="#Königszeit_Klassik">
-                            {% elif era == "Republik" %}
-                                <a href="#Klassik_Republik">
-                            {% elif era == "Hellenismus" %}
-                                <a href="#Republik_Hellenismus">
-                            {% else %}
-                                <a href="#{{ era }}">
-                            {% endif %}
-                                <li class="list-group-item">
-                                    <div class="row">
-                                        <div class="col-1" style="background-color: #{{ era1.color_code }}; margin-left: 5px;"></div>
-                                        <div class="col">{{ era }}</div>
-                                    </div>
-                                </li>
-                            </a>
-                        {% endif %}
-                    {% endfor %}
+                <!-- Iterate through all Eras -->
+                {% for era,list in Eras_Buildings.items %}
+                    {% with era_model=list|first era_buildings=list|index:1 %}
+                        <!-- Create link to specific era -->
+                        <a href="#{{ era }}">
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-1" style="background-color: #{{ era_model.color_code }}; margin-left: 5px;"></div>
+                                    <div class="col">{{ era }}</div>
+                                </div>
+                            </li>
+                        </a>
+                    {% endwith %}
                 {% endfor %}
             </ul>
         </div>
     </div>
 
+    <!-- Main components of timeline -->
     <div class="container container-page">
-        {% for item,list in items.items %}
-            {% if not list|length == 0 %}
-                <div id="{{ item }}">
-                    {% for is_building,building,time,image in list %}
-                        {% cycle "left" "right" as side silent %}
-                        <div class="row justify-content-center row-timeline">
-                            <div class="col d-flex justify-content-center">
-                                {% if side == "left" %}
-                                    <div class="card timeline-card">
-                                        {% if is_building %}
-                                            <a href="{% url 'details_page:detailed' building_id=building.id %}" class="card-link">
-                                        {% endif %}
-                                            <div class="card-body card-left" style="border-color: #{{ building.era.color_code }}">
-                                                {% if is_building %}
-                                                    <h5 class="card-title break-words" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.name }} · {{ time }}</h5>
-
-                                                    <div class="card-img">
-                                                        {% if image == None %}
-                                                            <img src="{% static "default_image.png"  %}" style="width: 100%;">
+        <!-- Iterate through all eras and buildings in these eras -->
+        {% for item,list in Eras_Buildings.items %}
+            <div id="{{ item }}">
+                {% with era_model=list|index:0 era_buildings=list|index:1 %}
+                    <!-- Add buildings if there exist some in this era -->
+                    {% if not era_buildings|length == 0 %}
+                        <!-- Iterate through buildings of era -->
+                        {% for is_building,building,time,image in era_buildings %}
+                            <!-- Add alternately left and right of timeline -->
+                            {% cycle "left" "right" as side silent %}
+                            <div class="row justify-content-center row-timeline">
+                                <div class="col d-flex justify-content-center">
+                                    <!-- Add cards on left side of timeline -->
+                                    {% if side == "left" %}
+                                        <div class="card timeline-card">
+                                            {% if is_building %}
+                                                <!-- Add a link to details page if the card is no historical date -->
+                                                <a href="{% url 'details_page:detailed' building_id=building.id %}" class="card-link">
+                                            {% endif %}
+                                                <div class="card-body card-left" style="border-color: #{{ building.era.color_code }}">
+                                                    <!-- Create card components of building -->
+                                                    {% if is_building %}
+                                                        <!-- Add date of building -->
+                                                        {% if building.date_century %}
+                                                            {% if building.date_ca %}
+                                                                <h5 class="card-title break-words" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.name }} · Ca. Jh. {{ time }}</h5>
+                                                            {% else %}
+                                                                <h5 class="card-title break-words" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.name }} · Jh. {{ time }}</h5>
+                                                            {% endif %}
                                                         {% else %}
-                                                            <img src="/media/{{ image.picture }}" style="width: 100%;">
+                                                            {% if building.date_ca %}
+                                                                <h5 class="card-title break-words" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.name }} · Ca. {{ time }}</h5>
+                                                            {% else %}
+                                                                <h5 class="card-title break-words" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.name }} · {{ time }}</h5>
+                                                            {% endif %}
                                                         {% endif %}
-                                                    </div>
-                                                {% else %}
-                                                    <h5 class="card-title historic-title break-words" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.title }} · {{ time }}</h5>
 
-                                                    {% if False and not building.infos == None %}
-                                                        <div class="card-text historic-title" align="justify">
-                                                            {{ building.infos }}
+                                                        <!-- Add image of building -->
+                                                        <div class="card-img">
+                                                            {% if image == None %}
+                                                                <!-- Add default image if building has no image -->
+                                                                <img src="{% static "default_image.png"  %}" style="width: 100%;">
+                                                            {% else %}
+                                                                <!-- Add thumbnail of building as image -->
+                                                                <img src="/media/{{ image.picture }}" style="width: 100%;">
+                                                            {% endif %}
                                                         </div>
+                                                    <!-- Create card components of historic date -->
+                                                    {% else %}
+                                                        <!-- Add date of historic date -->
+                                                        {% if building.date_century %}
+                                                            {% if building.date_ca %}
+                                                                <h5 class="card-title historic-title break-words" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.title }} · Ca. Jh. {{ time }}</h5>
+                                                            {% else %}
+                                                                <h5 class="card-title historic-title break-words" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.title }} · Jh. {{ time }}</h5>
+                                                            {% endif %}
+                                                        {% else %}
+                                                            {% if building.date_ca %}
+                                                                <h5 class="card-title historic-title break-words" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.title }} · Ca. {{ time }}</h5>
+                                                            {% else %}
+                                                                <h5 class="card-title historic-title break-words" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.title }} · {{ time }}</h5>
+                                                            {% endif %}
+                                                        {% endif %}
+
+                                                        <!-- Add description of historic date -->
+                                                        {% if False and not building.infos == None %}
+                                                            <div class="card-text historic-title" align="justify">
+                                                                {{ building.infos }}
+                                                            </div>
+                                                        {% endif %}
                                                     {% endif %}
-                                                {% endif %}
+                                                </div>
+                                            {% if is_building %}
+                                                </a>
+                                            {% endif %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+
+                                <!-- Add center beam -->
+                                <div class="col-1">
+                                    {% if forloop.parentloop.first and forloop.first %}
+                                        <!-- First element of timeline -->
+                                        {% if forloop.parentloop.first %}
+                                            <div class="timeline-center-text">
+                                                <h1>{{ era_model.name }}</h1>
                                             </div>
-                                        {% if is_building %}
-                                            </a>
                                         {% endif %}
+
+                                        <div class="timeline-center-first" style="background-color: #{{ era_model.color_code }}">
+                                    {% elif forloop.parentloop.last and forloop.last %}
+                                        <!-- Last element of timeline -->
+                                        {% if forloop.first %}
+                                            <div class="timeline-center-text">
+                                                <h1>{{ era_model.name }}</h1>
+                                            </div>
+                                        {% endif %}
+
+                                        <div class="timeline-center-last" style="background-color: #{{ era_model.color_code }}; border-color: #{{ era_model.color_code }};">
+                                    {% else %}
+                                        {% if forloop.first %}
+                                            <!-- First element of era -->
+                                            <div class="timeline-center-text">
+                                                <h1>{{ era_model.name }}</h1>
+                                            </div>
+                                        {% endif %}
+
+                                        <div class="timeline-center" style="background-color: #{{ era_model.color_code }}">
+                                    {% endif %}
                                     </div>
-                                {% endif %}
+                                </div>
+
+                                <!-- Add cards on right side of timeline -->
+                                <div class="col d-flex justify-content-center">
+                                    {% if side == "right" %}
+                                        <div class="card timeline-card">
+                                            {% if is_building %}
+                                                <!-- Add a link to details page if the card is no historical date -->
+                                                <a href="{% url 'details_page:detailed' building_id=building.id %}" class="card-link">
+                                            {% endif %}
+                                                <div class="card-body card-right" style="border-color: #{{ building.era.color_code }}">
+                                                    <!-- Create card components of building -->
+                                                    {% if is_building %}
+                                                        <!-- Add date of building -->
+                                                        {% if building.date_century %}
+                                                            {% if building.date_ca %}
+                                                                <h5 class="card-title break-words" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.name }} · Ca. Jh. {{ time }}</h5>
+                                                            {% else %}
+                                                                <h5 class="card-title break-words" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.name }} · Jh. {{ time }}</h5>
+                                                            {% endif %}
+                                                        {% else %}
+                                                            {% if building.date_ca %}
+                                                                <h5 class="card-title break-words" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.name }} · Ca. {{ time }}</h5>
+                                                            {% else %}
+                                                                <h5 class="card-title break-words" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.name }} · {{ time }}</h5>
+                                                            {% endif %}
+                                                        {% endif %}
+
+                                                        <!-- Add image of building -->
+                                                        <div class="card-img">
+                                                            {% if image == None %}
+                                                                <!-- Add default image if building has no image -->
+                                                                <img src="{% static "default_image.png"  %}" style="width: 100%;">
+                                                            {% else %}
+                                                                <!-- Add thumbnail of building as image -->
+                                                                <img src="/media/{{ image.picture }}" style="width: 100%;">
+                                                            {% endif %}
+                                                        </div>
+                                                    <!-- Create card components of historic date -->
+                                                    {% else %}
+                                                        <!-- Add date of historic date -->
+                                                        {% if building.date_century %}
+                                                            {% if building.date_ca %}
+                                                                <h5 class="card-title historic-title break-words" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.title }} · Ca. Jh. {{ time }}</h5>
+                                                            {% else %}
+                                                                <h5 class="card-title historic-title break-words" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.title }} · Jh. {{ time }}</h5>
+                                                            {% endif %}
+                                                        {% else %}
+                                                            {% if building.date_ca %}
+                                                                <h5 class="card-title historic-title break-words" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.title }} · Ca. {{ time }}</h5>
+                                                            {% else %}
+                                                                <h5 class="card-title historic-title break-words" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.title }} · {{ time }}</h5>
+                                                            {% endif %}
+                                                        {% endif %}
+
+                                                        <!-- Add description of historic date -->
+                                                        {% if False and not building.infos == None %}
+                                                            <div class="card-text" align="justify">
+                                                                {{ building.infos }}
+                                                            </div>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                </div>
+                                            {% if is_building %}
+                                                </a>
+                                            {% endif %}
+                                        </div>
+                                    {% endif %}
+                                </div>
                             </div>
-                            <div class="col-1">
-                                {% if forloop.parentloop.first and forloop.first %}
-                                    {% for era1,era2,_ in eras|key:item %}
-                                        {% if not era1 == None %}
-                                            {% if era2 == None %}
-                                                {% if forloop.parentloop.first %}
-                                                    <div class="timeline-center-text">
-                                                        <h1>{{ era1 }}</h1>
-                                                    </div>
-                                                {% endif %}
+                        {% endfor %}
+                    <!-- Add empty beam if there is no building in this era -->
+                    {% else %}
+                        <div class="row justify-content-center row-timeline">
+                            <!-- Add empty column on left side of beam -->
+                            <div class="col d-flex justify-content-center">
 
-                                                <div class="timeline-center-first" style="background-color: #{{ era1.color_code }}">
-                                            {% else %}
-                                                {% if forloop.parentloop.first %}
-                                                    <div class="timeline-center-text">
-                                                        <h1>{{ era1 }}/{{ era2 }}</h1>
-                                                    </div>
-                                                {% endif %}
+                            </div>
 
-                                                <div class="timeline-center-first" style="background: repeating-linear-gradient(20deg, #{{ era1.color_code }}, #{{ era1.color_code }} 40px, #{{ era2.color_code }} 0px, #{{ era2.color_code }} 80px);">
-                                            {% endif %}
-                                        {% endif %}
-                                    {% endfor %}
-                                {% elif forloop.parentloop.last and forloop.last %}
-                                    {% for era1,era2,_ in eras|key:item %}
-                                        {% if not era1 == None %}
-                                            {% if era2 == None %}
-                                                <div class="timeline-center-last" style="background-color: #{{ era1.color_code }}; border-color: #{{ era1.color_code }};">
-                                            {% else %}
-                                                <div class="timeline-center-last" style="background: repeating-linear-gradient(20deg, #{{ era1.color_code }}, #{{ era1.color_code }} 40px, #{{ era2.color_code }} 0px, #{{ era2.color_code }} 80px); border-color: #{{ era2.color_code }};">
-                                            {% endif %}
-                                        {% endif %}
-                                    {% endfor %}
+                            <!-- Add center beam -->
+                            <div class="col-1 timeline-center-empty">
+                                <div class="timeline-center-text">
+                                    <!-- Add era name on beam -->
+                                    <h1>{{ era_model.name }}</h1>
+                                </div>
+                                {% if forloop.first %}
+                                    <!-- First element of timeline -->
+                                    <div class="timeline-center-first" style="background-color: #{{ era_model.color_code }}">
+                                {% elif forloop.last %}
+                                    <!-- Last element of timeline -->
+                                    <div class="timeline-center-last" style="background-color: #{{ era_model.color_code }}; border-color: #{{ era_model.color_code }};">
                                 {% else %}
-                                    {% for era1,era2,_ in eras|key:item %}
-                                        {% if not era1 == None %}
-                                            {% if era2 == None %}
-                                                {% if forloop.parentloop.first %}
-                                                    <div class="timeline-center-text">
-                                                        <h1>{{ era1 }}</h1>
-                                                    </div>
-                                                {% endif %}
-
-                                                <div class="timeline-center" style="background-color: #{{ era1.color_code }}">
-                                            {% else %}
-                                                {% if forloop.parentloop.first %}
-                                                    <div class="timeline-center-text">
-                                                        <h1>{{ era1 }}/{{ era2 }}</h1>
-                                                    </div>
-                                                {% endif %}
-
-                                                <div class="timeline-center" style="background: repeating-linear-gradient(20deg, #{{ era1.color_code }}, #{{ era1.color_code }} 40px, #{{ era2.color_code }} 0px, #{{ era2.color_code }} 80px);">
-                                            {% endif %}
-                                        {% endif %}
-                                    {% endfor %}
+                                    <!-- Center element of timeline -->
+                                    <div class="timeline-center" style="background-color: #{{ era_model.color_code }}">
                                 {% endif %}
                                 </div>
                             </div>
+
+                            <!-- Add empty column on right sight of beam -->
                             <div class="col d-flex justify-content-center">
-                                {% if side == "right" %}
-                                    <div class="card timeline-card">
-                                        {% if is_building %}
-                                            <a href="{% url 'details_page:detailed' building_id=building.id %}" class="card-link">
-                                        {% endif %}
-                                            <div class="card-body card-right" style="border-color: #{{ building.era.color_code }}">
-                                                {% if is_building %}
-                                                    <h5 class="card-title break-words" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.name }} · {{ time }}</h5>
 
-                                                    <div class="card-img">
-                                                        {% if image == None %}
-                                                            <img src="{% static "default_image.png"  %}" style="width: 100%;">
-                                                        {% else %}
-                                                            <img src="/media/{{ image.picture }}" style="width: 100%;">
-                                                        {% endif %}
-                                                    </div>
-                                                {% else %}
-                                                    <h5 class="card-title historic-title break-words" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.title }} · {{ time }}</h5>
-
-                                                    {% if False and not building.infos == None %}
-                                                        <div class="card-text" align="justify">
-                                                            {{ building.infos }}
-                                                        </div>
-                                                    {% endif %}
-                                                {% endif %}
-                                            </div>
-                                        {% if is_building %}
-                                            </a>
-                                        {% endif %}
-                                    </div>
-                                {% endif %}
                             </div>
                         </div>
-                    {% endfor %}
-                </div>
-            {% endif %}
+                    {% endif %}
+                {% endwith %}
+            </div>
         {% endfor %}
     </div>
 

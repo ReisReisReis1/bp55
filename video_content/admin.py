@@ -9,6 +9,9 @@ from .models import Video, Timestamp
 
 
 class TimestampInLine(admin.StackedInline):
+    """
+    Model for the possibility to create a timestamp during the creation of an video
+    """
     model = Timestamp
 
 

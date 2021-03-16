@@ -3,13 +3,15 @@ Configurations of the different viewable functions and subpages from the App: de
 """
 
 from django.shortcuts import render
-# pylint: disable = import-error, relative-beyond-top-level
-from impressum.models import Impressum
+# pylint: disable = import-error, relative-beyond-top-level, no-name-in-module
 from video_content.models import Timestamp
-from .models import Picture, Building, Blueprint
 from impressum.views import get_course_link
+from start.views import login_required
+from .models import Picture, Building, Blueprint
 
 
+# Hier einkommentieren für SSO:
+#@login_required
 def detailed(request, building_id):
     """
     Subpage to show the characteristics of a building
@@ -25,12 +27,16 @@ def detailed(request, building_id):
         'Ort': Building.get_city(Building, building_id),
         'Region': Building.get_region(Building, building_id),
         'Land': Building.get_country(Building, building_id),
+
         'Datum_von': Building.get_year_from(Building, building_id),
         'Datum_von_BC_oder_AD': Building.get_year_from_bc_or_ad(Building, building_id),
         'Datum_bis': Building.get_year_to(Building, building_id),
         'Datum_bis_BC_oder_AD': Building.get_year_to_bc_or_ad(Building, building_id),
         'Datum_ca': Building.get_year_ca(Building, building_id),
-        'Datum_Jahrhundert': Building.get_year_ca(Building, building_id),
+        'Datum_Jahrhundert': Building.get_year_century(Building, building_id),
+
+        'Datum': Building.objects.get(pk=building_id).get_year_as_str(),
+
         'Architekt': Building.get_architect(Building, building_id),
         'Kontext_Lage': Building.get_context(Building, building_id),
         'Bauherr': Building.get_builder(Building, building_id),
@@ -45,7 +51,7 @@ def detailed(request, building_id):
         'Säulenordung': Building.get_column_order(Building, building_id),
         'Konstruktion': Building.get_construction(Building, building_id),
         'Material': Building.get_material(Building, building_id),
-        'Litertur': Building.get_literature(Building, building_id),
+        'Literatur': Building.get_literature(Building, building_id),
         'Links': Building.get_links(Building, building_id),
         'Bilder': Picture.get_picture_for_building(Picture, building_id),
         'Baupläne': Blueprint.get_blueprint_for_building(Blueprint, building_id),

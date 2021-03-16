@@ -21,9 +21,13 @@
             }
         }
 
+        // Function to switch the icon on 'show more' button
+        // video_id: The ID of the era where to toggle hide the hidden videos
         function changeIcon(video_id){
+            // Get correct button element
             var button = document.getElementById("color-btn-video-" + video_id);
 
+            // Change icon
             if (button.innerHTML === '∨') {
                 button.innerHTML = '∧';
             }
@@ -33,9 +37,15 @@
 
         }
 
+        // Function to pause video if popup gets closed
+        // section: ID of video section (era)
+        // id: ID of video which needs to stop
         function stopPopupVideo(section, id) {
+            // Get correct video element
             var video = document.getElementById("popup-video-" + section + "-" + id);
+            // Define id of popup element
             var popup = "popup-" + section + "-" + id;
+            // Pause correct video
             $('#' + popup).on('hidden.bs.modal', function () {
                 video.pause();
             });
@@ -72,18 +82,22 @@
                                 <!-- Add video Thumbnail -->
                                 <img class="video" src="/media/{{ video.thumbnail }}" data-toggle="modal" data-target="#popup-{{ forloop.parentloop.counter }}-{{ forloop.counter }}" style="width: 100%">
 
+                                <!-- Add video title -->
                                 <div class="video-title break-words">
                                     {{ video.title }}
                                 </div>
 
+                                <!-- Video popup element -->
                                 <div class="modal" id="popup-{{ forloop.parentloop.counter }}-{{ forloop.counter }}" data-keyboard="false" onclick="stopPopupVideo({{ forloop.parentloop.counter }}, {{ forloop.counter }})">
                                     <div class="modal-dialog modal-xl modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
+                                                <!-- Header row of popup -->
                                                 <h4 class="modal-title" style="overflow: hidden;">{{ video.title }}</h4>
                                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                                             </div>
                                             <div class="modal-body">
+                                                <!-- Body of popup which contains the video -->
                                                 <video preload="none" poster="/media/{{ video.thumbnail }}" id="popup-video-{{ forloop.parentloop.counter }}-{{ forloop.counter }}" width="100%" controls oncontextmenu="return false;" controlsList="nodownload">
                                                     <source src="{{ video.video.url }}" type="video/mp4">
                                                     {{ video.title }}
@@ -100,6 +114,7 @@
                 <!-- Add button to toggle hide the hidden videos -->
                 {% if videos|length > 4 %}
                     <div style="width: 100%">
+                        <!-- Add 'show more' button if there are more than 4 videos -->
                         <button class="button more-videos-button" id="color-btn-video-{{ forloop.counter }}" onclick="toggleHide({{ forloop.counter }}),changeIcon({{ forloop.counter }})">∨</button>
                     </div>
                 {% endif %}

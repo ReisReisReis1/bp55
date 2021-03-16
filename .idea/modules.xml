@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/bp55_ruins_and_beyond.iml" filepath="$PROJECT_DIR$/.idea/bp55_ruins_and_beyond.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/bp55.iml" filepath="$PROJECT_DIR$/.idea/bp55.iml" />
     </modules>
   </component>
 </project>

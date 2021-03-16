@@ -2,6 +2,9 @@
     CSS File for styling on the timeline page
 =============================================================================*/
 
+/*----------------------------------------------------------------------------
+    Styling of the index of all eras
+ */
 .index {
     position: fixed;
     right: 20px;
@@ -9,20 +12,25 @@
     z-index: 10;
 }
 
+/*
+    Hide the index by default
+ */
 .index-hide {
     display: none;
 }
 
+/*
+    Styling of the close button of the index
+ */
 .index-button {
     position: absolute;
     right: 1.25rem;
     top: 1.25rem;
 }
 
-.fas::before {
-    content: "\f121";
-}
-
+/*
+    Styling of the contents (eras) of the index
+ */
 .list-group a {
     color: black;
     text-decoration: none;
@@ -35,7 +43,10 @@
     width: 100%;
 }
 
-.timeline-center {
+/*
+    Make the center full width
+ */
+.timeline-center, .timeline-center-last {
     height: 100%;
 }
 
@@ -47,19 +58,18 @@
     border-width: 2px;
 }
 
+/*
+    Styling of the title of historic date cards
+ */
 .historic-title {
     margin-bottom: 0px !important;
 }
 
+/*
+    Styling of a card containing a building
+ */
 .timeline-card {
     width: 70%;
-}
-
-/*
-    Style of a card on the left side of the timeline
- */
-.card-left {
-    /*margin-right: 40%;*/
 }
 
 /*
@@ -76,13 +86,6 @@
     border: solid;
     border-width: 4px 130px 4px 0;
     border-color: inherit;
-}
-
-/*
-    Style of a card on the right side of the timeline
- */
-.card-right {
-    /*margin-left: 40%;*/
 }
 
 /*
@@ -111,10 +114,9 @@
     height: 230%;
 }
 
-.timeline-center-last {
-    height: 100%;
-}
-
+/*
+    Styling of the arrow at the end of the timeline
+ */
 .timeline-center-last::after {
     content: " ";
     height: 0;
@@ -130,25 +132,28 @@
     border-top-color: inherit;
 }
 
+/*
+    Styling of text on each era on the center beam
+ */
 .timeline-center-text {
     writing-mode: vertical-rl;
+    white-space: nowrap;
     position: absolute;
     z-index: 1;
     margin-top: 10px;
     margin-left: -20px;
 }
 
+/*
+    Default height of eras which contain no buildings
+ */
+.timeline-center-empty {
+    height: 300px;
+}
+
+/*----------------------------------------------------------------------------
+    Change color of the link to default (not blue)
+ */
 .card-link {
     color: inherit !important;
 }
-
-/*.row-timeline::after {
-    content: '';
-    position: absolute;
-    width: 50px;
-    top: -100px;
-    bottom: 0;
-    left: 46.8%;
-    margin-left: -3px;
-    z-index: -1;
-}*/
