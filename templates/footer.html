@@ -12,8 +12,10 @@
         <div class="container">
             <div class="row">
                 <div class="col text-center bottom-menu">
+                    <!-- Link to impressum -->
                     <a href="{% url "impressum:impressum" %}" id="color-txt-primary">Impressum</a>
                     <b>·</b>
+                    <!-- Link to Moodle course -->
                     {% if Kurs_Link|length == 0 %}
                         <a href="" id="color-txt-primary">Moodlekurs</a>
                     {% else %}

@@ -2,7 +2,7 @@
     CSS File for styling on the material page
 =============================================================================*/
 
-/*
+/*----------------------------------------------------------------------------
     Styling the border of the box
 */
 .borderline{
@@ -19,6 +19,9 @@
     color: black;
 }
 
+/*----------------------------------------------------------------------------
+    Styling of container of one PDF file
+ */
 .material-box {
     cursor: pointer;
     width: 12.5%;
@@ -26,10 +29,16 @@
     padding-right: 5px !important;
 }
 
+/*
+    Removes the margin of the first row of files
+ */
 .material-first-row {
     margin-bottom: 0px !important;
 }
 
+/*
+    Adds a margin over every other row of materials
+ */
 .material-rest-row {
     margin-bottom: 0px !important;
     margin-top: 1rem;
