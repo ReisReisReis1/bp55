@@ -35,7 +35,7 @@ def get_categories_and_corresponding_files():
 
 
 # Hier einkommentieren für SSO:
-@login_required
+#@login_required
 def get_categories_and_corresponding_zip_files(request, category):
     #
     """
@@ -77,7 +77,7 @@ def get_categories_and_corresponding_zip_files(request, category):
     return resp
 
 
-@login_required
+#@login_required
 def material(request):
     """
     Subpage to show the characteristics of a building
