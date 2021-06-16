@@ -8,23 +8,41 @@
     {% include '../default_head.html' %}
 </head>
 <body>
+    <div class="container full_height w-25" height="100%">
+        <div class="col">
+            <div class="row main_logo_container">
+                <!-- Logo -->
+                <img src="{% static "home-logo.png" %}" width="100%">
+            </div>
+            <div class="row main_button_container">
+                <!-- Login Button -->
+                <a href="{% url 'start:start' %}" style="width: 100%;">
+                    <button class="button" id="color-btn" style="width: 100%;">
+                        Anmelden
+                    </button>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- </div> -->
 
     <!-- Logo in the middle-->
 
+    <!--
     <div class="container full_height" height="100%">
         <div class="row align-items-center full_height" height="100%">
             <div class="col">
-                <div class="row main_logo_container">
-                    <!-- Logo -->
+                <div class="row main_logo_container"> -->
+                    <!-- Logo --> <!--
                     <img src="{% static "logoneu.png"  %}" width="100%">
                 </div>
-                <div class="row main_button_container">
-                    <!-- Login button -->
+                <div class="row main_button_container"> -->
+                    <!-- Login button --> <!--
                     <a href="{% url 'start:start' %}" style="width: 100%;"> <button class="button" id="color-btn" style="width: 100%;">Anmelden</button></a>
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     {% include 'footer.html' %}
 </body>
