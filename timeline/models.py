@@ -1,8 +1,8 @@
 """
 Configurations for the Database Models for the App 'timeline'
 """
+# pylint: disable = no-name-in-module, import-error
 from django.db import models
-# pylint : disable = import-error
 from details_page.models import Era
 
 
@@ -95,7 +95,7 @@ class HistoricDate(models.Model):
 
     def get_year_as_str(self):
         """
-        Getting the year as string 
+        Getting the year as string
         """
         result = ''
         if self.exacter_date is None and self.year is not None:

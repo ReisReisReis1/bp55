@@ -2,9 +2,9 @@
 Configurations for the Database Models for the App 'details_page'
 """
 
+# pylint: disable=import-error, relative-beyond-top-level, raise-missing-from
 from django.db import models
 from django.core.exceptions import ValidationError
-# pylint: disable=import-error
 from . import country_codes
 
 
@@ -27,10 +27,11 @@ def validate_color_code(code):
     :return: None or ValidationError
     """
     for sign in code:
-        if sign not in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d",
-                        "e", "f", "A", "B", "C", "D", "E", "F"]:
-            raise ValidationError(message="Bitte einen gültigen Code im Hex-Format einfügen: " +
-                                          "Nur Hex-Zeichen: 0-9, a-f und A-F.")
+        if sign not in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e",
+                        "f", "A", "B", "C", "D", "E", "F"]:
+            raise ValidationError(
+                message="Bitte einen gültigen Code im Hex-Format einfügen: " +
+                        "Nur Hex-Zeichen: 0-9, a-func und A-F.")
     if len(code) != 6:
         raise ValidationError(
             message="Bitte einen gültigen Code im Hex-Format einfügen: " +
@@ -50,6 +51,7 @@ class Era(models.Model):
     """
 
     class Meta:
+        # pylint: disable = too-few-public-methods
         """
         Meta data for the model
         In this case the singular and plural name that will be seen in the admin interface
@@ -179,6 +181,7 @@ class Building(models.Model):
     """
 
     class Meta:
+        # pylint: disable = too-few-public-methods, raise-missing-from
         """
         Meta data for the model
         In this case the singular and plural name that will be seen in the admin interface
@@ -294,15 +297,13 @@ class Building(models.Model):
                                        "https://moodle.tu-darmstadt.de/my/", default="", null=True,
                              blank=True)
 
+    # pylint: disable = raise-missing-from
     def __str__(self):
         """
         Name for the admin interface
         :return: the name of a Building
         """
-        try:
-            return str(self.name)
-        except Building.MultipleObjectsReturned:
-            raise Building.MultipleObjectsReturned
+        return str(self.name)
 
     def get_name(self, building_id):
         # pylint: disable= no-member
@@ -312,9 +313,9 @@ class Building(models.Model):
         """
         try:
             building = self.objects.get(pk=building_id)
-            return building.name
         except Building.DoesNotExist:
             raise Building.DoesNotExist
+        return building.name
 
     def get_era(self, building_id):
         # pylint: disable= no-member
@@ -336,9 +337,9 @@ class Building(models.Model):
         """
         try:
             building = self.objects.get(pk=building_id)
-            return building.description
         except Building.DoesNotExist:
             raise Building.DoesNotExist
+        return building.description
 
     def get_city(self, building_id):
         # pylint: disable= no-member
@@ -725,7 +726,7 @@ class Blueprint(models.Model):
     """
 
     class Meta:
-        # pylint : disable = too-few-public-methods
+        # pylint: disable=too-few-public-methods
         """
         Meta data for the model
         In this case the singular and plural name that will be seen in the admin interface

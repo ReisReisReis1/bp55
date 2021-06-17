@@ -1,7 +1,7 @@
 """
 Configurations of the Website subpages from the App: materials_page
 """
-# pylint: disable = import-error, relative-beyond-top-level
+# pylint: disable = all
 from start.views import login_required
 from .models import Material
 
@@ -29,14 +29,15 @@ def get_categories_and_corresponding_files():
             result[material_entry.get_category()] = [material_entry]
         # If the category is already in the dictionary, add file to this category
         else:
-            result[material_entry.get_category()] = result[material_entry.get_category()] + [material_entry]
+            result[material_entry.get_category()] = result[material_entry.get_category()] + [
+                material_entry]
     return result
 
 
-
 # Hier einkommentieren für SSO:
-#@login_required
+@login_required
 def get_categories_and_corresponding_zip_files(request, category):
+    #
     """
     :return: the categories and HttpsResponse for the corresponding zip files in a dictionary
     """
@@ -53,10 +54,10 @@ def get_categories_and_corresponding_zip_files(request, category):
         zip_filename = "%s.zip" % zip_subdir
 
         # Open BytesIO to grab in-memory ZIP contents
-        s = BytesIO()
+        sio = BytesIO()
 
         # the zip compressor
-        zf = zipfile.ZipFile(s, "w")
+        zf1 = zipfile.ZipFile(sio, "w")
 
         # Add all file sin the list to the zipfile
         for fpath in filenames:
@@ -64,18 +65,19 @@ def get_categories_and_corresponding_zip_files(request, category):
             fdir, fname = os.path.split(fpath)
             zip_path = os.path.join(zip_subdir, fname)
             # Add file, at correct path
-            zf.write(fpath, zip_path)
+            zf1.write(fpath, zip_path)
 
         # Must close zip for all contents to be written
-        zf.close()
+        zf1.close()
 
         # Grab ZIP file from in-memory, make response with correct MIME-type
-        resp = HttpResponse(s.getvalue(), content_type="application/x-zip-compressed")
+        resp = HttpResponse(sio.getvalue(), content_type="application/x-zip-compressed")
         # ..and correct content-disposition
         resp['Content-Disposition'] = 'attachment; filename=%s' % zip_filename
     return resp
 
 
+@login_required
 def material(request):
     """
     Subpage to show the characteristics of a building

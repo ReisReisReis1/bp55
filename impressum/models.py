@@ -34,9 +34,10 @@ class Impressum(models.Model):
         return str(self.name)
 
     def save(self, *args, **kwargs):
+        # pylint: disable = signature-differs
         """
-        makes sure that its not possible to create multiple instances of impressum
-        ovverites the save method
+        Makes sure that its not possible to create multiple instances of impressum
+        overrides the save method
         :param args: is needed for object creation
         :param kwargs: is needed for object creation
         :return: returns an error if you try to make multiple instances of Impressum
