@@ -7,7 +7,28 @@
 
 </head>
 <body>
-    <div class="row row-no-margin" id="color-bg-primary">
+    <div class="header-bar align-items-center d-flex">
+        <div class="container">
+            <div class="row">
+                <div class="col-2 col-no-padding">
+                    <a href="{% url "start:start" %}">
+                        <img class="header-logo" src="{% static "logo-nav.png" %}">
+                    </a>
+                </div>
+                <div class="col col-no-padding d-flex justify-content-end align-items-center font-header">
+                    <!-- Links to all sub pages of website -->
+                    <a href="{% url "start:start" %}" class="header-menu-item color-primary-header">Intro</a>
+                    <a href="{% url "timeline:timeline" %}" class="header-menu-item color-primary-header">Zeitachse</a>
+                    <a href="{% url "filter_page:filter" %}" class="header-menu-item color-primary-header">Bauwerke</a>
+                    <a href="{% url "video_content:videos" %}" class="header-menu-item color-primary-header">Staffeln</a>
+                    <a href="{% url "materials_page:material" %}" class="header-menu-item color-primary-header">Materialien</a>
+                    <img class="search-icon" src="{% static "icon-search.png" %}">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% comment %}<div class="row row-no-margin" id="color-bg-primary">
 
         <div class = "col text-left">
             <div style="padding: 45px">
@@ -43,6 +64,6 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>{% endcomment %}
 </body>
 </html>
