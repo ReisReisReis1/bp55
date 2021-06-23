@@ -1,0 +1,17 @@
+
+.header-bar {
+    height: 70px;
+    background: #1F1F1F;
+}
+
+.header-logo {
+    height: 28px;
+}
+
+.search-icon {
+    height: 12px;
+}
+
+.header-menu-item {
+    margin-right: 20px;
+}

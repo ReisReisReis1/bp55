@@ -1,0 +1,44 @@
+a:hover {
+    text-decoration: none !important;
+}
+
+.font-header {
+    font-size: 14px;
+}
+
+.color-primary-header {
+    color: #FFFFFF;
+}
+
+.color-primary-header:hover {
+    color: #F9EAD8 !important;
+}
+
+.color-secondary-header {
+    color: #F9EAD8;
+}
+
+.color-secondary-header:hover {
+    color: #FFFFFF !important;
+}
+
+
+.font-footer {
+    font-size: 14px;
+}
+
+.color-primary-footer {
+    color: #FFFFFF;
+}
+
+.color-primary-footer:hover {
+    color: #F9EAD8;
+}
+
+.color-secondary-footer {
+    color: #F9EAD8;
+}
+
+.color-secondary-footer:hover {
+    color: #FFFFFF;
+}
