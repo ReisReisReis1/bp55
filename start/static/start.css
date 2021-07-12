@@ -1,3 +1,74 @@
 /*============================================================================
     CSS File for styling on the starting page
 =============================================================================*/
+
+ /* Define height of body, html */
+ html, body {
+    height: 100%;
+ }
+
+/* Styling for the three main areas of the site */
+.start-title {
+    background: #1F1F1F;
+}
+
+.start-video {
+    background-color: #F9EAD8;
+    padding: 20px;
+}
+
+.start-linkboxes {
+    background: #CAA36E;
+    padding: 40px;
+}
+
+/* Image-container positioning to make title pos working */
+.start-image-container {
+    position: relative;
+}
+
+/* Style for the image, needs to fit the "stage"*/
+.start-image {
+    left: 50%;
+    margin-left: -16px;
+    padding-right: 13%;
+}
+
+/* Positioning of the title */
+.title {
+    position: absolute;
+    top: 50%;
+    bottom: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Styling of the title */
+.title-text {
+    color: #F9EAD8;
+    font-size: 90px;
+}
+
+/* Styling of the welcome text */
+.welcome-text {
+    font-size: 32px;
+}
+
+/* Styling of the cards, set dark background */
+.card {
+    background-color: #1F1F1F;
+    border-radius: 0%;
+    border-width: 0px;
+}
+
+/* Styling for the cards-title, set light text-color */
+.card-title {
+    color: #F9EAD8;
+    font-size: 32px;
+}
+
+/* Styling for the cards-text, set light text-color */
+.card-text {
+    color: #FFFFFF;
+    font-size: 18px;
+}
