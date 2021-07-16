@@ -7,6 +7,19 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+.subheader {
+    background-color: #1F1F1F !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
+    height: 500px;
+}
+
+.subheader-text {
+    color: #F9EAD8;
+    font-size: 90px;
+}
+
 /*----------------------------------------------------------------------------
     Add to Bootstrap .container to get the default spacing
  */
