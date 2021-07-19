@@ -2,47 +2,193 @@
     CSS File for styling on the videos page
 =============================================================================*/
 
+/* General */
+html, body {
+    height: 100%;
+}
+
+/* Styling of the body part with the videos */
+.videos-body {
+    background-color: #F9EAD8;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+/* Styling of the era titles*/
+.era-title {
+    font-size: 84px;
+    padding-left: 0px;
+}
+
+/* ... and year texts */
+.era-year {
+    font-size: 12px;
+    margin-left: 4px;
+}
+
+/* Style for the lines, uses borders of the divs */
+.era-line {
+    padding-left: 57px;
+    border-left-style: solid;
+    border-left-width: 4px;
+}
+
+/* Same thing for the gradients inbetween the eras */
+.gradient-line {
+    height: 50px;
+    /* Do the border as resized background, much easier
+    than to deal with all border-image-* properties */
+    background-size: 4px auto;
+    background-repeat: no-repeat;
+}
+
+/* Styling of the element containing a video and its title */
+.video-box {
+    width: 20%;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+}
+
+/* Some spacing to make the videos look nicer on the page */
+.row-video {
+    margin-bottom: 10px;
+}
+
+/* Style for the video titles */
+.video-title {
+    font-size: 18px;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    border-bottom: 4px solid;
+}
+
+/* Set video-hide rows to hide completely */
+.video-hide {
+    display: none !important;
+}
+
+/* Style for the thumbnails */
+.thumbnail {
+    margin-top: 6px;
+}
+
+/* Set the Thumbnails to show a hand/finger pointer,
+to make clear that you can start the video by clicking */
+.thumbnail:hover{
+    cursor: pointer;
+}
+
+/* Style symbol to make buttons to hide and unhide videos */
+.dash-symbol {
+    width: 18px;
+    height: 18px;
+    transform: scaleY(-1) scaleX(-1) translate(0px, 50%) rotate(0.125turn);
+    border-style: solid;
+    border-width: 4px;
+    border-right-width: 0px;
+    border-bottom-width: 0px;
+}
+
+/* Style the more videos button */
+.more-videos-button {
+    border: none;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: #F9EAD8;
+}
+
+/* Styling for the popup elements */
+.popup {
+    background-color: #1F1F1F;
+}
+
+/* ... re-set header borders to more height */
+.popup-header {
+    border-bottom: 4px solid;
+}
+
+/* ... title text */
+.popup-title {
+    color: #F9EAD8;
+    font-size: 18px;
+}
+
+/* ... body */
+.popup-body {
+    padding-top: 10px !important;
+    padding: 0px;
+}
+
+/* ... close button */
+.popup-close-button {
+    color: #F7F7F7;
+    opacity: 100%;
+}
+
+/* Make the Close button able to see on dark background */
+.popup-close-button:hover {
+    color: #F7F7F7;
+    opacity: 80%;
+    cursor: pointer;
+}
+
+
+/*------------------------------------------------------------------
+/*
+
+*/
 /*----------------------------------------------------------------------------
     Styling of one row of videos, containing all videos from one era
- */
+ *//*
+
 .video-section {
 
 }
 
+*/
 /*
     Styling of title of each era
- */
+ *//*
+
 .video-section-title {
     width: 100%;
 }
 
+*/
 /*
     Styling of one row of videos, containing max. 4 videos
- */
+ *//*
+
 .row-video {
     width: 100%;
     margin-bottom: 20px;
 }
 
+*/
 /*
     Styling of the element containing a video and its title
- */
+ *//*
+
 .video-box {
     width: 25%;
     padding-left: 5px !important;
     padding-right: 5px !important;
 }
 
+*/
 /*
     Styling of the video rows which are hidden until clicked on the button
- */
+ *//*
+
 .video-hide {
     display: none !important;
 }
 
+*/
 /*
     Styling of the button which opens and closes more rows of videos
- */
+ *//*
+
 .more-videos-button {
     width: 100%;
     border: none;
@@ -50,9 +196,11 @@
     padding-bottom: 5px;
 }
 
+*/
 /*
     Styling of the button which opens and closes more rows of videos on mouse hover
- */
+ *//*
+
 .video:hover, .video-title:hover {
     cursor: pointer;
-}
+}*/
