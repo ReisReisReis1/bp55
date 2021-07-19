@@ -13,14 +13,12 @@
 
     {% include './header.html' %}
 
-    <div class="container-fluid start-title">
-        <div class="container-fluid w-100 px-0 start-image-container">
-            <img class="img-fluid w-100 start-image" src="{% static 'start-head-background.png' %}" width="100%" height="auto">
-            <div class="title">
-                <h1 class="title-text text-center">RUINS AND BEYOND!</h1>
-            </div>
+    <div class="subheader" style="background: url('{% static "start-head-background.png" %}');">
+        <div class="container h-100 d-flex align-items-center justify-content-center">
+            <h1 class="subheader-text">RUINS AND BEYOND!</h1>
         </div>
     </div>
+
     <div class="container-fluid start-video p-3">
         <div class="container">
             <p class="welcome-text"><b>Herzlich Willkommen!</b></p>
