@@ -8,24 +8,29 @@
     {% include '../default_head.html' %}
 </head>
 <body>
-    <div class="container-fluid full_height bg-image">
-        <div class="container w-25">
-            <div class="col">
-                <div class="row main_logo_container">
-                    <!-- Logo -->
-                    <img src="{% static 'home-logo.png' %}" width="100%">
-                </div>
-                <div class="row main_button_container">
-                    <!-- Login Button -->
-                    <a href="{% url 'start:start' %}" style="width: 100%;">
-                        <button class="button" id="color-btn" style="width: 100%;">
-                            <b>Anmelden</b>
-                        </button>
-                    </a>
-                </div>
+    <div class="full_height bg-image">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col main_logo_container">
+                <!-- Logo -->
+                <img src="{% static 'home-logo.png' %}" width="100%">
             </div>
+            <div class="col"></div>
+        </div>
+        <div class="row">
+            <div class="col"></div>
+            <div class="col main_button_container">
+                <!-- Login Button -->
+                <a href="{% url 'start:start' %}" style="width: 100%;">
+                    <button class="button" id="color-btn" style="width: 100%;">
+                        <b>Anmelden</b>
+                    </button>
+                </a>
+            </div>
+            <div class="col"></div>
         </div>
     </div>
+
 
 
 
