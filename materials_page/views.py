@@ -46,6 +46,7 @@ def get_categories_and_corresponding_zip_files(request, category):
     # Get all material files of one category in a single list
     # Files (local path) to put in the .zip
     filenames = []
+    resp = None
     for material_entry in material_dict[category]:
         filenames = filenames + [material_entry.file.path]
 
@@ -86,8 +87,26 @@ def material(request):
     with a context variable to get the characteristics
     """
 
+    # this code ist for adding colors to the materials
+    # for visual difference, both colors will take turns
+    colors = ["2F4B33", "B43B44"]
+    materials = get_categories_and_corresponding_files()
+    materials_with_colors = []
+    i = 0
+    for category in materials.keys():
+        color = None
+        nextcolor = None
+        if i % 2 == 0:
+            color = colors[0]
+            nextcolor = colors[1]
+        else:
+            color = colors[1]
+            nextcolor = colors[0]
+        materials_with_colors.append([category, materials[category], color, nextcolor])
+        i += 1
+
     context = {
-        'Materials': get_categories_and_corresponding_files(),
+        'Materials': materials_with_colors,
         'Kurs_Link': get_course_link()
     }
     return render(request, "material.html", context)
