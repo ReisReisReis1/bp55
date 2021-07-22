@@ -9,7 +9,7 @@
 <body>
     <div class="header-bar align-items-center d-flex">
         <div class="container">
-            <div class="row">
+            <div class="row items">
                 <div class="col-2 col-no-padding">
                     <a href="{% url "start:start" %}">
                         <img class="header-logo" src="{% static "logo-nav.png" %}">
@@ -22,7 +22,48 @@
                     <a href="{% url "filter_page:filter" %}" class="header-menu-item color-primary-header">Bauwerke</a>
                     <a href="{% url "video_content:videos" %}" class="header-menu-item color-primary-header">Staffeln</a>
                     <a href="{% url "materials_page:material" %}" class="header-menu-item color-primary-header">Materialien</a>
-                    <img class="search-icon" src="{% static "icon-search.png" %}">
+                    <img class="search-icon" src="{% static 'icon-search.png' %}">
+                    <!-- The hamburger / overflow menu for mobile devices -->
+                    <button class="btn hamtogglebtn" type="button" data-toggle="collapse" data-target="#hamburger-menu-id">
+                        <img class="menu-icon" src="{% static 'icon-menu.png' %}">
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- The actual hamburger menu -->
+    <div class="collapse hamburger-menu" id="hamburger-menu-id">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <a href="{% url "start:start" %}" class="hamburger-menu-item color-primary-header">Intro</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <a href="{% url "timeline:timeline" %}" class="hamburger-menu-item color-primary-header">Zeitachse</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <a href="{% url "filter_page:filter" %}" class="hamburger-menu-item color-primary-header">Bauwerke</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <a href="{% url "video_content:videos" %}" class="hamburger-menu-item color-primary-header">Staffeln</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <a href="{% url "materials_page:material" %}" class="hamburger-menu-item color-primary-header">Materialien</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <img class="search-icon-hamburger" src="{% static 'icon-search.png' %}">
                 </div>
             </div>
         </div>
