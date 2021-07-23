@@ -72,3 +72,15 @@
     color: #FFFFFF;
     font-size: 18px;
 }
+
+/*------------------------------------ Responsive Design ----------------------*/
+
+@media screen and (max-width: 1100px) {
+
+    /* Responsive Design for mobile */
+
+    /* Bootstrap Card Deck will do this automatically on a break of 575px width */
+
+    /* If needed: Add more responsive design here */
+
+}
