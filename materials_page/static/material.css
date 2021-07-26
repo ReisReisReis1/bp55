@@ -13,6 +13,11 @@
 .category-title {
     font-size: 84px;
     padding-left: 0px;
+    width: 90%;
+}
+
+.more-matsbtn-div {
+    width: 10%;
 }
 
 /* ... and download all buttons */
@@ -20,6 +25,7 @@
     font-size: 12px;
     margin-left: 4px;
     margin-top: -10px;
+    margin-bottom: 10px;
     border: none;
     background-color: #F9EAD8;
 }
@@ -70,6 +76,10 @@
     display: none !important;
 }
 
+.material-section-mobile {
+        display: none !important;
+    }
+
 /* Style for the pdf icon */
 .icon {
     margin-top: 6px;
@@ -101,6 +111,72 @@ to make clear that you can see the material by clicking */
     padding-bottom: 5px;
     background-color: #F9EAD8;
 }
+
+/*--------------------------------------- Responsive Design ---------------------------------------------------------*/
+
+@media screen and (max-width: 1100px) {
+
+    /* Responsive Design for mobile */
+
+    .material-body {
+        padding-left: 6px;
+        padding-right: 6px;
+    }
+
+    .material-box {
+        width: 50%;
+        padding-left: 7px !important;
+        padding-right: 7px !important;
+    }
+
+    .material-section {
+        display: none !important;
+    }
+
+    .material-section-mobile {
+        display: grid !important;
+    }
+
+    .category-title {
+        font-size: 60px;
+        padding-left: 0px;
+    }
+
+    .material-title {
+        font-size: 12px;
+        margin-bottom: 3px;
+        padding-bottom: 3px;
+        border-bottom: 2px solid;
+    }
+
+    .icon {
+        margin-top: 3px;
+    }
+
+    .material-line {
+        padding-left: 6px;
+        margin-left: 6px;
+        margin-right: 6px;
+        border-left-style: solid;
+        border-left-width: 3px;
+    }
+
+    .gradient-line {
+        margin-left: 6px;
+        background-size: 3px auto;
+    }
+
+    .dash-symbol {
+        width: 12px;
+        height: 12px;
+        border-width: 3px;
+        border-right-width: 0px;
+        border-bottom-width: 0px;
+    }
+
+}
+
+
 
 /*----------------------------------------------------------------------------
     Styling the border of the box

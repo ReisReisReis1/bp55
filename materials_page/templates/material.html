@@ -60,8 +60,8 @@
                 <!-- Title for each section -->
                 <div class="container caregory-head">
                     <div class="row h-100">
-                        <h1 class="col category-title" style="color:#{{ items.2 }};">{{ items.0 }}</h1>
-                        <div class="col-sm-2 my-auto float-right">
+                        <h1 class="category-title break-words" style="color:#{{ items.2 }};">{{ items.0 }}</h1>
+                        <div class="my-auto float-right more-matsbtn-div">
                             <!-- The button on the right side, to toggle the materials of the category -->
                             <button class="button more-materials-button float-right" id="color-btn-material-{{ forloop.counter }}" onclick="toggleHide({{ forloop.counter }}),changeIcon({{ forloop.counter }})">
                                 <div class="dash-symbol float-right" style="border-color:#{{ items.2 }};"></div>
@@ -107,6 +107,43 @@
                             </div>
                         {% endfor %}
                     </div>
+
+                    <!-- Mobile Version -->
+                    <div class="container material-section-mobile">
+                        <!-- Materials in the section -->
+                        {% for material in items.1 %}
+                            <!-- Cases in which a new row has should be opened -->
+                            {% if forloop.counter0|divisibleby:2 or forloop.first %}
+                            <div class="row row-material row-no-margin material-hide" id="material-hide-{{ forloop.parentloop.counter }}">
+                            {% endif %}
+
+                            <!-- The Material Item -->
+                            <div class="material-box">
+                                <!-- Material title -->
+                                <div class="material-title break-words" style="border-color: #{{ items.2 }};">
+                                    <b>{{ material.name }}</b>
+                                </div>
+                                <!-- Material Icon with a link to open the corresponding PDF in a new tab -->
+                                <a href="{{ material.file.url }}" target="_blank">
+                                    <img class="icon" src="{% static 'PDF.png' %}">
+                                </a>
+                            </div>
+
+                            <!-- Cases in which the tag must be closed -->
+                            <!-- If it is at end of the row, or the video -->
+                            {% if forloop.last or forloop.counter|divisibleby:2 %}
+                                <!-- Close row div here -->
+                                </div>
+                            {% endif %}
+                        <!-- If there are no materials in an category, display it -->
+                        {% empty %}
+                            <div class="row row-material row-no-margin material-hide" id="material-hide-{{ forloop.counter }}">
+                                <b class="no-material-text w-100 text-center material-title" style="border: 0px;">Keine Materialien in dieser Kategorie vorhanden.</b>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+
                 </div>
             </div>
             {% if not forloop.last %}
