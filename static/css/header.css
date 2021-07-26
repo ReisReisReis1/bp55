@@ -60,6 +60,7 @@
 
     /* and the search icon height, within the hamburger menu */
     .search-icon-hamburger {
+        margin-top: 15px;
         height: 25px;
     }
 
