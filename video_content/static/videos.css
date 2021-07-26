@@ -18,6 +18,11 @@ html, body {
 .era-title {
     font-size: 84px;
     padding-left: 0px;
+    width: 90%;
+}
+
+.more-button-div {
+    width: 10%;
 }
 
 /* ... and year texts */
@@ -60,6 +65,11 @@ html, body {
     margin-bottom: 5px;
     padding-bottom: 5px;
     border-bottom: 4px solid;
+}
+
+/* Hide mobile two-vid cols */
+.video-section-mobile {
+    display: none !important;
 }
 
 /* Set video-hide rows to hide completely */
@@ -132,11 +142,89 @@ to make clear that you can start the video by clicking */
     cursor: pointer;
 }
 
+/* Fullscreen video */
+/*.fullscreen-vid {
+    display: none !important;
+}*/
 
-/*------------------------------------------------------------------
-/*
+/*--------------------------------------- Responsive Design ---------------------------------------------------------*/
 
-*/
+@media screen and (max-width: 1100px) {
+
+    /* Responsive Design for mobile */
+
+    .video-body {
+        padding-left: 6px;
+        padding-right: 6px;
+    }
+
+    .video-box {
+        width: 50%;
+        padding-left: 7px !important;
+        padding-right: 7px !important;
+    }
+
+    .video-section {
+        display: none !important;
+    }
+
+    .video-section-mobile {
+        display: grid !important;
+    }
+
+    .era-title {
+        font-size: 60px;
+        padding-left: 0px;
+    }
+
+    .video-title {
+        font-size: 12px;
+        margin-bottom: 3px;
+        padding-bottom: 3px;
+        border-bottom: 2px solid;
+    }
+
+    .thumbnail {
+        margin-top: 3px;
+    }
+
+    .era-line {
+        padding-left: 6px;
+        margin-left: 6px;
+        margin-right: 6px;
+        border-left-style: solid;
+        border-left-width: 3px;
+    }
+
+    .gradient-line {
+        margin-left: 6px;
+        background-size: 3px auto;
+    }
+
+    .dash-symbol {
+        width: 12px;
+        height: 12px;
+        border-width: 3px;
+        border-right-width: 0px;
+        border-bottom-width: 0px;
+    }
+
+    /* For Fullscreen video */
+    .modal-dialog {
+        /* position: relative;
+        max-width: 100%;
+        min-height: 100%;
+        width: 100%;
+        max-height: 100%;
+        min-height: 100%;
+        height: 100%;
+        margin: 0px !important;
+        left: 0px !important;
+        right: 0px !important;*/
+    }
+}
+
+
 /*----------------------------------------------------------------------------
     Styling of one row of videos, containing all videos from one era
  *//*

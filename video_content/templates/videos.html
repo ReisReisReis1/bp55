@@ -55,6 +55,44 @@
                 video.pause();
             });
         }
+
+        // Function to show the video and make it full-screen instantly
+        function showFullscreenVideo(era_id, video_id) {
+            // get the video
+            var video = document.getElementById("video-" + era_id + "-" + video_id);
+            if (!document.fullscreenElement && !document.mozFullScreenElement &&
+                !document.webkitFullscreenElement && !document.msFullscreenElement) {
+
+                // Make it fullscreen
+                if (video.requestFullscreen) {
+                    video.requestFullscreen();
+                } else if (video.msRequestFullscreen) {
+                    video.msRequestFullscreen();
+                } else if (video.mozRequestFullScreen) {
+                    video.mozRequestFullScreen();
+                } else if (video.webkitRequestFullscreen) {
+                    video.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+                }
+
+                // Show it
+                video.style.display = 'inherit';
+            }
+        }
+
+        // Hide the video after fullscreen was exited by the user
+        function hideFullscreenVideo(era_id, video_id) {
+            // get the video
+            var video = document.getElementById("video-" + era_id + "-" + video_id);
+            if (!document.webkitIsFullScreen && !document.mozFullScreen && !document.msFullscreenElement) {
+
+                // Pause the video
+                video.pause();
+
+                // Hide it
+                video.style.display = 'none';
+            }
+        }
+
     </script>
 </head>
 
@@ -87,8 +125,8 @@
                 <!-- Title for each section -->
                 <div class="container era-head">
                     <div class="row h-100">
-                        <h1 class="col era-title" style="color:#{{ items.0.color_code }};">{{ items.0.name }}</h1>
-                        <div class="col-sm-2 my-auto float-right">
+                        <h1 class="era-title break-words" style="color:#{{ items.0.color_code }};">{{ items.0.name }}</h1>
+                        <div class="more-button-div my-auto float-right">
                             <!-- The button on the right side, to toggle the vids of the era -->
                             <button class="button more-videos-button float-right" id="color-btn-video-{{ forloop.counter }}" onclick="toggleHide({{ forloop.counter }}),changeIcon({{ forloop.counter }})">
                                 <div class="dash-symbol float-right" style="border-color:#{{ items.0.color_code }};"></div>
@@ -101,6 +139,8 @@
                     </div>
                 </div>
                     <div class="row">
+
+                        <!-- Video section for standard design -->
                         <div class="container video-section">
                         <!-- Videos in the section -->
                         {% for video in items.1 %}
@@ -152,6 +192,56 @@
                             </div>
                         {% endfor %}
                     </div>
+
+                    <!-- For mobile design -->
+                    <div class="container video-section-mobile">
+                    <!-- Videos in the section -->
+                    {% for video in items.1 %}
+                        <!-- Cases in which a new row has should be opened -->
+                        {% if forloop.counter0|divisibleby:2 or forloop.first %}
+                        <div class="row row-video row-no-margin video-hide" id="video-hide-{{ forloop.parentloop.counter }}">
+                        {% endif %}
+
+                        <!-- The Video Item -->
+                        <div class="video-box">
+                            <!-- Video -->
+                            <div class="video-title break-words" style="border-color: #{{ items.0.color_code }};">
+                                <b>{{ video.title }}</b>
+                            </div>
+                            <img class="thumbnail" src="/media/{{ video.thumbnail }}" style="width: 100%" onclick="showFullscreenVideo({{ forloop.parentloop.counter }},{{ forloop.counter }})">
+                        </div>
+
+                        <!-- Definition of fullscreen element -->
+                        <div class="fullscreen-vid">
+                            <!-- Body of popup which contains the video -->
+                            <video preload="none" poster="/media/{{ video.thumbnail }}" id="video-{{ forloop.parentloop.counter }}-{{ forloop.counter }}" width="100%" controls oncontextmenu="return false;" controlsList="nodownload" style="display: none !important;">
+                                <source src="{{ video.video.url }}" type="video/mp4">
+                                {{ video.title }}
+                            </video>
+                            <!-- Add a script which will trigger if fullscreen state changes  -->
+                            <script>
+                                document.getElementById("video-{{ forloop.parentloop.counter }}-{{ forloop.counter }}").addEventListener('fullscreenchange', function (e) {
+                                    hideFullscreenVideo({{ forloop.parentloop.counter }}, {{ forloop.counter }});
+                                });
+                            </script>
+                        </div>
+                        <!-- End of fullscreen vid def -->
+
+                        <!-- Cases in which the tag must be closed -->
+                        <!-- If it is at end of the row, or the video -->
+                        {% if forloop.last or forloop.counter|divisibleby:2 %}
+                            <!-- Close row div here -->
+                            </div>
+                        {% endif %}
+                    <!-- If there are no vids in an era, display it -->
+                    {% empty %}
+                        <div class="row row-video row-no-margin video-hide" id="video-hide-{{ forloop.counter }}">
+                            <b class="no-videos-text w-100 text-center video-title" style="border: 0px;">Keine Videos in dieser Epoche vorhanden.</b>
+                        </div>
+                    {% endfor %}
+                </div>
+
+
                 </div>
             </div>
             {% if not forloop.parentloop.last %}
