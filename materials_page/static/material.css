@@ -106,6 +106,7 @@ to make clear that you can see the material by clicking */
 
 /* Style the more materials button */
 .more-materials-button {
+    outline: none !important;
     border: none;
     padding-top: 5px;
     padding-bottom: 5px;
