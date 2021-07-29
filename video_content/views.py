@@ -32,7 +32,10 @@ def display(request):
         nextcolor = None
         if i != len(eras)-1:
             nextcolor = eras[i+1].color_code
-        eras_context.append((eras[i], Video.get_era(Video, eras[i].name), nextcolor))
+        videos = Video.get_era(Video, eras[i].name)
+        # alphanumeric sort of videos
+        videos = sorted(videos, key=lambda v: v.title)
+        eras_context.append((eras[i], videos, nextcolor))
 
     context = {
         'Era': eras_context,

@@ -109,19 +109,33 @@ to make clear that you can start the video by clicking */
 }
 
 /* Styling for the popup elements */
-.popup {
+.modal-backdrop {
     background-color: #1F1F1F;
+    opacity: 0.97 !important;
+}
+
+.popup {
+    background-color: transparent;
+    border: 0px !important;
+    border-radius: 0 !important;
 }
 
 /* ... re-set header borders to more height */
 .popup-header {
+    padding-left: 0px;
+    margin-left: 0px;
+    padding-right: 0px;
+    margin-right: 0px;
     border-bottom: 4px solid;
+    padding-bottom: 5px;
 }
 
 /* ... title text */
 .popup-title {
+    padding-left: 0px;
+    margin-left: 0px;
     color: #F9EAD8;
-    font-size: 18px;
+    font-size: 22px;
 }
 
 /* ... body */
@@ -132,8 +146,11 @@ to make clear that you can start the video by clicking */
 
 /* ... close button */
 .popup-close-button {
+    padding-right: 0px;
+    margin-right: 0px;
     color: #F7F7F7;
     opacity: 100%;
+    font-size: 22px;
 }
 
 /* Make the Close button able to see on dark background */
