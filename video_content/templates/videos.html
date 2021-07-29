@@ -159,13 +159,13 @@
                             </div>
 
                             <!-- Popup-Element -->
-                            <div class="modal fade" id="popup-{{ forloop.parentloop.counter }}-{{ forloop.counter }}" data-keyboard="false" onclick="stopPopupVideo({{ forloop.parentloop.counter }}, {{ forloop.counter }})">
+                            <div class="modal fade popup-bg" id="popup-{{ forloop.parentloop.counter }}-{{ forloop.counter }}" data-keyboard="false" onclick="stopPopupVideo({{ forloop.parentloop.counter }}, {{ forloop.counter }})">
                                 <div class="modal-dialog modal-xl modal-dialog-centered">
                                     <div class="modal-content popup">
-                                        <div class="modal-header popup-header" style="border-color: #{{ items.0.color_code }};">
+                                        <div class="modal-header popup-header align-items-center" style="border-color: #{{ items.0.color_code }};">
                                             <!-- Header row of popup -->
-                                            <h4 class="modal-title popup-title" style="overflow: hidden;">{{ video.title }}</h4>
-                                            <button type="button" class="close popup-close-button" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title popup-title" style="overflow: hidden;"><b>{{ video.title }}</b></h4>
+                                            <button type="button" class="close popup-close-button" data-dismiss="modal">x</button>
                                         </div>
                                         <div class="modal-body popup-body">
                                             <!-- Body of popup which contains the video -->
