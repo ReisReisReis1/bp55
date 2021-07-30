@@ -7,6 +7,9 @@
     /* For responsive design: mobile devices */
 
     .mobile-footer-bar {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
         height: 55px;
         background: #1F1F1F;
         display: flex !important;
