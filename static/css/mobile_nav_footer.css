@@ -1,0 +1,36 @@
+.mobile-footer-bar {
+    display: none !important;
+}
+
+@media screen and (max-width: 1100px) {
+
+    /* For responsive design: mobile devices */
+
+    .mobile-footer-bar {
+        height: 55px;
+        background: #1F1F1F;
+        display: flex !important;
+    }
+
+    .mobile-footer-menu-item {
+        width: 20%;
+        padding-top: 3px;
+        padding-left: 0px;
+        padding-right: 0px;
+        margin-bottom: 0px;
+    }
+
+    .nav-img {
+        padding-left: 2px;
+        height: 19px;
+    }
+
+    .nav-text {
+        padding-top: 3px;
+        margin-bottom: 0px;
+        color: #FFFFFF;
+        font-size: 9px;
+        text-align: center;
+    }
+
+}
