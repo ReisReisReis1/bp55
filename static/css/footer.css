@@ -1,6 +1,7 @@
 .footer-bar {
     height: 80px;
     background: #701F2C;
+    display: flex;
 }
 
 .footer-logo {
@@ -15,9 +16,15 @@
 
     /* For responsive design: mobile devices */
 
-    .items {
+
+    .footer-bar{
+        display: none !important;
+    }
+
+    /* Old responsive design */
+    /*.items {
         margin-left: 0px !important;
         margin-right: 0px !important;
-    }
+    }*/
 
 }

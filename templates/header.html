@@ -63,6 +63,20 @@
             </div>
             <div class="row">
                 <div class="col">
+                    {% if Kurs_Link|length == 0 %}
+                        <a href="" class="hamburger-menu-item color-primary-header">Moodle-Kurs</a>
+                    {% else %}
+                        <a href="{{Kurs_Link}}" target="_blank" class="hamburger-menu-item color-primary-header">Moodle-Kurs</a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <a href="{% url "impressum:impressum" %}" class="hamburger-menu-item color-primary-header">Impressum</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
                     <img class="search-icon-hamburger" src="{% static 'icon-search.png' %}">
                 </div>
             </div>
