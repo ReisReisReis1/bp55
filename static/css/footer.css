@@ -17,7 +17,7 @@
     /* For responsive design: mobile devices */
 
 
-    .footer-bar, .align-items-center, .d-flex {
+    .footer-bar, .align-items-center {
         display: none !important;
     }
 
