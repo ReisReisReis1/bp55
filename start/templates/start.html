@@ -19,58 +19,83 @@
         </div>
     </div>
 
-    <div class="container-fluid start-video p-3">
+    <div class="start-video p-3">
         <div class="container">
-            <p class="welcome-text"><b>Herzlich Willkommen!</b></p>
+            <div class="row">
+                <div class="col welcome-text">
+                    <h4><b>Herzlich Willkommen!</b></h4>
+                </div>
+            </div>
             <!-- Intro Video -->
-            <video width="100%" controls="controls" preload="none" poster="/media/{{ Video.thumbnail }}" oncontextmenu="return false;" controlsList="nodownload">
-                <source src="{{Video.video.url}}" type="video/mp4">
-                <b>{{Video.title}}</b>
-            </video>
+            <div class="row">
+                <div class="col">
+                    <video width="100%" controls="controls" preload="none" poster="/media/{{ Video.thumbnail }}" oncontextmenu="return false;" controlsList="nodownload">
+                        <source src="{{Video.video.url}}" type="video/mp4">
+                        <b>{{Video.title}}</b>
+                    </video>
+                </div>
+            </div>
             <!-- Description text for the webapplikation -->
-            <br>
-            <p align="justify">
-                Die Vorlesung Architektur und Städtebau der Antike soll in ein zeitgemäßes digitales Format
-                überführt werden. Hierfür möchten wir eine digitale Wissensplattform zur Architekturgeschichte der Antike als Webanwendung aufbauen,
-                mit der die Studierenden auf der Basis des zur Verfügung gestellten Materials die Lehreinheiten selbstbestimmt
-                kombinieren und absolvieren können. Die bislang 13 1,5-stündigen Vorlesungen, die einen chronologischen Überblick
-                über den Wandel der Architektur in der Antike zum Gegenstand haben, werden zu 72 15-minütigen Videos umgewandelt
-                und durch einen Bauwerkskatalog bestehend aus 220 Steckbriefen mit grundlegenden Charakteristiken ergänzt.</p>
+            <div class="row">
+                <div class="col">
+                    <p align="justify">
+                        Die Vorlesung Architektur und Städtebau der Antike soll in ein zeitgemäßes digitales Format
+                        überführt werden. Hierfür möchten wir eine digitale Wissensplattform zur Architekturgeschichte der Antike als Webanwendung aufbauen,
+                        mit der die Studierenden auf der Basis des zur Verfügung gestellten Materials die Lehreinheiten selbstbestimmt
+                        kombinieren und absolvieren können. Die bislang 13 1,5-stündigen Vorlesungen, die einen chronologischen Überblick
+                        über den Wandel der Architektur in der Antike zum Gegenstand haben, werden zu 72 15-minütigen Videos umgewandelt
+                        und durch einen Bauwerkskatalog bestehend aus 220 Steckbriefen mit grundlegenden Charakteristiken ergänzt.
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="container-fluid start-linkboxes">
+    <div class="start-linkboxes">
         <div class="container">
-            <p><b>Anhand des Web-Tools Ruins and Beyond! werden diese Daten auf unterschiedlichen Wegen miteinander verknüpft:</b></p>
-            <div class="card-deck">
-              <!-- Card: Zeitachse -->
-              <a class="card" href="{% url 'timeline:timeline' %}">
-                <div class="card-body">
-                  <h5 class="card-title">ZEITACHSE</h5>
-                  <p class="card-text">Auf der Zeitachse werden die Einzel-bauten mit ihren Charakteristiken und zugehörigen Vorlesungsvideos über Bild-Buttons abrufbar gemacht.</p>
+            <div class="row">
+                <div class="col">
+                    <p>
+                        <b>
+                            Anhand des Web-Tools Ruins and Beyond! werden diese Daten auf unterschiedlichen Wegen miteinander verknüpft:
+                        </b>
+                    </p>
                 </div>
-                <img class="card-img-bottom" src="{% static 'timeline-head-background.png' %}" alt="Zeitachse Hintergrundbild">
-              </a>
-              <!-- Card: Bauwerke -->
-              <a class="card" href="{% url 'filter_page:filter' %}">
-                <div class="card-body">
-                  <h5 class="card-title">BAUWERKE</h5>
-                  <p class="card-text">Im Reiter Bauwerke werden die Gebäude thematisch abgefragt und zusammen-gestellt. Auch ermöglicht die Filter-funktion eine gezielte Auswahl bestimmter Gebäudegruppen.</p>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="card-deck">
+                        <!-- Card: Zeitachse -->
+                        <a class="card" href="{% url 'timeline:timeline' %}">
+                            <div class="card-body">
+                                <h5 class="card-title">ZEITACHSE</h5>
+                                <p class="card-text">Auf der Zeitachse werden die Einzel-bauten mit ihren Charakteristiken und zugehörigen Vorlesungsvideos über Bild-Buttons abrufbar gemacht.</p>
+                            </div>
+                            <img class="card-img-bottom" src="{% static 'timeline-head-background.png' %}" alt="Zeitachse Hintergrundbild">
+                        </a>
+                        <!-- Card: Bauwerke -->
+                        <a class="card" href="{% url 'filter_page:filter' %}">
+                            <div class="card-body">
+                                <h5 class="card-title">BAUWERKE</h5>
+                                <p class="card-text">Im Reiter Bauwerke werden die Gebäude thematisch abgefragt und zusammen-gestellt. Auch ermöglicht die Filter-funktion eine gezielte Auswahl bestimmter Gebäudegruppen.</p>
+                            </div>
+                        <img class="card-img-bottom" src="{% static 'filter-head-background.png' %}" alt="Zeitachse Hintergrundbild">
+                        </a>
+                        <!-- Card: Staffeln -->
+                        <a class="card" href="{% url 'video_content:videos' %}">
+                            <div class="card-body">
+                                <h5 class="card-title">STAFFELN</h5>
+                                <p class="card-text">Im Reiter Staffeln werden alle vorhandenen Videos in chronologischer Reihenfolge und nach Epoche sortiert aufgelistet.</p>
+                            </div>
+                            <img class="card-img-bottom" src="{% static 'videos-head-background.png' %}" alt="Zeitachse Hintergrundbild">
+                        </a>
+                    </div>
                 </div>
-                <img class="card-img-bottom" src="{% static 'filter-head-background.png' %}" alt="Zeitachse Hintergrundbild">
-              </a>
-              <!-- Card: Staffeln -->
-              <a class="card" href="{% url 'video_content:videos' %}">
-                <div class="card-body">
-                  <h5 class="card-title">STAFFELN</h5>
-                  <p class="card-text">Im Reiter Staffeln werden alle vorhandenen Videos in chronologischer Reihenfolge und nach Epoche sortiert aufgelistet.</p>
-                </div>
-                <img class="card-img-bottom" src="{% static 'videos-head-background.png' %}" alt="Zeitachse Hintergrundbild">
-              </a>
             </div>
         </div>
     </div>
 
     {% include './footer.html' %}
+    {% include './mobile_nav_footer.html' %}
 
 </body>
 </html>

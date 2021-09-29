@@ -12,6 +12,56 @@
     height: 12px;
 }
 
+.menu-icon, .hamtogglebtn {
+    display: none !important;
+}
+
 .header-menu-item {
     margin-right: 20px;
+}
+
+
+@media screen and (max-width: 1100px) {
+
+    /* Responsive design for mobile */
+
+    /* Show the hamburger menu icon in the header */
+    .menu-icon, .hamtogglebtn {
+        display: inherit !important;
+    }
+
+    .menu-icon {
+        height: 10px !important;
+        margin-left: 10px;
+    }
+
+    /* Hide the menu items, the "move" to the hamburger menu */
+    .header-menu-item {
+        display: none !important;
+        margin-right: 10px;
+    }
+
+    .items {
+        margin-left: 0px !important;
+        margin-right: 0px !important;
+    }
+
+    /* The hamburger menu */
+    .hamburger-menu {
+        min-height: 92vh;
+        height: 92vh;
+        background: #1F1F1F;
+    }
+
+    /* Set the font size */
+    .hamburger-menu-item {
+        font-size: 34px;
+    }
+
+    /* and the search icon height, within the hamburger menu */
+    .search-icon-hamburger {
+        margin-top: 15px;
+        height: 25px;
+    }
+
 }

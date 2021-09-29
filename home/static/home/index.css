@@ -5,8 +5,10 @@
 /*----------------------------------------------------------------------------
     Let the content get on full height of the page
  */
-html, body, .full_height {
+html, body {
+    min-height: 100%;
     height: 100%;
+    background-color: #1F1F1F;
 }
 
 /*----------------------------------------------------------------------------
@@ -15,8 +17,10 @@ html, body, .full_height {
 
 /* Added for design revision */
 /* Set background image */
-body {
+.bg-image {
     background-image: url("/static/home-background.jpg");
+    background-repeat: no-repeat;
+    background-position: top;
 }
 
 
@@ -37,8 +41,16 @@ body {
  */
 
 .main_logo_container {
-    margin-bottom: 50px;
-    margin-top: 90px;
+    padding-bottom: 50px;
+    padding-top: 90px;
+    width: 27%;
+}
+
+/* Style of the logo picture itself */
+.logo {
+    width: 100%;
+    /* Will not scale up more than fitting to an FullHD Screen */
+    max-width: 516px;
 }
 
 /*
@@ -50,22 +62,30 @@ body {
 /*
     Style of the container with the button
  */
-.main_button_container a {
+.main_button_container {
     text-decoration: none !important;
+    width: 27%;
+}
+
+/*Style the space row */
+.spacer {
+    height: 0vh;
 }
 
 /*----------------------------------------------------------------------------
     Style of the 'Anmelden' button
  */
- 
+
 .button {
     display: block;
     border: none;
     border-radius: 5px;
     padding: 15px 28px;
-    font-size: 16px;
+    font-size: 18px;
     cursor: pointer;
     text-align: center;
+    background-color: #B43B44;
+    color: #F9EAD8;
 }
 
 /*.button {
@@ -83,4 +103,33 @@ body {
  */
 .button:hover {
     color: black;
+}
+
+
+/*---------------------------------- Responsive Design ----------------------------------------------------------*/
+
+@media screen and (max-width: 650px) {
+    /* For mobile views: if screen gets smaller than 1100 px */
+
+    /* other position for the background image  */
+    .bg-image {
+        background-image: url("/static/home-background.jpg");
+        background-repeat: no-repeat;
+        background-position: 15% 0%;
+    }
+
+    /* Set wider width for logo */
+    .main_logo_container {
+        padding-bottom: 50px;
+        padding-top: 90px;
+        width: 73%;
+    }
+
+    /* Set wider width for logo */
+    .main_button_container {
+        position: relative;
+        text-decoration: none !important;
+        padding-top: 55vh;
+        width: 91%;
+    }
 }

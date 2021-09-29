@@ -5,6 +5,8 @@
 <html>
 <head>
     {% include 'default_head.html' %}
+
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="{% static 'videos.css' %}">
 
@@ -28,11 +30,14 @@
             var button = document.getElementById("color-btn-video-" + video_id);
 
             // Change icon
-            if (button.innerHTML === '∨') {
-                button.innerHTML = '∧';
+            // New for new design: Set CSS for the more videos button instead
+            if (button.style.transform === 'scaleY(-1) translate(0px, 50%)') {
+                button.style.transform = 'scaleY(1) translate(0px, 0%)';
+                // button.innerHTML = '∧';
             }
             else {
-                button.innerHTML = '∨';
+                button.style.transform = 'scaleY(-1) translate(0px, 50%)';
+                // button.innerHTML = '∨';
             }
 
         }
@@ -50,6 +55,44 @@
                 video.pause();
             });
         }
+
+        // Function to show the video and make it full-screen instantly
+        function showFullscreenVideo(era_id, video_id) {
+            // get the video
+            var video = document.getElementById("video-" + era_id + "-" + video_id);
+            if (!document.fullscreenElement && !document.mozFullScreenElement &&
+                !document.webkitFullscreenElement && !document.msFullscreenElement) {
+
+                // Make it fullscreen
+                if (video.requestFullscreen) {
+                    video.requestFullscreen();
+                } else if (video.msRequestFullscreen) {
+                    video.msRequestFullscreen();
+                } else if (video.mozRequestFullScreen) {
+                    video.mozRequestFullScreen();
+                } else if (video.webkitRequestFullscreen) {
+                    video.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+                }
+
+                // Show it
+                video.style.display = 'inherit';
+            }
+        }
+
+        // Hide the video after fullscreen was exited by the user
+        function hideFullscreenVideo(era_id, video_id) {
+            // get the video
+            var video = document.getElementById("video-" + era_id + "-" + video_id);
+            if (!document.webkitIsFullScreen && !document.mozFullScreen && !document.msFullscreenElement) {
+
+                // Pause the video
+                video.pause();
+
+                // Hide it
+                video.style.display = 'none';
+            }
+        }
+
     </script>
 </head>
 
@@ -57,53 +100,202 @@
 
     {% include './header.html' %}
 
-    <div class="subheader" style="background: url('{% static "videos-head-background.png" %}');">
+    <div class="subheader" style="background: url('{% static 'videos-head-background.png' %}');">
         <div class="container h-100 d-flex align-items-center justify-content-center">
             <h1 class="subheader-text">STAFFELN</h1>
         </div>
     </div>
 
-    <div class="container container-page">
-        <!-- Iterate through all eras -->
+    <!-- Old Subheader -->
+    <!-- <div class="container-fluid videos-head">
+        <div class="container-fluid w-100 px-0 videos-image-container">
+            <img class="img-fluid w-100 videos-image" src="{% static 'videos-head-background.png' %}" width="100%" height="auto">
+            <div class="title">
+                <h1 class="title-text text-center">STAFFELN</h1>
+            </div>
+        </div>
+    </div> -->
+
+    <div class="videos-body">
+        <!-- run through all eras -->
+        {% for items in Era %}
+
+            <!-- Set borders to see the eras color on the side -->
+            <div class="container era-line" style="border-color: #{{ items.0.color_code }};">
+                <!-- Title for each section -->
+                <div class="container era-head">
+                    <div class="row h-100">
+                        <h1 class="era-title break-words" style="color:#{{ items.0.color_code }};">{{ items.0.name }}</h1>
+                        <div class="more-button-div my-auto float-right">
+                            <!-- The button on the right side, to toggle the vids of the era -->
+                            <button class="button more-videos-button float-right" id="color-btn-video-{{ forloop.counter }}" onclick="toggleHide({{ forloop.counter }}),changeIcon({{ forloop.counter }})">
+                                <div class="dash-symbol float-right" style="border-color:#{{ items.0.color_code }};"></div>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- The date for the era -->
+                    <div class="row">
+                        <p class="era-year" style="color:#{{ items.0.color_code }};">{{ items.0.get_year_as_str }}</p>
+                    </div>
+                </div>
+                    <div class="row">
+
+                        <!-- Video section for standard design -->
+                        <div class="container video-section">
+                        <!-- Videos in the section -->
+                        {% for video in items.1 %}
+                            <!-- Cases in which a new row has should be opened -->
+                            {% if forloop.counter0|divisibleby:5 or forloop.first %}
+                            <div class="row row-video row-no-margin video-hide" id="video-hide-{{ forloop.parentloop.counter }}">
+                            {% endif %}
+
+                            <!-- The Video Item -->
+                            <div class="video-box">
+                                <!-- Video -->
+                                <div class="video-title break-words" style="border-color: #{{ items.0.color_code }};">
+                                    <b>{{ video.title }}</b>
+                                </div>
+                                <img class="thumbnail" src="/media/{{ video.thumbnail }}" data-toggle="modal" data-target="#popup-{{ forloop.parentloop.counter }}-{{ forloop.counter }}" style="width: 100%">
+                            </div>
+
+                            <!-- Popup-Element -->
+                            <div class="modal fade popup-bg" id="popup-{{ forloop.parentloop.counter }}-{{ forloop.counter }}" data-keyboard="false" onclick="stopPopupVideo({{ forloop.parentloop.counter }}, {{ forloop.counter }})">
+                                <div class="modal-dialog modal-xl modal-dialog-centered">
+                                    <div class="modal-content popup">
+                                        <div class="modal-header popup-header align-items-center" style="border-color: #{{ items.0.color_code }};">
+                                            <!-- Header row of popup -->
+                                            <h4 class="modal-title popup-title" style="overflow: hidden;"><b>{{ video.title }}</b></h4>
+                                            <button type="button" class="close popup-close-button" data-dismiss="modal">x</button>
+                                        </div>
+                                        <div class="modal-body popup-body">
+                                            <!-- Body of popup which contains the video -->
+                                            <video preload="none" poster="/media/{{ video.thumbnail }}" id="popup-video-{{ forloop.parentloop.counter }}-{{ forloop.counter }}" width="100%" controls oncontextmenu="return false;" controlsList="nodownload">
+                                                <source src="{{ video.video.url }}" type="video/mp4">
+                                                {{ video.title }}
+                                            </video>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End of Popup def -->
+
+                            <!-- Cases in which the tag must be closed -->
+                            <!-- If it is at end of the row, or the video -->
+                            {% if forloop.last or forloop.counter|divisibleby:5 %}
+                                <!-- Close row div here -->
+                                </div>
+                            {% endif %}
+                        <!-- If there are no vids in an era, display it -->
+                        {% empty %}
+                            <div class="row row-video row-no-margin video-hide" id="video-hide-{{ forloop.counter }}">
+                                <b class="no-videos-text w-100 text-center video-title" style="border: 0px;">Keine Videos in dieser Epoche vorhanden.</b>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- For mobile design -->
+                    <div class="container video-section-mobile">
+                    <!-- Videos in the section -->
+                    {% for video in items.1 %}
+                        <!-- Cases in which a new row has should be opened -->
+                        {% if forloop.counter0|divisibleby:2 or forloop.first %}
+                        <div class="row row-video row-no-margin video-hide" id="video-hide-{{ forloop.parentloop.counter }}">
+                        {% endif %}
+
+                        <!-- The Video Item -->
+                        <div class="video-box">
+                            <!-- Video -->
+                            <div class="video-title break-words" style="border-color: #{{ items.0.color_code }};">
+                                <b>{{ video.title }}</b>
+                            </div>
+                            <img class="thumbnail" src="/media/{{ video.thumbnail }}" style="width: 100%" onclick="showFullscreenVideo({{ forloop.parentloop.counter }},{{ forloop.counter }})">
+                        </div>
+
+                        <!-- Definition of fullscreen element -->
+                        <div class="fullscreen-vid">
+                            <!-- Body of popup which contains the video -->
+                            <video preload="none" poster="/media/{{ video.thumbnail }}" id="video-{{ forloop.parentloop.counter }}-{{ forloop.counter }}" width="100%" controls oncontextmenu="return false;" controlsList="nodownload" style="display: none !important;">
+                                <source src="{{ video.video.url }}" type="video/mp4">
+                                {{ video.title }}
+                            </video>
+                            <!-- Add a script which will trigger if fullscreen state changes  -->
+                            <script>
+                                document.getElementById("video-{{ forloop.parentloop.counter }}-{{ forloop.counter }}").addEventListener('fullscreenchange', function (e) {
+                                    hideFullscreenVideo({{ forloop.parentloop.counter }}, {{ forloop.counter }});
+                                });
+                            </script>
+                        </div>
+                        <!-- End of fullscreen vid def -->
+
+                        <!-- Cases in which the tag must be closed -->
+                        <!-- If it is at end of the row, or the video -->
+                        {% if forloop.last or forloop.counter|divisibleby:2 %}
+                            <!-- Close row div here -->
+                            </div>
+                        {% endif %}
+                    <!-- If there are no vids in an era, display it -->
+                    {% empty %}
+                        <div class="row row-video row-no-margin video-hide" id="video-hide-{{ forloop.counter }}">
+                            <b class="no-videos-text w-100 text-center video-title" style="border: 0px;">Keine Videos in dieser Epoche vorhanden.</b>
+                        </div>
+                    {% endfor %}
+                </div>
+
+
+                </div>
+            </div>
+            {% if not forloop.parentloop.last %}
+            <!-- Put an extra div in between the eras, exept after the last, to put the gradient there -->
+            <div class="container gradient-line" style="background-image: linear-gradient(to bottom, #{{ items.0.color_code }} 0%, #{{ items.2 }} 100%);">
+            </div>
+            {% else %}
+
+            {% endif %}
+        {% endfor %}
+    </div>
+
+
+    <!--<div class="container container-page">
+        &lt;!&ndash; Iterate through all eras &ndash;&gt;
         {% for era,videos in Era.items %}
             <div class="row video-section">
                 <div class="video-section-title">
-                    <!-- Cycle through all eras as title -->
+                    &lt;!&ndash; Cycle through all eras as title &ndash;&gt;
                     <h1 style="border-bottom-style: solid; border-bottom-color: #{{ era.color_code }}">{{ era.name }}</h1>
                 </div>
-                    <!-- Iterate through all videos of every era -->
+                    &lt;!&ndash; Iterate through all videos of every era &ndash;&gt;
                     {% for video in videos %}
-                        <!-- Add a new video row every four videos -->
+                        &lt;!&ndash; Add a new video row every four videos &ndash;&gt;
                         {% if forloop.counter0|divisibleby:4 or forloop.first %}
                             {% if forloop.counter <= 4 %}
-                                <!-- The first row of videos -->
+                                &lt;!&ndash; The first row of videos &ndash;&gt;
                                 <div class="row row-video row-no-margin">
                             {% else %}
-                                <!-- Every other row of videos which is hidden until clicked on the button -->
+                                &lt;!&ndash; Every other row of videos which is hidden until clicked on the button &ndash;&gt;
                                 <div id="video-hide-{{ forloop.parentloop.counter }}" class="row row-video row-no-margin video-hide">
                             {% endif %}
                         {% endif %}
-                            <!-- Distinguish between first, middle and last video of the current row -->
+                            &lt;!&ndash; Distinguish between first, middle and last video of the current row &ndash;&gt;
                             <div class="video-box">
-                                <!-- Add video Thumbnail -->
+                                &lt;!&ndash; Add video Thumbnail &ndash;&gt;
                                 <img class="video" src="/media/{{ video.thumbnail }}" data-toggle="modal" data-target="#popup-{{ forloop.parentloop.counter }}-{{ forloop.counter }}" style="width: 100%">
 
-                                <!-- Add video title -->
+                                &lt;!&ndash; Add video title &ndash;&gt;
                                 <div class="video-title break-words">
                                     {{ video.title }}
                                 </div>
 
-                                <!-- Video popup element -->
+                                &lt;!&ndash; Video popup element &ndash;&gt;
                                 <div class="modal" id="popup-{{ forloop.parentloop.counter }}-{{ forloop.counter }}" data-keyboard="false" onclick="stopPopupVideo({{ forloop.parentloop.counter }}, {{ forloop.counter }})">
                                     <div class="modal-dialog modal-xl modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <!-- Header row of popup -->
+                                                &lt;!&ndash; Header row of popup &ndash;&gt;
                                                 <h4 class="modal-title" style="overflow: hidden;">{{ video.title }}</h4>
                                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                                             </div>
                                             <div class="modal-body">
-                                                <!-- Body of popup which contains the video -->
+                                                &lt;!&ndash; Body of popup which contains the video &ndash;&gt;
                                                 <video preload="none" poster="/media/{{ video.thumbnail }}" id="popup-video-{{ forloop.parentloop.counter }}-{{ forloop.counter }}" width="100%" controls oncontextmenu="return false;" controlsList="nodownload">
                                                     <source src="{{ video.video.url }}" type="video/mp4">
                                                     {{ video.title }}
@@ -117,17 +309,19 @@
                             </div>
                         {% endif %}
                     {% endfor %}
-                <!-- Add button to toggle hide the hidden videos -->
+                &lt;!&ndash; Add button to toggle hide the hidden videos &ndash;&gt;
                 {% if videos|length > 4 %}
                     <div style="width: 100%">
-                        <!-- Add 'show more' button if there are more than 4 videos -->
+                        &lt;!&ndash; Add 'show more' button if there are more than 4 videos &ndash;&gt;
                         <button class="button more-videos-button" id="color-btn-video-{{ forloop.counter }}" onclick="toggleHide({{ forloop.counter }}),changeIcon({{ forloop.counter }})">∨</button>
                     </div>
                 {% endif %}
             </div>
         {% endfor %}
-    </div>
+    </div>-->
 
     {% include './footer.html' %}
+    {% include './mobile_nav_footer.html' %}
+
 </body>
 </html>

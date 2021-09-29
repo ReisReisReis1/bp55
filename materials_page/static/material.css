@@ -2,26 +2,208 @@
     CSS File for styling on the material page
 =============================================================================*/
 
+/* Styling of the body part with the materials */
+.material-body {
+    background-color: #F9EAD8;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+/* Styling of the category titles*/
+.category-title {
+    font-size: 84px;
+    padding-left: 0px;
+    width: 90%;
+}
+
+.more-matsbtn-div {
+    width: 10%;
+}
+
+/* ... and download all buttons */
+.material-alldl {
+    font-size: 12px;
+    margin-left: 4px;
+    margin-top: -10px;
+    margin-bottom: 10px;
+    border: none;
+    background-color: #F9EAD8;
+}
+
+/* Set some positioning for the divs with the materials */
+.material-section {
+    padding-top: 15px;
+}
+
+/* Style for the lines, uses borders of the divs */
+.material-line {
+    padding-left: 57px;
+    border-left-style: solid;
+    border-left-width: 4px;
+}
+
+/* Same thing for the gradients inbetween the categories */
+.gradient-line {
+    height: 50px;
+    /* Do the border as resized background, much easier
+    than to deal with all border-image-* properties */
+    background-size: 4px auto;
+    background-repeat: no-repeat;
+}
+
+/* Styling of the element containing a material and its title */
+.material-box {
+    width: 20%;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+}
+
+/* Some spacing to make the materials look nicer on the page */
+.row-material {
+    margin-bottom: 10px;
+}
+
+/* Style for the material titles */
+.material-title {
+    font-size: 18px;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    border-bottom: 4px solid;
+}
+
+/* Set material-hide rows to hide completely */
+.material-hide {
+    display: none !important;
+}
+
+.material-section-mobile {
+        display: none !important;
+    }
+
+/* Style for the pdf icon */
+.icon {
+    margin-top: 6px;
+    width: 51px;
+    height: 68px;
+}
+
+/* Set the icon to show a hand/finger pointer,
+to make clear that you can see the material by clicking */
+.icon:hover{
+    cursor: pointer;
+}
+
+/* Style symbol to make buttons to hide and unhide materials */
+.dash-symbol {
+    width: 18px;
+    height: 18px;
+    transform: scaleY(-1) scaleX(-1) translate(0px, 50%) rotate(0.125turn);
+    border-style: solid;
+    border-width: 4px;
+    border-right-width: 0px;
+    border-bottom-width: 0px;
+}
+
+/* Style the more materials button */
+.more-materials-button {
+    outline: none !important;
+    border: none;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: #F9EAD8;
+}
+
+/*--------------------------------------- Responsive Design ---------------------------------------------------------*/
+
+@media screen and (max-width: 1100px) {
+
+    /* Responsive Design for mobile */
+
+    .material-body {
+        padding-left: 6px;
+        padding-right: 6px;
+    }
+
+    .material-box {
+        width: 50%;
+        padding-left: 7px !important;
+        padding-right: 7px !important;
+    }
+
+    .material-section {
+        display: none !important;
+    }
+
+    .material-section-mobile {
+        display: grid !important;
+    }
+
+    .category-title {
+        font-size: 60px;
+        padding-left: 0px;
+    }
+
+    .material-title {
+        font-size: 12px;
+        margin-bottom: 3px;
+        padding-bottom: 3px;
+        border-bottom: 2px solid;
+    }
+
+    .icon {
+        margin-top: 3px;
+    }
+
+    .material-line {
+        padding-left: 6px;
+        margin-left: 6px;
+        margin-right: 6px;
+        border-left-style: solid;
+        border-left-width: 3px;
+    }
+
+    .gradient-line {
+        margin-left: 6px;
+        background-size: 3px auto;
+    }
+
+    .dash-symbol {
+        width: 12px;
+        height: 12px;
+        border-width: 3px;
+        border-right-width: 0px;
+        border-bottom-width: 0px;
+    }
+
+}
+
+
+
 /*----------------------------------------------------------------------------
     Styling the border of the box
-*/
+*//*
+
 .borderline{
   border-style: solid;
   border-width: thin;
   border-color: black;
 }
 
+*/
 /*
     Styling the font color and position center
- */
+ *//*
+
 .fontcolor{
     text-decoration: none;
     color: black;
 }
 
+*/
 /*----------------------------------------------------------------------------
     Styling of container of one PDF file
- */
+ *//*
+
 .material-box {
     cursor: pointer;
     width: 12.5%;
@@ -29,17 +211,21 @@
     padding-right: 5px !important;
 }
 
+*/
 /*
     Removes the margin of the first row of files
- */
+ *//*
+
 .material-first-row {
     margin-bottom: 0px !important;
 }
 
+*/
 /*
     Adds a margin over every other row of materials
- */
+ *//*
+
 .material-rest-row {
     margin-bottom: 0px !important;
     margin-top: 1rem;
-}
+}*/

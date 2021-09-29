@@ -1,6 +1,7 @@
 .footer-bar {
     height: 80px;
     background: #701F2C;
+    display: flex;
 }
 
 .footer-logo {
@@ -9,4 +10,21 @@
 
 .footer-menu-item {
     margin-left: 20px;
+}
+
+@media screen and (max-width: 1100px) {
+
+    /* For responsive design: mobile devices */
+
+
+    .footer-bar{
+        display: none !important;
+    }
+
+    /* Old responsive design */
+    /*.items {
+        margin-left: 0px !important;
+        margin-right: 0px !important;
+    }*/
+
 }

@@ -18,7 +18,24 @@ body {
 .subheader-text {
     color: #F9EAD8;
     font-size: 90px;
+    text-align: center;
 }
+
+/* Responsive design for the subheader */
+@media screen and (max-width: 1100px) {
+    .subheader {
+        background-color: #1F1F1F !important;
+        background-position: bottom !important;
+        background-repeat: no-repeat !important;
+        background-size: contain !important;
+        height: 220px;
+    }
+    .subheader-text {
+        font-size: 34px;
+        text-align: center;
+    }
+}
+
 
 /*----------------------------------------------------------------------------
     Add to Bootstrap .container to get the default spacing
