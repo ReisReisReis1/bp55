@@ -2,9 +2,135 @@
     CSS File for styling on the timeline page
 =============================================================================*/
 
+/* Set background color */
+.timeline-background-color {
+    background-color: #F9EAD8;
+    margin: 0px;
+    padding: 0px;
+}
+
+.timeline-container {
+    height: 100%;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.era-title {
+    font-size: 70px;
+    text-align: center;
+}
+
+.era-year {
+    font-size: 15px;
+    text-align: center;
+}
+
+.era-head {
+}
+
+.row {
+    text-align: center;
+    vertical-align: middle;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.row-content {
+    display: table;
+}
+
+.content-col {
+    display: table-cell;
+    height: 100%;
+    text-align: center;
+    vertical-align: middle;
+    align-items: center;
+    justify-content: center !important;
+}
+
+/* Set each col type width */
+.era-title-col {
+    width: 52%;
+}
+
+.era-rest-col {
+    width: 48%;
+}
+
+.hd-col {
+    width: 20%;
+    text-align: left;
+}
+
+.line-col {
+    width: 12%;
+}
+
+.name-col {
+    width: 20%;
+}
+
+.pic-col {
+    width: 24%;
+}
+
+.building-year {
+    background-color: #F9EAD8;
+}
+
+.line {
+    display: flex;
+    height: 38%;
+    width: 4px;
+    margin-left: 48%;
+    margin-right: 48%;
+}
+
+.gradient-line {
+    height: 60px;
+    width: 4px;
+    margin-left: 48%;
+    margin-right: 48%;
+}
+
+.hd-line {
+    height: 35%;
+    width: 4px;
+    margin-left: 48%;
+    margin-right: 48%;
+}
+
+.diamond-centered {
+    width:100%;
+    display: flex;
+    justify-content: center;
+}
+
+.diamond {
+    width: 16px;
+    height: 16px;
+    transform: rotate(0.125turn);
+    margin-left: 43.5%;
+    margin-right: 43.5%;
+}
+
+
+
+
+
+
+
+
+
+
+
+/*============================================================================*/
 /*----------------------------------------------------------------------------
     Styling of the index of all eras
  */
+/*
 .index {
     position: fixed;
     right: 20px;
@@ -12,69 +138,87 @@
     z-index: 10;
 }
 
+*/
 /*
     Hide the index by default
- */
+ *//*
+
 .index-hide {
     display: none;
 }
 
+*/
 /*
     Styling of the close button of the index
- */
+ *//*
+
 .index-button {
     position: absolute;
     right: 1.25rem;
     top: 1.25rem;
 }
 
+*/
 /*
     Styling of the contents (eras) of the index
- */
+ *//*
+
 .list-group a {
     color: black;
     text-decoration: none;
 }
 
+*/
 /*----------------------------------------------------------------------------
     One row in the timeline
- */
+ *//*
+
 .row-timeline {
     width: 100%;
 }
 
+*/
 /*
     Make the center full width
- */
+ *//*
+
 .timeline-center, .timeline-center-last {
     height: 100%;
 }
 
+*/
 /*----------------------------------------------------------------------------
     Style of the title box
- */
+ *//*
+
 .card-title {
     border-bottom: solid;
     border-width: 2px;
 }
 
+*/
 /*
     Styling of the title of historic date cards
- */
+ *//*
+
 .historic-title {
     margin-bottom: 0px !important;
 }
 
+*/
 /*
     Styling of a card containing a building
- */
+ *//*
+
 .timeline-card {
     width: 70%;
 }
 
+*/
 /*
     Style of the link between left side card and timeline center
- */
+ *//*
+
 .card-left::before {
     content: " ";
     height: 0;
@@ -88,9 +232,11 @@
     border-color: inherit;
 }
 
+*/
 /*
     Style of the link between right side card and timeline center
- */
+ *//*
+
 .card-right::before {
     content: " ";
     height: 0;
@@ -104,9 +250,11 @@
     border-color: inherit;
 }
 
+*/
 /*
     Style of the center bar of the timeline
- */
+ *//*
+
 .timeline-center-first {
     position: relative;
     z-index: -1;
@@ -114,9 +262,11 @@
     height: 230%;
 }
 
+*/
 /*
     Styling of the arrow at the end of the timeline
- */
+ *//*
+
 .timeline-center-last::after {
     content: " ";
     height: 0;
@@ -132,9 +282,11 @@
     border-top-color: inherit;
 }
 
+*/
 /*
     Styling of text on each era on the center beam
- */
+ *//*
+
 .timeline-center-text {
     writing-mode: vertical-rl;
     white-space: nowrap;
@@ -144,16 +296,20 @@
     margin-left: -20px;
 }
 
+*/
 /*
     Default height of eras which contain no buildings
- */
+ *//*
+
 .timeline-center-empty {
     height: 300px;
 }
 
+*/
 /*----------------------------------------------------------------------------
     Change color of the link to default (not blue)
- */
+ *//*
+
 .card-link {
     color: inherit !important;
-}
+}*/
