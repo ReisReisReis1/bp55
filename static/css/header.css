@@ -12,6 +12,15 @@
     height: 12px;
 }
 
+.header-search-bar {
+    position: absolute;
+    width: 100%;
+}
+
+.header-search {
+    margin-right: -15px;
+}
+
 .menu-icon, .hamtogglebtn {
     display: none !important;
 }

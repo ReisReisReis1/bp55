@@ -2,11 +2,6 @@
     General CSS file for styling on every page
 =============================================================================*/
 
-body {
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
 .subheader {
     background-color: #1F1F1F !important;
     background-position: center !important;
@@ -15,10 +10,11 @@ body {
     height: 500px;
 }
 
-.subheader-text {
-    color: #F9EAD8;
-    font-size: 90px;
-    text-align: center;
+.subheader-small {
+    background-color: #1F1F1F !important;
+    background-position: top !important;
+    background-repeat: no-repeat !important;
+    height: 250px;
 }
 
 /* Responsive design for the subheader */
@@ -40,9 +36,6 @@ body {
 /*----------------------------------------------------------------------------
     Add to Bootstrap .container to get the default spacing
  */
-.container-page {
-    margin-bottom: 100px;
-}
 
 .heading-no-margin {
     margin-bottom: 0 !important;

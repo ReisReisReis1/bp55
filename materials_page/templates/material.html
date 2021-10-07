@@ -146,12 +146,12 @@
 
                 </div>
             </div>
-            {% if not forloop.last %}
-            <!-- Put an extra div in between the eras, exept after the last, to put the gradient there -->
-            <div class="container gradient-line" style="background-image: linear-gradient(to bottom, #{{ items.2 }} 0%, #{{ items.3 }} 100%);">
-            </div>
-            {% else %}
 
+            {% if not forloop.last %}
+                <!-- Put an extra div in between the eras, exept after the last, to put the gradient there -->
+                <div class="container gradient-line" style="background-image: linear-gradient(to bottom, #{{ items.2 }} 0%, #{{ items.3 }} 100%);">
+
+                </div>
             {% endif %}
         {% endfor %}
     </div>

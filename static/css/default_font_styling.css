@@ -1,8 +1,51 @@
+@font-face {
+    font-family: "Bebas Neue";
+    src: url('../fonts/bebasneue-regular-webfont.eot');
+    src: url('../fonts/bebasneue-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/bebasneue-regular-webfont.woff2') format('woff2'),
+         url('../fonts/bebasneue-regular-webfont.woff') format('woff'),
+         url('../fonts/bebasneue-regular-webfont.ttf') format('truetype'),
+         url('../fonts/bebasneue-regular-webfont.svg#Bebas Neue') format('svg');
+}
+@font-face {
+    font-family: "Benton Sans";
+    src: url('../fonts/bentonsans_regular-webfont.eot');
+    src: url('../fonts/bentonsans_regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/bentonsans_regular-webfont.woff2') format('woff2'),
+         url('../fonts/bentonsans_regular-webfont.woff') format('woff'),
+         url('../fonts/bentonsans_regular-webfont.ttf') format('truetype'),
+         url('../fonts/bentonsans_regular-webfont.svg#Benton Sans') format('svg');
+}
+@font-face {
+    font-family: "Calluna";
+    src: url('../fonts/calluna-regular-webfont.eot');
+    src: url('../fonts/calluna-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/calluna-regular-webfont.woff2') format('woff2'),
+         url('../fonts/calluna-regular-webfont.woff') format('woff'),
+         url('../fonts/calluna-regular-webfont.ttf') format('truetype'),
+         url('../fonts/calluna-regular-webfont.svg#Calluna') format('svg');
+}
+
+.font-bebas-neue {
+    font-family: 'Bebas Neue', sans-serif !important;
+}
+.font-benton-sans {
+    font-family: 'Benton Sans', sans-serif !important;
+}
+.font-calluna {
+    font-family: 'Calluna', sans-serif !important;
+}
+
 a:hover {
     text-decoration: none !important;
 }
 
+h1 {
+    font-family: 'Bebas Neue', sans-serif !important;
+}
+
 .font-header {
+    font-family: 'Benton Sans', sans-serif;
     font-size: 14px;
 }
 
@@ -22,8 +65,15 @@ a:hover {
     color: #FFFFFF !important;
 }
 
+.subheader-text {
+    color: #F9EAD8;
+    font-size: 90px;
+    text-align: center;
+}
+
 
 .font-footer {
+    font-family: 'Benton Sans', sans-serif;
     font-size: 14px;
 }
 

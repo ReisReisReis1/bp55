@@ -2,22 +2,22 @@
     CSS File for styling on the details pages
 =============================================================================*/
 
-/*----------------------------------------------------------------------------
-    Styling of the container with all the details
- */
-.details-box {
-    padding-top: 15px;
-    border: solid;
+.detail-body {
+    background-color: #F9EAD8;
+    padding-top: 50px;
+    padding-bottom: 50px;
 }
 
-/*
-    Styling of the video containers
- */
-.video-box {
-    cursor: pointer;
-    width: 25%;
-    padding-left: 5px !important;
-    padding-right: 5px !important;
+.building-title {
+    font-size: 84px;
+    padding-left: 0;
+    margin-bottom: -15px;
+    width: 90%;
+}
+
+.building-era {
+    font-size: 20px;
+    letter-spacing: 1px;
 }
 
 /*----------------------------------------------------------------------------
@@ -49,17 +49,124 @@
     height: 5px;
 }
 
-/*----------------------------------------------------------------------------
+.carousel-inner .carousel-item {
+    height:360px;
+    background-size:cover;
+    background-position: center center;
+}
+
+/* Styling for the popup elements */
+.modal-backdrop {
+    background-color: #1F1F1F;
+    opacity: 0.97 !important;
+}
+
+.popup {
+    background-color: transparent;
+    border: 0px !important;
+    border-radius: 0 !important;
+}
+
+/* ... re-set header borders to more height */
+.popup-header {
+    padding-left: 0px;
+    margin-left: 0px;
+    padding-right: 0px;
+    margin-right: 0px;
+    border-bottom: 4px solid;
+    padding-bottom: 5px;
+}
+
+/* ... title text */
+.popup-title {
+    padding-left: 0px;
+    margin-left: 0px;
+    color: #F9EAD8;
+    font-size: 22px;
+}
+
+/* ... body */
+.popup-body {
+    padding-top: 10px !important;
+    padding: 0px;
+}
+
+/* ... close button */
+.popup-close-button {
+    padding-right: 0px;
+    margin-right: 0px;
+    color: #F7F7F7;
+    opacity: 100%;
+    font-size: 22px;
+}
+
+/* Make the Close button able to see on dark background */
+.popup-close-button:hover {
+    color: #F7F7F7;
+    opacity: 80%;
+    cursor: pointer;
+}
+
+
+/*
+!*----------------------------------------------------------------------------
+    Styling of the container with all the details
+ *!
+.details-box {
+    padding-top: 15px;
+    border: solid;
+}
+
+!*
+    Styling of the video containers
+ *!
+.video-box {
+    cursor: pointer;
+    width: 25%;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+}
+
+!*----------------------------------------------------------------------------
+    Styling of the left arrow in image carousel
+ *!
+.carousel .carousel-control-prev-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
+    width: 3rem;
+    height: 3rem;
+    filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));
+}
+
+!*
+    Styling of the right arrow in image carousel
+ *!
+.carousel .carousel-control-next-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
+    width: 3rem;
+    height: 3rem;
+    filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));
+}
+
+!*
+    Styling of the current image indicator in image carousel
+ *!
+.carousel .carousel-indicators li {
+    filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));
+    width: 40px;
+    height: 5px;
+}
+
+!*----------------------------------------------------------------------------
     Removes the margin of the first row of videos
- */
+ *!
 .video-first-row {
     margin-bottom: 0px !important;
 }
 
-/*
+!*
     Adds a margin over every other row of videos
- */
+ *!
 .video-rest-row {
     margin-bottom: 0px !important;
     margin-top: 1rem;
-}
+}*/
