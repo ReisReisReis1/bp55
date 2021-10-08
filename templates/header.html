@@ -4,7 +4,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <script>
+        function toggleHideSearchBar() {
+            var search_bar = document.getElementById("header-search");
 
+            search_bar.classList.toggle("header-search-hide")
+        }
+    </script>
 </head>
 <body>
     <div class="header-bar align-items-center d-flex">
@@ -22,7 +28,7 @@
                     <a href="{% url "filter_page:filter" %}" class="header-menu-item color-primary-header">Bauwerke</a>
                     <a href="{% url "video_content:videos" %}" class="header-menu-item color-primary-header">Staffeln</a>
                     <a href="{% url "materials_page:material" %}" class="header-menu-item color-primary-header">Materialien</a>
-                    <img class="search-icon" src="{% static 'icon-search.png' %}">
+                    <img class="search-icon" src="{% static 'icon-search.png' %}" onclick="toggleHideSearchBar()">
                     <!-- The hamburger / overflow menu for mobile devices -->
                     <button class="btn hamtogglebtn" type="button" data-toggle="collapse" data-target="#hamburger-menu-id">
                         <img class="menu-icon" src="{% static 'icon-menu.png' %}">
@@ -33,7 +39,7 @@
         </div>
     </div>
 
-    <div class="header-search-bar">
+    <div id="header-search" class="header-search-bar header-search-hide">
         <div class="container">
             <div class="row justify-content-end">
                 <div class="header-search">

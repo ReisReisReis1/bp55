@@ -9,6 +9,7 @@
 }
 
 .search-icon {
+    cursor: pointer;
     height: 12px;
 }
 
@@ -19,6 +20,10 @@
 
 .header-search {
     margin-right: -15px;
+}
+
+.header-search-hide {
+    display: none;
 }
 
 .menu-icon, .hamtogglebtn {
