@@ -44,6 +44,10 @@ h1 {
     font-family: 'Bebas Neue', sans-serif !important;
 }
 
+h3, p {
+    font-family: 'Benton Sans', sans-serif;
+}
+
 .font-header {
     font-family: 'Benton Sans', sans-serif;
     font-size: 14px;

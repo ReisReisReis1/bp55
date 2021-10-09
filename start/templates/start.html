@@ -20,11 +20,11 @@
         </div>
     </div>
 
-    <div class="start-video p-3">
-        <div class="container">
+    <div class="start-video">
+        <div class="container font-calluna">
             <div class="row">
                 <div class="col welcome-text">
-                    <h4><b>Herzlich Willkommen!</b></h4>
+                    <h2><b>Herzlich Willkommen!</b></h2>
                 </div>
             </div>
             <!-- Intro Video -->
@@ -38,7 +38,7 @@
             </div>
             <!-- Description text for the webapplikation -->
             <div class="row">
-                <div class="col">
+                <div class="col intro-text">
                     <p align="justify">
                         Die Vorlesung Architektur und Städtebau der Antike soll in ein zeitgemäßes digitales Format
                         überführt werden. Hierfür möchten wir eine digitale Wissensplattform zur Architekturgeschichte der Antike als Webanwendung aufbauen,
@@ -54,7 +54,7 @@
     <div class="start-linkboxes">
         <div class="container">
             <div class="row">
-                <div class="col">
+                <div class="col font-benton-sans">
                     <p>
                         <b>
                             Anhand des Web-Tools Ruins and Beyond! werden diese Daten auf unterschiedlichen Wegen miteinander verknüpft:
@@ -68,24 +68,24 @@
                         <!-- Card: Zeitachse -->
                         <a class="card" href="{% url 'timeline:timeline' %}">
                             <div class="card-body">
-                                <h5 class="card-title">ZEITACHSE</h5>
-                                <p class="card-text">Auf der Zeitachse werden die Einzel-bauten mit ihren Charakteristiken und zugehörigen Vorlesungsvideos über Bild-Buttons abrufbar gemacht.</p>
+                                <h5 class="card-title font-bebas-neue">ZEITACHSE</h5>
+                                <p class="card-text font-calluna">Auf der Zeitachse werden die Einzel-bauten mit ihren Charakteristiken und zugehörigen Vorlesungsvideos über Bild-Buttons abrufbar gemacht.</p>
                             </div>
                             <img class="card-img-bottom" src="{% static 'timeline-head-background.png' %}" alt="Zeitachse Hintergrundbild">
                         </a>
                         <!-- Card: Bauwerke -->
                         <a class="card" href="{% url 'filter_page:filter' %}">
                             <div class="card-body">
-                                <h5 class="card-title">BAUWERKE</h5>
-                                <p class="card-text">Im Reiter Bauwerke werden die Gebäude thematisch abgefragt und zusammen-gestellt. Auch ermöglicht die Filter-funktion eine gezielte Auswahl bestimmter Gebäudegruppen.</p>
+                                <h5 class="card-title font-bebas-neue">BAUWERKE</h5>
+                                <p class="card-text font-calluna">Im Reiter Bauwerke werden die Gebäude thematisch abgefragt und zusammen-gestellt. Auch ermöglicht die Filter-funktion eine gezielte Auswahl bestimmter Gebäudegruppen.</p>
                             </div>
                         <img class="card-img-bottom" src="{% static 'filter-head-background.png' %}" alt="Zeitachse Hintergrundbild">
                         </a>
                         <!-- Card: Staffeln -->
                         <a class="card" href="{% url 'video_content:videos' %}">
                             <div class="card-body">
-                                <h5 class="card-title">STAFFELN</h5>
-                                <p class="card-text">Im Reiter Staffeln werden alle vorhandenen Videos in chronologischer Reihenfolge und nach Epoche sortiert aufgelistet.</p>
+                                <h5 class="card-title font-bebas-neue">STAFFELN</h5>
+                                <p class="card-text font-calluna">Im Reiter Staffeln werden alle vorhandenen Videos in chronologischer Reihenfolge und nach Epoche sortiert aufgelistet.</p>
                             </div>
                             <img class="card-img-bottom" src="{% static 'videos-head-background.png' %}" alt="Zeitachse Hintergrundbild">
                         </a>

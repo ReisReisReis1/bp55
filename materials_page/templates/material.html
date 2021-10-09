@@ -71,7 +71,7 @@
                     </div>
                     <!-- The download all button for the category -->
                     <div class="row">
-                        <a href="{% url 'materials_page:download' items.0 %}" class="button material-alldl" style="color:#{{ items.2 }};"><b>ALLE HERUNTERLADEN</b></a>
+                        <a href="{% url 'materials_page:download' items.0 %}" class="button material-alldl font-benton-sans" style="color:#{{ items.2 }};"><b>ALLE HERUNTERLADEN</b></a>
                     </div>
                 </div>
                     <div class="row">
@@ -86,12 +86,12 @@
                             <!-- The Material Item -->
                             <div class="material-box">
                                 <!-- Material title -->
-                                <div class="material-title break-words" style="border-color: #{{ items.2 }};">
+                                <div class="material-title break-words font-benton-sans" style="border-color: #{{ items.2 }};">
                                     <b>{{ material.name }}</b>
                                 </div>
                                 <!-- Material Icon with a link to open the corresponding PDF in a new tab -->
                                 <a href="{{ material.file.url }}" target="_blank">
-                                    <img class="icon" src="{% static 'PDF.png' %}">
+                                    <img class="icon" src="{% static 'icon-pdf.png' %}">
                                 </a>
                             </div>
 
@@ -104,7 +104,7 @@
                         <!-- If there are no materials in an category, display it -->
                         {% empty %}
                             <div class="row row-material row-no-margin material-hide" id="material-hide-{{ forloop.counter }}">
-                                <b class="no-material-text w-100 text-center material-title" style="border: 0px;">(Noch) keine Materialien in dieser Kategorie vorhanden.</b>
+                                <b class="no-material-text w-100 text-center material-title font-benton-sans" style="border: 0px;">(Noch) keine Materialien in dieser Kategorie vorhanden.</b>
                             </div>
                         {% endfor %}
                     </div>
