@@ -9,31 +9,37 @@
     padding: 0px;
 }
 
+/* Set bottom and top padding for the whole page */
 .timeline-container {
     height: 100%;
     padding-top: 40px;
     padding-bottom: 40px;
 }
 
+/* Font for the Era title */
 .era-title {
     font-size: 70px;
     text-align: center;
 }
 
+/* Font for the era year */
 .era-year {
     text-align: center;
 }
 
+/* Building date text properties */
 .building-year {
     background-color: #F9EAD8;
     text-align: center;
     height: 36%;
 }
 
+/* Set the width of the main (time)line */
 .line {
     width: 4px;
 }
 
+/* Set height and length for the horizontal lines, for the historic dates */
 .horizontal-line {
     margin-top: 6px;
     padding-right: 0px;
@@ -41,62 +47,81 @@
     height: 4px;
 }
 
+/* Put the middle line for historic dates in the correct place */
 .hd-middle {
     margin-bottom: 6px;
 }
 
+/* Put the middle line for historic dates in the correct place,
+   space the text to good look */
 .hd-text {
-    margin-bottom: 6px;
+    margin-bottom: 12px;
 }
 
+/* Set a fixed height for the gradient line, to be able to see the gradient */
 .gradient-line {
     height: 60px;
     width: 4px;
 }
 
+/* Style the timeline line above the diamond symbol of historic dates */
 .hd-line-top {
     height: 70%;
     width: 4px;
 }
 
+/* Style the line leading to the pictures */
 .pic-line {
     height: 4px;
 }
 
-.building-text {
+/* To not screw up the horizontal lines, set fixed height to the texts above and below the lines */
+.fixed-height {
     height: 30px !important;
 }
 
-.pic {
+/* To realise the overlapping of pictures, set a negative margin to the thumbnail divs */
+.overlapping {
     margin-top: -2%;
     margin-bottom: -2%;
 }
 
+/* Add spacing to the thumbnails */
+.thumbnail {
+    padding-right: 20px;
+}
+
+/* Style of the main timeline line for historic dates, below the diamond */
 .hd-line {
     height: 100%;
     width: 4px;
 }
 
+/* Helper: Add to everything where padding is not needed */
 .no-padding {
     padding: 0;
 }
 
+/* Helps to center flexbox objects horizontally */
 .centered {
     display: flex;
-    width:100%;
-    height: 34%;
+    width: 100%;
     vertical-align: baseline;
     justify-content: center;
 }
 
-.centered-no-height {
-    display: flex;
-    width:100%;
-    height: 30px;
-    margin-right: 17px;
-    justify-content: center;
+/* Equally distribute height between timeline line and text */
+.one-third-height {
+    height: 34%;
 }
 
+/* Set height and positioning for the div surrounding the diamond symbol */
+.diamond-container {
+    height: 30px;
+    margin-right: 16px;
+}
+
+/* Style to make the diamond symbol for historic dates */
 .diamond {
     width: 16px;
     height: 16px;
