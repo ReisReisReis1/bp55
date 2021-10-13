@@ -55,6 +55,11 @@
     background-position: center center;
 }
 
+.carousel-image {
+    background-color: #e8d4bd;;
+    height: 360px;
+}
+
 /* Styling for the popup elements */
 .modal-backdrop {
     background-color: #1F1F1F;
