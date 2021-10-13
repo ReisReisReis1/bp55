@@ -112,7 +112,7 @@
                     {% if not building_thumbnail == None %}
                     <a class="img" href="{% url 'details_page:detailed' building_id=building.id %}"><img src="/media/{{ building_thumbnail.picture }}" style="width: 100%;"></a>
                     {% else %}
-                    <img src="{% static 'default_image.png' %}" style="width: 100%;">
+                    <a class="img" href="{% url 'details_page:detailed' building_id=building.id %}"><img src="{% static 'default_image.png' %}" style="width: 100%;"></a>
                     {% endif %}
                 </div>
                 <!-- ... else after the pic div -->
