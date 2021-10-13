@@ -2,6 +2,64 @@
     CSS File for styling on the timeline page
 =============================================================================*/
 
+.index-o {
+    transform: translateY(-50%);
+    background-color: #1F1F1F;
+    position: fixed;
+    right: 0;
+    top: 50%;
+    z-index: 10;
+}
+
+.index-c {
+    transform: translateY(-50%) rotate(-90deg);
+    background-color: #1F1F1F;
+    position: fixed;
+    right: -50px;
+    top: 50%;
+    z-index: 10;
+}
+
+.index-hide {
+    display: none !important;
+}
+
+.index-open {
+    width: 200px;
+    padding-top: 10px;
+    padding-bottom: 8px;
+}
+
+.index-close {
+    color: #F9EAD8;
+    padding-left: 12px;
+}
+
+.index-header {
+    cursor: pointer;
+    width: 100%;
+    color: #F9EAD8;
+}
+
+.index-header-close {
+    margin: 10px 18px 11px 13px;
+}
+
+.index-header-close-icon {
+    transform: rotate(90deg);
+}
+
+.index-item {
+    list-style-type: none;
+}
+
+.index-icon {
+    height: 4px;
+    width: 100%;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
 /* Set background color */
 .timeline-background-color {
     background-color: #F9EAD8;
