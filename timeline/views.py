@@ -31,12 +31,13 @@ def sorted_eras_with_buildings(items):
     # second making the list of dictionaries to one dictionary
     for era in all_eras:
         key = list(era.keys())[0]
-        value = list(era.values())
+        value = list(era.values())[0]
         era_dict[key] = value
 
+    i = 0
     for era, era_struct in era_dict.items():
         items_era_sorted = []  # list will be filled with the items fitting into the era
-        era_date_range = era_struct[0].get_year_as_signed_int()  # getting the range of the era
+        era_date_range = era_struct.get_year_as_signed_int()  # getting the range of the era
         for item in items:
             year_of_item = item.get_year_as_signed_int()[0]
             # item fits into the era?
@@ -47,8 +48,13 @@ def sorted_eras_with_buildings(items):
                         (True, item, item.get_year_as_str(), item.get_thumbnail()))
                 else:
                     items_era_sorted.append((False, item, item.get_year_as_str(), None))
+        nextcolor = "None"
+        if i != len(era_dict)-1:
+            nextcolor = list(era_dict.values())[i+1].color_code
 
-        era_dict[era] = (era_struct[0], items_era_sorted)
+        era_dict[era] = (era_struct, items_era_sorted, nextcolor)
+        i += 1
+
     return era_dict
 
 
