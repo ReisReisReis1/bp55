@@ -110,7 +110,7 @@
                 <div class="col-md-3 no-padding pic">
                     <!-- test if image is present, or default should be used -->
                     {% if not building_thumbnail == None %}
-                    <img src="/media/{{ building_thumbnail.picture }}" style="width: 100%;">
+                    <a class="img" href="{% url 'details_page:detailed' building_id=building.id %}"><img src="/media/{{ building_thumbnail.picture }}" style="width: 100%;"></a>
                     {% else %}
                     <img src="{% static 'default_image.png' %}" style="width: 100%;">
                     {% endif %}
