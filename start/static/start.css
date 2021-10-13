@@ -7,6 +7,11 @@
     height: 100%;
  }
 
+.intro-text {
+    font-size: 18px;
+    margin-top: 7px;
+}
+
 /* Styling for the three main areas of the site */
 .start-title {
     background: #1F1F1F;
@@ -14,12 +19,14 @@
 
 .start-video {
     background-color: #F9EAD8;
-    padding: 20px;
+    padding-top: 50px;
+    padding-bottom: 59px;
 }
 
 .start-linkboxes {
     background: #CAA36E;
-    padding: 40px;
+    padding-top: 75px;
+    padding-bottom: 75px;
 }
 
 /* Image-container positioning to make title pos working */
