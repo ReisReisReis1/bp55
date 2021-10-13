@@ -71,18 +71,19 @@
 .timeline-container {
     height: 100%;
     padding-top: 40px;
-    padding-bottom: 40px;
+    padding-bottom: 60px;
 }
 
 /* Font for the Era title */
 .era-title {
-    font-size: 70px;
+    font-size: 84px;
     text-align: center;
 }
 
 /* Font for the era year */
 .era-year {
     text-align: center;
+    margin-top: -25px;
 }
 
 /* Building date text properties */
@@ -144,9 +145,10 @@
     margin-bottom: -2%;
 }
 
-/* Add spacing to the thumbnails */
-.thumbnail {
-    padding-right: 20px;
+.img {
+    background-color: #e8d4bd;
+    width: 100%;
+    height: 180px;
 }
 
 /* Style of the main timeline line for historic dates, below the diamond */

@@ -257,11 +257,15 @@
                                 <!-- Add image/blueprint if there is only one image/blueprint -->
                                 {% if Baupläne|length == 0 %}
                                     {% for image in Bilder %}
-                                        <img class="d-block w-100" src="/media/{{ image.picture }}">
+                                        <div class="d-flex align-items-center justify-content-center w-100 carousel-image">
+                                            <img class="d-block mh-100 mw-100" src="/media/{{ image.picture }}">
+                                        </div>
                                     {% endfor %}
                                 {% else %}
                                     {% for blueprints in Baupläne %}
-                                        <img class="d-block w-100" src="/media/{{ blueprints.blueprint }}">
+                                        <div class="d-flex align-items-center justify-content-center w-100 carousel-image">
+                                            <img class="d-block mh-100 mw-100" src="/media/{{ blueprints.blueprint }}">
+                                        </div>
                                     {% endfor %}
                                 {% endif %}
                             {% endif %}

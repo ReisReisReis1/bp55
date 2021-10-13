@@ -87,9 +87,9 @@
                 <!-- Instead of 5, use 2 cols, to be able to make title bigger -->
                 <div class="col-md-6 era-title-col">
                     <div style="color:#{{ era_struct.color_code }};">
-                        <h2 class="era-title">{{ era_name }}</h2>
+                        <h1 class="era-title">{{ era_name }}</h1>
                     </div>
-                    <div class="era-year" style="color:#{{ era_struct.color_code }};">
+                    <div class="era-year font-benton-sans" style="color:#{{ era_struct.color_code }};">
                         <b>{{ era_struct.get_year_as_str }}</b>
                     </div>
                 </div>
@@ -111,7 +111,7 @@
                         <div class="line" style="background-color: #{{ era_struct.color_code }}">
                         </div>
                     </div>
-                    <div class="row-no-margin building-year" style="color: #{{ era_struct.color_code }}">
+                    <div class="row-no-margin building-year font-benton-sans" style="color: #{{ era_struct.color_code }}">
                         <b>{{ building_year }}</b>
                     </div>
                     <div class="row-no-margin centered one-third-height">
@@ -120,8 +120,8 @@
                     </div>
                 </div>
                 <div class="col-md-2 no-padding align-self-center">
-                    <div class="fixed-height break-words">
-                        {{ building.name }}
+                    <div class="fixed-height break-words font-benton-sans">
+                        <b>{{ building.name }}</b>
                     </div>
                     <div class="pic-line" style="background-color:#{{ era_struct.color_code }};">
                     </div>
@@ -137,12 +137,12 @@
                 </div>
                 {% else %}
                 {% endif %}
-                <div class="col-md-3 no-padding overlapping">
+                <div class="col-md-3 no-padding overlapping" style="padding-right: 20px;">
                     <!-- test if image is present, or default should be used -->
                     {% if not building_thumbnail == None %}
-                    <a class="img" href="{% url 'details_page:detailed' building_id=building.id %}"><img class="thumbnail" src="/media/{{ building_thumbnail.picture }}" style="width: 100%;"></a>
+                    <a class="img d-flex align-items-center justify-content-center" href="{% url 'details_page:detailed' building_id=building.id %}"><img class="thumbnail mh-100 mw-100" src="/media/{{ building_thumbnail.picture }}"></a>
                     {% else %}
-                    <a class="img" href="{% url 'details_page:detailed' building_id=building.id %}"><img class="thumbnail" src="{% static 'default_image.png' %}" style="width: 100%;"></a>
+                    <a class="img d-flex align-items-center justify-content-center" href="{% url 'details_page:detailed' building_id=building.id %}"><img class="thumbnail mh-100 mw-100" src="{% static 'default_image.png' %}"></a>
                     {% endif %}
                 </div>
                 <!-- ... else after the pic div -->
@@ -161,11 +161,11 @@
                 {% with historicdate=building_or_hd_data|index:1 %}
                 {% with hd_year=building_or_hd_data|index:2 %}
                 <div class="col-md-2">
-                    <div class="row fixed-height">
+                    <div class="row fixed-height font-benton-sans">
                         <b>{{ hd_year }}</b>
                     </div>
                     <div class="row hd-middle horizontal-line" style="background-color: #{{ era_struct.color_code }}"></div>
-                    <div class="row break-words hd-text fixed-height">
+                    <div class="row break-words hd-text fixed-height font-calluna">
                         {{ historicdate.title }}
                     </div>
                 </div>
