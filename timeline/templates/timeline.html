@@ -59,9 +59,11 @@
                     <div style="color:#{{ era_struct.color_code }};">
                         <h2 class="era-title">{{ era_name }}</h2>
                     </div>
+                    {% if not forloop.last %}
                     <div class="era-year" style="color:#{{ era_struct.color_code }};">
                         <b>{{ era_struct.get_year_as_str }}</b>
                     </div>
+                    {% endif %}
                 </div>
                 <div class="col-md-6">
                 </div>
