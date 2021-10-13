@@ -21,99 +21,88 @@
 }
 
 .era-year {
-    font-size: 15px;
     text-align: center;
-}
-
-.era-head {
-}
-
-.row {
-    text-align: center;
-    vertical-align: middle;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-}
-
-.row-content {
-    display: table;
-}
-
-.content-col {
-    display: table-cell;
-    height: 100%;
-    text-align: center;
-    vertical-align: middle;
-    align-items: center;
-    justify-content: center !important;
-}
-
-/* Set each col type width */
-.era-title-col {
-    width: 52%;
-}
-
-.era-rest-col {
-    width: 48%;
-}
-
-.hd-col {
-    width: 20%;
-    text-align: left;
-}
-
-.line-col {
-    width: 12%;
-}
-
-.name-col {
-    width: 20%;
-}
-
-.pic-col {
-    width: 24%;
 }
 
 .building-year {
     background-color: #F9EAD8;
+    text-align: center;
+    height: 36%;
 }
 
 .line {
-    display: flex;
-    height: 38%;
     width: 4px;
-    margin-left: 48%;
-    margin-right: 48%;
+}
+
+.horizontal-line {
+    margin-top: 6px;
+    padding-right: 0px;
+    width: 120%;
+    height: 4px;
+}
+
+.hd-middle {
+    margin-bottom: 6px;
+}
+
+.hd-text {
+    margin-bottom: 6px;
 }
 
 .gradient-line {
     height: 60px;
     width: 4px;
-    margin-left: 48%;
-    margin-right: 48%;
+}
+
+.hd-line-top {
+    height: 70%;
+    width: 4px;
+}
+
+.pic-line {
+    height: 4px;
+}
+
+.building-text {
+    height: 30px !important;
+}
+
+.pic {
+    margin-top: -2%;
+    margin-bottom: -2%;
 }
 
 .hd-line {
-    height: 35%;
+    height: 100%;
     width: 4px;
-    margin-left: 48%;
-    margin-right: 48%;
 }
 
-.diamond-centered {
-    width:100%;
+.no-padding {
+    padding: 0;
+}
+
+.centered {
     display: flex;
+    width:100%;
+    height: 34%;
+    vertical-align: baseline;
+    justify-content: center;
+}
+
+.centered-no-height {
+    display: flex;
+    width:100%;
+    height: 30px;
+    margin-right: 17px;
     justify-content: center;
 }
 
 .diamond {
     width: 16px;
     height: 16px;
+    margin-top: 0px;
+    padding-top: 5px;
     transform: rotate(0.125turn);
-    margin-left: 43.5%;
-    margin-right: 43.5%;
 }
 
 

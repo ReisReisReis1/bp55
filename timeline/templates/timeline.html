@@ -55,7 +55,7 @@
             {% with nextcolor=era_buildinglist|index:2 %}
             <div class="row">
                 <!-- Instead of 5, use 2 cols, to be able to make title bigger -->
-                <div class="content-col era-title-col era-head">
+                <div class="col-md-6 era-title-col">
                     <div style="color:#{{ era_struct.color_code }};">
                         <h2 class="era-title">{{ era_name }}</h2>
                     </div>
@@ -63,54 +63,62 @@
                         <b>{{ era_struct.get_year_as_str }}</b>
                     </div>
                 </div>
-                <div class="content-col era-rest-col">
+                <div class="col-md-6">
                 </div>
             </div>
             {% for building_or_hd_data in building_list %}
             {% with is_building=building_or_hd_data|first %}
             {% if is_building %}
             <!-- It is a building -->
-            <div class="row row-content">
+            <div class="row">
                 {% with building=building_or_hd_data|index:1 %}
                 {% with building_year=building_or_hd_data|index:2 %}
                 {% with building_thumbnail=building_or_hd_data|index:3 %}
-                <div class="content-col hd-col">
-
+                <div class="col-md-2">
                 </div>
-                <div class="content-col line-col">
-                    <div class="line" style="background-color: #{{ era_struct.color_code }}">
+                <div class="col-md-2">
+                    <div class="row-no-margin centered">
+                        <div class="line" style="background-color: #{{ era_struct.color_code }}">
+                        </div>
                     </div>
-                    <div class="building-year" style="color: #{{ era_struct.color_code }}">
+                    <div class="row-no-margin building-year" style="color: #{{ era_struct.color_code }}">
                         <b>{{ building_year }}</b>
                     </div>
-                    <div class="line" style="background-color: #{{ era_struct.color_code }}">
+                    <div class="row-no-margin centered">
+                        <div class="line" style="background-color: #{{ era_struct.color_code }}">
+                        </div>
                     </div>
                 </div>
-                <div class="content-col name-col" style="background-color:#{{ era_struct.color_code }};">
-                    {{ building.name }}
+                <div class="col-md-2 no-padding align-self-center">
+                    <div class="building-text">
+                        {{ building.name }}
+                    </div>
+                    <div class="pic-line" style="background-color:#{{ era_struct.color_code }};">
+                    </div>
+                    <div class="building-text">
+
+                    </div>
                 </div>
                 <!-- decide whether pic has to be in 4th or 5th col -->
                 {% cycle "right" "left" as side silent %}
                 <!-- if right, insert div bevor... -->
                 {% if side == "right" %}
-                <div class="content-col pic-col" style="background-color: #{{ era_struct.color_code }}">
-
+                <div class="col-md-3 no-padding align-self-center pic-line" style="background-color: #{{ era_struct.color_code }}">
                 </div>
                 {% else %}
                 {% endif %}
-                <div class="content-col pic-col">
+                <div class="col-md-3 no-padding pic">
                     <!-- test if image is present, or default should be used -->
                     {% if not building_thumbnail == None %}
                     <img src="/media/{{ building_thumbnail.picture }}" style="width: 100%;">
                     {% else %}
-                    <img src="{% static 'default-image.png' %}" style="width: 100%;">
+                    <img src="{% static 'default_image.png' %}" style="width: 100%;">
                     {% endif %}
                 </div>
                 <!-- ... else after the pic div -->
                 {% if side == "right"%}
                 {% else %}
-                <div class="content-col pic-col">
-
+                <div class="col-md-3">
                 </div>
                 {% endif %}
                 {% endwith %}
@@ -118,30 +126,43 @@
                 {% endwith %}
             </div>
             {% else %}
-            <div class="row row-content">
+            <div class="row">
             <!-- It is a historic date -->
                 {% with historicdate=building_or_hd_data|index:1 %}
                 {% with hd_year=building_or_hd_data|index:2 %}
-                <div class="content-col hd-col" style="background-color: #{{ era_struct.color_code }}">
-                    <b>{{ hd_year }}</b><br>
-                    {{ historicdate.title }}
-                </div>
-                <div class="content-col line-col">
-                    <div class="hd-line" style="background-color: #{{ era_struct.color_code }}">
+                <div class="col-md-2">
+                    <div class="row">
+                        <b>{{ hd_year }}</b>
                     </div>
-                    <div class="diamond" style="background-color: #{{ era_struct.color_code }}">
-                    </div>
-                    <div class="hd-line" style="background-color: #{{ era_struct.color_code }}">
+                    <div class="row hd-middle horizontal-line" style="background-color: #{{ era_struct.color_code }}"></div>
+                    <div class="row hd-text">
+                        {{ historicdate.title }}
                     </div>
                 </div>
-                <div class="content-col name-col">
-
+                <div class="col-md-2 no-padding">
+                    <div class="centered">
+                        <div class="hd-line-top" style="background-color: #{{ era_struct.color_code }}">
+                        </div>
+                    </div>
+                    <div class="row-no-margin centered">
+                        <div class="col-md-6 horizontal-line" style="background-color: #{{ era_struct.color_code }}">
+                        </div>
+                        <div class="col-md-1 no-padding centered-no-height">
+                            <div class="diamond" style="background-color: #{{ era_struct.color_code }}">
+                            </div>
+                        </div>
+                        <div class="col-md-5"></div>
+                    </div>
+                    <div class="centered">
+                        <div class="hd-line" style="background-color: #{{ era_struct.color_code }}">
+                        </div>
+                    </div>
                 </div>
-                <div class="content-col pic-col">
-
+                <div class="col-md-2">
                 </div>
-                <div class="content-col pic-col">
-
+                <div class="col-md-3">
+                </div>
+                <div class="col-md-3">
                 </div>
                 {% endwith %}
                 {% endwith %}
@@ -151,22 +172,20 @@
             {% endfor %}
             <!-- End of era: Gradient -->
             {% if not forloop.last %}
-            <div class="row row-content">
-                <div class="content-col hd-col">
-
+            <div class="row">
+                <div class="col-md-2">
                 </div>
-                <div class="content-col line-col">
-                    <div class="gradient-line" style="background-image: linear-gradient(to bottom, #{{ era_struct.color_code }} 0%, #{{ nextcolor }} 100%);">
+                <div class="col-md-2">
+                    <div class="centered" style="width: 100% !important;">
+                        <div class="gradient-line" style="background-image: linear-gradient(to bottom, #{{ era_struct.color_code }} 0%, #{{ nextcolor }} 100%);">
+                        </div>
                     </div>
                 </div>
-                <div class="content-col name-col">
-
+                <div class="col-md-2">
                 </div>
-                <div class="content-col pic-col">
-
+                <div class="col-md-3">
                 </div>
-                <div class="content-col pic-col">
-
+                <div class="col-md-3">
                 </div>
             </div>
             {% endif %}
