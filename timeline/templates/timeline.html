@@ -38,13 +38,16 @@
         </div>
     </div>
 
+    <!-- Get 'back to top' button -->
+    <a href="" class="back-to-top font-bebas-neue" role="button"><h4 class="m-0">«</h4></a>
+
     <!-- Create index -->
     <div class="d-flex justify-content-center index-o index-hide" id="index-open">
         <div class="index-open">
             <!-- Index header -->
             <div class="row row-no-margin index-header" onclick='hideIndex("index-open","index-close")'>
-                <div class="col"><h4>Legende</h4></div>
-                <div class="d-flex justify-content-center index-button col-2" id="index-button"><h4>»</h4></div>
+                <div class="col font-bebas-neue"><h4>Legende</h4></div>
+                <div class="d-flex justify-content-center index-button col-2 font-bebas-neue" id="index-button"><h4>»</h4></div>
             </div>
             <!-- Index body with all eras -->
             <ul class="list-group">
@@ -137,7 +140,7 @@
                 </div>
                 {% else %}
                 {% endif %}
-                <div class="col-md-3 no-padding overlapping" style="padding-right: 20px;">
+                <div class="col-md-3 no-padding overlapping">
                     <!-- test if image is present, or default should be used -->
                     {% if not building_thumbnail == None %}
                     <a class="img d-flex align-items-center justify-content-center" href="{% url 'details_page:detailed' building_id=building.id %}"><img class="thumbnail mh-100 mw-100" src="/media/{{ building_thumbnail.picture }}"></a>
