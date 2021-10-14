@@ -94,10 +94,12 @@
     Styling of the 'back to top' button
  */
 .back-to-top {
-    font-size: 1.5rem !important;
+    color: #CAA36E !important;
+    background-color: #1F1F1F;
     font-weight: 700 !important;
-    border: solid 2px !important;
     position: fixed;
     bottom: 20px;
     left: 20px;
+    padding: 0 11px 6px 11px;
+    transform: rotate(90deg);
 }

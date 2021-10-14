@@ -38,7 +38,7 @@
 .index-header {
     cursor: pointer;
     width: 100%;
-    color: #F9EAD8;
+    color: #CAA36E;
 }
 
 .index-header-close {
@@ -147,6 +147,7 @@
 
 /* To realise the overlapping of pictures, set a negative margin to the thumbnail divs */
 .overlapping {
+    padding-right: 20px !important;
     margin-top: -2%;
     margin-bottom: -2%;
     padding-right: 15px !important;
