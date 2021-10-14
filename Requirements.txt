@@ -5,3 +5,4 @@ selenium
 model-bakery
 Pillow
 django-cas-client
+django-mathfilters

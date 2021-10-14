@@ -82,6 +82,7 @@
 
 /* Font for the era year */
 .era-year {
+    font-size: 15px;
     text-align: center;
     margin-top: -25px;
 }
@@ -91,6 +92,11 @@
     background-color: #F9EAD8;
     text-align: center;
     height: 36%;
+}
+
+/* Style name texts properties */
+.name-text {
+    font-size: 16px;
 }
 
 /* Set the width of the main (time)line */
@@ -136,7 +142,7 @@
 
 /* To not screw up the horizontal lines, set fixed height to the texts above and below the lines */
 .fixed-height {
-    height: 30px !important;
+    height: 30px;
 }
 
 /* To realise the overlapping of pictures, set a negative margin to the thumbnail divs */
@@ -144,6 +150,7 @@
     padding-right: 20px !important;
     margin-top: -2%;
     margin-bottom: -2%;
+    padding-right: 15px !important;
 }
 
 .img {
@@ -156,11 +163,6 @@
 .hd-line {
     height: 100%;
     width: 4px;
-}
-
-/* Helper: Add to everything where padding is not needed */
-.no-padding {
-    padding: 0;
 }
 
 /* Helps to center flexbox objects horizontally */
@@ -191,7 +193,115 @@
     transform: rotate(0.125turn);
 }
 
+/*============================================================================*/
+/* Mobile design */
 
+/* Show the pc-design per default */
+.pc-design {
+    display: inherit !important;
+}
+
+/* Hide the mobile design per default */
+.mobile-design {
+    display: none !important;
+}
+
+@media screen and (max-width: 1100px) {
+    /* What to to if it is mobile design */
+
+    /* hide the pc-design */
+    .pc-design {
+        display: none !important;
+    }
+
+    /* show the mobile design */
+    .mobile-design {
+        display: inherit !important;
+    }
+
+
+    /* set other font specs for eta title and year */
+    .era-title {
+        font-size: 48px;
+        text-align: left;
+    }
+    .era-year {
+        margin-top: -20px;
+        font-size: 10px;
+        text-align: left;
+    }
+
+    /* Make all lines smaller, 2 instead of 4 px */
+    .line {
+        width: 2px;
+    }
+    .horizontal-line {
+        height: 2px;
+        width: 103%;
+    }
+    .pic-line {
+        height: 2px;
+    }
+    .gradient-line {
+        width: 2px;
+        height: 30px;
+    }
+    .hd-line {
+        height: 160%;
+        width: 2px;
+    }
+    .hd-line-top {
+        height: 70%;
+        width: 2px;
+    }
+
+    /* Set font size of timeline years smaller */
+    .building-year {
+        height: 40%;
+        font-size: 11px;
+    }
+
+    /* Make building names font smaller */
+    .name-text {
+        font-size: 13px;
+    }
+
+    /* Update fixed height, to not see much more spaces because of smaller text */
+    .fixed-height {
+        height: 20px;
+    }
+
+    /* Text will now consume more height, so make lines smaller */
+    .one-third-height {
+        height: 30%;
+    }
+
+    /* Now image overlapping is not needed, actually space the images because they are all on one col now */
+    .overlapping {
+        margin-top: 1.5%;
+        margin-bottom: 1.5%;
+    }
+
+    /* Fix diamond size */
+    .diamond-container {
+        height: 15px;
+        width: 15px;
+        margin-top: 2px;
+        margin-left: 15px;
+        margin-right: -5px;
+    }
+    .diamond {
+        height: 10px;
+        width: 10px;
+    }
+
+    /* Correct line positing for historic dates */
+    .hd-line-indent {
+        margin-top: 6px;
+        margin-right: 10px;
+    }
+
+}
 
 
 
