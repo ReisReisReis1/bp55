@@ -44,7 +44,7 @@
         </div>
     </div>
 
-    <div class="timeline-background-color">
+    <div class="timeline-background-color pc-design">
         <div class="container timeline-container">
             <!-- Cases we need: Era beginning (Era title, era year), Building on right, " on left,
             historic date, and gradient (at the end of eras) -->
@@ -55,7 +55,7 @@
             {% with nextcolor=era_buildinglist|index:2 %}
             <div class="row" id="{{ era_name }}">
                 <!-- Instead of 5, use 2 cols, to be able to make title bigger -->
-                <div class="col-md-6 era-title-col">
+                <div class="col-sm-6">
                     <div style="color:#{{ era_struct.color_code }};">
                         <h2 class="era-title">{{ era_name }}</h2>
                     </div>
@@ -65,7 +65,7 @@
                     </div>
                     {% endif %}
                 </div>
-                <div class="col-md-6">
+                <div class="col-sm-6">
                 </div>
             </div>
             {% for building_or_hd_data in building_list %}
@@ -76,9 +76,9 @@
                 {% with building=building_or_hd_data|index:1 %}
                 {% with building_year=building_or_hd_data|index:2 %}
                 {% with building_thumbnail=building_or_hd_data|index:3 %}
-                <div class="col-md-2">
+                <div class="col-sm-2">
                 </div>
-                <div class="col-md-2">
+                <div class="col-sm-2">
                     <div class="row-no-margin centered one-third-height">
                         <div class="line" style="background-color: #{{ era_struct.color_code }}">
                         </div>
@@ -91,9 +91,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-2 no-padding align-self-center">
-                    <div class="fixed-height break-words">
-                        {{ building.name }}
+                <div class="col-sm-2 p-0 align-self-center">
+                    <div class="fixed-height name-text break-words">
+                        <b>{{ building.name }}</b>
                     </div>
                     <div class="pic-line" style="background-color:#{{ era_struct.color_code }};">
                     </div>
@@ -105,11 +105,11 @@
                 {% cycle "right" "left" as side silent %}
                 <!-- if right, insert div bevor... -->
                 {% if side == "right" %}
-                <div class="col-md-3 no-padding align-self-center pic-line" style="background-color: #{{ era_struct.color_code }}">
+                <div class="col-sm-3 p-0 align-self-center pic-line" style="background-color: #{{ era_struct.color_code }}">
                 </div>
                 {% else %}
                 {% endif %}
-                <div class="col-md-3 no-padding overlapping">
+                <div class="col-sm-3 p-0 overlapping">
                     <!-- test if image is present, or default should be used -->
                     {% if not building_thumbnail == None %}
                     <a class="img" href="{% url 'details_page:detailed' building_id=building.id %}"><img class="thumbnail" src="/media/{{ building_thumbnail.picture }}" style="width: 100%;"></a>
@@ -120,7 +120,7 @@
                 <!-- ... else after the pic div -->
                 {% if side == "right"%}
                 {% else %}
-                <div class="col-md-3">
+                <div class="col-sm-3">
                 </div>
                 {% endif %}
                 {% endwith %}
@@ -132,39 +132,39 @@
             <!-- It is a historic date -->
                 {% with historicdate=building_or_hd_data|index:1 %}
                 {% with hd_year=building_or_hd_data|index:2 %}
-                <div class="col-md-2">
-                    <div class="row fixed-height">
+                <div class="col-sm-2">
+                    <div class="row name-text fixed-height">
                         <b>{{ hd_year }}</b>
                     </div>
                     <div class="row hd-middle horizontal-line" style="background-color: #{{ era_struct.color_code }}"></div>
-                    <div class="row break-words hd-text fixed-height">
+                    <div class="row break-words name-text hd-text fixed-height">
                         {{ historicdate.title }}
                     </div>
                 </div>
-                <div class="col-md-2 no-padding">
+                <div class="col-sm-2 p-0">
                     <div class="centered one-third-height">
                         <div class="hd-line-top" style="background-color: #{{ era_struct.color_code }}">
                         </div>
                     </div>
                     <div class="row-no-margin centered one-third-height">
-                        <div class="col-md-6 horizontal-line" style="background-color: #{{ era_struct.color_code }}">
+                        <div class="col-sm-6 horizontal-line" style="background-color: #{{ era_struct.color_code }}">
                         </div>
-                        <div class="col-md-1 no-padding centered diamond-container">
+                        <div class="col-sm-1 p-0 centered diamond-container">
                             <div class="diamond" style="background-color: #{{ era_struct.color_code }}">
                             </div>
                         </div>
-                        <div class="col-md-5"></div>
+                        <div class="col-sm-5"></div>
                     </div>
                     <div class="centered one-third-height">
                         <div class="hd-line" style="background-color: #{{ era_struct.color_code }}">
                         </div>
                     </div>
                 </div>
-                <div class="col-md-2">
+                <div class="col-sm-2">
                 </div>
-                <div class="col-md-3">
+                <div class="col-sm-3">
                 </div>
-                <div class="col-md-3">
+                <div class="col-sm-3">
                 </div>
                 {% endwith %}
                 {% endwith %}
@@ -175,19 +175,149 @@
             <!-- End of era: Gradient -->
             {% if not forloop.last %}
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-sm-2">
                 </div>
-                <div class="col-md-2">
+                <div class="col-sm-2">
                     <div class="centered" style="width: 100% !important;">
                         <div class="gradient-line" style="background-image: linear-gradient(to bottom, #{{ era_struct.color_code }} 0%, #{{ nextcolor }} 100%);">
                         </div>
                     </div>
                 </div>
-                <div class="col-md-2">
+                <div class="col-sm-2">
                 </div>
-                <div class="col-md-3">
+                <div class="col-sm-3">
                 </div>
-                <div class="col-md-3">
+                <div class="col-sm-3">
+                </div>
+            </div>
+            {% endif %}
+            {% endwith %}
+            {% endwith %}
+            {% endwith %}
+            {% endfor %}
+        </div>
+    </div>
+
+
+    <!-- Mobile Design -->
+    <div class="mobile-design timeline-background-color">
+        <div class="container timeline-container">
+            <!-- Cases we need: Era beginning (Era title, era year), Building on right, " on left,
+            historic date, and gradient (at the end of eras) -->
+            {% for era_name,era_buildinglist in Eras_Buildings.items %}
+            <!-- Define some more useful names out of the data structures -->
+            {% with era_struct=era_buildinglist|first %}
+            {% with building_list=era_buildinglist|index:1 %}
+            {% with nextcolor=era_buildinglist|index:2 %}
+            <div class="row" id="{{ era_name }}">
+                <!-- Instead of 5, use 2 cols, to be able to make title bigger -->
+                <div class="col-sm-12">
+                    <div style="color:#{{ era_struct.color_code }};">
+                        <h2 class="era-title">{{ era_name }}</h2>
+                    </div>
+                    {% if not forloop.last %}
+                    <div class="era-year" style="color:#{{ era_struct.color_code }};">
+                        <b>{{ era_struct.get_year_as_str }}</b>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            {% for building_or_hd_data in building_list %}
+            {% with is_building=building_or_hd_data|first %}
+            {% if is_building %}
+            <!-- It is a building -->
+            <div class="row">
+                {% with building=building_or_hd_data|index:1 %}
+                {% with building_year=building_or_hd_data|index:2 %}
+                {% with building_thumbnail=building_or_hd_data|index:3 %}
+                <div class="col-3">
+                    <div class="row-no-margin centered one-third-height">
+                        <div class="line" style="background-color: #{{ era_struct.color_code }}">
+                        </div>
+                    </div>
+                    <div class="row-no-margin building-year" style="color: #{{ era_struct.color_code }}">
+                        <b>{{ building_year }}</b>
+                    </div>
+                    <div class="row-no-margin centered one-third-height">
+                        <div class="line" style="background-color: #{{ era_struct.color_code }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-5 p-0 align-self-center">
+                    <div class="fixed-height name-text break-words">
+                        <b>{{ building.name }}</b>
+                    </div>
+                    <div class="pic-line" style="background-color:#{{ era_struct.color_code }};">
+                    </div>
+                    <div class="fixed-height">
+
+                    </div>
+                </div>
+                <!-- decide whether pic has to be in 4th or 5th col -->
+                <div class="col-4 p-0 overlapping">
+                    <!-- test if image is present, or default should be used -->
+                    {% if not building_thumbnail == None %}
+                    <a class="img" href="{% url 'details_page:detailed' building_id=building.id %}"><img class="thumbnail" src="/media/{{ building_thumbnail.picture }}" style="width: 100%;"></a>
+                    {% else %}
+                    <a class="img" href="{% url 'details_page:detailed' building_id=building.id %}"><img class="thumbnail" src="{% static 'default_image.png' %}" style="width: 100%;"></a>
+                    {% endif %}
+                </div>
+                {% endwith %}
+                {% endwith %}
+                {% endwith %}
+            </div>
+            {% else %}
+            <div class="row">
+            <!-- It is a historic date -->
+                {% with historicdate=building_or_hd_data|index:1 %}
+                {% with hd_year=building_or_hd_data|index:2 %}
+                <div class="col-3 p-0">
+                    <div class="centered one-third-height">
+                        <div class="hd-line-top" style="background-color: #{{ era_struct.color_code }}">
+                        </div>
+                    </div>
+                    <div class="row-no-margin centered one-third-height">
+                        <div class="col-5"></div>
+                        <div class="col-1 p-0 centered diamond-container">
+                            <div class="diamond" style="background-color: #{{ era_struct.color_code }}">
+                            </div>
+                        </div>
+                        <div class="col-6 horizontal-line hd-line-indent" style="background-color: #{{ era_struct.color_code }}">
+                        </div>
+                    </div>
+                    <div class="centered one-third-height">
+                        <div class="hd-line" style="background-color: #{{ era_struct.color_code }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-9">
+                    <div class="row name-text fixed-height">
+                        <b>{{ hd_year }}</b>
+                    </div>
+                    <div class="row hd-middle horizontal-line" style="background-color: #{{ era_struct.color_code }}"></div>
+                    <div class="row name-text break-words hd-text fixed-height">
+                        {{ historicdate.title }}
+                    </div>
+                </div>
+                {% endwith %}
+                {% endwith %}
+            </div>
+            {%endif%}
+            {% endwith %}
+            {% endfor %}
+            <!-- End of era: Gradient -->
+            {% if not forloop.last %}
+            <div class="row">
+                <div class="col-3">
+                    <div class="centered" style="width: 100% !important;">
+                        <div class="gradient-line" style="background-image: linear-gradient(to bottom, #{{ era_struct.color_code }} 0%, #{{ nextcolor }} 100%);">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-5">
+                </div>
+                <div class="col-4">
                 </div>
             </div>
             {% endif %}
