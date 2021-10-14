@@ -1,5 +1,6 @@
 {% load static %}
 {% load bootstrap4 %}
+{% load mathfilters %}
 
 <!DOCTYPE html>
 <html>
@@ -7,11 +8,66 @@
     {% include 'default_head.html' %}
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="{% static 'search.css' %}">
+    <title>Suche</title>
 </head>
 <body>
     {% include './header.html' %}
 
-    <a id="color-btn" href="" class="btn btn-lg back-to-top" role="button">∧</a>
+    <div class="subheader" style="background: url('{% static 'start-head-background.png' %}');">
+        <div class="container h-100 d-flex align-items-center justify-content-center">
+            <h1 class="subheader-text">Suche:&nbsp; {{ Active_Filter.search_request }}</h1>
+        </div>
+    </div>
+
+    <div class="search-body">
+        <div class="container">
+            {% if Result|length == 0 %}
+                <!-- If no fitting elements are found -->
+                <div class="row justify-content-center">
+                    <h1 class="no-results">Keine passenden Ergebnisse gefunden</h1>
+                </div>
+            {% else %}
+                <!-- Iterate through returned results -->
+                {% for building,image in Result %}
+                    {% if forloop.counter0|divisibleby:4 or forloop.first %}
+                        {% if Result|length|sub:forloop.counter <= 3 %}
+                            <div class="row row-no-margin">
+                        {% else %}
+                            <div class="row row-result row-no-margin">
+                        {% endif %}
+                    {% endif %}
+                        <a href="{% url 'details_page:detailed' building_id=building.id %}" class="col-3">
+                            <div class="result-box">
+                                <!-- Add image of building -->
+                                {% if image == None %}
+                                    <!-- Add default image if building has no thumbnail -->
+                                    <div class="building-image d-flex align-items-center justify-content-center">
+                                        <img src="{% static "default_image.png"  %}" style="max-width: 100%; height: 100%">
+                                    </div>
+                                {% else %}
+                                    <!-- Add thumbnail of building -->
+                                    <div class="building-image d-flex align-items-center justify-content-center">
+                                        <img src="/media/{{ image.picture }}" class="mh-100 mw-100">
+                                    </div>
+                                {% endif %}
+
+                                <!-- Add name of building -->
+                                <h5 class="card-title font-benton-sans break-words" style="border-bottom-style: solid; border-bottom-width: 5px; border-bottom-color: #{{ building.era.color_code }}">{{ building.name }}</h5>
+                                {% if False and not building.description == None %}
+                                    <!-- Add building description -->
+                                    <p class="card-text" align="justify">{{ building.description }}</p>
+                                {% endif %}
+                            </div>
+                        </a>
+                    {% if forloop.counter|divisibleby:4 or forloop.last %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+    {% comment %}<a id="color-btn" href="" class="btn btn-lg back-to-top" role="button">∧</a>
 
     <div class="container container-page">
         {% if Result|length == 0 %}
@@ -60,7 +116,7 @@
                 </div>
             {% endif %}
         {% endfor %}
-    </div>
+    </div>{% endcomment %}
 
     {% include './footer.html' %}
     {% include './mobile_nav_footer.html' %}

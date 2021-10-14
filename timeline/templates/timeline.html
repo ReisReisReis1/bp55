@@ -9,25 +9,19 @@
     {% include 'default_head.html' %}
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="{% static 'timeline.css' %}">
+    <title>Zeitstrahl</title>
 
     <script>
         // Function to toggle hide the index button
         // button_id: ID of the toggle button
         // index_id: ID of the index
-        function hideIndex(button_id,index_id) {
-            // Get correct button element
-            var button = document.getElementById(button_id);
-
-            // Change icon
-            if (button.innerHTML === '∧') {
-                button.innerHTML = '∨';
-            }
-            else {
-                button.innerHTML = '∧';
-            }
-
+        function hideIndex(index_id,index_closed_id) {
             // Get index element
             var index = document.getElementById(index_id);
+            // Toggle hide index element
+            index.classList.toggle("index-hide")
+            // Get index element
+            index = document.getElementById(index_closed_id);
             // Toggle hide index element
             index.classList.toggle("index-hide")
         }
@@ -44,6 +38,42 @@
         </div>
     </div>
 
+    <!-- Create index -->
+    <div class="d-flex justify-content-center index-o index-hide" id="index-open">
+        <div class="index-open">
+            <!-- Index header -->
+            <div class="row row-no-margin index-header" onclick='hideIndex("index-open","index-close")'>
+                <div class="col"><h4>Legende</h4></div>
+                <div class="d-flex justify-content-center index-button col-2" id="index-button"><h4>»</h4></div>
+            </div>
+            <!-- Index body with all eras -->
+            <ul class="list-group">
+                <!-- Iterate through all Eras -->
+                {% for era,list in Eras_Buildings.items %}
+                    {% with era_model=list|first era_buildings=list|index:1 %}
+                        <!-- Create link to specific era -->
+                        <a href="#{{ era }}">
+                            <li class="index-item">
+                                <div class="row row-no-margin">
+                                    <div class="d-flex col-3">
+                                        <div class="index-icon" style="background-color: #{{ era_model.color_code }};"></div>
+                                    </div>
+                                    <div class="col p-0 font-calluna" style="color: #F9EAD8">{{ era }}</div>
+                                </div>
+                            </li>
+                        </a>
+                    {% endwith %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center index-c" id="index-close">
+        <div class="row row-no-margin index-close index-header" onclick='hideIndex("index-open","index-close")'>
+            <h4 class="m-0 index-header-close-icon">«</h4>
+            <h4 class="index-header-close">Legende</h4>
+        </div>
+    </div>
+
     <div class="timeline-background-color pc-design">
         <div class="container timeline-container">
             <!-- Cases we need: Era beginning (Era title, era year), Building on right, " on left,
@@ -57,10 +87,10 @@
                 <!-- Instead of 5, use 2 cols, to be able to make title bigger -->
                 <div class="col-sm-6">
                     <div style="color:#{{ era_struct.color_code }};">
-                        <h2 class="era-title">{{ era_name }}</h2>
+                        <h1 class="era-title">{{ era_name }}</h1>
                     </div>
                     {% if not forloop.last %}
-                    <div class="era-year" style="color:#{{ era_struct.color_code }};">
+                    <div class="era-year font-benton-sans" style="color:#{{ era_struct.color_code }};">
                         <b>{{ era_struct.get_year_as_str }}</b>
                     </div>
                     {% endif %}
@@ -83,7 +113,7 @@
                         <div class="line" style="background-color: #{{ era_struct.color_code }}">
                         </div>
                     </div>
-                    <div class="row-no-margin building-year" style="color: #{{ era_struct.color_code }}">
+                    <div class="row-no-margin building-year font-benton-sans" style="color: #{{ era_struct.color_code }}">
                         <b>{{ building_year }}</b>
                     </div>
                     <div class="row-no-margin centered one-third-height">
@@ -91,8 +121,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-2 p-0 align-self-center">
-                    <div class="fixed-height name-text break-words">
+                <div class="col-md-2 no-padding align-self-center">
+                    <div class="fixed-height name-text break-words font-benton-sans">
                         <b>{{ building.name }}</b>
                     </div>
                     <div class="pic-line" style="background-color:#{{ era_struct.color_code }};">
@@ -109,12 +139,12 @@
                 </div>
                 {% else %}
                 {% endif %}
-                <div class="col-sm-3 p-0 overlapping">
+                <div class="col-md-3 p-0 overlapping">
                     <!-- test if image is present, or default should be used -->
                     {% if not building_thumbnail == None %}
-                    <a class="img" href="{% url 'details_page:detailed' building_id=building.id %}"><img class="thumbnail" src="/media/{{ building_thumbnail.picture }}" style="width: 100%;"></a>
+                    <a class="img d-flex align-items-center justify-content-center" href="{% url 'details_page:detailed' building_id=building.id %}"><img class="thumbnail mh-100 mw-100" src="/media/{{ building_thumbnail.picture }}"></a>
                     {% else %}
-                    <a class="img" href="{% url 'details_page:detailed' building_id=building.id %}"><img class="thumbnail" src="{% static 'default_image.png' %}" style="width: 100%;"></a>
+                    <a class="img d-flex align-items-center justify-content-center" href="{% url 'details_page:detailed' building_id=building.id %}"><img class="thumbnail mh-100 mw-100" src="{% static 'default_image.png' %}"></a>
                     {% endif %}
                 </div>
                 <!-- ... else after the pic div -->
@@ -132,12 +162,12 @@
             <!-- It is a historic date -->
                 {% with historicdate=building_or_hd_data|index:1 %}
                 {% with hd_year=building_or_hd_data|index:2 %}
-                <div class="col-sm-2">
-                    <div class="row name-text fixed-height">
+                <div class="col-md-2">
+                    <div class="row name-text fixed-height font-benton-sans">
                         <b>{{ hd_year }}</b>
                     </div>
                     <div class="row hd-middle horizontal-line" style="background-color: #{{ era_struct.color_code }}"></div>
-                    <div class="row break-words name-text hd-text fixed-height">
+                    <div class="row break-words name-text hd-text fixed-height font-calluna">
                         {{ historicdate.title }}
                     </div>
                 </div>

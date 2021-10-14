@@ -9,7 +9,21 @@
 }
 
 .search-icon {
+    cursor: pointer;
     height: 12px;
+}
+
+.header-search-bar {
+    position: absolute;
+    width: 100%;
+}
+
+.header-search {
+    margin-right: -15px;
+}
+
+.header-search-hide {
+    display: none;
 }
 
 .menu-icon, .hamtogglebtn {

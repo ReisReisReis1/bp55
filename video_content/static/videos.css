@@ -101,6 +101,7 @@ to make clear that you can start the video by clicking */
 
 /* Style the more videos button */
 .more-videos-button {
+    outline:none !important;
     border: none;
     padding-top: 5px;
     padding-bottom: 5px;

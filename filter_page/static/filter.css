@@ -2,3 +2,102 @@
     CSS File for styling on the filter page
 =============================================================================*/
 
+.search-filters {
+    background-color: #1F1F1F;
+    padding-top: 14px;
+    padding-bottom: 14px;
+}
+
+.dropdown {
+    padding-bottom: 14px;
+}
+
+.dropdown-menu {
+    width: 90%;
+    scrollbar-color: #701F2C #F9EAD8;
+    background-color: #1F1F1F;
+    border-color: #F7F7F7;
+    color: #F7F7F7;
+}
+
+.dropdown-item {
+    cursor: pointer;
+    color: #F7F7F7;
+}
+
+.dropdown-item:hover {
+    background-color: #F9EAD8;
+    color: #1F1F1F;
+}
+
+.btn, .search-filters {
+    color: #F7F7F7;
+}
+
+.btn:hover {
+    color: #F9EAD8;
+    border-color: #F9EAD8;
+}
+
+.btn {
+    text-align: left;
+    border-style: solid;
+    border-radius: 5px;
+    border-color: #F7F7F7;
+    width: 100%;
+}
+
+/* Style symbol to make buttons to hide and unhide materials */
+.dash-symbol {
+    margin-top: 10px;
+    width: 8px;
+    height: 8px;
+    transform: scaleY(-1) scaleX(-1) translate(0px, 50%) rotate(0.125turn);
+    border: 2px solid #F2F2F2;
+    border-right-width: 0px;
+    border-bottom-width: 0px;
+}
+
+.btn-filter-parent, .btn-filter-parent:hover {
+    cursor: pointer;
+    color: #F7F7F7;
+    margin-right: 20px;
+}
+
+.btn-filter {
+    margin-right: 7px;
+    display: inherit;
+}
+
+.btn-filter-x {
+    font-size: 20px;
+    display: inherit;
+}
+
+
+.no-results {
+    text-align: center;
+    font-size: 84px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.search-body {
+    background-color: #F9EAD8;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.row-result {
+    margin-bottom: 67px;
+}
+
+.building-image {
+    height: 180px;
+    background-color: #e8d4bd;
+}
+
+.card-title {
+    color: black;
+    padding-bottom: 28px;
+}

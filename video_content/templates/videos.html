@@ -9,6 +9,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="{% static 'videos.css' %}">
+    <title>Staffeln</title>
 
     <script>
         // Function to toggle hide hidden videos
@@ -119,7 +120,6 @@
     <div class="videos-body">
         <!-- run through all eras -->
         {% for items in Era %}
-
             <!-- Set borders to see the eras color on the side -->
             <div class="container era-line" style="border-color: #{{ items.0.color_code }};">
                 <!-- Title for each section -->
@@ -134,8 +134,8 @@
                         </div>
                     </div>
                     <!-- The date for the era -->
-                    <div class="row">
-                        <p class="era-year" style="color:#{{ items.0.color_code }};">{{ items.0.get_year_as_str }}</p>
+                    <div class="row font-benton-sans">
+                        <p class="era-year" style="color:#{{ items.0.color_code }};"><b>{{ items.0.get_year_as_str }}</b></p>
                     </div>
                 </div>
                     <div class="row">
@@ -152,7 +152,7 @@
                             <!-- The Video Item -->
                             <div class="video-box">
                                 <!-- Video -->
-                                <div class="video-title break-words" style="border-color: #{{ items.0.color_code }};">
+                                <div class="video-title break-words font-benton-sans" style="border-color: #{{ items.0.color_code }};">
                                     <b>{{ video.title }}</b>
                                 </div>
                                 <img class="thumbnail" src="/media/{{ video.thumbnail }}" data-toggle="modal" data-target="#popup-{{ forloop.parentloop.counter }}-{{ forloop.counter }}" style="width: 100%">
@@ -164,8 +164,8 @@
                                     <div class="modal-content popup">
                                         <div class="modal-header popup-header align-items-center" style="border-color: #{{ items.0.color_code }};">
                                             <!-- Header row of popup -->
-                                            <h4 class="modal-title popup-title" style="overflow: hidden;"><b>{{ video.title }}</b></h4>
-                                            <button type="button" class="close popup-close-button" data-dismiss="modal">x</button>
+                                            <h4 class="modal-title popup-title font-benton-sans" style="overflow: hidden;"><b>{{ video.title }}</b></h4>
+                                            <button type="button" class="close popup-close-button font-benton-sans" data-dismiss="modal">&times;</button>
                                         </div>
                                         <div class="modal-body popup-body">
                                             <!-- Body of popup which contains the video -->
@@ -188,7 +188,7 @@
                         <!-- If there are no vids in an era, display it -->
                         {% empty %}
                             <div class="row row-video row-no-margin video-hide" id="video-hide-{{ forloop.counter }}">
-                                <b class="no-videos-text w-100 text-center video-title" style="border: 0px;">Keine Videos in dieser Epoche vorhanden.</b>
+                                <b class="no-videos-text w-100 text-center video-title font-benton-sans" style="border: 0px;">Keine Videos in dieser Epoche vorhanden.</b>
                             </div>
                         {% endfor %}
                     </div>
@@ -205,7 +205,7 @@
                         <!-- The Video Item -->
                         <div class="video-box">
                             <!-- Video -->
-                            <div class="video-title break-words" style="border-color: #{{ items.0.color_code }};">
+                            <div class="video-title break-words font-benton-sans" style="border-color: #{{ items.0.color_code }};">
                                 <b>{{ video.title }}</b>
                             </div>
                             <img class="thumbnail" src="/media/{{ video.thumbnail }}" style="width: 100%" onclick="showFullscreenVideo({{ forloop.parentloop.counter }},{{ forloop.counter }})">
@@ -236,7 +236,7 @@
                     <!-- If there are no vids in an era, display it -->
                     {% empty %}
                         <div class="row row-video row-no-margin video-hide" id="video-hide-{{ forloop.counter }}">
-                            <b class="no-videos-text w-100 text-center video-title" style="border: 0px;">Keine Videos in dieser Epoche vorhanden.</b>
+                            <b class="no-videos-text w-100 text-center video-title font-benton-sans" style="border: 0px;">Keine Videos in dieser Epoche vorhanden.</b>
                         </div>
                     {% endfor %}
                 </div>
@@ -244,12 +244,12 @@
 
                 </div>
             </div>
-            {% if not forloop.parentloop.last %}
-            <!-- Put an extra div in between the eras, exept after the last, to put the gradient there -->
-            <div class="container gradient-line" style="background-image: linear-gradient(to bottom, #{{ items.0.color_code }} 0%, #{{ items.2 }} 100%);">
-            </div>
-            {% else %}
 
+            {% if not forloop.last %}
+                <!-- Put an extra div in between the eras, exept after the last, to put the gradient there -->
+                <div class="container gradient-line" style="background-image: linear-gradient(to bottom, #{{ items.0.color_code }} 0%, #{{ items.2 }} 100%);">
+
+                </div>
             {% endif %}
         {% endfor %}
     </div>
