@@ -29,10 +29,10 @@ html, body {
 */
 
 /* Added in design revision */
-/* We use the 25% width, then extend it with marign to 1/3 of the page */
+/* We use the 25% width, then extend it with margin to 1/3 of the page */
 .row {
-    margin-right: -75px;
-    margin-left: -75px;
+    margin-right: -75px !important;
+    margin-left: -75px !important;
 }
 
 
@@ -43,7 +43,7 @@ html, body {
 .main_logo_container {
     padding-bottom: 50px;
     padding-top: 90px;
-    width: 27%;
+    width: 100%;
 }
 
 /* Style of the logo picture itself */
@@ -64,7 +64,7 @@ html, body {
  */
 .main_button_container {
     text-decoration: none !important;
-    width: 27%;
+    width: 100%;
 }
 
 /*Style the space row */
