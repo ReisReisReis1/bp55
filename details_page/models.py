@@ -713,6 +713,28 @@ class Building(models.Model):
             thumbnail = Picture.objects.filter(building=self.id, usable_as_thumbnail=True)[0]
         return thumbnail
 
+    def get_year_and_bc_ad_as_str(self):
+        """
+        Get the year as number, and the bc and ad as strings.
+        :return: a tuple of strings for year and bd/ad.
+        """
+        century = '. Jh.' if self.year_century else ''
+        circa = 'ca. ' if self.year_ca else ''
+        start = ''
+        bc_ad = ''
+        end = ''
+        if self.year_from is not None:
+            year_from = str(self.year_from)
+            # default n.Chr.
+            start = circa + year_from + century
+            bc_ad = ' ' + str(
+                self.year_from_BC_or_AD) if self.year_from_BC_or_AD is not None else 'v.Chr.'
+            if self.year_to is not None:
+                year_to = str(self.year_to)
+                # default n.Chr.
+                end = ' - ' + circa + year_to + century
+        return start+end, bc_ad
+
 
 class Blueprint(models.Model):
     # pylint : disable = too-few-public-methods

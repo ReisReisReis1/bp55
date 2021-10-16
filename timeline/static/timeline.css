@@ -87,16 +87,26 @@
     margin-top: -25px;
 }
 
-/* Building date text properties */
-.building-year {
+/* New Building year */
+.building-year-only {
     background-color: #F9EAD8;
     text-align: center;
-    height: 36%;
+    height: 30%;
+    font-size: 24px;
+}
+.building-bcad-only {
+    background-color: #F9EAD8;
+    text-align: center;
+    font-size: 10px;
+    margin-top:-10px;
+    margin-bottom:10px;
+    height: 6%;
 }
 
 /* Style name texts properties */
 .name-text {
     font-size: 16px;
+    padding-right: 10px;
 }
 
 /* Set the width of the main (time)line */
@@ -255,10 +265,19 @@
         width: 2px;
     }
 
-    /* Set font size of timeline years smaller */
-    .building-year {
-        height: 40%;
-        font-size: 11px;
+    /* New Building year */
+    .building-year-only {
+        background-color: #F9EAD8;
+        text-align: center;
+        height: 30%;
+        font-size: 12px;
+    }
+    .building-bcad-only {
+        background-color: #F9EAD8;
+        text-align: center;
+        font-size: 7px;
+        margin-top: -7px;
+        height: 6%;
     }
 
     /* Make building names font smaller */
