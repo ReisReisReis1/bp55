@@ -45,9 +45,10 @@ def sorted_eras_with_buildings(items):
                 # Building tupel
                 if isinstance(item, Building):
                     items_era_sorted.append(
-                        (True, item, item.get_year_as_str(), item.get_thumbnail()))
+                        (True, item, item.get_thumbnail(),
+                         item.get_year_and_bc_ad_as_str()[0], item.get_year_and_bc_ad_as_str()[1]))
                 else:
-                    items_era_sorted.append((False, item, item.get_year_as_str(), None))
+                    items_era_sorted.append((False, item, item.get_year_as_str(), None, None))
         nextcolor = "None"
         if i != len(era_dict)-1:
             nextcolor = list(era_dict.values())[i+1].color_code
