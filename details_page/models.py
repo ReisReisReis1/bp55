@@ -76,6 +76,7 @@ class Era(models.Model):
                                           choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")],
                                           default="v.Chr.",
                                           null=True, blank=True)
+    year_from_ca = models.BooleanField(verbose_name="Anfangsdatum ca.?", default=False)
     year_to = models.PositiveIntegerField(verbose_name='Enddatum',
                                           help_text="Jahr des Endes der Epoche eingeben.",
                                           blank=True, null=True)
@@ -84,6 +85,7 @@ class Era(models.Model):
                                         choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")],
                                         default="v.Chr.",
                                         null=True, blank=True)
+    year_to_ca = models.BooleanField(verbose_name="Enddatum ca.?", default=False)
     visible_on_video_page = models.BooleanField(verbose_name='Sichtbar auf Staffelseite?',
                                                 default=True, help_text="""Angeben ob die Epoche
                                                 auf der 'Staffeln' Seite sichtbar sein soll.""")
@@ -137,11 +139,16 @@ class Era(models.Model):
             bc_ad_from = ' ' + str(
                 self.year_from_BC_or_AD) if self.year_from is not None else 'v.Chr.'
             start = year_from + bc_ad_from
+            if self.year_from_ca:
+                start = "ca. " + start
             if self.year_to is not None:
                 year_to = str(self.year_to)
                 bc_ad_to = ' ' + str(
                     self.year_to_BC_or_AD) if self.year_to_BC_or_AD is not None else 'v.Chr.'
-                end = ' - ' + year_to + bc_ad_to
+                end = year_to + bc_ad_to
+                if self.year_to_ca:
+                    end = "ca. " + end
+                end = ' - ' + end
 
         return start + end
 
