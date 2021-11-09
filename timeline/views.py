@@ -7,6 +7,7 @@ from details_page.models import Building, Era
 from start.views import login_required
 from timeline.models import HistoricDate
 from impressum.views import get_course_link
+from announcements.views import get_announcements
 
 
 def sorted_eras_with_buildings(items):
@@ -79,6 +80,7 @@ def timeline(request):
     context = {
         'Eras_Buildings': sorted_eras_with_buildings(items),
         'Kurs_Link': get_course_link(),
+        'announcements': get_announcements(),
     }
 
     return render(request, 'timeline.html', context)

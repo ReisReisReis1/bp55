@@ -7,6 +7,7 @@ from django.http import HttpResponseRedirect
 # pylint: disable = import-error, no-name-in-module
 from video_content.models import Video
 from impressum.views import get_course_link
+from announcements.views import get_announcements
 
 
 def login_required(func):
@@ -46,5 +47,6 @@ def start(request):
     context = {
         'Video': video,
         'Kurs_Link': get_course_link(),
+        'announcements': get_announcements(),
     }
     return render(request, 'start.html', context)

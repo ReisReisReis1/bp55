@@ -1,0 +1,30 @@
+
+.announcement-bar {
+    height: 50px;
+}
+
+.warning-announce-color {
+    background-color: #B43B44;
+}
+
+.announce-color{
+    background-color: #2F4B33;
+}
+
+.x-button {
+    text-align: right;
+    outline:none !important;
+    border: none;
+    height: 50px;
+    background-color: transparent;
+}
+
+.announce-text {
+    font-size: 17px;
+    color: #ffffff;
+    line-height: 50px;
+}
+
+.hide {
+    display: none !important;
+}

@@ -7,6 +7,7 @@ from django.shortcuts import render
 from details_page.models import Era
 from start.views import login_required
 from impressum.views import get_course_link
+from announcements.views import get_announcements
 from .models import Video
 
 
@@ -40,5 +41,6 @@ def display(request):
     context = {
         'Era': eras_context,
         'Kurs_Link': get_course_link(),
+        'announcements': get_announcements(),
     }
     return render(request, 'videos.html', context)
