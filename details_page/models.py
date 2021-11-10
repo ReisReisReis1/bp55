@@ -60,9 +60,10 @@ class Era(models.Model):
         verbose_name_plural = 'Epochen'
 
     name = models.CharField(verbose_name='Name', max_length=100, choices=[
-        ('Bronzezeit', 'Bronzezeit'), ('Frühe Eisenzeit', 'Frühe Eisenzeit'),
+        ('Mykenische Zeit', 'Mykenische Zeit'), ('Frühe Eisenzeit', 'Frühe Eisenzeit'),
         ('Archaik', 'Archaik'),
         ('Klassik', 'Klassik'), ('Hellenismus', 'Hellenismus'),
+        ('römische Republik', 'römische Republik'),
         ('Kaiserzeit', 'Kaiserzeit'),
         ('Spätantike', 'Spätantike'),
         ('Rezeption', 'Rezeption'),

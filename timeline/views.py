@@ -22,10 +22,20 @@ def sorted_eras_with_buildings(items):
     # Getting all existing eras
     all_eras = Era.objects.all()
     # Ordering the before and after the birth and christ
-    all_eras_vchr = all_eras.filter(year_from_BC_or_AD="v.Chr.").order_by('-year_from')
+    all_eras_vchr_db = all_eras.filter(year_from_BC_or_AD="v.Chr.").order_by('-year_from')
     all_eras_nchr = all_eras.filter(year_from_BC_or_AD="n.Chr.").order_by('year_from')
     # first making a list of dicts with name as key and the struct as value
-    all_eras_vchr = [{i.name: i} for i in all_eras_vchr]
+    all_eras_vchr = []
+    # This era name will be combined with "Hellenismus", and filtered out as era by it self for the
+    # timeline.
+    rome_overlap_name = "römische Republik"
+    for era in all_eras_vchr_db:
+        if era.name == "Hellenismus":
+            all_eras_vchr.append({era.name+" / "+rome_overlap_name: era})
+        elif era.name == rome_overlap_name:
+            continue
+        else:
+            all_eras_vchr.append({era.name: era})
     all_eras_nchr = [{i.name: i} for i in all_eras_nchr]
     # merging the lists
     all_eras = all_eras_vchr + all_eras_nchr
