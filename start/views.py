@@ -6,7 +6,9 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 # pylint: disable = import-error, no-name-in-module
 from video_content.models import Video
+from .models import IntroTexts
 from impressum.views import get_course_link
+from announcements.views import get_announcements
 
 
 def login_required(func):
@@ -42,9 +44,24 @@ def start(request):
     :return: rendering the subpage based on start.html
     with a context variable to get the intro-video
     """
+    texts = IntroTexts.objects.all()
+    intro_text = ""
+    timeline_card_text = ""
+    buildings_card_text = ""
+    video_card_text = ""
+    if texts.first() is not None:
+        intro_text = texts.first().intro_text
+        timeline_card_text = texts.first().timeline_card_text
+        buildings_card_text = texts.first().buildings_card_text
+        video_card_text = texts.first().video_card_text
     video = Video.get_intro(Video)
     context = {
         'Video': video,
+        'intro_text': intro_text,
+        'timeline_card_text': timeline_card_text,
+        'buildings_card_text': buildings_card_text,
+        'video_card_text': video_card_text,
         'Kurs_Link': get_course_link(),
+        'announcements': get_announcements(),
     }
     return render(request, 'start.html', context)

@@ -6,6 +6,7 @@ from django.shortcuts import render
 # pylint: disable = import-error, relative-beyond-top-level, no-name-in-module
 from video_content.models import Timestamp
 from impressum.views import get_course_link
+from announcements.views import get_announcements
 from start.views import login_required
 from .models import Picture, Building, Blueprint
 
@@ -56,7 +57,8 @@ def detailed(request, building_id):
         'Bilder': Picture.get_picture_for_building(Picture, building_id),
         'Baupläne': Blueprint.get_blueprint_for_building(Blueprint, building_id),
         'Videos': Timestamp.get_timestamps_by_building(Timestamp, building_id),
-        'Kurs_Link': get_course_link()
+        'Kurs_Link': get_course_link(),
+        'announcements': get_announcements(),
     }
 
     return render(request, 'detailed.html', context)

@@ -7,6 +7,7 @@ from django.shortcuts import render
 from details_page.models import Building, Era
 from start.views import login_required
 from impressum.views import get_course_link
+from announcements.views import get_announcements
 
 
 def splitting(lst):
@@ -214,6 +215,7 @@ def display_building_filter(request):
         'Filter_Names': filter_names,
         'Active_Filter': dict(urls_parameters),
         'Kurs_Link': get_course_link(),
+        'announcements': get_announcements(),
     }
 
     return render(request, 'filter.html', context)

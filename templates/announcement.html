@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script>
+        function closeBanner(id) {
+            // Get the content by ID
+            var banner = document.getElementById("banner-hide-" + id)
+            // Toggle the class 'hide'
+            banner.classList.toggle("hide");
+        }
+    </script>
+</head>
+<body>
+{% for announcement in announcements %}
+    {% if announcement.title == "Wartungsarbeiten" %}
+    <div class="announcement-bar warning-announce-color" id="banner-hide-{{ announcement.pk }}">
+    {% else %}
+    <div class="announcement-bar announce-color" id="banner-hide-{{ announcement.pk }}">
+    {% endif %}
+        <div class="container h-100">
+            <div class="row p-0 h-100">
+                <div class="col-11 p-0 font-benton-sans announce-text">
+                    <b>{{ announcement.title }}:</b> {{ announcement.content }}
+                </div>
+                <div class="col-1 p-0">
+                    <button class="x-button float-right announce-text font-benton-sans" onclick="closeBanner({{ announcement.pk }})">
+                        X
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+</body>
+</html>

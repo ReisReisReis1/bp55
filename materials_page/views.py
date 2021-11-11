@@ -15,6 +15,7 @@ import zipfile
 import os
 from django.http import HttpResponse
 from impressum.views import get_course_link
+from announcements.views import get_announcements
 
 
 def get_categories_and_corresponding_files():
@@ -107,6 +108,7 @@ def material(request):
 
     context = {
         'Materials': materials_with_colors,
-        'Kurs_Link': get_course_link()
+        'Kurs_Link': get_course_link(),
+        'announcements': get_announcements(),
     }
     return render(request, "material.html", context)

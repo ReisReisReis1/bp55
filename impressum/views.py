@@ -5,6 +5,7 @@ Configurations of the Website subpages from the App: impressum
 from django.shortcuts import render
 # pylint: disable = import-error, relative-beyond-top-level
 from .models import Impressum
+from announcements.views import get_announcements
 
 
 def get_course_link():
@@ -27,6 +28,7 @@ def impressum(request):
     """
 
     context = {
-        'Kurs_Link': get_course_link()
+        'Kurs_Link': get_course_link(),
+        'announcements': get_announcements(),
     }
     return render(request, "impressum.html", context)
