@@ -16,6 +16,7 @@ import os
 from django.http import HttpResponse
 from impressum.views import get_course_link
 from announcements.views import get_announcements
+from analytics.views import register_visit
 
 
 def get_categories_and_corresponding_files():
@@ -42,7 +43,7 @@ def get_categories_and_corresponding_zip_files(request, category):
     """
     :return: the categories and HttpsResponse for the corresponding zip files in a dictionary
     """
-
+    register_visit(request, "Download Material .zip für Kategorie "+category)
     material_dict = get_categories_and_corresponding_files()
     # Get all material files of one category in a single list
     # Files (local path) to put in the .zip
@@ -87,7 +88,7 @@ def material(request):
     :return: rendering the subpage based on material.html
     with a context variable to get the characteristics
     """
-
+    register_visit(request, "Materialseite")
     # this code ist for adding colors to the materials
     # for visual difference, both colors will take turns
     colors = ["2F4B33", "B43B44"]

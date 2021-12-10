@@ -7,6 +7,7 @@ from django.shortcuts import render
 from video_content.models import Timestamp
 from impressum.views import get_course_link
 from announcements.views import get_announcements
+from analytics.views import register_visit
 from start.views import login_required
 from .models import Picture, Building, Blueprint
 
@@ -60,5 +61,9 @@ def detailed(request, building_id):
         'Kurs_Link': get_course_link(),
         'announcements': get_announcements(),
     }
+    name = context["Name"]
+    if len(name) > 60:
+        name = name[:55]+"..."
+    register_visit(request, "Detailseite für Gebäude "+name+" (ID: "+str(building_id)+")")
 
     return render(request, 'detailed.html', context)

@@ -1,0 +1,46 @@
+{% load static %}
+{% load bootstrap4 %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Analytics</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'analytics.css'%}">
+</head>
+<body>
+    <h1>Analyseseite</h1>
+    <table>
+        <tr>
+            <th>
+                Bezeichnung
+            </th>
+            <th>
+                Aufrufe
+            </th>
+            <th>
+                Monat
+            </th>
+            <th>
+                Jahr
+            </th>
+        </tr>
+        {% for entry in analytics %}
+            <tr>
+                <td>
+                    {{ entry.name }}
+                </td>
+                <td>
+                    {{ entry.visits }}
+                </td>
+                <td>
+                    {{ entry.month }}
+                </td>
+                <td>
+                    {{ entry.year }}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

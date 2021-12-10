@@ -8,6 +8,7 @@ from details_page.models import Era
 from start.views import login_required
 from impressum.views import get_course_link
 from announcements.views import get_announcements
+from analytics.views import register_visit
 from .models import Video
 
 
@@ -20,6 +21,7 @@ def display(request):
     :return: rendering the subpage based on videos.html
     with a context variable to get Videos sorted in eras
     """
+    register_visit(request, "Videoseite")
     # pylint: disable = no-member
     eras = Era.objects.filter(visible_on_video_page=True).exclude(year_from=None)
     eras = sorted(eras, key=lambda er_a: er_a.get_year_as_signed_int()[0])

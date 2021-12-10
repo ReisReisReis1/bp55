@@ -3,6 +3,7 @@ Configurations of the different viewable functions and subpages from the App: ho
 """
 
 from django.shortcuts import render
+from analytics.views import register_visit
 
 
 def index(request):
@@ -11,4 +12,5 @@ def index(request):
     :param request: url request to get subpage /
     :return: rendering the subpage based on index.html
     """
+    register_visit(request, "Loginseite")
     return render(request, 'home/index.html')

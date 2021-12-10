@@ -32,6 +32,7 @@ urlpatterns = [
     path('search/', include('search.urls')),
     path('materials_page/', include('materials_page.urls')),
     path('impressum/', include('impressum.urls')),
+    path('analytics/', include('analytics.urls')),
     # CAS SSO TU-Darmstadt:
     path('login/', cas.views.login, name='login'),
     path('logout/', cas.views.logout, name='logout'),

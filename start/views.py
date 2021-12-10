@@ -9,6 +9,7 @@ from video_content.models import Video
 from .models import IntroTexts
 from impressum.views import get_course_link
 from announcements.views import get_announcements
+from analytics.views import register_visit
 
 
 def login_required(func):
@@ -44,6 +45,7 @@ def start(request):
     :return: rendering the subpage based on start.html
     with a context variable to get the intro-video
     """
+    register_visit(request, "Introseite")
     texts = IntroTexts.objects.all()
     intro_text = ""
     timeline_card_text = ""

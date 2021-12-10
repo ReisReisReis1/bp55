@@ -6,6 +6,7 @@ from django.shortcuts import render
 # pylint: disable = import-error, relative-beyond-top-level
 from .models import Impressum
 from announcements.views import get_announcements
+from analytics.views import register_visit
 
 
 def get_course_link():
@@ -26,7 +27,7 @@ def impressum(request):
     :return: rendering the subpage based on impressum.html
     with a context variable to get the characteistics
     """
-
+    register_visit(request, "Impressum")
     context = {
         'Kurs_Link': get_course_link(),
         'announcements': get_announcements(),
