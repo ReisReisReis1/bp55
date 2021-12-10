@@ -1,22 +1,38 @@
+{% load static %}
+{% load bootstrap4 %}
+{% load announcement_filters %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'announcement.css'%}">
     <script>
         function closeBanner(id) {
             // Get the content by ID
             var banner = document.getElementById("banner-hide-" + id)
             // Toggle the class 'hide'
             banner.classList.toggle("hide");
+            // Update height for every other
+            for(var i = 1; i <= {{ announcements|length }}; i++){
+                if(i <= id){
+                    continue;
+                }
+                var banner = document.getElementById("banner-hide-" + i)
+                let top = banner.style.top.replace("px", "") - 50;
+                banner.style.top = top+"px";
+            }
         }
     </script>
 </head>
 <body>
 {% for announcement in announcements %}
     {% if announcement.title == "Wartungsarbeiten" %}
-    <div class="announcement-bar warning-announce-color" id="banner-hide-{{ announcement.pk }}">
+    <div class="announcement-bar warning-announce-color" id="banner-hide-{{ announcement.pk }}"
+         style="top: {{ forloop.counter0|multiply:'50' }}px;">
     {% else %}
-    <div class="announcement-bar announce-color" id="banner-hide-{{ announcement.pk }}">
+    <div class="announcement-bar announce-color" id="banner-hide-{{ announcement.pk }}"
+         style="top: {{ forloop.counter0|multiply:'50' }}px;">
     {% endif %}
         <div class="container h-100">
             <div class="row p-0 h-100">
