@@ -33,8 +33,8 @@ def analytics_view(request):
 
     sorted_raw = {}
 
-    #base_url = "https://ruinsandbeyond.architektur.tu-darmstadt.de/"
-    base_url = "http://127.0.01:8000/"
+    base_url = "https://ruinsandbeyond.architektur.tu-darmstadt.de/"
+    # for testing purposes: base_url = "http://127.0.01:8000/"
 
     pages_raw = filter(lambda a: a.site_url not in ("search", "download", "details_page"), analytics_raw)
     buildings_raw = filter(lambda a: a.site_url == "details_page", analytics_raw)
