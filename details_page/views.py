@@ -62,8 +62,8 @@ def detailed(request, building_id):
         'announcements': get_announcements(),
     }
     name = context["Name"]
-    if len(name) > 60:
-        name = name[:55]+"..."
-    register_visit(request, "Detailseite für Gebäude "+name+" (ID: "+str(building_id)+")")
+    if len(name) > 80:
+        name = name[:75]+"..."
+    register_visit(request, name+","+str(building_id), alter_url="details_page")
 
     return render(request, 'detailed.html', context)

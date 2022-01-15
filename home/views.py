@@ -12,5 +12,5 @@ def index(request):
     :param request: url request to get subpage /
     :return: rendering the subpage based on index.html
     """
-    register_visit(request, "Loginseite")
+    register_visit(request, "Loginseite", alter_url="")
     return render(request, 'home/index.html')

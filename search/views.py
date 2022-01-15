@@ -47,7 +47,7 @@ def search(request):
     }
     # register visit for analytics
     search_term = search_request
-    if len(search_term) > 80:
-        search_term = search_term[:75]+"..."
-    register_visit(request, "Suche: "+search_term)
+    if len(search_term) >= 100:
+        search_term = search_term[:95]+"..."
+    register_visit(request, search_term)
     return render(request, 'search.html', context)

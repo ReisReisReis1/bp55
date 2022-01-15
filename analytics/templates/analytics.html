@@ -4,43 +4,256 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% include 'default_head.html' %}
     <meta charset="UTF-8">
-    <title>Analytics</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'analytics.css'%}">
+    <title>Analyseseite</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'analytics.css' %}">
+    <!-- Add scripts to set/update the url parameters -->
+    <script>
+        // param order always has to be this: month first, then year.
+        // Function to add the month to URL
+        // month: The choosen month, which gets updated to the URL.
+        function setParameterMonth(month){
+            // Get current URL
+            var curr_url = location.href;
+            // Prepare parameter to fit our definitions
+            var param = 'month=' + month;
+            // If year is in params, safe it:
+            var year = '';
+            if (curr_url.includes('&year=')) {
+                year = '&year=' + curr_url.split('&year=')[1];
+            }
+            // Get rid of all parameters
+            if (curr_url.includes('?')) {
+                curr_url = curr_url.split('?')[0];
+            }
+            // Add parameter to URL
+            curr_url += '?'+ param + year;
+            // Set new URL and reload page
+            location.href = curr_url;
+        }
+        // Function to add the year to URL
+        // month: The choosen year, which gets updated to the URL.
+        function setParameterYear(year){
+            // Get current URL
+            var curr_url = location.href;
+            // Prepare parameter to fit our definitions
+            var param = 'year=' + year;
+            // Get rid of the year parameter
+            if (curr_url.includes('&')) {
+                curr_url = curr_url.split('&')[0];
+            }
+            // Add parameter to URL
+            curr_url += '&' + param;
+            // Set new URL and reload page
+            location.href = curr_url;
+        }
+    </script>
 </head>
 <body>
-    <h1>Analyseseite</h1>
-    <table>
-        <tr>
-            <th>
-                Bezeichnung
-            </th>
-            <th>
-                Aufrufe
-            </th>
-            <th>
-                Monat
-            </th>
-            <th>
-                Jahr
-            </th>
-        </tr>
-        {% for entry in analytics %}
-            <tr>
-                <td>
-                    {{ entry.name }}
-                </td>
-                <td>
-                    {{ entry.visits }}
-                </td>
-                <td>
-                    {{ entry.month }}
-                </td>
-                <td>
-                    {{ entry.year }}
-                </td>
-            </tr>
-        {% endfor %}
-    </table>
+
+    {% include './header.html' %}
+
+    {% include './announcement.html' %}
+
+    <div class="subheader" style="background: url('{% static 'materials-head-background.png' %}');">
+        <div class="container d-flex h-100 align-items-center justify-content-center">
+            <h1 class="subheader-text">ANALYSESEITE</h1>
+        </div>
+    </div>
+    <div class="analytics-content">
+        <div class="container-fluid m-0 dropdown-row">
+            <div class="container">
+                <div class="row">
+                    <div class="col-4 dropdown-text-color d-flex justify-content-center align-items-center">
+                        Monat und Jahr auswählen:
+                    </div>
+                    <!-- Add month dropdown button -->
+                    <div class="dropdown col-4 d-flex justify-content-center align-items-center">
+                        <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <!-- Name of Dropdown -->
+                            {{ month }}<div class="dash-symbol float-right"></div>
+                        </button>
+                        <!-- Add dropdown menus -->
+                        <div class="dropdown-menu pre-scrollable" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" onclick="setParameterMonth('1')">Januar</a>
+                            <a class="dropdown-item" onclick="setParameterMonth('2')">Februar</a>
+                            <a class="dropdown-item" onclick="setParameterMonth('3')">März</a>
+                            <a class="dropdown-item" onclick="setParameterMonth('4')">April</a>
+                            <a class="dropdown-item" onclick="setParameterMonth('5')">Mai</a>
+                            <a class="dropdown-item" onclick="setParameterMonth('6')">Juni</a>
+                            <a class="dropdown-item" onclick="setParameterMonth('7')">Juli</a>
+                            <a class="dropdown-item" onclick="setParameterMonth('8')">August</a>
+                            <a class="dropdown-item" onclick="setParameterMonth('9')">September</a>
+                            <a class="dropdown-item" onclick="setParameterMonth('10')">Oktober</a>
+                            <a class="dropdown-item" onclick="setParameterMonth('11')">November</a>
+                            <a class="dropdown-item" onclick="setParameterMonth('12')">Dezember</a>
+                        </div>
+                    </div>
+                    <!-- Add year dropdown button -->
+                    <div class="dropdown col-4 d-flex justify-content-center align-items-center">
+                        <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <!-- Name of Dropdown -->
+                            {{ year }}<div class="dash-symbol float-right"></div>
+                        </button>
+                        <!-- Add dropdown menus -->
+                        <div class="dropdown-menu pre-scrollable" aria-labelledby="dropdownMenuButton">
+                            {% for ps in possible_years %}
+                                <a class="dropdown-item" onclick="setParameterYear('{{ ps }}')">{{ ps }}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <!-- Explanation and hints for site use -->
+            <div class="hint">
+                <p><b>Einordnung und Nutzungshinweise:</b></p>
+                <p><ul>
+                    <li>Alle hier genannten Zahlen sind absolute Angaben. Es werden ausdrücklich keine Nutzer gezählt, sondern jeder Aufruf einzeln. Die tatsächliche Anzahl der Nutzer dürfte also um ein vielfaches kleiner sein, da jeder Nutzer wahrscheinlich sehr viele Aufrufe von Unterseiten, Gebäuden, usw. tätigt.</li>
+                    <li>Die Analyse kann (derzeit) nur Aktionen und Besuche erfassen, welche durch das Backend prozessiert werden. Aktionen und Besuche, welche ausschließlich im Frontend behandelt werden (z.B. Video- oder PDF-Aufrufe), werden nicht erfasst.</li>
+                    <li>Diese Seite ist nur Admins (Mitgliedern mit "Staff"-Status) zugänglich, und kann nicht betrachtet werden, wenn man sich nur ("normal") mit der TU-ID einloggt - ein Login mit Admin-Passwort (wie fürs Admin-Interface) ist erforderlich.</li>
+                    <li>Die gezeigten Aufrufzahlen sind jeweils absteigend sortiert (meist-besuchtes Element zuerst).</li>
+                    <li>Wähle Monat und Jahr oben im Dropdown Menü aus, um die entsprechende Erhebung des Monats zu betrachten.</li>
+                    <li>Die Verlinkungen führen jeweils direkt zu dem Element, das in der Zeile erfasst wurde. So kann man sich z.B. direkt selbst schnell das meist angesehene Gebäude anschauen. Diese öffnen sich in neuen Tabs, sodass die Analyseseite offen bleibt.</li>
+                </ul></p>
+            </div>
+            <!-- analytics for this month and year -->
+            <h2>Erhebung für {{ month }} {{ year }}:</h2>
+            <h3>Besuchszahlen der Unterseiten:</h3>
+            <p><b>Gesamtzahl: {{ pages_count }}.</b></p>
+            <table class="w-100">
+                <tr>
+                    <th>
+                        Unterseite
+                    </th>
+                    <th>
+                        Anzahl der Besuche
+                    </th>
+                    <th>
+                        Weiterleitung zu diesem Element (neuer Tab)
+                    </th>
+                </tr>
+                {% for page in pages %}
+                <tr>
+                    <td>
+                        {{ page.name }}
+                    </td>
+                    <td>
+                        {{ page.visits }}
+                    </td>
+                    <td>
+                        <a href="{{ page.site_url }}" target="_blank">{{ page.site_url }}</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td class="no-data" colspan="3"><i>Keine Daten vorhanden.</i></td>
+                </tr>
+                {% endfor %}
+            </table>
+            <h3>Besuchte Gebäude:</h3>
+            <p><b>Gesamtzahl: {{ buildings_count }}.</b></p>
+            <table class="w-100">
+                <tr>
+                    <th>
+                        Gebäude, ID
+                    </th>
+                    <th>
+                        Anzahl der Besuche
+                    </th>
+                    <th>
+                        Weiterleitung zu diesem Element (neuer Tab)
+                    </th>
+                </tr>
+                {% for building in buildings %}
+                <tr>
+                    <td>
+                        {{ building.name }}
+                    </td>
+                    <td>
+                        {{ building.visits }}
+                    </td>
+                    <td>
+                        <a href="{{ building.site_url }}" target="_blank">{{ building.site_url }}</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td class="no-data" colspan="3"><i>Keine Daten vorhanden.</i></td>
+                </tr>
+                {% endfor %}
+            </table>
+            <h3>Suchen:</h3>
+            <p><b>Gesamtzahl: {{ search_count }}.</b></p>
+            <table class="w-100">
+                <tr>
+                    <th>
+                        Suchbegriff
+                    </th>
+                    <th>
+                        Anzahl der Suchen
+                    </th>
+                    <th>
+                        Weiterleitung zu diesem Element (neuer Tab)
+                    </th>
+                </tr>
+                {% for term in search_terms %}
+                <tr>
+                    <td>
+                        {{ term.name }}
+                    </td>
+                    <td>
+                        {{ term.visits }}
+                    </td>
+                    <td>
+                        <a href="{{ term.site_url }}" target="_blank">{{ term.site_url }}</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td class="no-data" colspan="3"><i>Keine Daten vorhanden.</i></td>
+                </tr>
+                {% endfor %}
+            </table>
+            <h3>Downloads:</h3>
+            <p><b>Gesamtzahl: {{ download_count }}</b></p>
+            <table class="w-100">
+                <tr>
+                    <th>
+                        Material ZIP der Kategorie
+                    </th>
+                    <th>
+                        Anzahl der Downloads
+                    </th>
+                    <th>
+                        Weiterleitung zu diesem Element (neuer Tab)
+                    </th>
+                </tr>
+                {% for download in zip_downloads %}
+                <tr>
+                    <td>
+                        {{ download.name }}
+                    </td>
+                    <td>
+                        {{ download.visits }}
+                    </td>
+                    <td>
+                        <a href="{{ download.site_url }}" target="_blank">{{ download.site_url }}</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td class="no-data" colspan="3"><i>Keine Daten vorhanden.</i></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+    {% include './footer.html' %}
+    {% include './mobile_nav_footer.html' %}
+
 </body>
 </html>
