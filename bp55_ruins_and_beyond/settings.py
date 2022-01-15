@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'mathfilters',
     'cas',
     'announcements.apps.AnnouncementsConfig',
+    'analytics.apps.AnalyticsConfig',
     ]
 
 MIDDLEWARE = [

@@ -8,6 +8,7 @@ from details_page.models import Building
 from start.views import login_required
 from impressum.views import get_course_link
 from announcements.views import get_announcements
+from analytics.views import register_visit
 
 
 # Hier einkommentieren für SSO:
@@ -44,4 +45,9 @@ def search(request):
         'Kurs_Link': get_course_link(),
         'announcements': get_announcements(),
     }
+    # register visit for analytics
+    search_term = search_request
+    if len(search_term) >= 100:
+        search_term = search_term[:95]+"..."
+    register_visit(request, search_term)
     return render(request, 'search.html', context)

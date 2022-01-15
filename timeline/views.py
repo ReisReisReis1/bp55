@@ -8,6 +8,7 @@ from start.views import login_required
 from timeline.models import HistoricDate
 from impressum.views import get_course_link
 from announcements.views import get_announcements
+from analytics.views import register_visit
 
 
 def sorted_eras_with_buildings(items):
@@ -78,6 +79,7 @@ def timeline(request):
     :param request: url request to get subpage /timeline
     :return: rendering the subpage based on timeline.html
     """
+    register_visit(request, "Zeitachse")
     # get only buildings with dates set
     # pylint: disable = no-member
     buildings = Building.objects.all()
