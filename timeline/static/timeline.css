@@ -97,6 +97,7 @@
 /* Style name texts properties */
 .name-text {
     font-size: 16px;
+    line-height: 33px;
 }
 
 /* Set the width of the main (time)line */
@@ -150,7 +151,6 @@
     padding-right: 20px !important;
     margin-top: -2%;
     margin-bottom: -2%;
-    padding-right: 15px !important;
 }
 
 .img {

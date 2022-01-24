@@ -57,7 +57,7 @@
                         <!-- Create link to specific era -->
                         <a href="#{{ era }}">
                             <li class="index-item">
-                                <div class="row row-no-margin">
+                                <div class="row row-no-margin" onclick='hideIndex("index-open","index-close")'>
                                     <div class="d-flex col-3">
                                         <div class="index-icon" style="background-color: #{{ era_model.color_code }};"></div>
                                     </div>
@@ -116,7 +116,7 @@
                         <div class="line" style="background-color: #{{ era_struct.color_code }}">
                         </div>
                     </div>
-                    <div class="row-no-margin building-year font-benton-sans" style="color: #{{ era_struct.color_code }}">
+                    <div class="row-no-margin building-year font-benton-sans d-flex align-items-center justify-content-center" style="color: #{{ era_struct.color_code }}">
                         <b>{{ building_year }}</b>
                     </div>
                     <div class="row-no-margin centered one-third-height">
