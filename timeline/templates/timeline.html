@@ -32,6 +32,8 @@
 
     {% include './header.html' %}
 
+    {% include './announcement.html' %}
+
     <div class="subheader" style="background: url('{% static 'timeline-head-background.png' %}');">
         <div class="container h-100 d-flex align-items-center justify-content-center">
             <h1 class="subheader-text">ZEITACHSE</h1>
@@ -107,8 +109,9 @@
             <!-- It is a building -->
             <div class="row">
                 {% with building=building_or_hd_data|index:1 %}
-                {% with building_year=building_or_hd_data|index:2 %}
-                {% with building_thumbnail=building_or_hd_data|index:3 %}
+                {% with building_thumbnail=building_or_hd_data|index:2 %}
+                {% with building_year_only=building_or_hd_data|index:3 %}
+                {% with building_bcad_only=building_or_hd_data|index:4 %}
                 <div class="col-sm-2">
                 </div>
                 <div class="col-sm-2">
@@ -116,14 +119,48 @@
                         <div class="line" style="background-color: #{{ era_struct.color_code }}">
                         </div>
                     </div>
-                    <div class="row-no-margin building-year font-benton-sans d-flex align-items-center justify-content-center" style="color: #{{ era_struct.color_code }}">
-                        <b>{{ building_year }}</b>
+                    <!-- Old building year:
+                    <div class="row-no-margin building-year font-benton-sans" style="color: #{{ era_struct.color_code }}">
+                        <b>{{ building_year|default:"N/A" }}</b>
+                    </div> -->
+                    <!-- New building year -->
+                    <div class="row-no-margin building-year-only font-benton-sans" style="color: #{{ era_struct.color_code }}">
+                        <b>{{ building_year_only|default:"N/A" }}</b>
                     </div>
+                    <div class="row-no-margin building-bcad-only font-benton-sans" style="color: #{{ era_struct.color_code }}">
+                        <b>{{ building_bcad_only|default:"N/A" }}</b>
+                    </div>
+                    <!-- ----------------- -->
                     <div class="row-no-margin centered one-third-height">
                         <div class="line" style="background-color: #{{ era_struct.color_code }}">
                         </div>
                     </div>
                 </div>
+                <!-- decide whether pic has to be in 4th or 5th col -->
+                {% cycle "right" "left" as side silent %}
+                <!-- if right, insert div bevor... -->
+                {% if side == "right" %}
+                <!-- building name div -->
+                <div class="col-md-5 p-0 align-self-center">
+                    <div class="fixed-height name-text break-words font-benton-sans">
+                        <b>{{ building.name }}</b>
+                    </div>
+                    <div class="pic-line" style="background-color:#{{ era_struct.color_code }};">
+                    </div>
+                    <div class="fixed-height">
+                    </div>
+                </div>
+                <!-- Pic div -->
+                <div class="col-md-3 p-0 overlapping">
+                    <!-- test if image is present, or default should be used -->
+                    {% if not building_thumbnail == None %}
+                    <a class="img d-flex align-items-center justify-content-center" href="{% url 'details_page:detailed' building_id=building.id %}"><img class="thumbnail mh-100 mw-100" src="/media/{{ building_thumbnail.picture }}"></a>
+                    {% else %}
+                    <a class="img d-flex align-items-center justify-content-center" href="{% url 'details_page:detailed' building_id=building.id %}"><img class="thumbnail mh-100 mw-100" src="{% static 'default_image.png' %}"></a>
+                    {% endif %}
+                </div>
+                {% else %}
+                <!-- Else: First name (short), then the pic div, then empty one -->
                 <div class="col-md-2 p-0 align-self-center">
                     <div class="fixed-height name-text break-words font-benton-sans">
                         <b>{{ building.name }}</b>
@@ -131,17 +168,8 @@
                     <div class="pic-line" style="background-color:#{{ era_struct.color_code }};">
                     </div>
                     <div class="fixed-height">
-
                     </div>
                 </div>
-                <!-- decide whether pic has to be in 4th or 5th col -->
-                {% cycle "right" "left" as side silent %}
-                <!-- if right, insert div bevor... -->
-                {% if side == "right" %}
-                <div class="col-sm-3 p-0 align-self-center pic-line" style="background-color: #{{ era_struct.color_code }}">
-                </div>
-                {% else %}
-                {% endif %}
                 <div class="col-md-3 p-0 overlapping">
                     <!-- test if image is present, or default should be used -->
                     {% if not building_thumbnail == None %}
@@ -151,11 +179,10 @@
                     {% endif %}
                 </div>
                 <!-- ... else after the pic div -->
-                {% if side == "right"%}
-                {% else %}
                 <div class="col-sm-3">
                 </div>
                 {% endif %}
+                {% endwith %}
                 {% endwith %}
                 {% endwith %}
                 {% endwith %}
@@ -262,16 +289,25 @@
             <!-- It is a building -->
             <div class="row">
                 {% with building=building_or_hd_data|index:1 %}
-                {% with building_year=building_or_hd_data|index:2 %}
-                {% with building_thumbnail=building_or_hd_data|index:3 %}
+                {% with building_thumbnail=building_or_hd_data|index:2 %}
+                {% with building_year_only=building_or_hd_data|index:3 %}
+                {% with building_bcad_only=building_or_hd_data|index:4 %}
                 <div class="col-3">
                     <div class="row-no-margin centered one-third-height">
                         <div class="line" style="background-color: #{{ era_struct.color_code }}">
                         </div>
                     </div>
-                    <div class="row-no-margin building-year" style="color: #{{ era_struct.color_code }}">
+                    <!-- <div class="row-no-margin building-year" style="color: #{{ era_struct.color_code }}">
                         <b>{{ building_year }}</b>
+                    </div> -->
+                    <!-- New building year -->
+                    <div class="row-no-margin building-year-only font-benton-sans" style="color: #{{ era_struct.color_code }}">
+                        <b>{{ building_year_only|default:"N/A" }}</b>
                     </div>
+                    <div class="row-no-margin building-bcad-only font-benton-sans" style="color: #{{ era_struct.color_code }}">
+                        <b>{{ building_bcad_only|default:"N/A" }}</b>
+                    </div>
+                    <!-- ----------------- -->
                     <div class="row-no-margin centered one-third-height">
                         <div class="line" style="background-color: #{{ era_struct.color_code }}">
                         </div>
@@ -296,6 +332,7 @@
                     <a class="img" href="{% url 'details_page:detailed' building_id=building.id %}"><img class="thumbnail" src="{% static 'default_image.png' %}" style="width: 100%;"></a>
                     {% endif %}
                 </div>
+                {% endwith %}
                 {% endwith %}
                 {% endwith %}
                 {% endwith %}
@@ -376,7 +413,7 @@
 
 
 
-
+    {% comment %}
     <!--
     &lt;!&ndash; Get 'back to top' button &ndash;&gt;
     <a id="color-btn" href="" class="btn btn-lg back-to-top" role="button">∧</a>
@@ -631,3 +668,4 @@
             </div>
         {% endfor %}
     </div>-->
+{% endcomment %}

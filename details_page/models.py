@@ -60,9 +60,10 @@ class Era(models.Model):
         verbose_name_plural = 'Epochen'
 
     name = models.CharField(verbose_name='Name', max_length=100, choices=[
-        ('Bronzezeit', 'Bronzezeit'), ('Frühe Eisenzeit', 'Frühe Eisenzeit'),
+        ('Mykenische Zeit', 'Mykenische Zeit'), ('Frühe Eisenzeit', 'Frühe Eisenzeit'),
         ('Archaik', 'Archaik'),
         ('Klassik', 'Klassik'), ('Hellenismus', 'Hellenismus'),
+        ('römische Republik', 'römische Republik'),
         ('Kaiserzeit', 'Kaiserzeit'),
         ('Spätantike', 'Spätantike'),
         ('Rezeption', 'Rezeption'),
@@ -76,6 +77,7 @@ class Era(models.Model):
                                           choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")],
                                           default="v.Chr.",
                                           null=True, blank=True)
+    year_from_ca = models.BooleanField(verbose_name="Anfangsdatum ca.?", default=False)
     year_to = models.PositiveIntegerField(verbose_name='Enddatum',
                                           help_text="Jahr des Endes der Epoche eingeben.",
                                           blank=True, null=True)
@@ -84,6 +86,7 @@ class Era(models.Model):
                                         choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")],
                                         default="v.Chr.",
                                         null=True, blank=True)
+    year_to_ca = models.BooleanField(verbose_name="Enddatum ca.?", default=False)
     visible_on_video_page = models.BooleanField(verbose_name='Sichtbar auf Staffelseite?',
                                                 default=True, help_text="""Angeben ob die Epoche
                                                 auf der 'Staffeln' Seite sichtbar sein soll.""")
@@ -137,11 +140,16 @@ class Era(models.Model):
             bc_ad_from = ' ' + str(
                 self.year_from_BC_or_AD) if self.year_from is not None else 'v.Chr.'
             start = year_from + bc_ad_from
+            if self.year_from_ca:
+                start = "ca. " + start
             if self.year_to is not None:
                 year_to = str(self.year_to)
                 bc_ad_to = ' ' + str(
                     self.year_to_BC_or_AD) if self.year_to_BC_or_AD is not None else 'v.Chr.'
-                end = ' - ' + year_to + bc_ad_to
+                end = year_to + bc_ad_to
+                if self.year_to_ca:
+                    end = "ca. " + end
+                end = ' - ' + end
 
         return start + end
 
@@ -712,6 +720,28 @@ class Building(models.Model):
         except Picture.MultipleObjectsReturned:
             thumbnail = Picture.objects.filter(building=self.id, usable_as_thumbnail=True)[0]
         return thumbnail
+
+    def get_year_and_bc_ad_as_str(self):
+        """
+        Get the year as number, and the bc and ad as strings.
+        :return: a tuple of strings for year and bd/ad.
+        """
+        century = '. Jh.' if self.year_century else ''
+        circa = 'ca. ' if self.year_ca else ''
+        start = ''
+        bc_ad = ''
+        end = ''
+        if self.year_from is not None:
+            year_from = str(self.year_from)
+            # default n.Chr.
+            start = circa + year_from + century
+            bc_ad = ' ' + str(
+                self.year_from_BC_or_AD) if self.year_from_BC_or_AD is not None else 'v.Chr.'
+            if self.year_to is not None:
+                year_to = str(self.year_to)
+                # default n.Chr.
+                end = ' - ' + circa + year_to + century
+        return start+end, bc_ad
 
 
 class Blueprint(models.Model):

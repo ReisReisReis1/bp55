@@ -14,7 +14,9 @@
 
     {% include './header.html' %}
 
-    <div class="subheader" style="background: url('{% static "start-head-background.png" %}');">
+    {% include './announcement.html' %}
+
+    <div class="subheader" style="background: url('{% static 'start-head-background.png' %}');">
         <div class="container h-100 d-flex align-items-center justify-content-center">
             <h1 class="subheader-text">RUINS AND BEYOND!</h1>
         </div>
@@ -40,12 +42,7 @@
             <div class="row">
                 <div class="col intro-text">
                     <p align="justify">
-                        Die Vorlesung Architektur und Städtebau der Antike soll in ein zeitgemäßes digitales Format
-                        überführt werden. Hierfür möchten wir eine digitale Wissensplattform zur Architekturgeschichte der Antike als Webanwendung aufbauen,
-                        mit der die Studierenden auf der Basis des zur Verfügung gestellten Materials die Lehreinheiten selbstbestimmt
-                        kombinieren und absolvieren können. Die bislang 13 1,5-stündigen Vorlesungen, die einen chronologischen Überblick
-                        über den Wandel der Architektur in der Antike zum Gegenstand haben, werden zu 72 15-minütigen Videos umgewandelt
-                        und durch einen Bauwerkskatalog bestehend aus 220 Steckbriefen mit grundlegenden Charakteristiken ergänzt.
+                        {{ intro_text }}
                     </p>
                 </div>
             </div>
@@ -69,7 +66,7 @@
                         <a class="card" href="{% url 'timeline:timeline' %}">
                             <div class="card-body">
                                 <h5 class="card-title font-bebas-neue">ZEITACHSE</h5>
-                                <p class="card-text font-calluna">Auf der Zeitachse werden die Einzel-bauten mit ihren Charakteristiken und zugehörigen Vorlesungsvideos über Bild-Buttons abrufbar gemacht.</p>
+                                <p class="card-text font-calluna">{{ timeline_card_text }}</p>
                             </div>
                             <img class="card-img-bottom" src="{% static 'timeline-head-background.png' %}" alt="Zeitachse Hintergrundbild">
                         </a>
@@ -77,7 +74,7 @@
                         <a class="card" href="{% url 'filter_page:filter' %}">
                             <div class="card-body">
                                 <h5 class="card-title font-bebas-neue">BAUWERKE</h5>
-                                <p class="card-text font-calluna">Im Reiter Bauwerke werden die Gebäude thematisch abgefragt und zusammen-gestellt. Auch ermöglicht die Filter-funktion eine gezielte Auswahl bestimmter Gebäudegruppen.</p>
+                                <p class="card-text font-calluna">{{ buildings_card_text }}</p>
                             </div>
                         <img class="card-img-bottom" src="{% static 'filter-head-background.png' %}" alt="Zeitachse Hintergrundbild">
                         </a>
@@ -85,7 +82,7 @@
                         <a class="card" href="{% url 'video_content:videos' %}">
                             <div class="card-body">
                                 <h5 class="card-title font-bebas-neue">STAFFELN</h5>
-                                <p class="card-text font-calluna">Im Reiter Staffeln werden alle vorhandenen Videos in chronologischer Reihenfolge und nach Epoche sortiert aufgelistet.</p>
+                                <p class="card-text font-calluna">{{ video_card_text }}</p>
                             </div>
                             <img class="card-img-bottom" src="{% static 'videos-head-background.png' %}" alt="Zeitachse Hintergrundbild">
                         </a>

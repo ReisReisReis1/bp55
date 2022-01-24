@@ -7,6 +7,8 @@ from django.shortcuts import render
 from details_page.models import Building, Era
 from start.views import login_required
 from impressum.views import get_course_link
+from announcements.views import get_announcements
+from analytics.views import register_visit
 
 
 def splitting(lst):
@@ -97,6 +99,7 @@ def display_building_filter(request):
     :return: rendering the subpage based on filter.html with context
     context: Variable to filter all buildings with the criteria got from the request
     """
+    register_visit(request, "Filterseite")
 
     # We can filter by this options:
     # era, country, region, city, architect, builders, column_orders, designs, material, function
@@ -214,6 +217,7 @@ def display_building_filter(request):
         'Filter_Names': filter_names,
         'Active_Filter': dict(urls_parameters),
         'Kurs_Link': get_course_link(),
+        'announcements': get_announcements(),
     }
 
     return render(request, 'filter.html', context)

@@ -7,6 +7,8 @@ from details_page.models import Building, Era
 from start.views import login_required
 from timeline.models import HistoricDate
 from impressum.views import get_course_link
+from announcements.views import get_announcements
+from analytics.views import register_visit
 
 
 def sorted_eras_with_buildings(items):
@@ -21,10 +23,20 @@ def sorted_eras_with_buildings(items):
     # Getting all existing eras
     all_eras = Era.objects.all()
     # Ordering the before and after the birth and christ
-    all_eras_vchr = all_eras.filter(year_from_BC_or_AD="v.Chr.").order_by('-year_from')
+    all_eras_vchr_db = all_eras.filter(year_from_BC_or_AD="v.Chr.").order_by('-year_from')
     all_eras_nchr = all_eras.filter(year_from_BC_or_AD="n.Chr.").order_by('year_from')
     # first making a list of dicts with name as key and the struct as value
-    all_eras_vchr = [{i.name: i} for i in all_eras_vchr]
+    all_eras_vchr = []
+    # This era name will be combined with "Hellenismus", and filtered out as era by it self for the
+    # timeline.
+    rome_overlap_name = "römische Republik"
+    for era in all_eras_vchr_db:
+        if era.name == "Hellenismus":
+            all_eras_vchr.append({era.name+" / "+rome_overlap_name: era})
+        elif era.name == rome_overlap_name:
+            continue
+        else:
+            all_eras_vchr.append({era.name: era})
     all_eras_nchr = [{i.name: i} for i in all_eras_nchr]
     # merging the lists
     all_eras = all_eras_vchr + all_eras_nchr
@@ -45,9 +57,10 @@ def sorted_eras_with_buildings(items):
                 # Building tupel
                 if isinstance(item, Building):
                     items_era_sorted.append(
-                        (True, item, item.get_year_as_str(), item.get_thumbnail()))
+                        (True, item, item.get_thumbnail(),
+                         item.get_year_and_bc_ad_as_str()[0], item.get_year_and_bc_ad_as_str()[1]))
                 else:
-                    items_era_sorted.append((False, item, item.get_year_as_str(), None))
+                    items_era_sorted.append((False, item, item.get_year_as_str(), None, None))
         nextcolor = "None"
         if i != len(era_dict)-1:
             nextcolor = list(era_dict.values())[i+1].color_code
@@ -66,6 +79,7 @@ def timeline(request):
     :param request: url request to get subpage /timeline
     :return: rendering the subpage based on timeline.html
     """
+    register_visit(request, "Zeitachse")
     # get only buildings with dates set
     # pylint: disable = no-member
     buildings = Building.objects.all()
@@ -78,6 +92,7 @@ def timeline(request):
     context = {
         'Eras_Buildings': sorted_eras_with_buildings(items),
         'Kurs_Link': get_course_link(),
+        'announcements': get_announcements(),
     }
 
     return render(request, 'timeline.html', context)
