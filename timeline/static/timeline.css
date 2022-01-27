@@ -282,7 +282,8 @@
 
     /* Make building names font smaller */
     .name-text {
-        font-size: 13px;
+        font-size: 16px;
+        padding-right: 10px;
     }
 
     /* Update fixed height, to not see much more spaces because of smaller text */
