@@ -327,9 +327,9 @@
                 <div class="col-4 p-0 overlapping">
                     <!-- test if image is present, or default should be used -->
                     {% if not building_thumbnail == None %}
-                    <a class="img" href="{% url 'details_page:detailed' building_id=building.id %}"><img class="thumbnail" src="/media/{{ building_thumbnail.picture }}" style="width: 100%;"></a>
+                    <a class="img d-flex align-items-center justify-content-center" href="{% url 'details_page:detailed' building_id=building.id %}"><img class="thumbnail mh-100 mw-100" src="/media/{{ building_thumbnail.picture }}"></a>
                     {% else %}
-                    <a class="img" href="{% url 'details_page:detailed' building_id=building.id %}"><img class="thumbnail" src="{% static 'default_image.png' %}" style="width: 100%;"></a>
+                    <a class="img d-flex align-items-center justify-content-center" href="{% url 'details_page:detailed' building_id=building.id %}"><img class="thumbnail mh-100 mw-100" src="{% static 'default_image.png' %}"></a>
                     {% endif %}
                 </div>
                 {% endwith %}
