@@ -132,7 +132,7 @@
                          This will also make the resulting numbers smaller. Because of this, we add a fixed constant to this number, again.
                          This is to get good-looking font sizes in the end.
                     -->
-                    <div class="row-no-margin building-year-only font-benton-sans" style="color: #{{ era_struct.color_code }}; font-size: calc(calc({% widthratio 200 building_year_only|length 1 %}px * 0.15) + 15px); ">
+                    <div class="row-no-margin building-year-only font-benton-sans" style="color: #{{ era_struct.color_code }}; font-size: {{ building_year_only|calc_font_size:False }}px;">
                         <b>{{ building_year_only|default:"N/A" }}</b>
                     </div>
                     <div class="row-no-margin building-bcad-only font-benton-sans" style="color: #{{ era_struct.color_code }}">
@@ -318,7 +318,7 @@
                          This will also make the resulting numbers smaller. Because of this, we add a fixed constant to this number, again.
                          This is to get good-looking font sizes in the end.
                     -->
-                    <div class="row-no-margin building-year-only font-benton-sans" style="color: #{{ era_struct.color_code }}; font-size: calc(calc({% widthratio 200 building_year_only|length 1 %}px * 0.15) + 15px);">
+                    <div class="row-no-margin building-year-only font-benton-sans" style="color: #{{ era_struct.color_code }}; font-size: {{ building_year_only|calc_font_size:True }}px;">
                         <b>{{ building_year_only|default:"N/A" }}</b>
                     </div>
                     <div class="row-no-margin building-bcad-only font-benton-sans" style="color: #{{ era_struct.color_code }}">

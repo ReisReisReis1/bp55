@@ -245,6 +245,7 @@
         width: 2px;
     }
     .horizontal-line {
+        margin-top: 0px;
         height: 2px;
         width: 103%;
     }
@@ -264,12 +265,16 @@
         width: 2px;
     }
 
+    .hd-text {
+        margin-top: -4px;
+        margin-bottom: 4px;
+    }
+
     /* New Building year */
     .building-year-only {
         background-color: #F9EAD8;
         text-align: center;
         height: 30%;
-        font-size: 12px;
     }
     .building-bcad-only {
         background-color: #F9EAD8;
@@ -281,8 +286,13 @@
 
     /* Make building names font smaller */
     .name-text {
-        font-size: 16px;
+        font-size: 13px;
+        line-height: 21px;
         padding-right: 10px;
+    }
+
+    .img {
+        height: 80px !important;
     }
 
     /* Update fixed height, to not see much more spaces because of smaller text */
