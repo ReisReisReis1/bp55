@@ -154,10 +154,10 @@
                             <!-- The Video Item -->
                             <div class="video-box">
                                 <!-- Video -->
+                                <img class="thumbnail" src="/media/{{ video.thumbnail }}" data-toggle="modal" data-target="#popup-{{ forloop.parentloop.counter }}-{{ forloop.counter }}" style="width: 100%">
                                 <div class="video-title break-words font-benton-sans" style="border-color: #{{ items.0.color_code }};">
                                     <b>{{ video.title }}</b>
                                 </div>
-                                <img class="thumbnail" src="/media/{{ video.thumbnail }}" data-toggle="modal" data-target="#popup-{{ forloop.parentloop.counter }}-{{ forloop.counter }}" style="width: 100%">
                             </div>
 
                             <!-- Popup-Element -->

@@ -62,9 +62,14 @@ html, body {
 /* Style for the video titles */
 .video-title {
     font-size: 18px;
+    /*
     margin-bottom: 5px;
     padding-bottom: 5px;
     border-bottom: 4px solid;
+    */
+    margin-top: 12px;
+    padding-top: 4px;
+    border-top: 4px solid;
 }
 
 /* Hide mobile two-vid cols */

@@ -26,7 +26,7 @@ def display(request):
     eras = Era.objects.filter(visible_on_video_page=True).exclude(year_from=None)
     eras = sorted(eras, key=lambda er_a: er_a.get_year_as_signed_int()[0])
     eras_context = []
-    # Add all eras that do not have an year_from
+    # Add all eras that do not have a year_from
     # pylint: disable = no-member
     eras = eras + list(Era.objects.filter(year_from=None, visible_on_video_page=True))
     i = 0
