@@ -120,18 +120,6 @@
                         </div>
                     </div>
                     <!-- New building year -->
-                    <!-- Weird font-size calculation explained: The font size is now variable depending on the string length,
-                         so everything will fit in the div.
-                         The way this works: Djangos "widthration" template tag allows to devide and multiply arguments.
-                         It is: First arg / second arg * third arg.
-                         We choose 50/<string length> (* 1) here, to get a positiv result, also we need to do the division,
-                         because we need big font size for short strings and small font size for long strings.
-                         After this, we multiply it by a constant factor, using the css calc function. We need to do this,
-                         to get a reasonable font size intervall, which should be not as bis as the intervall of the string lengths.
-                         E.g. you want font sizes between 10 and 25 and not 4 and 20 like the differences in string lengths.
-                         This will also make the resulting numbers smaller. Because of this, we add a fixed constant to this number, again.
-                         This is to get good-looking font sizes in the end.
-                    -->
                     <div class="row-no-margin building-year-only font-benton-sans" style="color: #{{ era_struct.color_code }}; font-size: {{ building_year_only|calc_font_size:False }}px;">
                         <b>{{ building_year_only|default:"N/A" }}</b>
                     </div>
@@ -306,18 +294,6 @@
                         </div>
                     </div>
                     <!-- New building year -->
-                    <!-- Weird font-size calculation explained: The font size is now variable depending on the string length,
-                         so everything will fit in the div.
-                         The way this works: Djangos "widthration" template tag allows to devide and multiply arguments.
-                         It is: First arg / second arg * third arg.
-                         We choose 50/<string length> (* 1) here, to get a positiv result, also we need to do the division,
-                         because we need big font size for short strings and small font size for long strings.
-                         After this, we multiply it by a constant factor, using the css calc function. We need to do this,
-                         to get a reasonable font size intervall, which should be not as bis as the intervall of the string lengths.
-                         E.g. you want font sizes between 10 and 25 and not 4 and 20 like the differences in string lengths.
-                         This will also make the resulting numbers smaller. Because of this, we add a fixed constant to this number, again.
-                         This is to get good-looking font sizes in the end.
-                    -->
                     <div class="row-no-margin building-year-only font-benton-sans" style="color: #{{ era_struct.color_code }}; font-size: {{ building_year_only|calc_font_size:True }}px;">
                         <b>{{ building_year_only|default:"N/A" }}</b>
                     </div>

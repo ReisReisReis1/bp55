@@ -34,7 +34,7 @@ def calc_font_size(s, is_mobile=False):
         if not is_mobile:
             return 24
         else:
-            return 11
+            return 12  # on mobile just "N/A" can be bigger then the default size
     if not is_mobile:
         # as long as a limit of 15 is not exceeded, it will get the standard font size
         if len(s) >= 15:
@@ -49,6 +49,6 @@ def calc_font_size(s, is_mobile=False):
     else:
         if len(s) >= 11:
             # a optimized version of the function from above for the mobile design
-            f = -0.08*math.pow(len(s)-12, 2)+11
+            f = -0.09*math.pow(len(s)-12, 2)+11
             return str(f).replace(",", ".")
         return 11  # default font size
