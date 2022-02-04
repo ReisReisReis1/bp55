@@ -19,9 +19,9 @@ def analytics_view(request):
     """
     register_visit(request, "Analyseseite")
 
-    # base_url = "https://ruinsandbeyond.architektur.tu-darmstadt.de/"
+    base_url = "https://ruinsandbeyond.architektur.tu-darmstadt.de/"
     # for testing purposes:
-    base_url = "http://127.0.0.1:8000/"
+    # base_url = "http://127.0.0.1:8000/"
 
     # check if there are url parameters for which month or year is requested,
     # otherwise set it to the current ones
