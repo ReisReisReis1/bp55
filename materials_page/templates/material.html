@@ -41,6 +41,36 @@
             }
         }
 
+        // The following function are copying from
+        // https://docs.djangoproject.com/en/dev/ref/csrf/#ajax
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        // registers a view on the pdf,
+        // should be the onClick on the correct element
+        function registerPDFClick(pdf_id) {
+            // use fetch to call the add endpoint
+            var url = "/analytics/add/pdf/"+pdf_id+"/";
+            let csrftoken = getCookie('csrftoken');
+            fetch(url, {
+                method: 'POST',
+                headers: { "X-CSRFToken": csrftoken },
+              });
+        }
+
     </script>
 
 </head>
@@ -89,7 +119,7 @@
                             <!-- The Material Item -->
                             <div class="material-box">
                                 <!-- Material Icon with a link to open the corresponding PDF in a new tab -->
-                                <a href="{{ material.file.url }}" target="_blank">
+                                <a href="{{ material.file.url }}" target="_blank" onclick="registerPDFClick({{ material.pk }})">
                                     <img class="icon" src="{% static 'icon-pdf.png' %}">
                                 </a>
                                 <!-- Material title -->
