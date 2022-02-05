@@ -12,6 +12,14 @@
             search_bar.classList.toggle("header-search-hide")
             search_form.focus()
         }
+
+        function toggleBurgerMenu() {
+            var burger_menu = document.getElementById("burger-menu");
+
+            burger_menu.classList.toggle("header-burger-hide")
+
+            document.body.classList.toggle("remove-scrolling");
+        }
     </script>
 </head>
 <body>
@@ -32,9 +40,7 @@
                     <a href="{% url "materials_page:material" %}" class="header-menu-item color-primary-header">Materialien</a>
                     <img class="search-icon" src="{% static 'icon-search.png' %}" onclick="toggleHideSearchBar()">
                     <!-- The hamburger / overflow menu for mobile devices -->
-                    <button class="btn hamtogglebtn" type="button" data-toggle="collapse" data-target="#hamburger-menu-id">
-                        <img class="menu-icon" src="{% static 'icon-menu.png' %}">
-                    </button>
+                    <img class="menu-icon" src="{% static 'icon-menu.png' %}" onclick="toggleBurgerMenu()">
 
                 </div>
             </div>
@@ -54,50 +60,45 @@
     </div>
 
     <!-- The actual hamburger menu -->
-    <div class="collapse hamburger-menu" id="hamburger-menu-id">
+    <div class="burger-menu header-burger-hide" id="burger-menu">
         <div class="container">
             <div class="row">
                 <div class="col">
-                    <a href="{% url "start:start" %}" class="hamburger-menu-item color-primary-header">Intro</a>
+                    <a href="{% url "start:start" %}" class="burger-menu-item color-primary-header">Intro</a>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
-                    <a href="{% url "timeline:timeline" %}" class="hamburger-menu-item color-primary-header">Zeitachse</a>
+                    <a href="{% url "timeline:timeline" %}" class="burger-menu-item color-primary-header">Zeitachse</a>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
-                    <a href="{% url "filter_page:filter" %}" class="hamburger-menu-item color-primary-header">Bauwerke</a>
+                    <a href="{% url "filter_page:filter" %}" class="burger-menu-item color-primary-header">Bauwerke</a>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
-                    <a href="{% url "video_content:videos" %}" class="hamburger-menu-item color-primary-header">Staffeln</a>
+                    <a href="{% url "video_content:videos" %}" class="burger-menu-item color-primary-header">Staffeln</a>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
-                    <a href="{% url "materials_page:material" %}" class="hamburger-menu-item color-primary-header">Materialien</a>
+                    <a href="{% url "materials_page:material" %}" class="burger-menu-item color-primary-header">Materialien</a>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
                     {% if Kurs_Link|length == 0 %}
-                        <a href="" class="hamburger-menu-item color-primary-header">Moodle-Kurs</a>
+                        <a href="" class="burger-menu-item color-primary-header">Moodle-Kurs</a>
                     {% else %}
-                        <a href="{{Kurs_Link}}" target="_blank" class="hamburger-menu-item color-primary-header">Moodle-Kurs</a>
+                        <a href="{{Kurs_Link}}" target="_blank" class="burger-menu-item color-primary-header">Moodle-Kurs</a>
                     {% endif %}
                 </div>
             </div>
             <div class="row">
                 <div class="col">
-                    <a href="{% url "impressum:impressum" %}" class="hamburger-menu-item color-primary-header">Impressum</a>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <img class="search-icon-hamburger" src="{% static 'icon-search.png' %}">
+                    <a href="{% url "impressum:impressum" %}" class="burger-menu-item color-primary-header">Impressum</a>
                 </div>
             </div>
         </div>

@@ -149,6 +149,11 @@
 
                     <table class="table table-borderless mobile-table">
                         <tbody>
+                            {% if not Beschreibung == None and not Beschreibung|length == 0 %}
+                                <div class="mobile-design building-description">
+                                    {{ Beschreibung }}
+                                </div>
+                            {% endif %}
                             {% if Ort != None or Region != None %}
                                 <tr>
                                     <td class="font-benton-sans">
@@ -429,7 +434,12 @@
                             <tr class="mobile-border" style="border-color: #{{ Era.color_code }}">
 
                             </tr>
-                            {% if not Videos == None and not Videos|length == 0%}
+                            {% if not Beschreibung == None and not Beschreibung|length == 0 %}
+                                <div class="pc-design building-description">
+                                    {{ Beschreibung }}
+                                </div>
+                            {% endif %}
+                            {% if not Videos == None and not Videos|length == 0 %}
                                 <tr>
                                     <td class="font-benton-sans">
                                         <b>Videos</b>
