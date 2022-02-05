@@ -7,8 +7,10 @@
     <script>
         function toggleHideSearchBar() {
             var search_bar = document.getElementById("header-search");
+            var search_form = search_bar.getElementsByTagName("INPUT").item(0)
 
             search_bar.classList.toggle("header-search-hide")
+            search_form.focus()
         }
     </script>
 </head>

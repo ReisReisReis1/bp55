@@ -113,6 +113,44 @@
 }
 
 
+/* Show the pc-design per default */
+.pc-design {
+    display: inherit !important;
+}
+
+/* Hide the mobile design per default */
+.mobile-design {
+    display: none !important;
+}
+
+.mobile-border {
+    border-style: none !important;
+}
+
+@media screen and (max-width: 767px) {
+    /* Show the pc-design per default */
+    .pc-design {
+        display: none !important;
+    }
+
+    /* Hide the mobile design per default */
+    .mobile-design {
+        display: inherit !important;
+    }
+
+    .mobile-border {
+        border-style: solid !important;
+    }
+
+    .mobile-table {
+        margin-bottom: 0 !important;
+    }
+
+    .building-title {
+        font-size: 70px;
+    }
+}
+
 /*
 !*----------------------------------------------------------------------------
     Styling of the container with all the details
