@@ -31,8 +31,14 @@ body{
         height: 220px;
     }
     .subheader-text {
-        font-size: 34px;
+        font-size: 70px !important;
         text-align: center;
+    }
+}
+
+@media screen and (max-width: 460px) {
+    .subheader-text {
+        font-size: 50px !important;
     }
 }
 
