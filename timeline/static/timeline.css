@@ -266,22 +266,22 @@
     }
 
     .hd-text {
-        margin-top: -4px;
-        margin-bottom: 4px;
+        margin-top: -7px;
+        margin-bottom: 2px;
     }
 
     /* New Building year */
     .building-year-only {
         background-color: #F9EAD8;
         text-align: center;
-        height: 30%;
+        height: 23%;
     }
     .building-bcad-only {
         background-color: #F9EAD8;
         text-align: center;
         font-size: 7px;
         margin-top: -7px;
-        height: 6%;
+        height: 4%;
     }
 
     /* Make building names font smaller */
@@ -302,7 +302,7 @@
 
     /* Text will now consume more height, so make lines smaller */
     .one-third-height {
-        height: 32%;
+        height: 37%;
     }
 
     /* Now image overlapping is not needed, actually space the images because they are all on one col now */
