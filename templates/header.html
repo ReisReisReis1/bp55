@@ -5,6 +5,10 @@
 <html>
 <head>
     <script>
+        $("#header-search").click(function(toggleHideSearchBar) {
+           toggleHideSearchBar.stopPropagation();
+        });
+
         function toggleHideSearchBar() {
             var search_bar = document.getElementById("header-search");
             var search_form = search_bar.getElementsByTagName("INPUT").item(0)
@@ -47,10 +51,10 @@
         </div>
     </div>
 
-    <div id="header-search" class="header-search-bar header-search-hide">
+    <div id="header-search" class="header-search-bar header-search-hide" onclick="toggleHideSearchBar()">
         <div class="container">
             <div class="row justify-content-end">
-                <div class="header-search">
+                <div id="header-search" class="header-search">
                     <form action="{% url 'search:search' %}" method="get">
                         <input type="search" class="form-control header-search-input" id="color-bg-secondary" placeholder="Suche" name="search_request">
                     </form>
@@ -89,16 +93,16 @@
             </div>
             <div class="row">
                 <div class="col">
+                    <a href="{% url "impressum:impressum" %}" class="burger-menu-item color-primary-header">Impressum</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
                     {% if Kurs_Link|length == 0 %}
                         <a href="" class="burger-menu-item color-primary-header">Moodle-Kurs</a>
                     {% else %}
                         <a href="{{Kurs_Link}}" target="_blank" class="burger-menu-item color-primary-header">Moodle-Kurs</a>
                     {% endif %}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <a href="{% url "impressum:impressum" %}" class="burger-menu-item color-primary-header">Impressum</a>
                 </div>
             </div>
         </div>
