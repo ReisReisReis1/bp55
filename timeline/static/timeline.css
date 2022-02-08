@@ -92,7 +92,6 @@
     background-color: #F9EAD8;
     text-align: center;
     height: 30%;
-    font-size: 24px;
 }
 .building-bcad-only {
     background-color: #F9EAD8;
@@ -216,7 +215,7 @@
     display: none !important;
 }
 
-@media screen and (max-width: 1100px) {
+@media screen and (max-width: 1200px) {
     /* What to to if it is mobile design */
 
     /* hide the pc-design */
@@ -246,6 +245,7 @@
         width: 2px;
     }
     .horizontal-line {
+        margin-top: 2px;
         height: 2px;
         width: 103%;
     }
@@ -265,12 +265,16 @@
         width: 2px;
     }
 
+    .hd-text {
+        margin-top: -4px;
+        margin-bottom: 4px;
+    }
+
     /* New Building year */
     .building-year-only {
         background-color: #F9EAD8;
         text-align: center;
         height: 30%;
-        font-size: 12px;
     }
     .building-bcad-only {
         background-color: #F9EAD8;
@@ -282,8 +286,13 @@
 
     /* Make building names font smaller */
     .name-text {
-        font-size: 16px;
+        font-size: 13px;
+        line-height: 21px;
         padding-right: 10px;
+    }
+
+    .img {
+        height: 80px !important;
     }
 
     /* Update fixed height, to not see much more spaces because of smaller text */
@@ -293,7 +302,7 @@
 
     /* Text will now consume more height, so make lines smaller */
     .one-third-height {
-        height: 30%;
+        height: 32%;
     }
 
     /* Now image overlapping is not needed, actually space the images because they are all on one col now */
@@ -310,9 +319,11 @@
         margin-left: 15px;
         margin-right: -5px;
     }
+
+    /* Don't know really why, but it must be not quadratic to display so */
     .diamond {
-        height: 10px;
-        width: 10px;
+        height: 9px;
+        width: 12px;
     }
 
     /* Correct line positing for historic dates */

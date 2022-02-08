@@ -134,12 +134,8 @@
                         <div class="line" style="background-color: #{{ era_struct.color_code }}">
                         </div>
                     </div>
-                    <!-- Old building year:
-                    <div class="row-no-margin building-year font-benton-sans" style="color: #{{ era_struct.color_code }}">
-                        <b>{{ building_year|default:"N/A" }}</b>
-                    </div> -->
                     <!-- New building year -->
-                    <div class="row-no-margin building-year-only font-benton-sans" style="color: #{{ era_struct.color_code }}">
+                    <div class="row-no-margin building-year-only font-benton-sans" style="color: #{{ era_struct.color_code }}; font-size: {{ building_year_only|calc_font_size:False }}px;">
                         <b>{{ building_year_only|default:"N/A" }}</b>
                     </div>
                     <div class="row-no-margin building-bcad-only font-benton-sans" style="color: #{{ era_struct.color_code }}">
@@ -312,11 +308,8 @@
                         <div class="line" style="background-color: #{{ era_struct.color_code }}">
                         </div>
                     </div>
-                    <!-- <div class="row-no-margin building-year" style="color: #{{ era_struct.color_code }}">
-                        <b>{{ building_year }}</b>
-                    </div> -->
                     <!-- New building year -->
-                    <div class="row-no-margin building-year-only font-benton-sans" style="color: #{{ era_struct.color_code }}">
+                    <div class="row-no-margin building-year-only font-benton-sans" style="color: #{{ era_struct.color_code }}; font-size: {{ building_year_only|calc_font_size:True }}px;">
                         <b>{{ building_year_only|default:"N/A" }}</b>
                     </div>
                     <div class="row-no-margin building-bcad-only font-benton-sans" style="color: #{{ era_struct.color_code }}">

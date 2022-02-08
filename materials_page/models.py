@@ -60,7 +60,7 @@ class Material(models.Model):
         verbose_name = 'Material'
         verbose_name_plural = 'Materialien'
 
-    name = models.CharField(verbose_name='Titel', max_length=1000,
+    name = models.CharField(verbose_name='Titel', max_length=100,
                             help_text='Bezeichnung der Datei')
     file = models.FileField(verbose_name='Datei', upload_to='material/',
                             help_text="Datei hochladen.", validators=[validate_pdf_extension])

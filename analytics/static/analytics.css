@@ -90,3 +90,22 @@ h3, h2 {
     border-right-width: 0px;
     border-bottom-width: 0px;
 }
+
+/* Styling for the danger zone at the page bottom */
+.danger-hg {
+    background-color: #701F2C;
+}
+
+.danger-zone {
+    color: #F9EAD8;
+}
+
+.btn-confirm-yes {
+    background-color: #701F2C;
+    color: #F9EAD8;
+}
+
+.btn-confirm-no {
+    background-color: #2F4B33;
+    color: #F9EAD8;
+}
