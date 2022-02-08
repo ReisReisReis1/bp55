@@ -235,10 +235,10 @@
                         <!-- The Video Item -->
                         <div class="video-box">
                             <!-- Video -->
+                            <img class="thumbnail" src="/media/{{ video.thumbnail }}" style="width: 100%" onclick="showFullscreenVideo({{ forloop.parentloop.counter }},{{ forloop.counter }}),registerVideoClick({{ video.pk }})">
                             <div class="video-title break-words font-benton-sans" style="border-color: #{{ items.0.color_code }};">
                                 <b>{{ video.title }}</b>
                             </div>
-                            <img class="thumbnail" src="/media/{{ video.thumbnail }}" style="width: 100%" onclick="showFullscreenVideo({{ forloop.parentloop.counter }},{{ forloop.counter }}),registerVideoClick({{ video.pk }})">
                         </div>
 
                         <!-- Definition of fullscreen element -->
