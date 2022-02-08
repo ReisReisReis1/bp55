@@ -119,12 +119,8 @@
                         <div class="line" style="background-color: #{{ era_struct.color_code }}">
                         </div>
                     </div>
-                    <!-- Old building year:
-                    <div class="row-no-margin building-year font-benton-sans" style="color: #{{ era_struct.color_code }}">
-                        <b>{{ building_year|default:"N/A" }}</b>
-                    </div> -->
                     <!-- New building year -->
-                    <div class="row-no-margin building-year-only font-benton-sans" style="color: #{{ era_struct.color_code }}">
+                    <div class="row-no-margin building-year-only font-benton-sans" style="color: #{{ era_struct.color_code }}; font-size: {{ building_year_only|calc_font_size:False }}px;">
                         <b>{{ building_year_only|default:"N/A" }}</b>
                     </div>
                     <div class="row-no-margin building-bcad-only font-benton-sans" style="color: #{{ era_struct.color_code }}">
@@ -297,11 +293,8 @@
                         <div class="line" style="background-color: #{{ era_struct.color_code }}">
                         </div>
                     </div>
-                    <!-- <div class="row-no-margin building-year" style="color: #{{ era_struct.color_code }}">
-                        <b>{{ building_year }}</b>
-                    </div> -->
                     <!-- New building year -->
-                    <div class="row-no-margin building-year-only font-benton-sans" style="color: #{{ era_struct.color_code }}">
+                    <div class="row-no-margin building-year-only font-benton-sans" style="color: #{{ era_struct.color_code }}; font-size: {{ building_year_only|calc_font_size:True }}px;">
                         <b>{{ building_year_only|default:"N/A" }}</b>
                     </div>
                     <div class="row-no-margin building-bcad-only font-benton-sans" style="color: #{{ era_struct.color_code }}">
@@ -327,9 +320,9 @@
                 <div class="col-4 p-0 overlapping">
                     <!-- test if image is present, or default should be used -->
                     {% if not building_thumbnail == None %}
-                    <a class="img" href="{% url 'details_page:detailed' building_id=building.id %}"><img class="thumbnail" src="/media/{{ building_thumbnail.picture }}" style="width: 100%;"></a>
+                    <a class="img d-flex align-items-center justify-content-center" href="{% url 'details_page:detailed' building_id=building.id %}"><img class="thumbnail mh-100 mw-100" src="/media/{{ building_thumbnail.picture }}"></a>
                     {% else %}
-                    <a class="img" href="{% url 'details_page:detailed' building_id=building.id %}"><img class="thumbnail" src="{% static 'default_image.png' %}" style="width: 100%;"></a>
+                    <a class="img d-flex align-items-center justify-content-center" href="{% url 'details_page:detailed' building_id=building.id %}"><img class="thumbnail mh-100 mw-100" src="{% static 'default_image.png' %}"></a>
                     {% endif %}
                 </div>
                 {% endwith %}

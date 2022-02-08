@@ -41,6 +41,36 @@
             }
         }
 
+        // The following function are copying from
+        // https://docs.djangoproject.com/en/dev/ref/csrf/#ajax
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        // registers a view on the pdf,
+        // should be the onClick on the correct element
+        function registerPDFClick(pdf_id) {
+            // use fetch to call the add endpoint
+            var url = "/analytics/add/pdf/"+pdf_id+"/";
+            let csrftoken = getCookie('csrftoken');
+            fetch(url, {
+                method: 'POST',
+                headers: { "X-CSRFToken": csrftoken },
+              });
+        }
+
     </script>
 
 </head>
@@ -88,14 +118,14 @@
 
                             <!-- The Material Item -->
                             <div class="material-box">
+                                <!-- Material Icon with a link to open the corresponding PDF in a new tab -->
+                                <a href="{{ material.file.url }}" target="_blank" onclick="registerPDFClick({{ material.pk }})">
+                                    <img class="icon" src="{% static 'icon-pdf.png' %}">
+                                </a>
                                 <!-- Material title -->
                                 <div class="material-title break-words font-benton-sans" style="border-color: #{{ items.2 }};">
                                     <b>{{ material.name }}</b>
                                 </div>
-                                <!-- Material Icon with a link to open the corresponding PDF in a new tab -->
-                                <a href="{{ material.file.url }}" target="_blank">
-                                    <img class="icon" src="{% static 'icon-pdf.png' %}">
-                                </a>
                             </div>
 
                             <!-- Cases in which the tag must be closed -->
@@ -123,14 +153,14 @@
 
                             <!-- The Material Item -->
                             <div class="material-box">
-                                <!-- Material title -->
-                                <div class="material-title break-words" style="border-color: #{{ items.2 }};">
-                                    <b>{{ material.name }}</b>
-                                </div>
                                 <!-- Material Icon with a link to open the corresponding PDF in a new tab -->
                                 <a href="{{ material.file.url }}" target="_blank">
                                     <img class="icon" src="{% static 'icon-pdf.png' %}">
                                 </a>
+                                <!-- Material title -->
+                                <div class="material-title break-words" style="border-color: #{{ items.2 }};">
+                                    <b>{{ material.name }}</b>
+                                </div>
                             </div>
 
                             <!-- Cases in which the tag must be closed -->
@@ -159,70 +189,6 @@
             {% endif %}
         {% endfor %}
     </div>
-
-    <!--<div class="container container-page">
-        {% if Materials|length == 0 %}
-            <div class="row justify-content-center">
-                <h1>Keine Materialien vorhanden</h1>
-            </div>
-        {% endif %}
-
-        {% for category, filelist in Materials.items %}
-            <div class="card">
-                &lt;!&ndash; Split the box in topic and download  &ndash;&gt;
-                <div class="d-flex w-100 justify-content-between">
-                    &lt;!&ndash; Collapse box for each topic &ndash;&gt;
-                    <a class="collapsed card-link" data-toggle="collapse" href="#collapse-{{ category |cut:" " }}" style="width: 100%; ">
-                        <div class="borderline">
-                            <div class="card-header" id="color-bg-card-header">
-                                <h1 class="fontcolor break-words heading-no-margin"> {{ category }} </h1>
-                            </div>
-                        </div>
-                    </a>
-                 <a href="{% url "materials_page:download" category %}" class="btn borderline" id="color-btn-download" style=" width: 15%" >Download all </a>
-
-                </div>
-
-                &lt;!&ndash; Text showing after open the collapse box&ndash;&gt;
-                <div id="collapse-{{ category |cut:" " }}" class="collapse">
-                    <div class="borderline">
-                        <div class="card-body bg-light">
-                            <div class="row row-no-margin">
-                                &lt;!&ndash; PDF Liste &ndash;&gt;
-                                {% for file in filelist %}
-                                    <div class="material-box">
-                                        &lt;!&ndash; Add box for every PDF file &ndash;&gt;
-                                        <a href="{{ file.file.url }}" target="_blank">
-                                            {% if forloop.counter <= 8 %}
-                                                    <table class="table table-bordered material-first-row">
-                                                {% else %}
-                                                    <table class="table table-bordered material-rest-row">
-                                                {% endif %}
-                                                <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            &lt;!&ndash; PDF icon &ndash;&gt;
-                                                            <img src="{% static "PDF.png" %}" width="100%">
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="break-words fontcolor">
-                                                            &lt;!&ndash; File name &ndash;&gt;
-                                                            {{ file.name }}<br>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </a>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
-    </div>-->
 
     {% include './footer.html' %}
     {% include './mobile_nav_footer.html' %}

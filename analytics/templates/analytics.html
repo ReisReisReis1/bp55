@@ -112,11 +112,11 @@
                 <p><b>Einordnung und Nutzungshinweise:</b></p>
                 <p><ul>
                     <li>Alle hier genannten Zahlen sind absolute Angaben. Es werden ausdrücklich keine Nutzer gezählt, sondern jeder Aufruf einzeln. Die tatsächliche Anzahl der Nutzer dürfte also um ein vielfaches kleiner sein, da jeder Nutzer wahrscheinlich sehr viele Aufrufe von Unterseiten, Gebäuden, usw. tätigt.</li>
-                    <li>Die Analyse kann (derzeit) nur Aktionen und Besuche erfassen, welche durch das Backend prozessiert werden. Aktionen und Besuche, welche ausschließlich im Frontend behandelt werden (z.B. Video- oder PDF-Aufrufe), werden nicht erfasst.</li>
                     <li>Diese Seite ist nur Admins (Mitgliedern mit "Staff"-Status) zugänglich, und kann nicht betrachtet werden, wenn man sich nur ("normal") mit der TU-ID einloggt - ein Login mit Admin-Passwort (wie fürs Admin-Interface) ist erforderlich.</li>
                     <li>Die gezeigten Aufrufzahlen sind jeweils absteigend sortiert (meist-besuchtes Element zuerst).</li>
                     <li>Wähle Monat und Jahr oben im Dropdown Menü aus, um die entsprechende Erhebung des Monats zu betrachten.</li>
                     <li>Die Verlinkungen führen jeweils direkt zu dem Element, das in der Zeile erfasst wurde. So kann man sich z.B. direkt selbst schnell das meist angesehene Gebäude anschauen. Diese öffnen sich in neuen Tabs, sodass die Analyseseite offen bleibt.</li>
+                    <li>Am unteren Ende der Seite können die älteren Analysedaten gelöscht werden.</li>
                 </ul></p>
             </div>
             <!-- analytics for this month and year -->
@@ -158,7 +158,7 @@
             <table class="w-100">
                 <tr>
                     <th>
-                        Gebäude, ID
+                        Gebäude (ID)
                     </th>
                     <th>
                         Anzahl der Besuche
@@ -177,6 +177,39 @@
                     </td>
                     <td>
                         <a href="{{ building.site_url }}" target="_blank">{{ building.site_url }}</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td class="no-data" colspan="3"><i>Keine Daten vorhanden.</i></td>
+                </tr>
+                {% endfor %}
+            </table>
+            <h3>Videoaufrufe:</h3>
+            <p><b>Gesamtzahl: {{ video_count }}</b></p>
+            <p><i>Hinweis: Videos würden normalerweise in den Pop-Ups zu sehen sein, die Weiterleitung öffnet sie aber ebenfalls in neuen Tabs.</i></p>
+            <table class="w-100">
+                <tr>
+                    <th>
+                        Video (ID)
+                    </th>
+                    <th>
+                        Anzahl der Aufrufe
+                    </th>
+                    <th>
+                        Weiterleitung zu diesem Element (neuer Tab)
+                    </th>
+                </tr>
+                {% for video in videos %}
+                <tr>
+                    <td>
+                        {{ video.name }}
+                    </td>
+                    <td>
+                        {{ video.visits }}
+                    </td>
+                    <td>
+                        <a href="{{ video.site_url }}" target="_blank">{{ video.site_url }}</a>
                     </td>
                 </tr>
                 {% empty %}
@@ -209,6 +242,38 @@
                     </td>
                     <td>
                         <a href="{{ term.site_url }}" target="_blank">{{ term.site_url }}</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td class="no-data" colspan="3"><i>Keine Daten vorhanden.</i></td>
+                </tr>
+                {% endfor %}
+            </table>
+            <h3>Materialien:</h3>
+            <p><b>Gesamtzahl: {{ pdf_count }}</b></p>
+            <table class="w-100">
+                <tr>
+                    <th>
+                        Material (ID)
+                    </th>
+                    <th>
+                        Anzahl der Aufrufe
+                    </th>
+                    <th>
+                        Weiterleitung zu diesem Element (neuer Tab)
+                    </th>
+                </tr>
+                {% for pdf in pdfs %}
+                <tr>
+                    <td>
+                        {{ pdf.name }}
+                    </td>
+                    <td>
+                        {{ pdf.visits }}
+                    </td>
+                    <td>
+                        <a href="{{ pdf.site_url }}" target="_blank">{{ pdf.site_url }}</a>
                     </td>
                 </tr>
                 {% empty %}
@@ -251,6 +316,38 @@
             </table>
         </div>
     </div>
+    <div class="danger-hg m-0 p-0">
+        <div class="container danger-zone">
+            <h2>GEFAHRENZONE:</h2>
+            <p>Hier können alle Datensätze von vorhergegangenen Monaten gelöscht werden. <b>Löschen ist unwiederbringlich.</b> Nur die Erhebung des aktuellen Monats ({{ month }} {{ year }}) bleibt erhalten. Falls die Daten erhalten bleiben sollen, nicht betätigen, oder vorher anderweitig notieren.</p>
+            <button class="btn d-flex justify-content-center" data-toggle="modal" data-target="#confirmPopup"><b>ALLE VERALTETEN DATENSÄTZE LÖSCHEN</b></button>
+        </div>
+    </div>
+
+    <!-- Popup for confirmation -->
+    <div class="modal fade" id="confirmPopup" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Wirklich löschen? - Bitte bestätigen</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p><b>Das Löschen der Analyse Datensätze ist unwiederbringlich. Nur die Erhebung des aktuellen Monats ({{ month }} {{ year }}) bleibt erhalten. Falls die Daten erhalten bleiben sollen, nicht löschen, oder vorher anderweitig notieren.</b><br>
+                Möchten sie wirklich alle Datensätze der Analyse, außer dem aktuellen Monat ({{ month }} {{ year }}), löschen?</p>
+          </div>
+          <div class="modal-footer">
+              <div class="row w-100">
+                  <a href="/analytics/delete/" type="button" class="w-50 btn btn-confirm-yes d-flex justify-content-center"><b>Ja</b></a>
+                  <button type="button" class="w-50 btn btn-confirm-no d-flex justify-content-center" data-dismiss="modal"><b>Nein</b></button>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
     {% include './footer.html' %}
     {% include './mobile_nav_footer.html' %}

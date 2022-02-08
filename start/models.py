@@ -17,12 +17,12 @@ class IntroTexts(models.Model):
 
     intro_text = models.TextField(verbose_name="Intro-Text", max_length=5000,
                                   help_text="Allgemeiner Text für die Intro-Seite (max. 5000 Zeichen).")
-    timeline_card_text = models.TextField(verbose_name="Zeitachsen Karten Text", max_length=200,
-                                          help_text="Text für die Zeitachsen Karte (max. 200 Zeichen).")
-    buildings_card_text = models.TextField(verbose_name="Bauwerke Karten Text", max_length=200,
-                                           help_text="Text für die Bauwerke Karte (max. 200 Zeichen).")
-    video_card_text = models.TextField(verbose_name="Video Karten Text", max_length=200,
-                                       help_text="Text für die Video Karte (max. 200 Zeichen).")
+    timeline_card_text = models.TextField(verbose_name="Zeitachsen Karten Text", max_length=250,
+                                          help_text="Text für die Zeitachsen Karte (max. 250 Zeichen).")
+    buildings_card_text = models.TextField(verbose_name="Bauwerke Karten Text", max_length=250,
+                                           help_text="Text für die Bauwerke Karte (max. 250 Zeichen).")
+    video_card_text = models.TextField(verbose_name="Video Karten Text", max_length=250,
+                                       help_text="Text für die Video Karte (max. 250 Zeichen).")
 
     def __str__(self):
         """
