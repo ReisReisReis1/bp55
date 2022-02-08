@@ -62,11 +62,6 @@ html, body {
 /* Style for the video titles */
 .video-title {
     font-size: 18px;
-    /*
-    margin-bottom: 5px;
-    padding-bottom: 5px;
-    border-bottom: 4px solid;
-    */
     margin-top: 12px;
     padding-top: 4px;
     border-top: 4px solid;
@@ -202,9 +197,9 @@ to make clear that you can start the video by clicking */
 
     .video-title {
         font-size: 12px;
-        margin-bottom: 3px;
-        padding-bottom: 3px;
-        border-bottom: 2px solid;
+        margin-top: 6px;
+        padding-top: 2px;
+        border-top: 2px solid;
     }
 
     .thumbnail {
