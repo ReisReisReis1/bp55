@@ -56,17 +56,32 @@
                 <!-- Iterate through all Eras -->
                 {% for era,list in Eras_Buildings.items %}
                     {% with era_model=list|first era_buildings=list|index:1 %}
-                        <!-- Create link to specific era -->
-                        <a href="#{{ era }}">
-                            <li class="index-item">
-                                <div class="row row-no-margin" onclick='hideIndex("index-open","index-close")'>
-                                    <div class="d-flex col-3">
-                                        <div class="index-icon" style="background-color: #{{ era_model.color_code }};"></div>
+                        <div class="pc-design">
+                            <!-- Create link to specific era -->
+                            <a href="#{{ era }}" style="width: 100%">
+                                <li class="index-item">
+                                    <div class="row row-no-margin" onclick='hideIndex("index-open","index-close")'>
+                                        <div class="d-flex col-3">
+                                            <div class="index-icon" style="background-color: #{{ era_model.color_code }};"></div>
+                                        </div>
+                                        <div class="col p-0 font-calluna" style="color: #F9EAD8">{{ era }}</div>
                                     </div>
-                                    <div class="col p-0 font-calluna" style="color: #F9EAD8">{{ era }}</div>
-                                </div>
-                            </li>
-                        </a>
+                                </li>
+                            </a>
+                        </div>
+                        <div class="mobile-design">
+                            <!-- Create link to specific era -->
+                            <a href="#{{ era }}-m" style="width: 100%;">
+                                <li class="index-item">
+                                    <div class="row row-no-margin" onclick='hideIndex("index-open","index-close")'>
+                                        <div class="d-flex col-3">
+                                            <div class="index-icon" style="background-color: #{{ era_model.color_code }};"></div>
+                                        </div>
+                                        <div class="col p-0 font-calluna" style="color: #F9EAD8">{{ era }}</div>
+                                    </div>
+                                </li>
+                            </a>
+                        </div>
                     {% endwith %}
                 {% endfor %}
             </ul>
@@ -265,7 +280,7 @@
             {% with era_struct=era_buildinglist|first %}
             {% with building_list=era_buildinglist|index:1 %}
             {% with nextcolor=era_buildinglist|index:2 %}
-            <div class="row" id="{{ era_name }}">
+            <div class="row" id="{{ era_name }}-m">
                 <!-- Instead of 5, use 2 cols, to be able to make title bigger -->
                 <div class="col-sm-12">
                     <div style="color:#{{ era_struct.color_code }};">

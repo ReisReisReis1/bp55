@@ -29,6 +29,32 @@
     padding-bottom: 28px;
 }
 
+@media screen and (min-width: 768px) and (max-width: 991px) {
+    .building-image {
+        height: 100px;
+        background-color: #e8d4bd;
+    }
+
+    .card-title {
+        padding-bottom: 10px;
+    }
+
+    .row-result {
+        margin-bottom: 30px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .row-result {
+        margin-bottom: 0;
+    }
+
+    .card-title {
+        margin-bottom: 28px;
+        padding-bottom: 5px;
+    }
+}
+
 /*
 !*----------------------------------------------------------------------------
     Setting the width of the card content to full width

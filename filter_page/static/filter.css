@@ -30,16 +30,16 @@
     color: #1F1F1F;
 }
 
-.btn, .search-filters {
+.btn-dropdown, .search-filters {
     color: #F7F7F7;
 }
 
-.btn:hover {
+.btn-dropdown:hover {
     color: #F9EAD8;
     border-color: #F9EAD8;
 }
 
-.btn {
+.btn-dropdown {
     text-align: left;
     border-style: solid;
     border-radius: 5px;
@@ -100,4 +100,30 @@
 .card-title {
     color: black;
     padding-bottom: 28px;
+}
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+    .building-image {
+        height: 100px;
+        background-color: #e8d4bd;
+    }
+
+    .card-title {
+        padding-bottom: 10px;
+    }
+
+    .row-result {
+        margin-bottom: 30px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .row-result {
+        margin-bottom: 0;
+    }
+
+    .card-title {
+        margin-bottom: 28px;
+        padding-bottom: 5px;
+    }
 }

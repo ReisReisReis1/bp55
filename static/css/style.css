@@ -102,4 +102,11 @@
     left: 20px;
     padding: 0 11px 6px 11px;
     transform: rotate(90deg);
+    z-index: 998;
+}
+
+@media screen and (max-width: 1100px) {
+    .back-to-top {
+        bottom: 75px;
+    }
 }

@@ -1,3 +1,6 @@
+.remove-scrolling {
+    overflow: hidden;
+}
 
 .header-bar {
     height: 70px;
@@ -15,6 +18,7 @@
 
 .header-search-bar {
     position: absolute;
+    z-index: 1000;
     width: 100%;
 }
 
@@ -22,12 +26,13 @@
     margin-right: -15px;
 }
 
-.header-search-hide {
+.header-search-hide, .header-burger-hide {
     display: none;
 }
 
-.menu-icon, .hamtogglebtn {
+.menu-icon {
     display: none !important;
+    cursor: pointer;
 }
 
 .header-menu-item {
@@ -61,14 +66,17 @@
     }
 
     /* The hamburger menu */
-    .hamburger-menu {
+    .burger-menu {
+        position: fixed;
+        z-index: 999;
         min-height: 92vh;
         height: 92vh;
-        background: #1F1F1F;
+        width: 100%;
+        background-color: rgba(31, 31, 31, 0.95);
     }
 
     /* Set the font size */
-    .hamburger-menu-item {
+    .burger-menu-item {
         font-size: 34px;
     }
 
