@@ -37,7 +37,7 @@
         <div class="container h-100">
             <div class="row p-0 h-100">
                 <div class="col-11 p-0 font-benton-sans announce-text">
-                    <b>{{ announcement.title }}:</b> {{ announcement.content }}
+                    <marquee behavior="scroll"><b>{{ announcement.title }}:</b> {{ announcement.content }}</marquee>
                 </div>
                 <div class="col-1 p-0">
                     <button class="x-button float-right announce-text font-benton-sans" onclick="closeBanner({{ announcement.pk }})">
