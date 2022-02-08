@@ -2,6 +2,10 @@
     General CSS file for styling on every page
 =============================================================================*/
 
+body{
+    overflow-x: hidden;
+}
+
 .subheader {
     background-color: #1F1F1F !important;
     background-position: center !important;
@@ -88,6 +92,10 @@
     -moz-hyphens: auto;
     -webkit-hyphens: auto;
     hyphens: auto;
+}
+
+.truncate-title {
+
 }
 
 /*----------------------------------------------------------------------------
