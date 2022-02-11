@@ -8,12 +8,12 @@
 
 .warning-announce-color {
     background-color: #B43B44;
-    opacity: 0.9;
+    opacity: 0.85;
 }
 
 .announce-color{
     background-color: #2F4B33;
-    opacity: 0.9;
+    opacity: 0.85;
 }
 
 .x-button {
@@ -32,4 +32,44 @@
 
 .hide {
     display: none !important;
+}
+
+/* Style the marquee for infinite texts */
+.marquee {
+  width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.span {
+    white-space: nowrap;
+}
+.marquee-content {
+  display: inline-block;
+  animation: marquee linear infinite;
+}
+.item-collection-1 {
+  position: relative;
+  left: 0%;
+}
+/*reload first item collection at the end*/
+@keyframes swap {
+  0%, 50% {
+    left: 0%;
+  }
+  50.01%,
+  100% {
+    left: 100%;
+  }
+}
+.marquee-content:hover {
+  animation-play-state: paused
+}
+@keyframes marquee {
+  0% {
+    transform: translateX(0)
+  }
+  100% {
+    transform: translateX(-100%)
+  }
 }
