@@ -7,24 +7,15 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="{% static 'announcement.css'%}">
     <script>
-        function makeVisible(id) {
-            // Check if banner is set as closed in session storage
-            const closed = sessionStorage.getItem("closed-banner-"+id);
-            console.log(closed);
-            if (closed != "yes") {
-                // Get the content by ID
-                var banner = document.getElementById("banner-hide-" + id);
-                // Toggle the class 'hide'
-                banner.classList.toggle("hide");
-            }
-        }
+        // function to close a banner
         function closeBanner(id) {
             // Get the content by ID
             var banner = document.getElementById("banner-hide-" + id)
             // Toggle the class 'hide'
             banner.classList.toggle("hide");
-            // Update height for every other
+            // save to session storage
             sessionStorage.setItem("closed-banner-"+id, 'yes');
+            // Update height for every other
             for(var i = 0; i < {{ announcements.items|length }}; i++){
                 if(i <= id){
                     continue;
@@ -34,12 +25,20 @@
                 banner_rest.style.top = top+"px";
             }
         }
+        // For on load to check with sessionStorage, if banner should be displayed.
+        function makeVisible(id) {
+            // Check if banner is set as closed in session storage
+            const closed = sessionStorage.getItem("closed-banner-"+id);
+            if (closed == "yes") {
+                closeBanner(id);
+            }
+        }
     </script>
 </head>
 <body>
 {% for is_warning_and_len, contents in announcements.items %}
     {% if is_warning_and_len|first %}
-        <div class="announcement-bar hide warning-announce-color" id="banner-hide-{{ forloop.counter0 }}" style="top: {{ forloop.counter0|multiply:50 }}px;">
+        <div class="announcement-bar warning-announce-color" id="banner-hide-{{ forloop.counter0 }}" style="top: {{ forloop.counter0|multiply:50 }}px;">
             <div class="container h-100">
                 <div class="row p-0 h-100">
                     <div class="col-11 p-0 font-benton-sans announce-text">
@@ -63,10 +62,8 @@
                 </div>
             </div>
         </div>
-        <!-- Add onLoad check skript -->
-        <script type="text/javascript">makeVisible({{ forloop.counter0 }});</script>
     {% else %}
-        <div class="announcement-bar hide announce-color" id="banner-hide-{{ forloop.counter0 }}" style="top: {{ forloop.counter0|multiply:50 }}px;">
+        <div class="announcement-bar announce-color" id="banner-hide-{{ forloop.counter0 }}" style="top: {{ forloop.counter0|multiply:50 }}px;">
             <div class="container h-100">
                 <div class="row p-0 h-100">
                     <div class="col-11 p-0 font-benton-sans announce-text">
@@ -90,8 +87,12 @@
                 </div>
             </div>
         </div>
-        <script type="text/javascript">makeVisible({{ forloop.counter0 }});</script>
     {% endif %}
+{% endfor %}
+<!-- Make an extra for loop for scripts, cause here the classes they try to exit are declared -->
+{% for _, __ in announcements.items %}
+    <!-- Add onLoad check skript -->
+    <script type="text/javascript">makeVisible({{ forloop.counter0 }});</script>
 {% endfor %}
 </body>
 </html>
