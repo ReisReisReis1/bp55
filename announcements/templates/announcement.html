@@ -14,7 +14,7 @@
             // Toggle the class 'hide'
             banner.classList.toggle("hide");
             // Update height for every other
-            for(var i = 1; i <= {{ announcements|length }}; i++){
+            for(var i = 0; i <= {{ announcements.items|length }}; i++){
                 if(i <= id){
                     continue;
                 }
@@ -26,27 +26,60 @@
     </script>
 </head>
 <body>
-{% for announcement in announcements %}
-    {% if announcement.title == "Wartungsarbeiten" %}
-    <div class="announcement-bar warning-announce-color" id="banner-hide-{{ announcement.pk }}"
-         style="top: {{ forloop.counter0|multiply:'50' }}px;">
-    {% else %}
-    <div class="announcement-bar announce-color" id="banner-hide-{{ announcement.pk }}"
-         style="top: {{ forloop.counter0|multiply:'50' }}px;">
-    {% endif %}
-        <div class="container h-100">
-            <div class="row p-0 h-100">
-                <div class="col-11 p-0 font-benton-sans announce-text">
-                    <marquee behavior="scroll"><b>{{ announcement.title }}:</b> {{ announcement.content }}</marquee>
-                </div>
-                <div class="col-1 p-0">
-                    <button class="x-button float-right announce-text font-benton-sans" onclick="closeBanner({{ announcement.pk }})">
-                        X
-                    </button>
+{% for is_warning_and_len, contents in announcements.items %}
+    {% if is_warning_and_len|first %}
+        <div class="announcement-bar warning-announce-color" id="banner-hide-{{ forloop.counter0 }}" style="top: {{ forloop.counter0|multiply:50 }}px;">
+            <div class="container h-100">
+                <div class="row p-0 h-100">
+                    <div class="col-11 p-0 font-benton-sans announce-text">
+                        <div class="marquee">
+                            <div class="marquee-content" style="animation-duration: {{ is_warning_and_len|last }}s;">
+                                {% for w_group in contents %}
+                                <span class="item-collection-{{ forloop.counter }}" {% if forloop.counter0 == 0 %} style="animation: swap {{ is_warning_and_len|last }}s linear infinite;"{% endif %}>
+                                    {% for w in w_group %}
+                                    <span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+++&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <b>{{ w.title }}: </b>{{ w.content }}</span>
+                                    {% endfor %}
+                                </span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-1 p-0">
+                        <button class="x-button float-right announce-text font-benton-sans" onclick="closeBanner({{ forloop.counter0 }})">
+                            X
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    {% else %}
+        <div class="announcement-bar announce-color" id="banner-hide-{{ forloop.counter0 }}" style="top: {{ forloop.counter0|multiply:50 }}px;">
+            <div class="container h-100">
+                <div class="row p-0 h-100">
+                    <div class="col-11 p-0 font-benton-sans announce-text">
+                        <div class="marquee">
+                            <div class="marquee-content" style="animation-duration: {{ is_warning_and_len|last }}s;">
+                                {% for u_group in contents %}
+                                <span class="item-collection-{{ forloop.counter }}" {% if forloop.counter0 == 0 %} style="animation: swap {{ is_warning_and_len|last }}s linear infinite;"{% endif %}>
+                                    {% for u in u_group %}
+                                    <span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+++&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <b>{{ u.title }}: </b>{{ u.content }}</span>
+                                    {% endfor %}
+                                </span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-1 p-0">
+                        <button class="x-button float-right announce-text font-benton-sans" onclick="closeBanner({{ forloop.counter0 }})">
+                            X
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
 {% endfor %}
 </body>
 </html>
