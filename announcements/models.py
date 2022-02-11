@@ -9,7 +9,7 @@ class Announcement(models.Model):
     content: The content.
     active: Whether it is active or not.
     """
-    active = models.BooleanField(verbose_name="Aktiv?", default=False)
+    active = models.BooleanField(verbose_name="Aktiv?", default=True)
     title = models.CharField(verbose_name="Titel", max_length=30,
                              choices=[
                                  ("Wartungsarbeiten", "Wartungsarbeiten"),
