@@ -30,7 +30,8 @@ be a good choice).
 The two banners (warning and normal), are placed (css position absolut) variable, depending on
 which are activated. If you close one the JS script closeBanner(id) function gets called. It will
 hide the banner you want to close, and set every other banner 50px up. This uses JS sessionStorage
-to make sure you have to close the banners only one time per session.
+to make sure you have to close the banners only one time per session. The function 
+autoCloseSessionClosedBanners will called at page load, to make sure closed banners won't show up.
 """
 
 

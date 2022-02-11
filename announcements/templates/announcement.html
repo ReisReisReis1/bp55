@@ -26,7 +26,7 @@
             }
         }
         // For on load to check with sessionStorage, if banner should be displayed.
-        function makeVisible(id) {
+        function autoCloseSessionClosedBanners(id) {
             // Check if banner is set as closed in session storage
             const closed = sessionStorage.getItem("closed-banner-"+id);
             if (closed == "yes") {
@@ -92,7 +92,7 @@
 <!-- Make an extra for loop for scripts, cause here the classes they try to exit are declared -->
 {% for _, __ in announcements.items %}
     <!-- Add onLoad check skript -->
-    <script type="text/javascript">makeVisible({{ forloop.counter0 }});</script>
+    <script type="text/javascript">autoCloseSessionClosedBanners({{ forloop.counter0 }});</script>
 {% endfor %}
 </body>
 </html>
