@@ -60,20 +60,6 @@
     margin-bottom: auto;
 }
 
-/* Set background color */
-.timeline-background-color {
-    background-color: #F9EAD8;
-    margin: 0px;
-    padding: 0px;
-}
-
-/* Set bottom and top padding for the whole page */
-.timeline-container {
-    height: 100%;
-    padding-top: 40px;
-    padding-bottom: 60px;
-}
-
 /* Font for the Era title */
 .era-title {
     font-size: 84px;

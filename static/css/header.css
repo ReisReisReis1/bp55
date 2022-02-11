@@ -18,14 +18,22 @@
 
 .header-search-bar {
     position: absolute;
-    z-index: 1000;
     width: 100%;
-    height: 100%;
+    height: 500px;
 }
 
 .header-search {
-    margin-right: -15px;
+    z-index: 1000;
 }
+
+.header-search-close {
+    position: absolute;
+    z-index: 1;
+}
+
+/*.header-search {
+    margin-right: -15px;
+}*/
 
 .header-search-hide, .header-burger-hide {
     display: none;
@@ -66,6 +74,10 @@
         margin-right: 0px !important;
     }
 
+    .header-search-bar {
+        height: 220px;
+    }
+
     /* The hamburger menu */
     .burger-menu {
         position: fixed;
@@ -79,6 +91,7 @@
     /* Set the font size */
     .burger-menu-item {
         font-size: 34px;
+        width: 100%;
     }
 
     /* and the search icon height, within the hamburger menu */
@@ -86,5 +99,10 @@
         margin-top: 15px;
         height: 25px;
     }
+}
 
+@media screen and (max-width: 575px) {
+    .header-search {
+        margin-right: 15px;
+    }
 }

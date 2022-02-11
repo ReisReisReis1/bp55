@@ -51,7 +51,10 @@
         </div>
     </div>
 
-    <div id="header-search" class="header-search-bar header-search-hide" onclick="toggleHideSearchBar()">
+    <div id="header-search" class="header-search-bar header-search-hide">
+        <div class="header-search-close w-100 h-100" onclick="toggleHideSearchBar()">
+
+        </div>
         <div class="container">
             <div class="row justify-content-end">
                 <div id="header-search" class="header-search">
@@ -63,47 +66,65 @@
         </div>
     </div>
 
-    <!-- The actual hamburger menu -->
+    <!-- The actual burger menu -->
     <div class="burger-menu header-burger-hide" id="burger-menu">
         <div class="container">
             <div class="row">
-                <div class="col">
-                    <a href="{% url "start:start" %}" class="burger-menu-item color-primary-header">Intro</a>
-                </div>
+                <a href="{% url "start:start" %}" class="burger-menu-item color-primary-header">
+                    <div class="col">
+                        Intro
+                    </div>
+                </a>
             </div>
             <div class="row">
-                <div class="col">
-                    <a href="{% url "timeline:timeline" %}" class="burger-menu-item color-primary-header">Zeitachse</a>
-                </div>
+                <a href="{% url "timeline:timeline" %}" class="burger-menu-item color-primary-header">
+                    <div class="col">
+                        Zeitachse
+                    </div>
+                </a>
             </div>
             <div class="row">
-                <div class="col">
-                    <a href="{% url "filter_page:filter" %}" class="burger-menu-item color-primary-header">Bauwerke</a>
-                </div>
+                <a href="{% url "filter_page:filter" %}" class="burger-menu-item color-primary-header">
+                    <div class="col">
+                        Bauwerke
+                    </div>
+                </a>
             </div>
             <div class="row">
-                <div class="col">
-                    <a href="{% url "video_content:videos" %}" class="burger-menu-item color-primary-header">Staffeln</a>
-                </div>
+                <a href="{% url "video_content:videos" %}" class="burger-menu-item color-primary-header">
+                    <div class="col">
+                        Staffeln
+                    </div>
+                </a>
             </div>
             <div class="row">
-                <div class="col">
-                    <a href="{% url "materials_page:material" %}" class="burger-menu-item color-primary-header">Materialien</a>
-                </div>
+                <a href="{% url "materials_page:material" %}" class="burger-menu-item color-primary-header">
+                    <div class="col">
+                        Materialien
+                    </div>
+                </a>
             </div>
             <div class="row">
-                <div class="col">
-                    <a href="{% url "impressum:impressum" %}" class="burger-menu-item color-primary-header">Impressum</a>
-                </div>
+                <a href="{% url "impressum:impressum" %}" class="burger-menu-item color-primary-header">
+                    <div class="col">
+                        Impressum
+                    </div>
+                </a>
             </div>
             <div class="row">
-                <div class="col">
-                    {% if Kurs_Link|length == 0 %}
-                        <a href="" class="burger-menu-item color-primary-header">Moodle-Kurs</a>
-                    {% else %}
-                        <a href="{{Kurs_Link}}" target="_blank" class="burger-menu-item color-primary-header">Moodle-Kurs</a>
-                    {% endif %}
-                </div>
+                {% if Kurs_Link|length == 0 %}
+                    <a href="" class="burger-menu-item color-primary-header">
+                        <div class="col">
+                            Moodle-Kurs
+                        </div>
+                    </a>
+                {% else %}
+                    <a href="{{Kurs_Link}}" target="_blank" class="burger-menu-item color-primary-header">
+                        <div class="col">
+                            Moodle-Kurs
+                        </div>
+                    </a>
+                {% endif %}
             </div>
         </div>
     </div>

@@ -7,17 +7,10 @@ html, body {
     height: 100%;
 }
 
-/* Styling of the body part with the videos */
-.videos-body {
-    background-color: #F9EAD8;
-    padding-top: 50px;
-    padding-bottom: 50px;
-}
-
 /* Styling of the era titles*/
 .era-title {
     font-size: 84px;
-    padding-left: 0px;
+    padding-left: 0;
     width: 90%;
 }
 
@@ -49,7 +42,8 @@ html, body {
 
 /* Styling of the element containing a video and its title */
 .video-box {
-    width: 20%;
+    cursor: pointer;
+    width: 25%;
     padding-left: 5px !important;
     padding-right: 5px !important;
 }
@@ -77,11 +71,6 @@ html, body {
     display: none !important;
 }
 
-/* Style for the thumbnails */
-.thumbnail {
-    margin-top: 6px;
-}
-
 /* Set the Thumbnails to show a hand/finger pointer,
 to make clear that you can start the video by clicking */
 .thumbnail:hover{
@@ -95,8 +84,8 @@ to make clear that you can start the video by clicking */
     transform: scaleY(-1) scaleX(-1) translate(0px, 50%) rotate(0.125turn);
     border-style: solid;
     border-width: 4px;
-    border-right-width: 0px;
-    border-bottom-width: 0px;
+    border-right-width: 0;
+    border-bottom-width: 0;
 }
 
 /* Style the more videos button */
@@ -116,24 +105,25 @@ to make clear that you can start the video by clicking */
 
 .popup {
     background-color: transparent;
-    border: 0px !important;
+    border: 0 !important;
     border-radius: 0 !important;
 }
 
 /* ... re-set header borders to more height */
 .popup-header {
-    padding-left: 0px;
-    margin-left: 0px;
-    padding-right: 0px;
-    margin-right: 0px;
+    padding-left: 0;
+    margin-left: 0;
+    padding-right: 0;
+    margin-right: 0;
     border-bottom: 4px solid;
     padding-bottom: 5px;
 }
 
 /* ... title text */
 .popup-title {
-    padding-left: 0px;
-    margin-left: 0px;
+    cursor: default;
+    padding-left: 0;
+    margin-left: 0;
     color: #F9EAD8;
     font-size: 22px;
 }
@@ -167,14 +157,9 @@ to make clear that you can start the video by clicking */
 
 /*--------------------------------------- Responsive Design ---------------------------------------------------------*/
 
-@media screen and (max-width: 1100px) {
+@media screen and (max-width: 991px) {
 
     /* Responsive Design for mobile */
-
-    .video-body {
-        padding-left: 6px;
-        padding-right: 6px;
-    }
 
     .video-box {
         width: 50%;
@@ -199,7 +184,7 @@ to make clear that you can start the video by clicking */
         font-size: 12px;
         margin-top: 6px;
         padding-top: 2px;
-        border-top: 2px solid;
+        border-top: 3px solid;
     }
 
     .thumbnail {
@@ -208,14 +193,11 @@ to make clear that you can start the video by clicking */
 
     .era-line {
         padding-left: 6px;
-        margin-left: 6px;
-        margin-right: 6px;
         border-left-style: solid;
         border-left-width: 3px;
     }
 
     .gradient-line {
-        margin-left: 6px;
         background-size: 3px auto;
     }
 
@@ -239,6 +221,16 @@ to make clear that you can start the video by clicking */
         margin: 0px !important;
         left: 0px !important;
         right: 0px !important;*/
+    }
+}
+
+@media screen and (max-width: 575px) {
+    .era-line {
+        margin-left: 8px;
+    }
+
+    .gradient-line {
+        margin-left: 8px;
     }
 }
 

@@ -51,7 +51,7 @@
 
     </div>
 
-    <div class="detail-body">
+    <div class="default-page-body">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
@@ -147,7 +147,7 @@
                         {% endif %}
                     {% endwith %}
 
-                    <table class="table table-borderless mobile-table">
+                    <table class="table table-borderless table-mobile break-words">
                         <tbody>
                             {% if not Beschreibung == None and not Beschreibung|length == 0 %}
                                 <div class="mobile-design building-description">
@@ -346,18 +346,18 @@
                         {% if image_length|add:blueprints_length <= 1 %}
                             {% if Bilder|length == 0 and Baupläne|length == 0 %}
                                 <!-- Add default image if there are no images/blueprints -->
-                                <img src="{% static "default_image.png"  %}" class="pc-design" style="width: 100%;">
+                                <img src="{% static "default_image.png"  %}" class="pc-design w-100">
                             {% else %}
                                 <!-- Add image/blueprint if there is only one image/blueprint -->
                                 {% if Baupläne|length == 0 %}
                                     {% for image in Bilder %}
-                                        <div class="pc-design d-flex align-items-center justify-content-center w-100 carousel-image">
+                                        <div class="d-flex align-items-center justify-content-center w-100 carousel-image pc-design">
                                             <img class="d-block mh-100 mw-100" src="/media/{{ image.picture }}">
                                         </div>
                                     {% endfor %}
                                 {% else %}
                                     {% for blueprints in Baupläne %}
-                                        <div class="pc-design d-flex align-items-center justify-content-center w-100 carousel-image">
+                                        <div class="d-flex align-items-center justify-content-center w-100 carousel-image pc-design">
                                             <img class="d-block mh-100 mw-100" src="/media/{{ blueprints.blueprint }}">
                                         </div>
                                     {% endfor %}
@@ -429,13 +429,13 @@
                         {% endif %}
                     {% endwith %}
 
-                    <table class="table table-borderless">
+                    <table class="table table-borderless break-words">
                         <tbody>
-                            <tr class="mobile-border" style="border-color: #{{ Era.color_code }}">
+                            <tr class="mobile-design" style="border-color: #{{ Era.color_code }}; border-style: solid;">
 
                             </tr>
                             {% if not Beschreibung == None and not Beschreibung|length == 0 %}
-                                <div class="pc-design building-description">
+                                <div class="building-description pc-design">
                                     {{ Beschreibung }}
                                 </div>
                             {% endif %}
@@ -444,11 +444,13 @@
                                     <td class="font-benton-sans">
                                         <b>Videos</b>
                                     </td>
-                                    <td class="break-words font-calluna">
+                                    <td class="font-calluna">
                                         {% for timestamp in Videos %}
-                                            <div class="d-flex align-items-center" data-toggle="modal" data-target="#popup-{{ forloop.counter }}" onclick="startVideoOnTimestamp({{ forloop.counter }},{{ timestamp.minutes }},{{ timestamp.seconds }})" style="cursor: pointer">
+                                            <div class="d-flex align-items-center" data-toggle="modal" title="{{ timestamp.video.title }}" data-target="#popup-{{ forloop.counter }}" onclick="startVideoOnTimestamp({{ forloop.counter }},{{ timestamp.minutes }},{{ timestamp.seconds }})" style="cursor: pointer">
                                                 <img src="{% static "icon-video.png" %}" width="20px">
-                                                {{ timestamp.video.title }}<br>
+                                                <div class="truncate-title">
+                                                    {{ timestamp.video.title }}
+                                                </div>
                                             </div>
 
                                             <!-- Add popup in which the video gets played -->
@@ -457,7 +459,9 @@
                                                     <div class="modal-content popup">
                                                         <div class="modal-header popup-header align-items-center" style="border-color: #{{ Era.color_code }};">
                                                             <!-- Header row of popup -->
-                                                            <h4 class="modal-title popup-title font-benton-sans" style="overflow: hidden;"><b>{{ timestamp.video.title }}</b></h4>
+                                                            <h4 class="modal-title popup-title font-benton-sans truncate-title" title="{{ timestamp.video.title }}">
+                                                                <b>{{ timestamp.video.title }}</b>
+                                                            </h4>
                                                             <button type="button" class="close popup-close-button font-benton-sans" data-dismiss="modal">&times;</button>
                                                         </div>
                                                         <!-- Body of popup which contains the video -->
@@ -489,9 +493,9 @@
                                     <td class="font-benton-sans">
                                         <b>Links</b>
                                     </td>
-                                    <td class="break-words font-calluna">
+                                    <td class="truncate-title font-calluna">
                                         {% for link in Links %}
-                                            <a href="{{ link }}" target="_blank">{{ link }}</a><br>
+                                            <a href="{{ link }}" target="_blank" title="{{ link }}">{{ link }}</a><br>
                                         {% endfor %}
                                     </td>
                                 </tr>
