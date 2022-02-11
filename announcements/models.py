@@ -10,10 +10,12 @@ class Announcement(models.Model):
     active: Whether it is active or not.
     """
     active = models.BooleanField(verbose_name="Aktiv?", default=False)
-    title = models.CharField(verbose_name="Titel", max_length=20,
+    title = models.CharField(verbose_name="Titel", max_length=30,
                              choices=[
                                  ("Wartungsarbeiten", "Wartungsarbeiten"),
                                  ("Jetzt Neu", "Jetzt Neu"),
+                                 ("Neues Vorlesungsvideo", "Neues Vorlesungsvideo"),
+                                 ("Klausur", "Klausur"),
                                  ("Erinnerung", "Erinnerung"),
                              ], help_text="Den Typ der Ankündigung auswählen.")
     content = models.CharField(verbose_name="Inhalt", max_length=105,
@@ -27,4 +29,4 @@ class Announcement(models.Model):
         verbose_name_plural = "Ankündigungen"
 
     def __str__(self):
-        return self.content[:50]+"..."
+        return self.title+": "+self.content[:50]+"..."
