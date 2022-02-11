@@ -147,7 +147,7 @@
         </div>
     </div> -->
 
-    <div class="videos-body">
+    <div class="default-page-body">
         <!-- run through all eras -->
         {% for items in Era %}
             <!-- Set borders to see the eras color on the side -->
@@ -175,15 +175,15 @@
                         <!-- Videos in the section -->
                         {% for video in items.1 %}
                             <!-- Cases in which a new row has should be opened -->
-                            {% if forloop.counter0|divisibleby:5 or forloop.first %}
+                            {% if forloop.counter0|divisibleby:4 or forloop.first %}
                             <div class="row row-video row-no-margin video-hide" id="video-hide-{{ forloop.parentloop.counter }}">
                             {% endif %}
 
                             <!-- The Video Item -->
-                            <div class="video-box">
+                            <div class="video-box" data-toggle="modal" title="{{ video.title }}" data-target="#popup-{{ forloop.parentloop.counter }}-{{ forloop.counter }}" onclick="registerVideoClick({{ video.pk }})">
                                 <!-- Video -->
-                                <img class="thumbnail" src="/media/{{ video.thumbnail }}" data-toggle="modal" data-target="#popup-{{ forloop.parentloop.counter }}-{{ forloop.counter }}" style="width: 100%" onclick="registerVideoClick({{ video.pk }})">
-                                <div class="video-title break-words font-benton-sans" style="border-color: #{{ items.0.color_code }};">
+                                <img class="thumbnail w-100" src="/media/{{ video.thumbnail }}">
+                                <div class="video-title truncate-title font-benton-sans" style="border-color: #{{ items.0.color_code }};">
                                     <b>{{ video.title }}</b>
                                 </div>
                             </div>
@@ -194,7 +194,7 @@
                                     <div class="modal-content popup">
                                         <div class="modal-header popup-header align-items-center" style="border-color: #{{ items.0.color_code }};">
                                             <!-- Header row of popup -->
-                                            <h4 class="modal-title popup-title font-benton-sans" style="overflow: hidden;"><b>{{ video.title }}</b></h4>
+                                            <h4 class="modal-title popup-title truncate-title font-benton-sans" data-toggle="tooltip" title="{{ video.title }}"><b>{{ video.title }}</b></h4>
                                             <button type="button" class="close popup-close-button font-benton-sans" data-dismiss="modal">&times;</button>
                                         </div>
                                         <div class="modal-body popup-body">
@@ -211,7 +211,7 @@
 
                             <!-- Cases in which the tag must be closed -->
                             <!-- If it is at end of the row, or the video -->
-                            {% if forloop.last or forloop.counter|divisibleby:5 %}
+                            {% if forloop.last or forloop.counter|divisibleby:4 %}
                                 <!-- Close row div here -->
                                 </div>
                             {% endif %}
@@ -233,10 +233,10 @@
                         {% endif %}
 
                         <!-- The Video Item -->
-                        <div class="video-box">
+                        <div class="video-box" title="{{ video.title }}" onclick="showFullscreenVideo({{ forloop.parentloop.counter }},{{ forloop.counter }}),registerVideoClick({{ video.pk }})">
                             <!-- Video -->
-                            <img class="thumbnail" src="/media/{{ video.thumbnail }}" style="width: 100%" onclick="showFullscreenVideo({{ forloop.parentloop.counter }},{{ forloop.counter }}),registerVideoClick({{ video.pk }})">
-                            <div class="video-title break-words font-benton-sans" style="border-color: #{{ items.0.color_code }};">
+                            <img class="thumbnail w-100" src="/media/{{ video.thumbnail }}">
+                            <div class="video-title truncate-title font-benton-sans" style="border-color: #{{ items.0.color_code }};">
                                 <b>{{ video.title }}</b>
                             </div>
                         </div>

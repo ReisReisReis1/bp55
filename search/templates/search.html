@@ -25,7 +25,7 @@
     <!-- Get 'back to top' button -->
     <a href="" class="back-to-top font-bebas-neue" role="button"><h4 class="m-0">«</h4></a>
 
-    <div class="search-body">
+    <div class="default-page-body">
         <div class="container">
             {% if Result|length == 0 %}
                 <!-- If no fitting elements are found -->
@@ -42,7 +42,7 @@
                             <div class="row row-result row-no-margin">
                         {% endif %}
                     {% endif %}
-                        <a href="{% url 'details_page:detailed' building_id=building.id %}" class="col-md-3">
+                        <a href="{% url 'details_page:detailed' building_id=building.id %}" title="{{ building.name }}" class="col-md-3">
                             <div class="result-box">
                                 <!-- Add image of building -->
                                 {% if image == None %}
@@ -58,11 +58,7 @@
                                 {% endif %}
 
                                 <!-- Add name of building -->
-                                <h5 class="card-title font-benton-sans break-words" style="border-bottom-style: solid; border-bottom-width: 5px; border-bottom-color: #{{ building.era.color_code }}">{{ building.name }}</h5>
-                                {% if False and not building.description == None %}
-                                    <!-- Add building description -->
-                                    <p class="card-text" align="justify">{{ building.description }}</p>
-                                {% endif %}
+                                <h5 class="card-title font-benton-sans truncate-title" style="border-bottom-style: solid; border-bottom-width: 5px; border-bottom-color: #{{ building.era.color_code }}">{{ building.name }}</h5>
                             </div>
                         </a>
                     {% if forloop.counter|divisibleby:4 or forloop.last %}
