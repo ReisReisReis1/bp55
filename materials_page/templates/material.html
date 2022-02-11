@@ -86,7 +86,7 @@
         </div>
     </div>
 
-    <div class="material-body">
+    <div class="default-page-body">
         <!-- run through all categories -->
         {% for items in Materials %}
             <!-- Set borders to see the categories color on the side -->
@@ -112,25 +112,28 @@
                         <!-- Materials in the section -->
                         {% for material in items.1 %}
                             <!-- Cases in which a new row has should be opened -->
-                            {% if forloop.counter0|divisibleby:5 or forloop.first %}
+                            {% if forloop.counter0|divisibleby:8 or forloop.first %}
                             <div class="row row-material row-no-margin material-hide" id="material-hide-{{ forloop.parentloop.counter }}">
                             {% endif %}
 
                             <!-- The Material Item -->
                             <div class="material-box">
                                 <!-- Material Icon with a link to open the corresponding PDF in a new tab -->
-                                <a href="{{ material.file.url }}" target="_blank" onclick="registerPDFClick({{ material.pk }})">
-                                    <img class="icon" src="{% static 'icon-pdf.png' %}">
+                                <a href="{{ material.file.url }}" class="material-link" target="_blank" data-toggle="tooltip" title="{{ material.name }}" onclick="registerPDFClick({{ material.pk }})">
+                                    <div class="material-icon d-flex align-items-center justify-content-center">
+                                        <img class="icon" src="{% static 'icon-pdf.png' %}">
+                                    </div>
+
+                                    <!-- Material title -->
+                                    <div class="material-title break-words truncate-title font-benton-sans" style="border-color: #{{ items.2 }};">
+                                        <b>{{ material.name }}</b>
+                                    </div>
                                 </a>
-                                <!-- Material title -->
-                                <div class="material-title break-words font-benton-sans" style="border-color: #{{ items.2 }};">
-                                    <b>{{ material.name }}</b>
-                                </div>
                             </div>
 
                             <!-- Cases in which the tag must be closed -->
                             <!-- If it is at end of the row, or the video -->
-                            {% if forloop.last or forloop.counter|divisibleby:5 %}
+                            {% if forloop.last or forloop.counter|divisibleby:8 %}
                                 <!-- Close row div here -->
                                 </div>
                             {% endif %}
@@ -147,25 +150,28 @@
                         <!-- Materials in the section -->
                         {% for material in items.1 %}
                             <!-- Cases in which a new row has should be opened -->
-                            {% if forloop.counter0|divisibleby:2 or forloop.first %}
+                            {% if forloop.counter0|divisibleby:3 or forloop.first %}
                             <div class="row row-material row-no-margin material-hide" id="material-hide-{{ forloop.parentloop.counter }}">
                             {% endif %}
 
                             <!-- The Material Item -->
                             <div class="material-box">
                                 <!-- Material Icon with a link to open the corresponding PDF in a new tab -->
-                                <a href="{{ material.file.url }}" target="_blank">
-                                    <img class="icon" src="{% static 'icon-pdf.png' %}">
+                                <a href="{{ material.file.url }}" class="material-link" target="_blank" data-toggle="tooltip" title="{{ material.name }}" onclick="registerPDFClick({{ material.pk }})">
+                                    <div class="material-icon d-flex align-items-center justify-content-center">
+                                        <img class="icon" src="{% static 'icon-pdf.png' %}">
+                                    </div>
+
+                                    <!-- Material title -->
+                                    <div class="material-title truncate-title font-benton-sans"style="border-color: #{{ items.2 }};">
+                                        <b>{{ material.name }}</b>
+                                    </div>
                                 </a>
-                                <!-- Material title -->
-                                <div class="material-title break-words" style="border-color: #{{ items.2 }};">
-                                    <b>{{ material.name }}</b>
-                                </div>
                             </div>
 
                             <!-- Cases in which the tag must be closed -->
                             <!-- If it is at end of the row, or the video -->
-                            {% if forloop.last or forloop.counter|divisibleby:2 %}
+                            {% if forloop.last or forloop.counter|divisibleby:3 %}
                                 <!-- Close row div here -->
                                 </div>
                             {% endif %}

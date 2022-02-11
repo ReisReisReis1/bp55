@@ -2,13 +2,6 @@
     CSS File for styling on the material page
 =============================================================================*/
 
-/* Styling of the body part with the materials */
-.material-body {
-    background-color: #F9EAD8;
-    padding-top: 50px;
-    padding-bottom: 50px;
-}
-
 /* Styling of the category titles*/
 .category-title {
     font-size: 84px;
@@ -53,7 +46,7 @@
 
 /* Styling of the element containing a material and its title */
 .material-box {
-    width: 20%;
+    width: 12.5%;
     padding-left: 5px !important;
     padding-right: 5px !important;
 }
@@ -61,6 +54,15 @@
 /* Some spacing to make the materials look nicer on the page */
 .row-material {
     margin-bottom: 10px;
+}
+
+.material-link {
+    color: black;
+    display: block;
+}
+
+.material-link:hover {
+    color: black;
 }
 
 /* Style for the material titles */
@@ -81,10 +83,13 @@
     }
 
 /* Style for the pdf icon */
+.material-icon {
+    background-color: #e8d4bd;
+    height: 70px;
+}
+
 .icon {
-    margin-top: 6px;
-    width: 51px;
-    height: 68px;
+    width: 40px;
 }
 
 /* Set the icon to show a hand/finger pointer,
@@ -115,17 +120,12 @@ to make clear that you can see the material by clicking */
 
 /*--------------------------------------- Responsive Design ---------------------------------------------------------*/
 
-@media screen and (max-width: 1100px) {
+@media screen and (max-width: 991px) {
 
     /* Responsive Design for mobile */
 
-    .material-body {
-        padding-left: 6px;
-        padding-right: 6px;
-    }
-
     .material-box {
-        width: 50%;
+        width: 33.33%;
         padding-left: 7px !important;
         padding-right: 7px !important;
     }
@@ -147,7 +147,7 @@ to make clear that you can see the material by clicking */
         font-size: 12px;
         margin-top: 6px;
         padding-top: 2px;
-        border-top: 2px solid;
+        border-top: 3px solid;
     }
 
     .icon {
@@ -156,14 +156,11 @@ to make clear that you can see the material by clicking */
 
     .material-line {
         padding-left: 6px;
-        margin-left: 6px;
-        margin-right: 6px;
         border-left-style: solid;
         border-left-width: 3px;
     }
 
     .gradient-line {
-        margin-left: 6px;
         background-size: 3px auto;
     }
 
@@ -175,6 +172,16 @@ to make clear that you can see the material by clicking */
         border-bottom-width: 0px;
     }
 
+}
+
+@media screen and (max-width: 575px) {
+    .material-line {
+        margin-left: 8px;
+    }
+
+    .gradient-line {
+        margin-left: 8px;
+    }
 }
 
 

@@ -2,12 +2,6 @@
     CSS File for styling on the details pages
 =============================================================================*/
 
-.detail-body {
-    background-color: #F9EAD8;
-    padding-top: 50px;
-    padding-bottom: 50px;
-}
-
 .building-title {
     font-size: 84px;
     padding-left: 0;
@@ -18,6 +12,10 @@
 .building-era {
     font-size: 20px;
     letter-spacing: 1px;
+}
+
+table {
+    table-layout: fixed;
 }
 
 /*----------------------------------------------------------------------------
@@ -89,6 +87,7 @@
 
 /* ... title text */
 .popup-title {
+    cursor: default;
     padding-left: 0px;
     margin-left: 0px;
     color: #F9EAD8;
@@ -128,10 +127,6 @@
     display: none !important;
 }*/
 
-.mobile-border {
-    border-style: none !important;
-}
-
 @media screen and (min-width: 768px) {
     .mobile-design {
         display: none !important;
@@ -149,16 +144,12 @@
         display: inherit !important;
     }*/
 
-    .mobile-border {
-        border-style: solid !important;
-    }
-
-    .mobile-table {
-        margin-bottom: 0 !important;
-    }
-
     .building-title, .building-era {
         text-align: center;
+    }
+
+    .table-mobile {
+        margin-bottom: 0;
     }
 }
 
