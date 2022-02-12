@@ -97,6 +97,34 @@
             }
         }
 
+        // The following function are copying from
+        // https://docs.djangoproject.com/en/dev/ref/csrf/#ajax
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        function registerVideoClick(video_id) {
+            // use fetch to call the add endpoint
+            var url = "/analytics/add/video/"+video_id+"/";
+            let csrftoken = getCookie('csrftoken');
+            fetch(url, {
+                method: 'POST',
+                headers: { "X-CSRFToken": csrftoken },
+              });
+        }
+
     </script>
 </head>
 <body>
@@ -505,7 +533,7 @@
                                     <td class="font-calluna">
                                         {% for timestamp in Videos %}
                                             <!-- <div class="d-flex align-items-center" data-toggle="modal" title="{{ timestamp.video.title }}" data-target="#popup-{{ timestamp.video.pk }}" onclick="startVideoOnTimestamp({{ timestamp.video.pk }},{{ timestamp.minutes }},{{ timestamp.seconds }})" style="cursor: pointer"> -->
-                                            <div class="d-flex align-items-center" title="{{ timestamp.video.title }}" onclick="showVideo({{ Era.pk }}, {{ timestamp.video.pk }}, {{ timestamp.minutes }}, {{ timestamp.seconds }})" style="cursor: pointer">
+                                            <div class="d-flex align-items-center" title="{{ timestamp.video.title }}" onclick="registerVideoClick({{ timestamp.video.pk }}), showVideo({{ Era.pk }}, {{ timestamp.video.pk }}, {{ timestamp.minutes }}, {{ timestamp.seconds }})" style="cursor: pointer">
                                                 <img src="{% static "icon-video.png" %}" width="20px">
                                                 <div class="truncate-title">
                                                     {{ timestamp.video.title }}
