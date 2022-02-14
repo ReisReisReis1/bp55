@@ -201,9 +201,10 @@
     display: none !important;
 }
 
+/* Better pic sizes for: 1200px, 992px, 768px, 575px and smaller */
+/* Most mobile design defined in biggest width here */
 @media screen and (max-width: 1200px) {
     /* What to to if it is mobile design */
-
     /* hide the pc-design */
     .pc-design {
         display: none !important;
@@ -252,8 +253,8 @@
     }
 
     .hd-text {
-        margin-top: -7px;
-        margin-bottom: 2px;
+        margin-top: -8px;
+        margin-bottom: 1px;
     }
 
     /* New Building year */
@@ -278,7 +279,7 @@
     }
 
     .img {
-        height: 80px !important;
+        height: 155px !important;
     }
 
     /* Update fixed height, to not see much more spaces because of smaller text */
@@ -317,4 +318,43 @@
         margin-top: 6px;
         margin-right: 10px;
     }
+}
+
+@media screen and (max-width: 991px) {
+    .img {
+        height: 130px !important;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .img {
+        height: 105px !important;
+    }
+}
+
+@media screen and (max-width: 574px) {
+    .img {
+        height: 80px !important;
+    }
+}
+
+/*============================================================================*/
+/*----------------------------------------------------------------------------
+    Styling of the index of all eras
+ */
+/*
+.index {
+    position: fixed;
+    right: 20px;
+    bottom: 0;
+    z-index: 10;
+}
+
+*/
+/*
+    Hide the index by default
+ *//*
+
+.index-hide {
+    display: none;
 }

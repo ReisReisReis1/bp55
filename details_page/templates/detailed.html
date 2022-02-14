@@ -28,9 +28,13 @@
         // id: Video ID of video which gets started
         // minutes: Minutes on which video gets started
         // seconds: Seconds on which video gets started
-        function startVideoOnTimestamp(id, minutes, seconds) {
+        function startVideoOnTimestamp(id, era_id, minutes, seconds, mobile) {
             // Get correct video element
-            var video = document.getElementById("popup-video-" + id);
+            if (mobile) {
+                var video = document.getElementById("video-"+era_id+"-"+id);
+            } else {
+                var video = document.getElementById("popup-video-" + id);
+            }
             // Calculate timestamp in seconds
             var timestamp = (minutes * 60) + seconds;
 
@@ -39,6 +43,88 @@
                 video.currentTime = timestamp;
             }
         }
+
+        // Function to show the video and make it full-screen instantly
+        function showFullscreenVideo(era_id, video_id) {
+            // get the video
+            var video = document.getElementById("video-" + era_id + "-" + video_id);
+            if (!document.fullscreenElement && !document.mozFullScreenElement &&
+                !document.webkitFullscreenElement && !document.msFullscreenElement) {
+
+                // Make it fullscreen
+                if (video.requestFullscreen) {
+                    video.requestFullscreen();
+                } else if (video.msRequestFullscreen) {
+                    video.msRequestFullscreen();
+                } else if (video.mozRequestFullScreen) {
+                    video.mozRequestFullScreen();
+                } else if (video.webkitRequestFullscreen) {
+                    video.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+                }
+
+                // Show it
+                video.style.display = 'inherit';
+            }
+        }
+
+        // Hide the video after fullscreen was exited by the user
+        function hideFullscreenVideo(era_id, video_id) {
+            // get the video
+            var video = document.getElementById("video-" + era_id + "-" + video_id);
+            if (!document.webkitIsFullScreen && !document.mozFullScreen && !document.msFullscreenElement) {
+
+                // Pause the video
+                video.pause();
+
+                // Hide it
+                video.style.display = 'none';
+            }
+        }
+
+        // checks the screen size, and shows the mobile video if it is 767px or less
+        // this also hides the modals, in order to not display both
+        function showVideo(era_id, video_id, minutes, seconds) {
+            console.log($(window).width());
+            if ($(window).width() > 767) {
+                startVideoOnTimestamp(video_id, era_id, minutes, seconds, false);
+                var modal_id = "popup-"+video_id;
+                // open the modal
+                $('#'+modal_id).modal();
+            } else {
+                startVideoOnTimestamp(video_id, era_id, minutes, seconds, true);
+                //show the fullscreen vid
+                showFullscreenVideo(era_id, video_id);
+            }
+        }
+
+        // The following function are copying from
+        // https://docs.djangoproject.com/en/dev/ref/csrf/#ajax
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        function registerVideoClick(video_id) {
+            // use fetch to call the add endpoint
+            var url = "/analytics/add/video/"+video_id+"/";
+            let csrftoken = getCookie('csrftoken');
+            fetch(url, {
+                method: 'POST',
+                headers: { "X-CSRFToken": csrftoken },
+              });
+        }
+
     </script>
 </head>
 <body>
@@ -446,7 +532,8 @@
                                     </td>
                                     <td class="font-calluna">
                                         {% for timestamp in Videos %}
-                                            <div class="d-flex align-items-center" data-toggle="modal" title="{{ timestamp.video.title }}" data-target="#popup-{{ forloop.counter }}" onclick="startVideoOnTimestamp({{ forloop.counter }},{{ timestamp.minutes }},{{ timestamp.seconds }})" style="cursor: pointer">
+                                            <!-- <div class="d-flex align-items-center" data-toggle="modal" title="{{ timestamp.video.title }}" data-target="#popup-{{ timestamp.video.pk }}" onclick="startVideoOnTimestamp({{ timestamp.video.pk }},{{ timestamp.minutes }},{{ timestamp.seconds }})" style="cursor: pointer"> -->
+                                            <div class="d-flex align-items-center" title="{{ timestamp.video.title }}" onclick="registerVideoClick({{ timestamp.video.pk }}), showVideo({{ Era.pk }}, {{ timestamp.video.pk }}, {{ timestamp.minutes }}, {{ timestamp.seconds }})" style="cursor: pointer">
                                                 <img src="{% static "icon-video.png" %}" width="20px">
                                                 <div class="truncate-title">
                                                     {{ timestamp.video.title }}
@@ -454,7 +541,7 @@
                                             </div>
 
                                             <!-- Add popup in which the video gets played -->
-                                            <div class="modal fade popup-bg" id="popup-{{ forloop.counter }}" data-keyboard="false" onclick="stopPopupVideo({{ forloop.counter }})">
+                                            <div class="modal fade popup-bg" id="popup-{{ timestamp.video.pk }}" data-keyboard="false" onclick="stopPopupVideo({{ timestamp.video.pk }})">
                                                 <div class="modal-dialog modal-xl modal-dialog-centered">
                                                     <div class="modal-content popup">
                                                         <div class="modal-header popup-header align-items-center" style="border-color: #{{ Era.color_code }};">
@@ -466,7 +553,7 @@
                                                         </div>
                                                         <!-- Body of popup which contains the video -->
                                                         <div class="modal-body popup-body">
-                                                            <video id="popup-video-{{ forloop.counter }}" width="100%" controls preload="none" poster="/media/{{ timestamp.video.thumbnail }}" oncontextmenu="return false;" controlsList="nodownload">
+                                                            <video id="popup-video-{{ timestamp.video.pk }}" width="100%" controls preload="none" poster="/media/{{ timestamp.video.thumbnail }}" oncontextmenu="return false;" controlsList="nodownload">
                                                                 <source src="{{ timestamp.video.video.url }}" type="video/mp4">
                                                                 {{ timestamp.title }}
                                                             </video>
@@ -474,6 +561,23 @@
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <!-- Definition of fullscreen element -->
+                                            <div class="fullscreen-vid">
+                                                <!-- Body of popup which contains the video -->
+                                                <video preload="none" poster="/media/{{ timestamp.video.thumbnail }}" id="video-{{ Era.pk }}-{{ timestamp.video.pk }}" width="100%" controls oncontextmenu="return false;" controlsList="nodownload" style="display: none !important;">
+                                                    <source src="{{ timestamp.video.video.url }}" type="video/mp4">
+                                                    {{ video.title }}
+                                                </video>
+                                                <!-- Add a script which will trigger if fullscreen state changes  -->
+                                                <script>
+                                                    document.getElementById("video-{{ Era.pk }}-{{ timestamp.video.pk }}").addEventListener('fullscreenchange', function (e) {
+                                                        hideFullscreenVideo({{ Era.pk }}, {{ timestamp.video.pk }});
+                                                    });
+                                                </script>
+                                            </div>
+                                            <!-- End of fullscreen vid def -->
+
                                         {% endfor %}
                                     </td>
                                 </tr>
