@@ -53,7 +53,6 @@
 <body>
 
     {% include './header.html' %}
-
     {% include './announcement.html' %}
 
     <div class="subheader" style="background: url('{% static 'materials-head-background.png' %}');">
@@ -61,51 +60,52 @@
             <h1 class="subheader-text">ANALYSESEITE</h1>
         </div>
     </div>
-    <div class="analytics-content">
-        <div class="container-fluid m-0 dropdown-row">
-            <div class="container">
-                <div class="row">
-                    <div class="col-4 dropdown-text-color d-flex justify-content-center align-items-center">
-                        Monat und Jahr auswählen:
+
+    <div class="container-fluid m-0 dropdown-row">
+        <div class="container">
+            <div class="row">
+                <div class="col-4 dropdown-text-color d-flex justify-content-center align-items-center">
+                    Monat und Jahr auswählen:
+                </div>
+                <!-- Add month dropdown button -->
+                <div class="dropdown col-4 d-flex justify-content-center align-items-center">
+                    <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <!-- Name of Dropdown -->
+                        {{ month }}<div class="dash-symbol float-right"></div>
+                    </button>
+                    <!-- Add dropdown menus -->
+                    <div class="dropdown-menu pre-scrollable" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" onclick="setParameterMonth('1')">Januar</a>
+                        <a class="dropdown-item" onclick="setParameterMonth('2')">Februar</a>
+                        <a class="dropdown-item" onclick="setParameterMonth('3')">März</a>
+                        <a class="dropdown-item" onclick="setParameterMonth('4')">April</a>
+                        <a class="dropdown-item" onclick="setParameterMonth('5')">Mai</a>
+                        <a class="dropdown-item" onclick="setParameterMonth('6')">Juni</a>
+                        <a class="dropdown-item" onclick="setParameterMonth('7')">Juli</a>
+                        <a class="dropdown-item" onclick="setParameterMonth('8')">August</a>
+                        <a class="dropdown-item" onclick="setParameterMonth('9')">September</a>
+                        <a class="dropdown-item" onclick="setParameterMonth('10')">Oktober</a>
+                        <a class="dropdown-item" onclick="setParameterMonth('11')">November</a>
+                        <a class="dropdown-item" onclick="setParameterMonth('12')">Dezember</a>
                     </div>
-                    <!-- Add month dropdown button -->
-                    <div class="dropdown col-4 d-flex justify-content-center align-items-center">
-                        <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <!-- Name of Dropdown -->
-                            {{ month }}<div class="dash-symbol float-right"></div>
-                        </button>
-                        <!-- Add dropdown menus -->
-                        <div class="dropdown-menu pre-scrollable" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" onclick="setParameterMonth('1')">Januar</a>
-                            <a class="dropdown-item" onclick="setParameterMonth('2')">Februar</a>
-                            <a class="dropdown-item" onclick="setParameterMonth('3')">März</a>
-                            <a class="dropdown-item" onclick="setParameterMonth('4')">April</a>
-                            <a class="dropdown-item" onclick="setParameterMonth('5')">Mai</a>
-                            <a class="dropdown-item" onclick="setParameterMonth('6')">Juni</a>
-                            <a class="dropdown-item" onclick="setParameterMonth('7')">Juli</a>
-                            <a class="dropdown-item" onclick="setParameterMonth('8')">August</a>
-                            <a class="dropdown-item" onclick="setParameterMonth('9')">September</a>
-                            <a class="dropdown-item" onclick="setParameterMonth('10')">Oktober</a>
-                            <a class="dropdown-item" onclick="setParameterMonth('11')">November</a>
-                            <a class="dropdown-item" onclick="setParameterMonth('12')">Dezember</a>
-                        </div>
-                    </div>
-                    <!-- Add year dropdown button -->
-                    <div class="dropdown col-4 d-flex justify-content-center align-items-center">
-                        <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <!-- Name of Dropdown -->
-                            {{ year }}<div class="dash-symbol float-right"></div>
-                        </button>
-                        <!-- Add dropdown menus -->
-                        <div class="dropdown-menu pre-scrollable" aria-labelledby="dropdownMenuButton">
-                            {% for ps in possible_years %}
-                                <a class="dropdown-item" onclick="setParameterYear('{{ ps }}')">{{ ps }}</a>
-                            {% endfor %}
-                        </div>
+                </div>
+                <!-- Add year dropdown button -->
+                <div class="dropdown col-4 d-flex justify-content-center align-items-center">
+                    <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <!-- Name of Dropdown -->
+                        {{ year }}<div class="dash-symbol float-right"></div>
+                    </button>
+                    <!-- Add dropdown menus -->
+                    <div class="dropdown-menu pre-scrollable" aria-labelledby="dropdownMenuButton">
+                        {% for ps in possible_years %}
+                            <a class="dropdown-item" onclick="setParameterYear('{{ ps }}')">{{ ps }}</a>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="default-page-body">
         <div class="container">
             <!-- Explanation and hints for site use -->
             <div class="hint">
@@ -316,7 +316,7 @@
             </table>
         </div>
     </div>
-    <div class="danger-hg m-0 p-0">
+    <div class="danger-hg">
         <div class="container danger-zone">
             <h2>GEFAHRENZONE:</h2>
             <p>Hier können alle Datensätze von vorhergegangenen Monaten gelöscht werden. <b>Löschen ist unwiederbringlich.</b> Nur die Erhebung des aktuellen Monats ({{ month }} {{ year }}) bleibt erhalten. Falls die Daten erhalten bleiben sollen, nicht betätigen, oder vorher anderweitig notieren.</p>

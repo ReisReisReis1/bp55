@@ -149,11 +149,6 @@ to make clear that you can start the video by clicking */
     cursor: pointer;
 }
 
-/* Fullscreen video */
-/*.fullscreen-vid {
-    display: none !important;
-}*/
-
 /*--------------------------------------- Responsive Design ---------------------------------------------------------*/
 
 @media screen and (min-width: 992px) {
@@ -212,20 +207,6 @@ to make clear that you can start the video by clicking */
         border-right-width: 0px;
         border-bottom-width: 0px;
     }
-
-    /* For Fullscreen video */
-    .modal-dialog {
-        /* position: relative;
-        max-width: 100%;
-        min-height: 100%;
-        width: 100%;
-        max-height: 100%;
-        min-height: 100%;
-        height: 100%;
-        margin: 0px !important;
-        left: 0px !important;
-        right: 0px !important;*/
-    }
 }
 
 @media screen and (max-width: 575px) {
@@ -237,72 +218,3 @@ to make clear that you can start the video by clicking */
         margin-left: 8px;
     }
 }
-
-
-/*----------------------------------------------------------------------------
-    Styling of one row of videos, containing all videos from one era
- *//*
-
-.video-section {
-
-}
-
-*/
-/*
-    Styling of title of each era
- *//*
-
-.video-section-title {
-    width: 100%;
-}
-
-*/
-/*
-    Styling of one row of videos, containing max. 4 videos
- *//*
-
-.row-video {
-    width: 100%;
-    margin-bottom: 20px;
-}
-
-*/
-/*
-    Styling of the element containing a video and its title
- *//*
-
-.video-box {
-    width: 25%;
-    padding-left: 5px !important;
-    padding-right: 5px !important;
-}
-
-*/
-/*
-    Styling of the video rows which are hidden until clicked on the button
- *//*
-
-.video-hide {
-    display: none !important;
-}
-
-*/
-/*
-    Styling of the button which opens and closes more rows of videos
- *//*
-
-.more-videos-button {
-    width: 100%;
-    border: none;
-    padding-top: 5px;
-    padding-bottom: 5px;
-}
-
-*/
-/*
-    Styling of the button which opens and closes more rows of videos on mouse hover
- *//*
-
-.video:hover, .video-title:hover {
-    cursor: pointer;
-}*/

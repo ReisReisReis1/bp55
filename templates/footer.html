@@ -29,23 +29,5 @@
             </div>
         </div>
     </div>
-
-    {% comment %}<div class="row row-no-margin bottom-menu-bg" id="color-bg-secondary">
-        <div class="container">
-            <div class="row">
-                <div class="col text-center bottom-menu">
-                    <!-- Link to impressum -->
-                    <a href="{% url "impressum:impressum" %}" id="color-txt-primary">Impressum</a>
-                    <b>·</b>
-                    <!-- Link to Moodle course -->
-                    {% if Kurs_Link|length == 0 %}
-                        <a href="" id="color-txt-primary">Moodlekurs</a>
-                    {% else %}
-                        <a href="{{Kurs_Link}}" target="_blank" id="color-txt-primary">Moodlekurs</a>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-    </div>{% endcomment %}
 </body>
 </html>
