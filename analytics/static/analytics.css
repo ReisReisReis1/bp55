@@ -10,8 +10,8 @@ table, th, td {
   padding: 7px;
 }
 
-.table {
-    width: 100%;
+table {
+    table-layout: fixed;
 }
 
 h3, h2 {

@@ -125,25 +125,25 @@
             <p><b>Gesamtzahl: {{ pages_count }}.</b></p>
             <table class="w-100">
                 <tr>
-                    <th>
+                    <th class="break-words">
                         Unterseite
                     </th>
-                    <th>
+                    <th class="break-words">
                         Anzahl der Besuche
                     </th>
-                    <th>
-                        Weiterleitung zu diesem Element (neuer Tab)
+                    <th class="break-words">
+                        Weiterleitung zum Element
                     </th>
                 </tr>
                 {% for page in pages %}
                 <tr>
-                    <td>
+                    <td class="break-words">
                         {{ page.name }}
                     </td>
                     <td>
                         {{ page.visits }}
                     </td>
-                    <td>
+                    <td class="truncate-title" title="{{ page.site_url }}">
                         <a href="{{ page.site_url }}" target="_blank">{{ page.site_url }}</a>
                     </td>
                 </tr>
@@ -157,25 +157,25 @@
             <p><b>Gesamtzahl: {{ buildings_count }}.</b></p>
             <table class="w-100">
                 <tr>
-                    <th>
+                    <th class="break-words">
                         Gebäude (ID)
                     </th>
-                    <th>
+                    <th class="break-words">
                         Anzahl der Besuche
                     </th>
-                    <th>
-                        Weiterleitung zu diesem Element (neuer Tab)
+                    <th class="break-words">
+                        Weiterleitung zum Element
                     </th>
                 </tr>
                 {% for building in buildings %}
                 <tr>
-                    <td>
+                    <td class="break-words">
                         {{ building.name }}
                     </td>
                     <td>
                         {{ building.visits }}
                     </td>
-                    <td>
+                    <td class="truncate-title" title="{{ building.site_url }}">
                         <a href="{{ building.site_url }}" target="_blank">{{ building.site_url }}</a>
                     </td>
                 </tr>
@@ -190,25 +190,25 @@
             <p><i>Hinweis: Videos würden normalerweise in den Pop-Ups zu sehen sein, die Weiterleitung öffnet sie aber ebenfalls in neuen Tabs.</i></p>
             <table class="w-100">
                 <tr>
-                    <th>
+                    <th class="break-words">
                         Video (ID)
                     </th>
-                    <th>
+                    <th class="break-words">
                         Anzahl der Aufrufe
                     </th>
-                    <th>
-                        Weiterleitung zu diesem Element (neuer Tab)
+                    <th class="break-words">
+                        Weiterleitung zum Element
                     </th>
                 </tr>
                 {% for video in videos %}
                 <tr>
-                    <td>
+                    <td class="break-words">
                         {{ video.name }}
                     </td>
                     <td>
                         {{ video.visits }}
                     </td>
-                    <td>
+                    <td class="truncate-title" title="{{ video.site_url }}">
                         <a href="{{ video.site_url }}" target="_blank">{{ video.site_url }}</a>
                     </td>
                 </tr>
@@ -222,25 +222,25 @@
             <p><b>Gesamtzahl: {{ search_count }}.</b></p>
             <table class="w-100">
                 <tr>
-                    <th>
+                    <th  class="break-words">
                         Suchbegriff
                     </th>
-                    <th>
+                    <th  class="break-words">
                         Anzahl der Suchen
                     </th>
-                    <th>
-                        Weiterleitung zu diesem Element (neuer Tab)
+                    <th  class="break-words">
+                        Weiterleitung zum Element
                     </th>
                 </tr>
                 {% for term in search_terms %}
                 <tr>
-                    <td>
+                    <td class="break-words">
                         {{ term.name }}
                     </td>
                     <td>
                         {{ term.visits }}
                     </td>
-                    <td>
+                    <td class="truncate-title" title="{{ term.site_url }}">
                         <a href="{{ term.site_url }}" target="_blank">{{ term.site_url }}</a>
                     </td>
                 </tr>
@@ -254,25 +254,25 @@
             <p><b>Gesamtzahl: {{ pdf_count }}</b></p>
             <table class="w-100">
                 <tr>
-                    <th>
+                    <th class="break-words">
                         Material (ID)
                     </th>
-                    <th>
+                    <th class="break-words">
                         Anzahl der Aufrufe
                     </th>
-                    <th>
-                        Weiterleitung zu diesem Element (neuer Tab)
+                    <th class="break-words">
+                        Weiterleitung zum Element
                     </th>
                 </tr>
                 {% for pdf in pdfs %}
                 <tr>
-                    <td>
+                    <td class="break-words">
                         {{ pdf.name }}
                     </td>
                     <td>
                         {{ pdf.visits }}
                     </td>
-                    <td>
+                    <td class="truncate-title" title="{{ pdf.site_url }}">
                         <a href="{{ pdf.site_url }}" target="_blank">{{ pdf.site_url }}</a>
                     </td>
                 </tr>
@@ -286,25 +286,25 @@
             <p><b>Gesamtzahl: {{ download_count }}</b></p>
             <table class="w-100">
                 <tr>
-                    <th>
+                    <th class="break-words">
                         Material ZIP der Kategorie
                     </th>
-                    <th>
+                    <th class="break-words">
                         Anzahl der Downloads
                     </th>
-                    <th>
-                        Weiterleitung zu diesem Element (neuer Tab)
+                    <th class="break-words">
+                        Weiterleitung zum Element
                     </th>
                 </tr>
                 {% for download in zip_downloads %}
                 <tr>
-                    <td>
+                    <td class="break-words">
                         {{ download.name }}
                     </td>
                     <td>
                         {{ download.visits }}
                     </td>
-                    <td>
+                    <td class="truncate-title" title="{{ download.site_url }}">
                         <a href="{{ download.site_url }}" target="_blank">{{ download.site_url }}</a>
                     </td>
                 </tr>
