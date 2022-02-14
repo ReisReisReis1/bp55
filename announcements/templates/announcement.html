@@ -14,13 +14,13 @@
             // Toggle the class 'hide'
             banner.classList.toggle("hide");
             // Update height for every other
-            for(var i = 0; i <= {{ announcements.items|length }}; i++){
+            for(var i = 0; i < {{ announcements.items|length }}; i++){
                 if(i <= id){
                     continue;
                 }
-                var banner = document.getElementById("banner-hide-" + i)
-                let top = banner.style.top.replace("px", "") - 50;
-                banner.style.top = top+"px";
+                var banner_rest = document.getElementById("banner-hide-" + i)
+                let top = banner_rest.style.top.replace("px", "") - 50;
+                banner_rest.style.top = top+"px";
             }
         }
     </script>
