@@ -13,7 +13,6 @@
 <body>
 
     {% include './header.html' %}
-
     {% include './announcement.html' %}
 
     <div class="subheader" style="background: url('{% static 'start-head-background.png' %}');">
@@ -95,30 +94,3 @@
 
 </body>
 </html>
-
-<!--    Intro-Video -->
-<!--    <div class="container container-page">-->
-<!--        <div class="row row-distance-sm">-->
-<!--            <h1>Herzlich Willkommen!</h1>-->
-<!--            <video width="100%" controls="controls" preload="none" poster="/media/{{ Video.thumbnail }}" oncontextmenu="return false;" controlsList="nodownload">-->
-<!--                <source src="{{Video.video.url}}" type="video/mp4">-->
-<!--                <b>{{Video.title}}</b>-->
-<!--            </video>-->
-            <!-- Description text for the webapplikation -->
-<!--            <p align="justify">Die Vorlesung Architektur und Städtebau der Antike soll in ein zeitgemäßes digitales Format überführt werden.-->
-<!--            Hierfür möchten wir eine digitale Wissensplattform zur Architekturgeschichte der Antike als Webanwendung aufbauen,-->
-<!--            mit der die Studierenden auf der Basis des zur Verfügung gestellten Materials die Lehreinheiten selbstbestimmt-->
-<!--            kombinieren und absolvieren können. Die bislang 13 1,5-stündigen Vorlesungen, die einen chronologischen Überblick-->
-<!--            über den Wandel der Architektur in der Antike zum Gegenstand haben, werden zu 72 15-minütigen Videos umgewandelt-->
-<!--                und durch einen Bauwerkskatalog bestehend aus 220 Steckbriefen mit grundlegenden Charakteristiken ergänzt.</p><br>-->
-<!--            Anhand des Web-Tools Ruins and Beyond! werden diese Daten auf unterschiedlichen Wegen miteinander verknüpft:-->
-<!--            <ol>-->
-<!--                <li><a href="{% url "timeline:timeline" %}">Zeitachse</a>: Auf der Zeitachse werden die Einzelbauten mit-->
-<!--                    ihren Charakteristiken und zugehörigen Vorlesungsvideos über Bild-Buttons abrufbar gemacht.</li>-->
-<!--                <li><a href="{% url "filter_page:filter" %}">Bauwerke</a>: Im Reiter Bauwerke werden die Gebäude thematisch-->
-<!--                    abgefragt und zusammengestellt. Auch ermöglicht die Filterfunktion eine gezielte Auswahl bestimmter Gebäudegruppen.</li>-->
-<!--                <li><a href="{% url "video_content:videos" %}">Staffeln</a>: Im Reiter Staffeln werden alle vorhandenen-->
-<!--                    Videos in chronologischer Reihenfolge und nach Epoche sortiert aufgelistet</li>-->
-<!--            </ol>-->
-<!--        </div>-->
-<!--    </div>-->

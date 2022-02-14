@@ -128,7 +128,6 @@
 <body>
 
     {% include './header.html' %}
-
     {% include './announcement.html' %}
 
     <div class="subheader" style="background: url('{% static 'videos-head-background.png' %}');">
@@ -270,72 +269,6 @@
             {% endif %}
         {% endfor %}
     </div>
-
-
-    <!--<div class="container container-page">
-        &lt;!&ndash; Iterate through all eras &ndash;&gt;
-        {% for era,videos in Era.items %}
-            <div class="row video-section">
-                <div class="video-section-title">
-                    &lt;!&ndash; Cycle through all eras as title &ndash;&gt;
-                    <h1 style="border-bottom-style: solid; border-bottom-color: #{{ era.color_code }}">{{ era.name }}</h1>
-                </div>
-                    &lt;!&ndash; Iterate through all videos of every era &ndash;&gt;
-                    {% for video in videos %}
-                        &lt;!&ndash; Add a new video row every four videos &ndash;&gt;
-                        {% if forloop.counter0|divisibleby:4 or forloop.first %}
-                            {% if forloop.counter <= 4 %}
-                                &lt;!&ndash; The first row of videos &ndash;&gt;
-                                <div class="row row-video row-no-margin">
-                            {% else %}
-                                &lt;!&ndash; Every other row of videos which is hidden until clicked on the button &ndash;&gt;
-                                <div id="video-hide-{{ forloop.parentloop.counter }}" class="row row-video row-no-margin video-hide">
-                            {% endif %}
-                        {% endif %}
-                            &lt;!&ndash; Distinguish between first, middle and last video of the current row &ndash;&gt;
-                            <div class="video-box">
-                                &lt;!&ndash; Add video Thumbnail &ndash;&gt;
-                                <img class="video" src="/media/{{ video.thumbnail }}" data-toggle="modal" data-target="#popup-{{ forloop.parentloop.counter }}-{{ forloop.counter }}" style="width: 100%">
-
-                                &lt;!&ndash; Add video title &ndash;&gt;
-                                <div class="video-title break-words">
-                                    {{ video.title }}
-                                </div>
-
-                                &lt;!&ndash; Video popup element &ndash;&gt;
-                                <div class="modal" id="popup-{{ forloop.parentloop.counter }}-{{ forloop.counter }}" data-keyboard="false" onclick="stopPopupVideo({{ forloop.parentloop.counter }}, {{ forloop.counter }})">
-                                    <div class="modal-dialog modal-xl modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                &lt;!&ndash; Header row of popup &ndash;&gt;
-                                                <h4 class="modal-title" style="overflow: hidden;">{{ video.title }}</h4>
-                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            </div>
-                                            <div class="modal-body">
-                                                &lt;!&ndash; Body of popup which contains the video &ndash;&gt;
-                                                <video preload="none" poster="/media/{{ video.thumbnail }}" id="popup-video-{{ forloop.parentloop.counter }}-{{ forloop.counter }}" width="100%" controls oncontextmenu="return false;" controlsList="nodownload">
-                                                    <source src="{{ video.video.url }}" type="video/mp4">
-                                                    {{ video.title }}
-                                                </video>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        {% if forloop.counter|divisibleby:4 or forloop.last %}
-                            </div>
-                        {% endif %}
-                    {% endfor %}
-                &lt;!&ndash; Add button to toggle hide the hidden videos &ndash;&gt;
-                {% if videos|length > 4 %}
-                    <div style="width: 100%">
-                        &lt;!&ndash; Add 'show more' button if there are more than 4 videos &ndash;&gt;
-                        <button class="button more-videos-button" id="color-btn-video-{{ forloop.counter }}" onclick="toggleHide({{ forloop.counter }}),changeIcon({{ forloop.counter }})">∨</button>
-                    </div>
-                {% endif %}
-            </div>
-        {% endfor %}
-    </div>-->
 
     {% include './footer.html' %}
     {% include './mobile_nav_footer.html' %}

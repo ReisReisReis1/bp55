@@ -48,34 +48,3 @@
         padding-bottom: 5px;
     }
 }
-
-/*
-!*----------------------------------------------------------------------------
-    Setting the width of the card content to full width
- *!
-.card-body .btn {
-    width: 100%;
-}
-
-!*
-    Styling of the result box containing a building
- *!
-.result-box {
-    width: 33.33%;
-    padding-left: 5px;
-    padding-right: 5px;
-}
-
-!*
-    Styling of one row of results
- *!
-.row-result {
-    margin-bottom: 20px;
-}
-
-!*----------------------------------------------------------------------------
-    Styling of the image of one result card
- *!
-.card-img {
-    height: 200px;
-}*/
