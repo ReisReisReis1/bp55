@@ -137,16 +137,6 @@
         </div>
     </div>
 
-    <!-- Old Subheader -->
-    <!-- <div class="container-fluid videos-head">
-        <div class="container-fluid w-100 px-0 videos-image-container">
-            <img class="img-fluid w-100 videos-image" src="{% static 'videos-head-background.png' %}" width="100%" height="auto">
-            <div class="title">
-                <h1 class="title-text text-center">STAFFELN</h1>
-            </div>
-        </div>
-    </div> -->
-
     <div class="default-page-body">
         <!-- run through all eras -->
         {% for items in Era %}
@@ -168,15 +158,14 @@
                         <p class="era-year" style="color:#{{ items.0.color_code }};"><b>{{ items.0.get_year_as_str }}</b></p>
                     </div>
                 </div>
-                    <div class="row">
-
-                        <!-- Video section for standard design -->
-                        <div class="container video-section">
+                <div class="row">
+                    <!-- Video section for standard design -->
+                    <div class="container video-section">
                         <!-- Videos in the section -->
                         {% for video in items.1 %}
                             <!-- Cases in which a new row has should be opened -->
                             {% if forloop.counter0|divisibleby:4 or forloop.first %}
-                            <div class="row row-video row-no-margin video-hide" id="video-hide-{{ forloop.parentloop.counter }}">
+                                <div class="row row-video row-no-margin video-hide" id="video-hide-{{ forloop.parentloop.counter }}">
                             {% endif %}
 
                             <!-- The Video Item -->
@@ -225,53 +214,51 @@
 
                     <!-- For mobile design -->
                     <div class="container video-section-mobile">
-                    <!-- Videos in the section -->
-                    {% for video in items.1 %}
-                        <!-- Cases in which a new row has should be opened -->
-                        {% if forloop.counter0|divisibleby:2 or forloop.first %}
-                        <div class="row row-video row-no-margin video-hide" id="video-hide-{{ forloop.parentloop.counter }}">
-                        {% endif %}
+                        <!-- Videos in the section -->
+                        {% for video in items.1 %}
+                            <!-- Cases in which a new row has should be opened -->
+                            {% if forloop.counter0|divisibleby:2 or forloop.first %}
+                                <div class="row row-video row-no-margin video-hide" id="video-hide-{{ forloop.parentloop.counter }}">
+                            {% endif %}
 
-                        <!-- The Video Item -->
-                        <div class="video-box" title="{{ video.title }}" onclick="showFullscreenVideo({{ forloop.parentloop.counter }},{{ forloop.counter }}),registerVideoClick({{ video.pk }})">
-                            <!-- Video -->
-                            <img class="thumbnail w-100" src="/media/{{ video.thumbnail }}">
-                            <div class="video-title truncate-title font-benton-sans" style="border-color: #{{ items.0.color_code }};">
-                                <b>{{ video.title }}</b>
+                            <!-- The Video Item -->
+                            <div class="video-box col-sm-6" title="{{ video.title }}" onclick="showFullscreenVideo({{ forloop.parentloop.counter }},{{ forloop.counter }}),registerVideoClick({{ video.pk }})">
+                                <!-- Video -->
+                                <img class="thumbnail w-100" src="/media/{{ video.thumbnail }}">
+                                <div class="video-title truncate-title font-benton-sans" style="border-color: #{{ items.0.color_code }};">
+                                    <b>{{ video.title }}</b>
+                                </div>
                             </div>
-                        </div>
 
-                        <!-- Definition of fullscreen element -->
-                        <div class="fullscreen-vid">
-                            <!-- Body of popup which contains the video -->
-                            <video preload="none" poster="/media/{{ video.thumbnail }}" id="video-{{ forloop.parentloop.counter }}-{{ forloop.counter }}" width="100%" controls oncontextmenu="return false;" controlsList="nodownload" style="display: none !important;">
-                                <source src="{{ video.video.url }}" type="video/mp4">
-                                {{ video.title }}
-                            </video>
-                            <!-- Add a script which will trigger if fullscreen state changes  -->
-                            <script>
-                                document.getElementById("video-{{ forloop.parentloop.counter }}-{{ forloop.counter }}").addEventListener('fullscreenchange', function (e) {
-                                    hideFullscreenVideo({{ forloop.parentloop.counter }}, {{ forloop.counter }});
-                                });
-                            </script>
-                        </div>
-                        <!-- End of fullscreen vid def -->
-
-                        <!-- Cases in which the tag must be closed -->
-                        <!-- If it is at end of the row, or the video -->
-                        {% if forloop.last or forloop.counter|divisibleby:2 %}
-                            <!-- Close row div here -->
+                            <!-- Definition of fullscreen element -->
+                            <div class="fullscreen-vid">
+                                <!-- Body of popup which contains the video -->
+                                <video preload="none" poster="/media/{{ video.thumbnail }}" id="video-{{ forloop.parentloop.counter }}-{{ forloop.counter }}" width="100%" controls oncontextmenu="return false;" controlsList="nodownload" style="display: none !important;">
+                                    <source src="{{ video.video.url }}" type="video/mp4">
+                                    {{ video.title }}
+                                </video>
+                                <!-- Add a script which will trigger if fullscreen state changes  -->
+                                <script>
+                                    document.getElementById("video-{{ forloop.parentloop.counter }}-{{ forloop.counter }}").addEventListener('fullscreenchange', function (e) {
+                                        hideFullscreenVideo({{ forloop.parentloop.counter }}, {{ forloop.counter }});
+                                    });
+                                </script>
                             </div>
-                        {% endif %}
-                    <!-- If there are no vids in an era, display it -->
-                    {% empty %}
-                        <div class="row row-video row-no-margin video-hide" id="video-hide-{{ forloop.counter }}">
-                            <b class="no-videos-text w-100 text-center video-title font-benton-sans" style="border: 0px;">Keine Videos in dieser Epoche vorhanden.</b>
-                        </div>
-                    {% endfor %}
-                </div>
+                            <!-- End of fullscreen vid def -->
 
-
+                            <!-- Cases in which the tag must be closed -->
+                            <!-- If it is at end of the row, or the video -->
+                            {% if forloop.last or forloop.counter|divisibleby:2 %}
+                                <!-- Close row div here -->
+                                </div>
+                            {% endif %}
+                            <!-- If there are no vids in an era, display it -->
+                            {% empty %}
+                            <div class="row row-video row-no-margin video-hide" id="video-hide-{{ forloop.counter }}">
+                                <b class="no-videos-text w-100 text-center video-title font-benton-sans" style="border: 0px;">Keine Videos in dieser Epoche vorhanden.</b>
+                            </div>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
 

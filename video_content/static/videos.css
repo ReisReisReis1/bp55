@@ -43,7 +43,6 @@ html, body {
 /* Styling of the element containing a video and its title */
 .video-box {
     cursor: pointer;
-    width: 25%;
     padding-left: 5px !important;
     padding-right: 5px !important;
 }
@@ -157,12 +156,17 @@ to make clear that you can start the video by clicking */
 
 /*--------------------------------------- Responsive Design ---------------------------------------------------------*/
 
+@media screen and (min-width: 992px) {
+    .video-box {
+        width: 25%;
+    }
+}
+
 @media screen and (max-width: 991px) {
 
     /* Responsive Design for mobile */
 
     .video-box {
-        width: 50%;
         padding-left: 7px !important;
         padding-right: 7px !important;
     }
