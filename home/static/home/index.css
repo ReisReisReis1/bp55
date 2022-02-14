@@ -54,12 +54,6 @@ html, body {
 }
 
 /*
-.main_logo_container {
-    margin-bottom: 50px;
-}
-*/
-
-/*
     Style of the container with the button
  */
 .main_button_container {
@@ -87,16 +81,6 @@ html, body {
     background-color: #B43B44;
     color: #F9EAD8;
 }
-
-/*.button {
-    display: block;
-    border: none;
-    border-radius: 5px;
-    padding: 20px 28px;
-    font-size: 30px;
-    cursor: pointer;
-    text-align: center;
-}*/
 
 /*
     Style of the 'Anmelden' button on mouse hover
