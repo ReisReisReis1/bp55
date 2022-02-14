@@ -220,12 +220,12 @@
                             {% if forloop.counter0|divisibleby:2 or forloop.first %}
                                 <div class="row row-video row-no-margin video-hide" id="video-hide-{{ forloop.parentloop.counter }}">
                             {% endif %}
-
+                                  
                             <!-- The Video Item -->
                             <div class="video-box col-sm-6" title="{{ video.title }}" onclick="showFullscreenVideo({{ forloop.parentloop.counter }},{{ forloop.counter }}),registerVideoClick({{ video.pk }})">
                                 <!-- Video -->
                                 <img class="thumbnail w-100" src="/media/{{ video.thumbnail }}">
-                                <div class="video-title truncate-title font-benton-sans" style="border-color: #{{ items.0.color_code }};">
+                                <div class="video-title break-words truncate-title-alternative font-benton-sans" style="border-color: #{{ items.0.color_code }};">
                                     <b>{{ video.title }}</b>
                                 </div>
                             </div>
