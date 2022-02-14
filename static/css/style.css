@@ -118,6 +118,13 @@ body{
     text-overflow: ellipsis;
 }
 
+.truncate-title-alternative {
+    overflow: hidden;
+    display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
 /*----------------------------------------------------------------------------
     Styling of the 'back to top' button
  */
