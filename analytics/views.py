@@ -57,7 +57,8 @@ def analytics_view(request):
     pages_count = sum([p.visits for p in pages])
     buildings = sorted(buildings_raw, key=lambda a: a.visits, reverse=True)
     for building in buildings:
-        name, building_id = building.name.split(",")
+        split = building.name.split(",")
+        name, building_id = ",".join(split[:-1]), split[-1]
         building.name = name + " (ID: " + building_id + ")"
         # add id to site url, to get on correct detailspage
         building.site_url = base_url + building.site_url + "/" + building_id + "/"
@@ -68,18 +69,20 @@ def analytics_view(request):
         st.site_url = base_url + st.site_url + "/?search_request=" + st.name
     downloads = sorted(downloads_raw, key=lambda a: a.visits, reverse=True)
     for d in downloads:
-        d.name = d.name.split(",")[1]
+        d.name = ",".join(d.name.split(",")[1:])
         d.site_url = base_url + "materials_page/" + d.name
     dl_count = sum([dl.visits for dl in downloads])
     pdfs = sorted(pdfs_raw, key=lambda a: a.visits, reverse=True)
     for p in pdfs:
-        pdf_name, pdf_id = p.name.split(",")
+        split = p.name.split(",")
+        pdf_name, pdf_id = ",".join(split[:-1]), split[-1]
         p.name = pdf_name+" (ID: "+pdf_id+")"
         p.site_url = base_url + p.site_url
     pdf_count = sum([p.visits for p in pdfs])
     videos = sorted(videos_raw, key=lambda a: a.visits, reverse=True)
     for v in videos:
-        vid_name, vid_id = v.name.split(",")
+        split = v.name.split(",")
+        vid_name, vid_id = ",".join(split[:-1]), split[-1]
         v.name = vid_name+" (ID: "+vid_id+")"
         v.site_url = base_url + v.site_url
     video_clicks = sum([v.visits for v in videos])
