@@ -66,6 +66,7 @@ def get_announcements():
         short_ancmt = announcements
         for a in announcements:
             str_len = str_len + (len(a.title) + len(a.content) + constlen)
+        onetime_strlen = str_len
         while str_len < min_collection_size:
             str_len = str_len + onetime_strlen
             announcements = announcements + short_ancmt
