@@ -76,6 +76,7 @@
 /* New Building year */
 .building-year-only {
     background-color: #F9EAD8;
+    font-size: 24px;
     text-align: center;
     height: 30%;
 }
@@ -260,13 +261,14 @@
     /* New Building year */
     .building-year-only {
         background-color: #F9EAD8;
+        font-size: 22px;
         text-align: center;
         height: 23%;
     }
     .building-bcad-only {
         background-color: #F9EAD8;
         text-align: center;
-        font-size: 7px;
+        font-size: 10px;
         margin-top: -7px;
         height: 4%;
     }
@@ -297,20 +299,17 @@
         margin-top: 1.5%;
         margin-bottom: 1.5%;
     }
-
     /* Fix diamond size */
     .diamond-container {
         height: 15px;
         width: 15px;
         margin-top: 2px;
-        margin-left: 15px;
+        margin-left: 25px;
         margin-right: -5px;
     }
-
-    /* Don't know really why, but it must be not quadratic to display so */
     .diamond {
         height: 9px;
-        width: 12px;
+        width: 9px;
     }
 
     /* Correct line positing for historic dates */
@@ -324,17 +323,88 @@
     .img {
         height: 130px !important;
     }
+    .building-year-only {
+        font-size: 18px;
+        height: 23%;
+    }
+    .building-bcad-only {
+        font-size: 8px;
+        height: 4%;
+    }
+    .diamond-container {
+        height: 15px;
+        width: 15px;
+        margin-top: 2px;
+        margin-left: 20px;
+        margin-right: -5px;
+    }
+    .diamond {
+        height: 9px;
+        width: 9px;
+    }
 }
 
 @media screen and (max-width: 767px) {
     .img {
         height: 105px !important;
     }
+    .building-year-only {
+        font-size: 15px;
+        height: 23%;
+    }
+    .building-bcad-only {
+        font-size: 7px;
+        height: 4%;
+    }
+    .diamond-container {
+        height: 15px;
+        width: 15px;
+        margin-top: 2px;
+        margin-left: 16px;
+        margin-right: -5px;
+    }
+    .diamond {
+        height: 9px;
+        width: 9px;
+    }
 }
 
 @media screen and (max-width: 574px) {
     .img {
         height: 80px !important;
+    }
+    .building-year-only {
+        font-size: 12px;
+        height: 23%;
+    }
+    .building-bcad-only {
+        font-size: 6px;
+        height: 4%;
+    }
+}
+
+@media screen and (max-width: 395px) {
+    .img {
+        height: 80px !important;
+    }
+    .building-year-only {
+        font-size: 9px;
+        height: 23%;
+    }
+    .building-bcad-only {
+        font-size: 6px;
+        height: 4%;
+    }
+    .diamond-container {
+        height: 15px;
+        width: 15px;
+        margin-top: 2px;
+        margin-left: 15px;
+        margin-right: -2px;
+    }
+    .diamond {
+        height: 8px;
+        width: 9px;
     }
 }
 
