@@ -19,7 +19,8 @@ def sorted_eras_with_buildings(items):
     era_dict = {}
 
     # Sort it with years as key, ascending
-    items = sorted(items, key=lambda i: i.get_year_as_signed_int()[0])
+    # order by year from, if not there by year to, if both are not present push it to the end (will get filtered out later)
+    items = sorted(items, key=lambda i: i.get_year_as_signed_int()[0] if i.get_year_as_signed_int()[0] is not None else i.get_year_as_signed_int()[1] if i.get_year_as_signed_int()[1] is not None else 9999999999999999999)
     # Getting all existing eras
     all_eras = Era.objects.all()
     # Ordering the before and after the birth and christ
@@ -51,9 +52,17 @@ def sorted_eras_with_buildings(items):
         items_era_sorted = []  # list will be filled with the items fitting into the era
         era_date_range = era_struct.get_year_as_signed_int()  # getting the range of the era
         for item in items:
-            year_of_item = item.get_year_as_signed_int()[0]
+            years_of_item = item.get_year_as_signed_int()
             # item fits into the era?
-            if year_of_item in range(era_date_range[0], era_date_range[1]):
+            if years_of_item[0] is None and years_of_item[1] is not None:
+                years_of_item = [years_of_item[1]]
+            elif years_of_item[0] is not None and years_of_item[1] is None:
+                years_of_item = [years_of_item[0]]
+            elif years_of_item[0] is None and years_of_item[1] is None:
+                continue
+            # test if first year (if only first or both years), or last year (if only last year given)
+            # is in the era
+            if years_of_item[0] in range(era_date_range[0], era_date_range[1]):
                 # Building tupel
                 if isinstance(item, Building):
                     items_era_sorted.append(

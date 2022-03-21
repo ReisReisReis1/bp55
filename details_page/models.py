@@ -659,8 +659,8 @@ class Building(models.Model):
         Getting the dates of an building as signed int
         :return: list with two elements: new_list[0] start date, new_list[1] end date
         """
-        new_list = [0, 0]
-        date = 9999
+        new_list = [None, None]
+        date = None
         if self.year_from is not None:
             # Checking for the self start date if it is before or after the birth of christ
             if self.year_from_BC_or_AD == 'v.Chr.':
@@ -672,7 +672,7 @@ class Building(models.Model):
                 if self.year_century and date != 0:
                     date = date * 100 - 50
         new_list[0] = date
-        date = 9999
+        date = None
         if self.year_to is not None:
             # Checking for the self end date if it is before or after the birth of christ
             if self.year_to_BC_or_AD == 'v.Chr.':
@@ -726,22 +726,34 @@ class Building(models.Model):
         Get the year as number, and the bc and ad as strings.
         :return: a tuple of strings for year and bd/ad.
         """
-        century = '. Jh.' if self.year_century else ''
-        circa = 'ca. ' if self.year_ca else ''
+        century = 'Jh. ' if self.year_century else ''
+        circa = 'circa ' if self.year_ca else 'exakt '
         start = ''
-        bc_ad = ''
         end = ''
         if self.year_from is not None:
-            year_from = str(self.year_from)
-            # default n.Chr.
-            start = circa + year_from + century
-            bc_ad = ' ' + str(
-                self.year_from_BC_or_AD) if self.year_from_BC_or_AD is not None else 'v.Chr.'
-            if self.year_to is not None:
-                year_to = str(self.year_to)
-                # default n.Chr.
-                end = ' - ' + circa + year_to + century
-        return start+end, bc_ad
+            start = str(self.year_from)
+        if self.year_to is not None:
+            end = str(self.year_to)
+        if start != '' and end != '':
+            res_years = start+' - '+end
+        elif start == '' and end != '':
+            res_years = "bis "+ end
+        elif start != '' and end == '':
+            res_years = "ab "+start
+        else:
+            res_years = ''
+        bc_ad = ''
+        if self.year_from_BC_or_AD is not None:
+            bc_ad = self.year_from_BC_or_AD
+        if self.year_to_BC_or_AD is not None:
+            if bc_ad != '':
+                if self.year_from_BC_or_AD != self.year_to_BC_or_AD:
+                    bc_ad = bc_ad + ' - ' + str(self.year_to_BC_or_AD)
+            else:
+                bc_ad = str(self.year_to_BC_or_AD)
+        other_info = century+bc_ad
+        other_info = other_info+" | "+circa if circa != '' else other_info
+        return res_years, other_info
 
 
 class Blueprint(models.Model):

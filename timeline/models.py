@@ -75,7 +75,7 @@ class HistoricDate(models.Model):
         Getting the year of a historic date as signed int
         :return: year as signed int or the year of the exact date as signed int
         """
-        result = 9999
+        result = None
         if self.exacter_date is None and self.year is not None:
             if self.year_BC_or_AD == "v.Chr.":
                 result = -1 * int(self.year)
@@ -91,7 +91,7 @@ class HistoricDate(models.Model):
             elif self.year_BC_or_AD == 'n.Chr.':
                 result = int(self.exacter_date.year)
 
-        return [result, 9999]
+        return [result, result]
 
     def get_year_as_str(self):
         """
