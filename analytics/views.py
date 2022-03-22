@@ -4,6 +4,8 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.urls import resolve
 from django.utils.datastructures import MultiValueDictKeyError
 from django.core.exceptions import PermissionDenied
+from django.views.generic import TemplateView
+from chartjs.views.lines import BaseLineChartView
 
 from .models import Analytic
 from video_content.models import Video
@@ -103,9 +105,21 @@ def analytics_view(request):
     }
     wanted_month = md[wanted_month]
 
+    semester = ""
+    if dt.month in [10, 11, 12, 1, 2, 3]:
+        if dt.month in [10, 11, 12]:
+            semester = "Wintersemester "+str(dt.year)+"/"+str(dt.year+1)
+        else:
+            semester = "Wintersemester " + str(dt.year-1) + "/" + str(dt.year)
+    else:
+        semester = "Sommersemester " + str(dt.year)
+
     context = {
         "year": wanted_year,
         "month": wanted_month,
+        "year_curr": dt.year,
+        "month_curr": md[str(dt.month)],
+        "semester": semester,
         "possible_years": possible_years,
         "pages_count": pages_count,
         "pages": pages,
@@ -121,6 +135,102 @@ def analytics_view(request):
         "videos": videos,
     }
     return render(request, context=context, template_name="analytics.html")
+
+
+class LineChartJSONView(BaseLineChartView):
+    """
+    View for the chart.
+    """
+
+    sose = ["April", "Mai", "Juni", "Juli", "August", "September"]
+    wise = ["Oktober", "November", "Dezember", "Januar", "Februar", "März"]
+
+    def get_labels(self):
+        """Return 6 labels for the x-axis."""
+        dt = datetime.now()
+        if dt.month in [4, 5, 6, 7, 8, 9]:
+            res = []
+            for m in self.sose:
+                res.append(m+" "+str(dt.year))
+            return res
+        else:
+            res = []
+            if dt.month in [10, 11, 12]:
+                for i in range(3):
+                    res.append(self.wise[i]+" "+str(dt.year))
+                for i in range(3, 6):
+                    res.append(self.wise[i]+" "+str(dt.year+1))
+            else:
+                for i in range(3):
+                    res.append(self.wise[i]+" "+str(dt.year-1))
+                for i in range(3, 6):
+                    res.append(self.wise[i]+" "+str(dt.year))
+            return res
+
+    def get_providers(self):
+        """Return names of datasets."""
+        return ["Alle erhobenen Zugriffe", "PDF Zugriffe Insgesamt", "Gebäude Zugriffe", "Videoaufrufe", "Anzahl der Suchen"]
+
+    def get_data(self):
+        """Return datasets to plot."""
+        all = Analytic.objects.all()
+        buildings = all.filter(site_url="details_page")
+        downloads = all.filter(site_url="download")
+        pdfs = all.filter(site_url__contains="media/material")
+        videos = all.filter(site_url__contains="media/video")
+        searches = all.filter(site_url="search")
+        data_all = []
+        data_pdfs = []
+        data_videos = []
+        data_buildings = []
+        data_searches = []
+        dt = datetime.now()
+        if dt.month not in [4, 5, 6, 7, 8, 9]:
+            # is wise
+            if dt.month in [10, 11, 12]:
+                for i in range(10, 13):
+                    data_all.append(sum(a.visits for a in all.filter(year=dt.year).filter(month=i)))
+                    data_pdfs.append(sum(a.visits for a in pdfs.filter(year=dt.year).filter(month=i))+sum(
+                        a.visits for a in downloads.filter(year=dt.year).filter(month=i)))
+                    data_videos.append(sum(a.visits for a in videos.filter(year=dt.year).filter(month=i)))
+                    data_buildings.append(sum(a.visits for a in buildings.filter(year=dt.year).filter(month=i)))
+                    data_searches.append(sum(a.visits for a in searches.filter(year=dt.year).filter(month=i)))
+                for i in range(1, 4):
+                    data_all.append(sum(a.visits for a in all.filter(year=dt.year+1).filter(month=i)))
+                    data_pdfs.append(sum(a.visits for a in pdfs.filter(year=dt.year+1).filter(month=i)) + sum(
+                        a.visits for a in downloads.filter(year=dt.year+1).filter(month=i)))
+                    data_videos.append(sum(a.visits for a in videos.filter(year=dt.year+1).filter(month=i)))
+                    data_buildings.append(sum(a.visits for a in buildings.filter(year=dt.year+1).filter(month=i)))
+                    data_searches.append(sum(a.visits for a in searches.filter(year=dt.year+1).filter(month=i)))
+            else:
+                for i in range(10, 13):
+                    data_all.append(sum(a.visits for a in all.filter(year=dt.year-1).filter(month=i)))
+                    data_pdfs.append(sum(a.visits for a in pdfs.filter(year=dt.year-1).filter(month=i)) + sum(
+                        a.visits for a in downloads.filter(year=dt.year-1).filter(month=i)))
+                    data_videos.append(sum(a.visits for a in videos.filter(year=dt.year-1).filter(month=i)))
+                    data_buildings.append(sum(a.visits for a in buildings.filter(year=dt.year-1).filter(month=i)))
+                    data_searches.append(sum(a.visits for a in searches.filter(year=dt.year-1).filter(month=i)))
+                for i in range(1, 4):
+                    data_all.append(sum(a.visits for a in all.filter(year=dt.year).filter(month=i)))
+                    data_pdfs.append(sum(a.visits for a in pdfs.filter(year=dt.year).filter(month=i)) + sum(
+                        a.visits for a in downloads.filter(year=dt.year).filter(month=i)))
+                    data_videos.append(sum(a.visits for a in videos.filter(year=dt.year).filter(month=i)))
+                    data_buildings.append(sum(a.visits for a in buildings.filter(year=dt.year).filter(month=i)))
+                    data_searches.append(sum(a.visits for a in searches.filter(year=dt.year).filter(month=i)))
+        else:
+            # is sose
+            for i in range(4, 10):
+                data_all.append(sum(a.visits for a in Analytic.objects.filter(year=dt.year).filter(month=i)))
+                data_pdfs.append(sum(a.visits for a in pdfs.filter(year=dt.year).filter(month=i)) + sum(
+                    a.visits for a in downloads.filter(year=dt.year).filter(month=i)))
+                data_videos.append(sum(a.visits for a in videos.filter(year=dt.year).filter(month=i)))
+                data_buildings.append(sum(a.visits for a in buildings.filter(year=dt.year).filter(month=i)))
+                data_searches.append(sum(a.visits for a in searches.filter(year=dt.year).filter(month=i)))
+        return [data_all, data_pdfs, data_buildings, data_videos, data_searches]
+
+
+line_chart = TemplateView.as_view()
+line_chart_json = LineChartJSONView.as_view()
 
 
 def add_visit(request, page, object_id):

@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'cas',
     'announcements.apps.AnnouncementsConfig',
     'analytics.apps.AnalyticsConfig',
+    'chartjs',
     ]
 
 MIDDLEWARE = [

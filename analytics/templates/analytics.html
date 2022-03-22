@@ -107,20 +107,38 @@
     </div>
     <div class="default-page-body">
         <div class="container">
+
             <!-- Explanation and hints for site use -->
             <div class="hint">
                 <p><b>Einordnung und Nutzungshinweise:</b></p>
-                <p><ul>
+                <ul>
                     <li>Alle hier genannten Zahlen sind absolute Angaben. Es werden ausdrücklich keine Nutzer gezählt, sondern jeder Aufruf einzeln. Die tatsächliche Anzahl der Nutzer dürfte also um ein vielfaches kleiner sein, da jeder Nutzer wahrscheinlich sehr viele Aufrufe von Unterseiten, Gebäuden, usw. tätigt.</li>
                     <li>Diese Seite ist nur Admins (Mitgliedern mit "Staff"-Status) zugänglich, und kann nicht betrachtet werden, wenn man sich nur ("normal") mit der TU-ID einloggt - ein Login mit Admin-Passwort (wie fürs Admin-Interface) ist erforderlich.</li>
                     <li>Die gezeigten Aufrufzahlen sind jeweils absteigend sortiert (meist-besuchtes Element zuerst).</li>
                     <li>Wähle Monat und Jahr oben im Dropdown Menü aus, um die entsprechende Erhebung des Monats zu betrachten.</li>
+                    <li>Unten findet sich die Zusammenfassung für das aktuelle Semester, darunter die Erhebung des ausgewählten Monats.</li>
                     <li>Die Verlinkungen führen jeweils direkt zu dem Element, das in der Zeile erfasst wurde. So kann man sich z.B. direkt selbst schnell das meist angesehene Gebäude anschauen. Diese öffnen sich in neuen Tabs, sodass die Analyseseite offen bleibt.</li>
                     <li>Am unteren Ende der Seite können die älteren Analysedaten gelöscht werden.</li>
-                </ul></p>
+                    <li>Das Zusammenfassungs-Diagramm ist interaktiv: Klickt man auf Elemente der Legende, kann man Datensätze ein- oder ausblenden, das Diagramm passt sich entsprechend an. Fährt man mit der Maus über Datenpunkte im Diagramm, bekommt man die Werte zu diesem Punkt angezeigt.</li>
+                </ul>
             </div>
+
+            <!-- Chart for the semester -->
+            <h2>Zusammenfassung für das {{ semester }}:</h2>
+            <canvas id="myChart" max-height="200px !important;"></canvas>
+            <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+            <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
+            <script type="text/javascript">
+                $.get('/analytics/chartJSON', function(data) {
+                    var ctx = $("#myChart").get(0).getContext("2d");
+                    new Chart(ctx, {
+                        type: 'line', data: data
+                    });
+                });
+            </script>
+
             <!-- analytics for this month and year -->
-            <h2>Erhebung für {{ month }} {{ year }}:</h2>
+            <h2>Detailreiche Erhebung für {{ month }} {{ year }}:</h2>
             <h3>Besuchszahlen der Unterseiten:</h3>
             <p><b>Gesamtzahl: {{ pages_count }}.</b></p>
             <table class="w-100">
@@ -319,7 +337,7 @@
     <div class="danger-hg">
         <div class="container danger-zone">
             <h2>GEFAHRENZONE:</h2>
-            <p>Hier können alle Datensätze von vorhergegangenen Monaten gelöscht werden. <b>Löschen ist unwiederbringlich.</b> Nur die Erhebung des aktuellen Monats ({{ month }} {{ year }}) bleibt erhalten. Falls die Daten erhalten bleiben sollen, nicht betätigen, oder vorher anderweitig notieren.</p>
+            <p>Hier können alle Datensätze von vorhergegangenen Monaten gelöscht werden. <b>Löschen ist unwiederbringlich.</b> Nur die Erhebung des aktuellen Monats ({{ month_curr }} {{ year_curr }}) bleibt erhalten. Falls die Daten erhalten bleiben sollen, nicht betätigen, oder vorher anderweitig notieren.</p>
             <button class="btn d-flex justify-content-center" data-toggle="modal" data-target="#confirmPopup"><b>ALLE VERALTETEN DATENSÄTZE LÖSCHEN</b></button>
         </div>
     </div>
@@ -335,8 +353,8 @@
             </button>
           </div>
           <div class="modal-body">
-            <p><b>Das Löschen der Analyse Datensätze ist unwiederbringlich. Nur die Erhebung des aktuellen Monats ({{ month }} {{ year }}) bleibt erhalten. Falls die Daten erhalten bleiben sollen, nicht löschen, oder vorher anderweitig notieren.</b><br>
-                Möchten sie wirklich alle Datensätze der Analyse, außer dem aktuellen Monat ({{ month }} {{ year }}), löschen?</p>
+            <p><b>Das Löschen der Analyse Datensätze ist unwiederbringlich. Nur die Erhebung des aktuellen Monats ({{ month_curr }} {{ year_curr }}) bleibt erhalten. Falls die Daten erhalten bleiben sollen, nicht löschen, oder vorher anderweitig notieren.</b><br>
+                Möchten sie wirklich alle Datensätze der Analyse, außer dem aktuellen Monat ({{ month_curr }} {{ year_curr }}), löschen?</p>
           </div>
           <div class="modal-footer">
               <div class="row w-100">
