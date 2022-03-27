@@ -5,27 +5,42 @@
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="{% static './home/index.css' %}">
+    <title>Home</title>
     {% include '../default_head.html' %}
 </head>
 <body>
 
-    <!-- Logo in the middle-->
-
-    <div class="container full_height" height="100%">
-        <div class="row align-items-center full_height" height="100%">
-            <div class="col">
-                <div class="row main_logo_container">
-                    <!-- Logo -->
-                    <img src="{% static "logoneu.png"  %}" width="100%">
+    <div class="h-100 bg-image">
+        <div class="container">
+            <div class="row">
+                <div class="col-4"></div>
+                <div class="col-4 d-flex justify-content-center">
+                    <div class="main_logo_container d-flex justify-content-center">
+                        <!-- Logo -->
+                        <img class="logo" src="{% static 'home-logo.png' %}">
+                    </div>
                 </div>
-                <div class="row main_button_container">
-                    <!-- Login button -->
-                    <a href="{% url 'start:start' %}" style="width: 100%;"> <button class="button" id="color-btn" style="width: 100%;">Anmelden</button></a>
+                <div class="col-4"></div>
+            </div>
+            <div class="row">
+                <div class="col-4"></div>
+                <div class="col-4 d-flex justify-content-center">
+                    <div class="main_button_container">
+                        <!-- Login Button -->
+                        <a href="{% url 'start:start' %}" style="width: 100%;">
+                            <button class="button font-benton-sans" id="color-btn" style="width: 100%;">
+                                <b>Anmelden</b>
+                            </button>
+                        </a>
+                    </div>
                 </div>
+                <div class="col-4"></div>
             </div>
         </div>
     </div>
 
     {% include 'footer.html' %}
+    {% include 'mobile_nav_footer.html' %}
+
 </body>
 </html>

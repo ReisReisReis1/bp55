@@ -2,22 +2,20 @@
     CSS File for styling on the details pages
 =============================================================================*/
 
-/*----------------------------------------------------------------------------
-    Styling of the container with all the details
- */
-.details-box {
-    padding-top: 15px;
-    border: solid;
+.building-title {
+    font-size: 84px;
+    padding-left: 0;
+    margin-bottom: -15px;
+    width: 100%;
 }
 
-/*
-    Styling of the video containers
- */
-.video-box {
-    cursor: pointer;
-    width: 25%;
-    padding-left: 5px !important;
-    padding-right: 5px !important;
+.building-era {
+    font-size: 20px;
+    letter-spacing: 1px;
+}
+
+table {
+    table-layout: fixed;
 }
 
 /*----------------------------------------------------------------------------
@@ -49,17 +47,92 @@
     height: 5px;
 }
 
-/*----------------------------------------------------------------------------
-    Removes the margin of the first row of videos
- */
-.video-first-row {
-    margin-bottom: 0px !important;
+.carousel-inner .carousel-item {
+    height:360px;
+    background-size:cover;
+    background-position: center center;
 }
 
-/*
-    Adds a margin over every other row of videos
- */
-.video-rest-row {
-    margin-bottom: 0px !important;
-    margin-top: 1rem;
+.carousel-image {
+    background-color: #e8d4bd;;
+    height: 360px;
+}
+
+/* Styling for the popup elements */
+.modal-backdrop {
+    background-color: #1F1F1F;
+    opacity: 0.97 !important;
+}
+
+.building-description {
+    padding-top: .75rem;
+    text-align: justify;
+}
+
+.popup {
+    background-color: transparent;
+    border: 0px !important;
+    border-radius: 0 !important;
+}
+
+/* ... re-set header borders to more height */
+.popup-header {
+    padding-left: 0px;
+    margin-left: 0px;
+    padding-right: 0px;
+    margin-right: 0px;
+    border-bottom: 4px solid;
+    padding-bottom: 5px;
+}
+
+/* ... title text */
+.popup-title {
+    cursor: default;
+    padding-left: 0px;
+    margin-left: 0px;
+    color: #F9EAD8;
+    font-size: 22px;
+}
+
+/* ... body */
+.popup-body {
+    padding-top: 10px !important;
+    padding: 0px;
+}
+
+/* ... close button */
+.popup-close-button {
+    padding-right: 0px;
+    margin-right: 0px;
+    color: #F7F7F7;
+    opacity: 100%;
+    font-size: 22px;
+}
+
+/* Make the Close button able to see on dark background */
+.popup-close-button:hover {
+    color: #F7F7F7;
+    opacity: 80%;
+    cursor: pointer;
+}
+
+@media screen and (min-width: 768px) {
+    .mobile-design {
+        display: none !important;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    /* Show the pc-design per default */
+    .pc-design {
+        display: none !important;
+    }
+
+    .building-title, .building-era {
+        text-align: center;
+    }
+
+    .table-mobile {
+        margin-bottom: 0;
+    }
 }

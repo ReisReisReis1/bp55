@@ -2,9 +2,417 @@
     CSS File for styling on the timeline page
 =============================================================================*/
 
+.index-o {
+    transform: translateY(-50%);
+    background-color: #1F1F1F;
+    position: fixed;
+    right: 0;
+    top: 50%;
+    z-index: 10;
+}
+
+.index-c {
+    transform: translateY(-50%) rotate(-90deg);
+    background-color: #1F1F1F;
+    position: fixed;
+    right: -50px;
+    top: 50%;
+    z-index: 10;
+}
+
+.index-hide {
+    display: none !important;
+}
+
+.index-open {
+    width: 200px;
+    padding-top: 10px;
+    padding-bottom: 8px;
+}
+
+.index-close {
+    color: #F9EAD8;
+    padding-left: 12px;
+}
+
+.index-header {
+    cursor: pointer;
+    width: 100%;
+    color: #CAA36E;
+}
+
+.index-header-close {
+    margin: 10px 18px 11px 13px;
+}
+
+.index-header-close-icon {
+    transform: rotate(90deg);
+}
+
+.index-item {
+    list-style-type: none;
+}
+
+.index-icon {
+    height: 4px;
+    width: 100%;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+/* Font for the Era title */
+.era-title {
+    font-size: 84px;
+    text-align: center;
+}
+
+/* Font for the era year */
+.era-year {
+    font-size: 15px;
+    text-align: center;
+    margin-top: -25px;
+}
+
+/* New Building year */
+.building-year-only {
+    background-color: #F9EAD8;
+    font-size: 24px;
+    text-align: center;
+    height: 30%;
+}
+.building-bcad-only {
+    background-color: #F9EAD8;
+    text-align: center;
+    font-size: 10px;
+    margin-top:-10px;
+    margin-bottom:10px;
+    height: 6%;
+}
+
+/* Style name texts properties */
+.name-text {
+    font-size: 16px;
+    line-height: 33px;
+    padding-right: 10px;
+}
+
+/* Set the width of the main (time)line */
+.line {
+    width: 4px;
+}
+
+/* Set height and length for the horizontal lines, for the historic dates */
+.horizontal-line {
+    margin-top: 6px;
+    padding-right: 0px;
+    width: 120%;
+    height: 4px;
+}
+
+/* Put the middle line for historic dates in the correct place */
+.hd-middle {
+    margin-bottom: 6px;
+}
+
+/* Put the middle line for historic dates in the correct place,
+   space the text to good look */
+.hd-text {
+    margin-bottom: 12px;
+}
+
+/* Set a fixed height for the gradient line, to be able to see the gradient */
+.gradient-line {
+    height: 60px;
+    width: 4px;
+}
+
+/* Style the timeline line above the diamond symbol of historic dates */
+.hd-line-top {
+    height: 70%;
+    width: 4px;
+}
+
+/* Style the line leading to the pictures */
+.pic-line {
+    height: 4px;
+}
+
+/* To not screw up the horizontal lines, set fixed height to the texts above and below the lines */
+.fixed-height {
+    height: 30px;
+}
+
+/* To realise the overlapping of pictures, set a negative margin to the thumbnail divs */
+.overlapping {
+    padding-right: 20px !important;
+    margin-top: -2%;
+    margin-bottom: -2%;
+}
+
+.img {
+    background-color: #e8d4bd;
+    width: 100%;
+    height: 180px;
+}
+
+/* Style of the main timeline line for historic dates, below the diamond */
+.hd-line {
+    height: 100%;
+    width: 4px;
+}
+
+/* Helps to center flexbox objects horizontally */
+.centered {
+    display: flex;
+    width: 100%;
+    vertical-align: baseline;
+    justify-content: center;
+}
+
+/* Equally distribute height between timeline line and text */
+.one-third-height {
+    height: 34%;
+}
+
+/* Set height and positioning for the div surrounding the diamond symbol */
+.diamond-container {
+    height: 30px;
+    margin-right: 16px;
+}
+
+/* Style to make the diamond symbol for historic dates */
+.diamond {
+    width: 16px;
+    height: 16px;
+    margin-top: 0px;
+    padding-top: 5px;
+    transform: rotate(0.125turn);
+}
+
+/*============================================================================*/
+/* Mobile design */
+
+/* Show the pc-design per default */
+.pc-design {
+    display: inherit !important;
+}
+
+/* Hide the mobile design per default */
+.mobile-design {
+    display: none !important;
+}
+
+/* Better pic sizes for: 1200px, 992px, 768px, 575px and smaller */
+/* Most mobile design defined in biggest width here */
+@media screen and (max-width: 1200px) {
+    /* What to to if it is mobile design */
+    /* hide the pc-design */
+    .pc-design {
+        display: none !important;
+    }
+
+    /* show the mobile design */
+    .mobile-design {
+        display: inherit !important;
+    }
+
+
+    /* set other font specs for eta title and year */
+    .era-title {
+        font-size: 48px;
+        text-align: left;
+    }
+    .era-year {
+        margin-top: -20px;
+        font-size: 10px;
+        text-align: left;
+    }
+
+    /* Make all lines smaller, 2 instead of 4 px */
+    .line {
+        width: 2px;
+    }
+    .horizontal-line {
+        margin-top: 2px;
+        height: 2px;
+        width: 103%;
+    }
+    .pic-line {
+        height: 2px;
+    }
+    .gradient-line {
+        width: 2px;
+        height: 30px;
+    }
+    .hd-line {
+        height: 160%;
+        width: 2px;
+    }
+    .hd-line-top {
+        height: 70%;
+        width: 2px;
+    }
+
+    .hd-text {
+        margin-top: -8px;
+        margin-bottom: 1px;
+    }
+
+    /* New Building year */
+    .building-year-only {
+        background-color: #F9EAD8;
+        font-size: 22px;
+        text-align: center;
+        height: 23%;
+    }
+    .building-bcad-only {
+        background-color: #F9EAD8;
+        text-align: center;
+        font-size: 10px;
+        margin-top: -7px;
+        height: 4%;
+    }
+
+    /* Make building names font smaller */
+    .name-text {
+        font-size: 13px;
+        line-height: 21px;
+        padding-right: 10px;
+    }
+
+    .img {
+        height: 155px !important;
+    }
+
+    /* Update fixed height, to not see much more spaces because of smaller text */
+    .fixed-height {
+        height: 20px;
+    }
+
+    /* Text will now consume more height, so make lines smaller */
+    .one-third-height {
+        height: 37%;
+    }
+
+    /* Now image overlapping is not needed, actually space the images because they are all on one col now */
+    .overlapping {
+        margin-top: 1.5%;
+        margin-bottom: 1.5%;
+    }
+    /* Fix diamond size */
+    .diamond-container {
+        height: 15px;
+        width: 15px;
+        margin-top: 2px;
+        margin-left: 25px;
+        margin-right: -5px;
+    }
+    .diamond {
+        height: 9px;
+        width: 9px;
+    }
+
+    /* Correct line positing for historic dates */
+    .hd-line-indent {
+        margin-top: 6px;
+        margin-right: 10px;
+    }
+}
+
+@media screen and (max-width: 991px) {
+    .img {
+        height: 130px !important;
+    }
+    .building-year-only {
+        font-size: 18px;
+        height: 23%;
+    }
+    .building-bcad-only {
+        font-size: 8px;
+        height: 4%;
+    }
+    .diamond-container {
+        height: 15px;
+        width: 15px;
+        margin-top: 2px;
+        margin-left: 20px;
+        margin-right: -5px;
+    }
+    .diamond {
+        height: 9px;
+        width: 9px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .img {
+        height: 105px !important;
+    }
+    .building-year-only {
+        font-size: 15px;
+        height: 23%;
+    }
+    .building-bcad-only {
+        font-size: 7px;
+        height: 4%;
+    }
+    .diamond-container {
+        height: 15px;
+        width: 15px;
+        margin-top: 2px;
+        margin-left: 16px;
+        margin-right: -5px;
+    }
+    .diamond {
+        height: 9px;
+        width: 9px;
+    }
+}
+
+@media screen and (max-width: 574px) {
+    .img {
+        height: 80px !important;
+    }
+    .building-year-only {
+        font-size: 12px;
+        height: 23%;
+    }
+    .building-bcad-only {
+        font-size: 6px;
+        height: 4%;
+    }
+}
+
+@media screen and (max-width: 395px) {
+    .img {
+        height: 80px !important;
+    }
+    .building-year-only {
+        font-size: 9px;
+        height: 23%;
+    }
+    .building-bcad-only {
+        font-size: 6px;
+        height: 4%;
+    }
+    .diamond-container {
+        height: 15px;
+        width: 15px;
+        margin-top: 2px;
+        margin-left: 15px;
+        margin-right: -2px;
+    }
+    .diamond {
+        height: 8px;
+        width: 9px;
+    }
+}
+
+/*============================================================================*/
 /*----------------------------------------------------------------------------
     Styling of the index of all eras
  */
+/*
 .index {
     position: fixed;
     right: 20px;
@@ -12,148 +420,11 @@
     z-index: 10;
 }
 
+*/
 /*
     Hide the index by default
- */
+ *//*
+
 .index-hide {
     display: none;
-}
-
-/*
-    Styling of the close button of the index
- */
-.index-button {
-    position: absolute;
-    right: 1.25rem;
-    top: 1.25rem;
-}
-
-/*
-    Styling of the contents (eras) of the index
- */
-.list-group a {
-    color: black;
-    text-decoration: none;
-}
-
-/*----------------------------------------------------------------------------
-    One row in the timeline
- */
-.row-timeline {
-    width: 100%;
-}
-
-/*
-    Make the center full width
- */
-.timeline-center, .timeline-center-last {
-    height: 100%;
-}
-
-/*----------------------------------------------------------------------------
-    Style of the title box
- */
-.card-title {
-    border-bottom: solid;
-    border-width: 2px;
-}
-
-/*
-    Styling of the title of historic date cards
- */
-.historic-title {
-    margin-bottom: 0px !important;
-}
-
-/*
-    Styling of a card containing a building
- */
-.timeline-card {
-    width: 70%;
-}
-
-/*
-    Style of the link between left side card and timeline center
- */
-.card-left::before {
-    content: " ";
-    height: 0;
-    position: absolute;
-    top: 35px;
-    width: 0;
-    z-index: -2;
-    right: -130px;
-    border: solid;
-    border-width: 4px 130px 4px 0;
-    border-color: inherit;
-}
-
-/*
-    Style of the link between right side card and timeline center
- */
-.card-right::before {
-    content: " ";
-    height: 0;
-    position: absolute;
-    top: 35px;
-    width: 0;
-    z-index: -2;
-    left: -130px;
-    border: solid;
-    border-width: 4px 0 4px 130px;
-    border-color: inherit;
-}
-
-/*
-    Style of the center bar of the timeline
- */
-.timeline-center-first {
-    position: relative;
-    z-index: -1;
-    margin-top: -100px;
-    height: 230%;
-}
-
-/*
-    Styling of the arrow at the end of the timeline
- */
-.timeline-center-last::after {
-    content: " ";
-    height: 0;
-    width: 0;
-    position: absolute;
-    top: 100%;
-    left: 0;
-
-    -webkit-transform:rotate(360deg);
-    border-style: solid;
-    border-width: 80px 46px 0 46px;
-    border-color: transparent transparent transparent;
-    border-top-color: inherit;
-}
-
-/*
-    Styling of text on each era on the center beam
- */
-.timeline-center-text {
-    writing-mode: vertical-rl;
-    white-space: nowrap;
-    position: absolute;
-    z-index: 1;
-    margin-top: 10px;
-    margin-left: -20px;
-}
-
-/*
-    Default height of eras which contain no buildings
- */
-.timeline-center-empty {
-    height: 300px;
-}
-
-/*----------------------------------------------------------------------------
-    Change color of the link to default (not blue)
- */
-.card-link {
-    color: inherit !important;
 }

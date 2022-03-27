@@ -1,5 +1,6 @@
 {% load static %}
 {% load bootstrap4 %}
+{% load mathfilters %}
 
 
 <!DOCTYPE html>
@@ -8,6 +9,7 @@
     {% include 'default_head.html' %}
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="{% static 'filter.css' %}">
+    <title>Bauwerke</title>
 
     <script>
         // Function to add the filter to URL
@@ -51,132 +53,150 @@
 </head>
 
 <body>
+
     {% include './header.html' %}
+    {% include './announcement.html' %}
+
+    <div class="subheader" style="background: url('{% static "filter-head-background.png" %}');">
+        <div class="container h-100 d-flex align-items-center justify-content-center">
+            <h1 class="subheader-text">BAUWERKE</h1>
+        </div>
+    </div>
 
     <!-- Get 'back to top' button -->
-    <a id="color-btn" href="" class="btn btn-lg back-to-top" role="button">∧</a>
+    <a href="" class="back-to-top font-bebas-neue" role="button"><h4 class="m-0">«</h4></a>
 
-    <div class="container container-page">
-        <div class="row">
-            <!-- Iterate through filters -->
-            {% for filter in Filter_Names %}
-                <!-- Add dropdown button -->
-                <div class="dropdown">
-                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <!-- Name of filter -->
-                        {{ filter }}
-                    </button>
-                    <!-- Add dropdown menus -->
-                    <div class="dropdown-menu pre-scrollable" aria-labelledby="dropdownMenuButton">
-                        {% if forloop.counter == 1 %}
-                            {% for city in Cities %}
-                                <a class="dropdown-item" onclick="addParameterToURL('city={{ city }}')">{{ city }}</a>
-                            {% endfor %}
-                        {% endif %}
-                        {% if forloop.counter == 2 %}
-                            {% for region in Regions %}
-                                <a class="dropdown-item" onclick="addParameterToURL('region={{ region }}')">{{ region }}</a>
-                            {% endfor %}
-                        {% endif %}
-                        {% if forloop.counter == 3 %}
-                            {% for country in Countries %}
-                                <a class="dropdown-item" onclick="addParameterToURL('country={{ country }}')">{{ country }}</a>
-                            {% endfor %}
-                        {% endif %}
-                        {% if forloop.counter == 4 %}
-                            {% for era in Eras %}
-                                <a class="dropdown-item" onclick="addParameterToURL('era={{ era }}')">{{ era }}</a>
-                            {% endfor %}
-                        {% endif %}
-                        {% if forloop.counter == 5 %}
-                            {% for architect in Architects %}
-                                <a class="dropdown-item" onclick="addParameterToURL('architect={{ architect }}')">{{ architect }}</a>
-                            {% endfor %}
-                        {% endif %}
-                        {% if forloop.counter == 6 %}
-                            {% for builder in Builders %}
-                                <a class="dropdown-item" onclick="addParameterToURL('builder={{ builder }}')">{{ builder }}</a>
-                            {% endfor %}
-                        {% endif %}
-                        {% if forloop.counter == 7 %}
-                            {% for design in Designs %}
-                                <a class="dropdown-item" onclick="addParameterToURL('design={{ design }}')">{{ design }}</a>
-                            {% endfor %}
-                        {% endif %}
-                        {% if forloop.counter == 8 %}
-                            {% for column_order in Column_Orders %}
-                                <a class="dropdown-item" onclick="addParameterToURL('column_order={{ column_order }}')">{{ column_order }}</a>
-                            {% endfor %}
-                        {% endif %}
-                        {% if forloop.counter == 9 %}
-                            {% for material in Materials %}
-                                <a class="dropdown-item" onclick="addParameterToURL('material={{ material }}')">{{ material }}</a>
-                            {% endfor %}
-                        {% endif %}
-                        {% if forloop.counter == 10 %}
-                            {% for function in Functions %}
-                                <a class="dropdown-item" onclick="addParameterToURL('function={{ function }}')">{{ function }}</a>
-                            {% endfor %}
-                        {% endif %}
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-
-        <div class="row row-distance-sm">
-            <!-- Add currently selected filters -->
-            Ausgewählte Filter:
-            {% for key,filter_list in Active_Filter.items %}
-                {% for filter in filter_list %}
-                    <!-- Add button to remove filter -->
-                    <a class="btn-filter" id="color-btn-inv" onclick="removeParameterFromURL('{{ key }}={{ filter }}')">{{ filter }}</a><a class="btn-filter-x" id="color-bg-primary" onclick="removeParameterFromURL('{{ key }}={{ filter }}')">&times;</a>
-                {% endfor %}
-            {% endfor %}
-        </div>
-
-        {% if Filter_Result|length == 0 %}
-            <!-- If no fitting elements are found -->
-            <div class="row justify-content-center">
-                <h1>Keine passenden Ergebnisse gefunden</h1>
-            </div>
-        {% endif %}
-
-        <!-- Iterate through returned results -->
-        {% for building,image in Filter_Result %}
-            {% if forloop.counter0|divisibleby:3 or forloop.first %}
-                <div class="row row-result row-no-margin">
-            {% endif %}
-                <div class="result-box">
-                    <div class="card shadow-sm">
-                        <div class="card-body">
-                            <!-- Add image of building -->
-                            <div class="card-img d-flex justify-content-center align-items-center">
-                                {% if image == None %}
-                                    <!-- Add default image if building has no thumbnail -->
-                                    <img src="{% static "default_image.png"  %}" style="max-width: 100%; height: 100%">
-                                {% else %}
-                                    <!-- Add thumbnail of building -->
-                                    <img src="/media/{{ image.picture }}" style="max-width: 100%; max-height: 100%">
-                                {% endif %}
-                            </div>
-
-                            <!-- Add name of building -->
-                            <h5 class="card-title" style="border-bottom-style: solid; border-bottom-color: #{{ building.era.color_code }}">{{ building.name }}</h5>
-                            {% if False and not building.description == None %}
-                                <!-- Add building description -->
-                                <p class="card-text" align="justify">{{ building.description }}</p>
+    <div class="search-filters font-calluna">
+        <div class="container">
+            <div class="row">
+                <!-- Iterate through filters -->
+                {% for filter in Filter_Names %}
+                    <!-- Add dropdown button -->
+                    <div class="dropdown col-md-3">
+                        <button class="btn btn-dropdown" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <!-- Name of filter -->
+                            {{ filter }}<div class="dash-symbol float-right"></div>
+                        </button>
+                        <!-- Add dropdown menus -->
+                        <div class="dropdown-menu pre-scrollable" aria-labelledby="dropdownMenuButton">
+                            {% if forloop.counter == 1 %}
+                                {% for city in Cities %}
+                                    <a class="dropdown-item" onclick="addParameterToURL('city={{ city }}')">{{ city }}</a>
+                                {% endfor %}
                             {% endif %}
-                            <!-- Add button which links to details page of building -->
-                            <a href="{% url 'details_page:detailed' building_id=building.id %}" class="btn" id="color-btn">Mehr erfahren</a>
+                            {% if forloop.counter == 2 %}
+                                {% for region in Regions %}
+                                    <a class="dropdown-item" onclick="addParameterToURL('region={{ region }}')">{{ region }}</a>
+                                {% endfor %}
+                            {% endif %}
+                            {% if forloop.counter == 3 %}
+                                {% for country in Countries %}
+                                    <a class="dropdown-item" onclick="addParameterToURL('country={{ country }}')">{{ country }}</a>
+                                {% endfor %}
+                            {% endif %}
+                            {% if forloop.counter == 4 %}
+                                {% for era in Eras %}
+                                    <a class="dropdown-item" onclick="addParameterToURL('era={{ era }}')">{{ era }}</a>
+                                {% endfor %}
+                            {% endif %}
+                            {% if forloop.counter == 5 %}
+                                {% for architect in Architects %}
+                                    <a class="dropdown-item" onclick="addParameterToURL('architect={{ architect }}')">{{ architect }}</a>
+                                {% endfor %}
+                            {% endif %}
+                            {% if forloop.counter == 6 %}
+                                {% for builder in Builders %}
+                                    <a class="dropdown-item" onclick="addParameterToURL('builder={{ builder }}')">{{ builder }}</a>
+                                {% endfor %}
+                            {% endif %}
+                            {% if forloop.counter == 7 %}
+                                {% for design in Designs %}
+                                    <a class="dropdown-item" onclick="addParameterToURL('design={{ design }}')">{{ design }}</a>
+                                {% endfor %}
+                            {% endif %}
+                            {% if forloop.counter == 8 %}
+                                {% for column_order in Column_Orders %}
+                                    <a class="dropdown-item" onclick="addParameterToURL('column_order={{ column_order }}')">{{ column_order }}</a>
+                                {% endfor %}
+                            {% endif %}
+                            {% if forloop.counter == 9 %}
+                                {% for material in Materials %}
+                                    <a class="dropdown-item" onclick="addParameterToURL('material={{ material }}')">{{ material }}</a>
+                                {% endfor %}
+                            {% endif %}
+                            {% if forloop.counter == 10 %}
+                                {% for function in Functions %}
+                                    <a class="dropdown-item" onclick="addParameterToURL('function={{ function }}')">{{ function }}</a>
+                                {% endfor %}
+                            {% endif %}
                         </div>
                     </div>
+                {% endfor %}
+            </div>
+            <div class="row">
+                <div class="col">
+                    <!-- Add currently selected filters -->
+                    <b style="margin-right: 20px;">Aktive Filter:</b>
+                    {% for key,filter_list in Active_Filter.items %}
+                        {% for filter in filter_list %}
+                            <!-- Add button to remove filter -->
+                            <a class="btn-filter-parent" onclick="removeParameterFromURL('{{ key }}={{ filter }}')">
+                                <div class="btn-filter">{{ filter }}</div>
+                                <div class="btn-filter-x">&times;</div>
+                            </a>
+                        {% endfor %}
+                    {% endfor %}
                 </div>
-            {% if forloop.counter|divisibleby:3 or forloop.last %}
+            </div>
+        </div>
+    </div>
+
+    <div class="default-page-body">
+        <div class="container">
+            {% if Filter_Result|length == 0 %}
+                <!-- If no fitting elements are found -->
+                <div class="row justify-content-center">
+                    <h1 class="no-results">Keine passenden Ergebnisse gefunden</h1>
                 </div>
+            {% else %}
+                <!-- Iterate through returned results -->
+                {% for building,image in Filter_Result %}
+                    {% if forloop.counter0|divisibleby:4 or forloop.first %}
+                        {% if Filter_Result|length|sub:forloop.counter <= 3 %}
+                            <div class="row row-no-margin">
+                        {% else %}
+                            <div class="row row-result row-no-margin">
+                        {% endif %}
+                    {% endif %}
+                        <a href="{% url 'details_page:detailed' building_id=building.id %}" title="{{ building.name }}" class="col-md-3">
+                            <div class="result-box">
+                                <!-- Add image of building -->
+                                {% if image == None %}
+                                    <!-- Add default image if building has no thumbnail -->
+                                    <div class="building-image d-flex align-items-center justify-content-center">
+                                        <img src="{% static "default_image.png"  %}" class="mh-100 mw-100">
+                                    </div>
+                                {% else %}
+                                    <!-- Add thumbnail of building -->
+                                    <div class="building-image d-flex align-items-center justify-content-center">
+                                        <img src="/media/{{ image.picture }}" class="mh-100 mw-100">
+                                    </div>
+                                {% endif %}
+
+                                <!-- Add name of building -->
+                                <h5 class="card-title font-benton-sans truncate-title" style="border-bottom-style: solid; border-bottom-width: 5px; border-bottom-color: #{{ building.era.color_code }}">{{ building.name }}</h5>
+                            </div>
+                        </a>
+                    {% if forloop.counter|divisibleby:4 or forloop.last %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
             {% endif %}
-        {% endfor %}
+        </div>
     </div>
 
     {% include './footer.html' %}
+    {% include './mobile_nav_footer.html' %}
+
 </body>
 </html>

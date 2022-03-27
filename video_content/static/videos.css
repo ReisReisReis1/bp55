@@ -2,57 +2,219 @@
     CSS File for styling on the videos page
 =============================================================================*/
 
-/*----------------------------------------------------------------------------
-    Styling of one row of videos, containing all videos from one era
- */
-.video-section {
-
+/* General */
+html, body {
+    height: 100%;
 }
 
-/*
-    Styling of title of each era
- */
-.video-section-title {
-    width: 100%;
+/* Styling of the era titles*/
+.era-title {
+    font-size: 84px;
+    padding-left: 0;
+    width: 90%;
 }
 
-/*
-    Styling of one row of videos, containing max. 4 videos
- */
-.row-video {
-    width: 100%;
-    margin-bottom: 20px;
+.more-button-div {
+    width: 10%;
 }
 
-/*
-    Styling of the element containing a video and its title
- */
+/* ... and year texts */
+.era-year {
+    font-size: 12px;
+    margin-left: 4px;
+}
+
+/* Style for the lines, uses borders of the divs */
+.era-line {
+    padding-left: 57px;
+    border-left-style: solid;
+    border-left-width: 4px;
+}
+
+/* Same thing for the gradients inbetween the eras */
+.gradient-line {
+    height: 50px;
+    /* Do the border as resized background, much easier
+    than to deal with all border-image-* properties */
+    background-size: 4px auto;
+    background-repeat: no-repeat;
+}
+
+/* Styling of the element containing a video and its title */
 .video-box {
-    width: 25%;
+    cursor: pointer;
     padding-left: 5px !important;
     padding-right: 5px !important;
 }
 
-/*
-    Styling of the video rows which are hidden until clicked on the button
- */
+/* Some spacing to make the videos look nicer on the page */
+.row-video {
+    margin-bottom: 10px;
+}
+
+/* Style for the video titles */
+.video-title {
+    font-size: 18px;
+    margin-top: 12px;
+    padding-top: 4px;
+    border-top: 4px solid;
+}
+
+/* Hide mobile two-vid cols */
+.video-section-mobile {
+    display: none !important;
+}
+
+/* Set video-hide rows to hide completely */
 .video-hide {
     display: none !important;
 }
 
-/*
-    Styling of the button which opens and closes more rows of videos
- */
+/* Set the Thumbnails to show a hand/finger pointer,
+to make clear that you can start the video by clicking */
+.thumbnail:hover{
+    cursor: pointer;
+}
+
+/* Style symbol to make buttons to hide and unhide videos */
+.dash-symbol {
+    width: 18px;
+    height: 18px;
+    transform: scaleY(-1) scaleX(-1) translate(0px, 50%) rotate(0.125turn);
+    border-style: solid;
+    border-width: 4px;
+    border-right-width: 0;
+    border-bottom-width: 0;
+}
+
+/* Style the more videos button */
 .more-videos-button {
-    width: 100%;
+    outline:none !important;
     border: none;
     padding-top: 5px;
     padding-bottom: 5px;
+    background-color: #F9EAD8;
 }
 
-/*
-    Styling of the button which opens and closes more rows of videos on mouse hover
- */
-.video:hover, .video-title:hover {
+/* Styling for the popup elements */
+.modal-backdrop {
+    background-color: #1F1F1F;
+    opacity: 0.97 !important;
+}
+
+.popup {
+    background-color: transparent;
+    border: 0 !important;
+    border-radius: 0 !important;
+}
+
+/* ... re-set header borders to more height */
+.popup-header {
+    padding-left: 0;
+    margin-left: 0;
+    padding-right: 0;
+    margin-right: 0;
+    border-bottom: 4px solid;
+    padding-bottom: 5px;
+}
+
+/* ... title text */
+.popup-title {
+    cursor: default;
+    padding-left: 0;
+    margin-left: 0;
+    color: #F9EAD8;
+    font-size: 22px;
+}
+
+/* ... body */
+.popup-body {
+    padding-top: 10px !important;
+    padding: 0px;
+}
+
+/* ... close button */
+.popup-close-button {
+    padding-right: 0px;
+    margin-right: 0px;
+    color: #F7F7F7;
+    opacity: 100%;
+    font-size: 22px;
+}
+
+/* Make the Close button able to see on dark background */
+.popup-close-button:hover {
+    color: #F7F7F7;
+    opacity: 80%;
     cursor: pointer;
+}
+
+/*--------------------------------------- Responsive Design ---------------------------------------------------------*/
+
+@media screen and (min-width: 992px) {
+    .video-box {
+        width: 25%;
+    }
+}
+
+@media screen and (max-width: 991px) {
+
+    /* Responsive Design for mobile */
+
+    .video-box {
+        padding-left: 7px !important;
+        padding-right: 7px !important;
+    }
+
+    .video-section {
+        display: none !important;
+    }
+
+    .video-section-mobile {
+        display: grid !important;
+    }
+
+    .era-title {
+        font-size: 60px;
+        padding-left: 0px;
+    }
+
+    .video-title {
+        font-size: 12px;
+        margin-top: 6px;
+        padding-top: 2px;
+        border-top: 3px solid;
+    }
+
+    .thumbnail {
+        margin-top: 3px;
+    }
+
+    .era-line {
+        padding-left: 6px;
+        border-left-style: solid;
+        border-left-width: 3px;
+    }
+
+    .gradient-line {
+        background-size: 3px auto;
+    }
+
+    .dash-symbol {
+        width: 12px;
+        height: 12px;
+        border-width: 3px;
+        border-right-width: 0px;
+        border-bottom-width: 0px;
+    }
+}
+
+@media screen and (max-width: 575px) {
+    .era-line {
+        margin-left: 8px;
+    }
+
+    .gradient-line {
+        margin-left: 8px;
+    }
 }
