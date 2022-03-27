@@ -169,7 +169,7 @@ class LineChartJSONView(BaseLineChartView):
 
     def get_providers(self):
         """Return names of datasets."""
-        return ["Alle erhobenen Zugriffe", "PDF Zugriffe Insgesamt", "Gebäude Zugriffe", "Videoaufrufe", "Anzahl der Suchen"]
+        return ["Alle erhobenen Zugriffe", "Material Zugriffe", "Gebäude Zugriffe", "Videoaufrufe", "Suchen"]
 
     def get_data(self):
         """Return datasets to plot."""
