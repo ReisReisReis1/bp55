@@ -1,4 +1,9 @@
+import csv
 from datetime import datetime
+from io import StringIO
+from io import BytesIO
+
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.admin.views.decorators import staff_member_required
 from django.urls import resolve
@@ -135,6 +140,42 @@ def analytics_view(request):
         "videos": videos,
     }
     return render(request, context=context, template_name="analytics.html")
+
+
+@staff_member_required()
+def analytics_download_view(request):
+    """
+    Download all analytics as .csv.
+    :param request: The web request.
+    """
+    fields = ["URL", "Bezeichnung(,ID)", "Monat", "Jahr", "Anzahl Aufrufe"]
+    all = Analytic.objects.all()
+    rows = []
+    for a in all:
+        rows.append([a.site_url, a.name, str(a.month), str(a.year), str(a.visits)])
+    dt = datetime.now()
+    filename = "analytics-export-"+str(dt.day)+"-"+str(dt.month)+"-"+str(dt.year)+".csv"
+
+    # open file in-memory
+    sio = StringIO()
+
+    # writing to csv file
+
+    # creating a csv writer object
+    csvwriter = csv.writer(sio, delimiter=';')
+    # writing the fields
+    csvwriter.writerow(fields)
+    # writing the data rows
+    csvwriter.writerows(rows)
+
+    # Grab ZIP file from in-memory, make response with correct MIME-type
+    resp = HttpResponse(sio.getvalue(), content_type="application/csv")
+    # ..and correct content-disposition
+    resp['Content-Disposition'] = 'attachment; filename=%s' % filename
+    sio.close()
+    return resp
+
+
 
 
 class LineChartJSONView(BaseLineChartView):

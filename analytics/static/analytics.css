@@ -99,6 +99,15 @@ h3, h2 {
     color: #F9EAD8;
 }
 
+.csv-hg {
+    background-color: #2F4B33;
+}
+
+.csv-zone {
+    color: #F9EAD8;
+    padding-bottom: 20px;
+}
+
 .btn-confirm-yes {
     background-color: #701F2C;
     color: #F9EAD8;
