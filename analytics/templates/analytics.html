@@ -127,7 +127,7 @@
             <!-- Chart for the semester -->
             <h2>Zusammenfassung für das {{ semester }}:</h2>
             <canvas id="myChart" max-height="200px !important;"></canvas>
-            <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+            <script type="text/javascript" src="https://code.jquery.com/jquery-1.10.0.min.js"></script>
             <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
             <script type="text/javascript">
                 $.get('{% url 'analytics:line_chart_json' %}', function(data) {
