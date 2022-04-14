@@ -161,7 +161,7 @@ def display_building_filter(request):
     # pylint: disable = no-member
     buildings = Building.objects.all()
     # pylint: disable = no-member
-    eras = Era.objects.all().exclude(name=None).order_by("name").values('name')
+    eras = Era.objects.all().exclude(name=None).values('name').distinct()
     # Now we just need to delete all duplicates. We could use .distinct() for that,
     # but this only works on postgres Databases
     # (what is painful cause we use sqlite for development)
@@ -169,38 +169,43 @@ def display_building_filter(request):
     # But later (if no one uses sqlite anymore)
     # it would be better and more efficient to set .distinct() for that.
     eras = delete_duplicates(splitting(one_dict_set_to_string_list(eras)))
+    eras = sorted(eras, key=lambda x: x.lower() if x.isupper() else x)
 
-    countries = buildings.only('country').exclude(country=None).order_by("country")\
-        .values('country')
-    countries = delete_duplicates(splitting(one_dict_set_to_string_list(countries)))
+    countries = buildings.only('country').exclude(country=None).values('country').distinct()
+    countries = splitting(one_dict_set_to_string_list(countries))
+    countries = sorted(countries, key=lambda x: x.lower() if x.isupper() else x)
 
-    regions = buildings.only('region').exclude(region=None).order_by("region").values('region')
-    regions = delete_duplicates(splitting(one_dict_set_to_string_list(regions)))
+    regions = buildings.only('region').exclude(region=None).values('region').distinct()
+    regions = splitting(one_dict_set_to_string_list(regions))
+    regions = sorted(regions, key=lambda x: x.lower() if x.isupper() else x)
 
-    cities = buildings.only('city').exclude(city=None).order_by("city").values('city')
-    cities = delete_duplicates(splitting(one_dict_set_to_string_list(cities)))
+    cities = buildings.only('city').exclude(city=None).values('city').distinct()
+    cities = splitting(one_dict_set_to_string_list(cities))
+    cities = sorted(cities, key=lambda x: x.lower() if x.isupper() else x)
 
-    architects = buildings.only('architect').exclude(architect=None).order_by("architect")\
-        .values('architect')
-    architects = delete_duplicates(splitting(one_dict_set_to_string_list(architects)))
+    architects = buildings.only('architect').exclude(architect=None).values('architect')
+    architects = splitting(one_dict_set_to_string_list(architects))
+    architects = sorted(architects, key=lambda x: x.lower() if x.isupper() else x)
 
-    builders = buildings.only('builder').exclude(builder=None).order_by("builder").values('builder')
-    builders = delete_duplicates(splitting(one_dict_set_to_string_list(builders)))
+    builders = buildings.only('builder').exclude(builder=None).values('builder').distinct()
+    builders = splitting(one_dict_set_to_string_list(builders))
+    builders = sorted(builders, key=lambda x: x.lower() if x.isupper() else x)
 
-    column_orders = buildings.only('column_order').exclude(column_order=None)\
-        .order_by("column_order").values('column_order')
-    column_orders = delete_duplicates(splitting(one_dict_set_to_string_list(column_orders)))
+    column_orders = buildings.only('column_order').exclude(column_order=None).values('column_order')
+    column_orders = splitting(one_dict_set_to_string_list(column_orders))
+    builders = sorted(builders, key=lambda x: x.lower() if x.isupper() else x)
 
-    designs = buildings.only('design').exclude(design=None).order_by("design").values('design')
-    designs = delete_duplicates(splitting(one_dict_set_to_string_list(designs)))
+    designs = buildings.only('design').exclude(design=None).values('design').distinct()
+    designs = splitting(one_dict_set_to_string_list(designs))
+    designs = sorted(designs, key=lambda x: x.lower() if x.isupper() else x)
 
-    material = buildings.only('material').exclude(material=None).order_by("material") \
-        .values('material')
-    material = delete_duplicates(splitting(one_dict_set_to_string_list(material)))
+    material = buildings.only('material').exclude(material=None).values('material').distinct()
+    material = splitting(one_dict_set_to_string_list(material))
+    material = sorted(material, key=lambda x: x.lower() if x.isupper() else x)
 
-    function = buildings.only('function').exclude(function=None).order_by("function") \
-        .values('function')
-    function = delete_duplicates(splitting(one_dict_set_to_string_list(function)))
+    function = buildings.only('function').exclude(function=None).values('function').distinct()
+    function = splitting(one_dict_set_to_string_list(function))
+    function = sorted(function, key=lambda x: x.lower() if x.isupper() else x)
 
     context = {
         'Cities': cities,
