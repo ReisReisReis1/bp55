@@ -16,7 +16,20 @@ def validate_pdf_extension(filename):
     import os
     ext = os.path.splitext(filename.name)[1]
     if ext != ".pdf":
-        raise ValidationError("Es sind nur Datein mit Endung .pdf erlaubt.")
+        raise ValidationError("Es sind nur Dateien mit Endung .pdf erlaubt.")
+
+
+def validate_file_name(filename):
+    """
+    Checks for german special characters ä,ö,ü,ß. They cannot be part of the name.
+    """
+    import os
+    file_name = os.path.splitext(filename.name)[0]
+    if "ä" in file_name or \
+        "ö" in file_name or \
+        "ü" in file_name or \
+        "ß" in file_name:
+        raise ValidationError("Dateiname des PDFs darf kein 'Ä', 'Ö', 'Ü', 'ä', 'ö', 'ü' oder 'ß' enthalten.")
 
 
 class Category(models.Model):
@@ -63,7 +76,7 @@ class Material(models.Model):
     name = models.CharField(verbose_name='Titel', max_length=100,
                             help_text='Bezeichnung der Datei')
     file = models.FileField(verbose_name='Datei', upload_to='material/',
-                            help_text="Datei hochladen.", validators=[validate_pdf_extension])
+                            help_text="Datei hochladen. Darf KEINE Umlaute und 'ß' im Namen enthalten!", validators=[validate_pdf_extension, validate_file_name])
     category = models.ForeignKey(verbose_name='Kategorie', to=Category, null=True, blank=True,
                                  on_delete=models.SET_NULL)
 
