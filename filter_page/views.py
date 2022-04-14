@@ -168,7 +168,7 @@ def display_building_filter(request):
     # so we will implement duplication deletion in python here for this matter.
     # But later (if no one uses sqlite anymore)
     # it would be better and more efficient to set .distinct() for that.
-    eras = delete_duplicates(splitting(one_dict_set_to_string_list(eras)))
+    eras = splitting(one_dict_set_to_string_list(eras))
     eras = sorted(eras, key=lambda x: x.lower() if x.isupper() else x)
 
     countries = buildings.only('country').exclude(country=None).values('country').distinct()
