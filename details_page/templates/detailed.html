@@ -272,9 +272,9 @@
                                     </td>
                                     <td class="break-words font-calluna">
                                         {% if Datum_Jahrhundert %}
-                                            {% if Datum_ca %}
+                                            {% comment %}{% if Datum_ca %}
                                                 Ca.
-                                            {% endif %}
+                                            {% endif %}{% endcomment %}
                                             {% if Datum_von != None %}
                                                 {{ Datum_von }}. Jh. {{ Datum_von_BC_oder_AD }}
                                             {% endif %}
@@ -282,9 +282,9 @@
                                                 - {{ Datum_bis }}. Jh. {{ Datum_bis_BC_oder_AD }}
                                             {% endif %}
                                         {% else %}
-                                            {% if Datum_ca %}
+                                            {% comment %}{% if Datum_ca %}
                                                 Ca.
-                                            {% endif %}
+                                            {% endif %}{% endcomment %}
                                             {% if Datum_von != None %}
                                                 {{ Datum_von }} {{ Datum_von_BC_oder_AD }}
                                             {% endif %}
