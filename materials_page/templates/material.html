@@ -7,71 +7,196 @@
 <head>
     {% include 'default_head.html' %}
     <link rel="stylesheet" type="text/css" href="{% static 'material.css' %}">
+    <title>Materialien</title>
+
+    <script>
+
+        // Function to toggle hide hidden categories
+        // category_id: The ID of the category where to toggle hide the hidden category
+        function toggleHide(category_id) {
+            // Get all contents with the ID of the current row
+            var material_row = Array.from(document.querySelectorAll('[id='+"material-hide-"+category_id+']'));
+            // Iterate through every row with the returned ID
+            for (var i = 0; i < material_row.length; i++) {
+                // Toggle the class 'material-hide'
+                material_row[i].classList.toggle("material-hide");
+            }
+        }
+
+        // Function to switch the icon on 'show more' button
+        // material_id: The ID of the category where to toggle hide the hidden materials
+        function changeIcon(material_id){
+            // Get correct button element
+            var button = document.getElementById("color-btn-material-" + material_id);
+
+            // Change icon
+            // New for new design: Set CSS for the more materials button instead
+            if (button.style.transform === 'scaleY(-1) translate(0px, 50%)') {
+                button.style.transform = 'scaleY(1) translate(0px, 0%)';
+                // button.innerHTML = '∧';
+            }
+            else {
+                button.style.transform = 'scaleY(-1) translate(0px, 50%)';
+                // button.innerHTML = '∨';
+            }
+        }
+
+        // The following function are copying from
+        // https://docs.djangoproject.com/en/dev/ref/csrf/#ajax
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        // registers a view on the pdf,
+        // should be the onClick on the correct element
+        function registerPDFClick(pdf_id) {
+            // use fetch to call the add endpoint
+            var url = "/analytics/add/pdf/"+pdf_id+"/";
+            let csrftoken = getCookie('csrftoken');
+            fetch(url, {
+                method: 'POST',
+                headers: { "X-CSRFToken": csrftoken },
+              });
+        }
+
+    </script>
+
 </head>
 <body>
+
     {% include './header.html' %}
+    {% include './announcement.html' %}
 
-    <div class="container container-page">
-        {% if Materials|length == 0 %}
-            <div class="row justify-content-center">
-                <h1>Keine Materialien vorhanden</h1>
-            </div>
-        {% endif %}
+    <div class="subheader" style="background: url('{% static 'materials-head-background.png' %}');">
+        <div class="container h-100 d-flex align-items-center justify-content-center">
+            <h1 class="subheader-text">MATERIALIEN</h1>
+        </div>
+    </div>
 
-        {% for category, filelist in Materials.items %}
-            <div class="card">
-                <!-- Split the box in topic and download  -->
-                <div class="d-flex w-100 justify-content-between">
-                    <!-- Collapse box for each topic -->
-                    <a class="collapsed card-link" data-toggle="collapse" href="#collapse-{{ category |cut:" " }}" style="width: 100%; ">
-                        <div class="borderline">
-                            <div class="card-header" id="color-bg-card-header">
-                                <h1 class="fontcolor break-words heading-no-margin"> {{ category }} </h1>
-                            </div>
-                        </div>
-                    </a>
-                 <a href="{% url "materials_page:download" category %}" class="btn borderline" id="color-btn-download" style=" width: 15%" >Download all </a>
-
-                </div>
-
-                <!-- Text showing after open the collapse box-->
-                <div id="collapse-{{ category |cut:" " }}" class="collapse">
-                    <div class="borderline">
-                        <div class="card-body bg-light">
-                            <div class="row row-no-margin">
-                                <!-- PDF Liste -->
-                                {% for file in filelist %}
-                                    <div class="material-box">
-                                        <a href="{{ file.file.url }}" target="_blank">
-                                            {% if forloop.counter <= 8 %}
-                                                    <table class="table table-bordered material-first-row">
-                                                {% else %}
-                                                    <table class="table table-bordered material-rest-row">
-                                                {% endif %}
-                                                <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            <img src="{% static "PDF.png" %}" width="100%">
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="break-words fontcolor">
-                                                            {{ file.name }}<br>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </a>
-                                    </div>
-                                {% endfor %}
-                            </div>
+    <div class="default-page-body">
+        <!-- run through all categories -->
+        {% for items in Materials %}
+            <!-- Set borders to see the categories color on the side -->
+            <div class="container material-line" style="border-color: #{{ items.2 }};">
+                <!-- Title for each section -->
+                <div class="container caregory-head">
+                    <div class="row h-100">
+                        <h1 class="category-title break-words" style="color:#{{ items.2 }};">{{ items.0 }}</h1>
+                        <div class="my-auto float-right more-matsbtn-div">
+                            <!-- The button on the right side, to toggle the materials of the category -->
+                            <button class="button more-materials-button float-right" id="color-btn-material-{{ forloop.counter }}" onclick="toggleHide({{ forloop.counter }}),changeIcon({{ forloop.counter }})">
+                                <div class="dash-symbol float-right" style="border-color:#{{ items.2 }};"></div>
+                            </button>
                         </div>
                     </div>
+                    <!-- The download all button for the category -->
+                    <div class="row">
+                        <a href="{% url 'materials_page:download' items.0 %}" class="button material-alldl font-benton-sans" style="color:#{{ items.2 }};"><b>ALLE HERUNTERLADEN</b></a>
+                    </div>
+                </div>
+                    <div class="row">
+                        <div class="container material-section">
+                        <!-- Materials in the section -->
+                        {% for material in items.1 %}
+                            <!-- Cases in which a new row has should be opened -->
+                            {% if forloop.counter0|divisibleby:8 or forloop.first %}
+                            <div class="row row-material row-no-margin material-hide" id="material-hide-{{ forloop.parentloop.counter }}">
+                            {% endif %}
+
+                            <!-- The Material Item -->
+                            <div class="material-box">
+                                <!-- Material Icon with a link to open the corresponding PDF in a new tab -->
+                                <a href="{{ material.file.url }}" class="material-link" target="_blank" data-toggle="tooltip" title="{{ material.name }}" onclick="registerPDFClick({{ material.pk }})">
+                                    <div class="material-icon d-flex align-items-center justify-content-center">
+                                        <img class="icon" src="{% static 'icon-pdf.png' %}">
+                                    </div>
+
+                                    <!-- Material title -->
+                                    <div class="material-title break-words truncate-title font-benton-sans" style="border-color: #{{ items.2 }};">
+                                        <b>{{ material.name }}</b>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <!-- Cases in which the tag must be closed -->
+                            <!-- If it is at end of the row, or the video -->
+                            {% if forloop.last or forloop.counter|divisibleby:8 %}
+                                <!-- Close row div here -->
+                                </div>
+                            {% endif %}
+                        <!-- If there are no materials in an category, display it -->
+                        {% empty %}
+                            <div class="row row-material row-no-margin material-hide" id="material-hide-{{ forloop.counter }}">
+                                <b class="no-material-text w-100 text-center material-title font-benton-sans" style="border: 0px;">(Noch) keine Materialien in dieser Kategorie vorhanden.</b>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Mobile Version -->
+                    <div class="container material-section-mobile">
+                        <!-- Materials in the section -->
+                        {% for material in items.1 %}
+                            <!-- Cases in which a new row has should be opened -->
+                            {% if forloop.counter0|divisibleby:3 or forloop.first %}
+                            <div class="row row-material row-no-margin material-hide" id="material-hide-{{ forloop.parentloop.counter }}">
+                            {% endif %}
+
+                            <!-- The Material Item -->
+                            <div class="material-box">
+                                <!-- Material Icon with a link to open the corresponding PDF in a new tab -->
+                                <a href="{{ material.file.url }}" class="material-link" target="_blank" data-toggle="tooltip" title="{{ material.name }}" onclick="registerPDFClick({{ material.pk }})">
+                                    <div class="material-icon d-flex align-items-center justify-content-center">
+                                        <img class="icon" src="{% static 'icon-pdf.png' %}">
+                                    </div>
+
+                                    <!-- Material title -->
+                                    <div class="material-title truncate-title font-benton-sans"style="border-color: #{{ items.2 }};">
+                                        <b>{{ material.name }}</b>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <!-- Cases in which the tag must be closed -->
+                            <!-- If it is at end of the row, or the video -->
+                            {% if forloop.last or forloop.counter|divisibleby:3 %}
+                                <!-- Close row div here -->
+                                </div>
+                            {% endif %}
+                        <!-- If there are no materials in an category, display it -->
+                        {% empty %}
+                            <div class="row row-material row-no-margin material-hide" id="material-hide-{{ forloop.counter }}">
+                                <b class="no-material-text w-100 text-center material-title" style="border: 0px;">Keine Materialien in dieser Kategorie vorhanden.</b>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+
                 </div>
             </div>
+
+            {% if not forloop.last %}
+                <!-- Put an extra div in between the eras, exept after the last, to put the gradient there -->
+                <div class="container gradient-line" style="background-image: linear-gradient(to bottom, #{{ items.2 }} 0%, #{{ items.3 }} 100%);">
+
+                </div>
+            {% endif %}
         {% endfor %}
     </div>
 
     {% include './footer.html' %}
+    {% include './mobile_nav_footer.html' %}
+
 </body>
 </html>

@@ -2,9 +2,9 @@
 Configurations for the Database Models for the App 'details_page'
 """
 
+# pylint: disable=import-error, relative-beyond-top-level, raise-missing-from
 from django.db import models
 from django.core.exceptions import ValidationError
-# pylint: disable=import-error
 from . import country_codes
 
 
@@ -27,10 +27,11 @@ def validate_color_code(code):
     :return: None or ValidationError
     """
     for sign in code:
-        if sign not in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d",
-                        "e", "f", "A", "B", "C", "D", "E", "F"]:
-            raise ValidationError(message="Bitte einen gültigen Code im Hex-Format einfügen: " +
-                                          "Nur Hex-Zeichen: 0-9, a-f und A-F.")
+        if sign not in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e",
+                        "f", "A", "B", "C", "D", "E", "F"]:
+            raise ValidationError(
+                message="Bitte einen gültigen Code im Hex-Format einfügen: " +
+                        "Nur Hex-Zeichen: 0-9, a-func und A-F.")
     if len(code) != 6:
         raise ValidationError(
             message="Bitte einen gültigen Code im Hex-Format einfügen: " +
@@ -50,6 +51,7 @@ class Era(models.Model):
     """
 
     class Meta:
+        # pylint: disable = too-few-public-methods
         """
         Meta data for the model
         In this case the singular and plural name that will be seen in the admin interface
@@ -58,9 +60,10 @@ class Era(models.Model):
         verbose_name_plural = 'Epochen'
 
     name = models.CharField(verbose_name='Name', max_length=100, choices=[
-        ('Bronzezeit', 'Bronzezeit'), ('Frühe Eisenzeit', 'Frühe Eisenzeit'),
+        ('Mykenische Zeit', 'Mykenische Zeit'), ('Frühe Eisenzeit', 'Frühe Eisenzeit'),
         ('Archaik', 'Archaik'),
         ('Klassik', 'Klassik'), ('Hellenismus', 'Hellenismus'),
+        ('römische Republik', 'römische Republik'),
         ('Kaiserzeit', 'Kaiserzeit'),
         ('Spätantike', 'Spätantike'),
         ('Rezeption', 'Rezeption'),
@@ -74,6 +77,7 @@ class Era(models.Model):
                                           choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")],
                                           default="v.Chr.",
                                           null=True, blank=True)
+    year_from_ca = models.BooleanField(verbose_name="Anfangsdatum ca.?", default=False)
     year_to = models.PositiveIntegerField(verbose_name='Enddatum',
                                           help_text="Jahr des Endes der Epoche eingeben.",
                                           blank=True, null=True)
@@ -82,6 +86,7 @@ class Era(models.Model):
                                         choices=[("v.Chr.", "v.Chr."), ("n.Chr.", "n.Chr.")],
                                         default="v.Chr.",
                                         null=True, blank=True)
+    year_to_ca = models.BooleanField(verbose_name="Enddatum ca.?", default=False)
     visible_on_video_page = models.BooleanField(verbose_name='Sichtbar auf Staffelseite?',
                                                 default=True, help_text="""Angeben ob die Epoche
                                                 auf der 'Staffeln' Seite sichtbar sein soll.""")
@@ -135,11 +140,16 @@ class Era(models.Model):
             bc_ad_from = ' ' + str(
                 self.year_from_BC_or_AD) if self.year_from is not None else 'v.Chr.'
             start = year_from + bc_ad_from
+            if self.year_from_ca:
+                start = "ca. " + start
             if self.year_to is not None:
                 year_to = str(self.year_to)
                 bc_ad_to = ' ' + str(
                     self.year_to_BC_or_AD) if self.year_to_BC_or_AD is not None else 'v.Chr.'
-                end = ' - ' + year_to + bc_ad_to
+                end = year_to + bc_ad_to
+                if self.year_to_ca:
+                    end = "ca. " + end
+                end = ' - ' + end
 
         return start + end
 
@@ -179,6 +189,7 @@ class Building(models.Model):
     """
 
     class Meta:
+        # pylint: disable = too-few-public-methods, raise-missing-from
         """
         Meta data for the model
         In this case the singular and plural name that will be seen in the admin interface
@@ -229,7 +240,7 @@ class Building(models.Model):
                                        help_text="Sind die Daten Jahrhundert Angaben?")
     year_ca = models.BooleanField(verbose_name='ungefähre Jahresangabe?', default=False,
                                   help_text="ca. zum Datum hinzufügen (für ungenaue Datumsangaben)"
-                                            ".")
+                                            ".", editable=False)
     era = models.ForeignKey(verbose_name='Epoche', to=Era, on_delete=models.SET_NULL,
                             null=True, blank=True)
     architect = models.CharField(verbose_name='Architekt', max_length=100,
@@ -294,15 +305,13 @@ class Building(models.Model):
                                        "https://moodle.tu-darmstadt.de/my/", default="", null=True,
                              blank=True)
 
+    # pylint: disable = raise-missing-from
     def __str__(self):
         """
         Name for the admin interface
         :return: the name of a Building
         """
-        try:
-            return str(self.name)
-        except Building.MultipleObjectsReturned:
-            raise Building.MultipleObjectsReturned
+        return str(self.name)
 
     def get_name(self, building_id):
         # pylint: disable= no-member
@@ -312,9 +321,9 @@ class Building(models.Model):
         """
         try:
             building = self.objects.get(pk=building_id)
-            return building.name
         except Building.DoesNotExist:
             raise Building.DoesNotExist
+        return building.name
 
     def get_era(self, building_id):
         # pylint: disable= no-member
@@ -336,9 +345,9 @@ class Building(models.Model):
         """
         try:
             building = self.objects.get(pk=building_id)
-            return building.description
         except Building.DoesNotExist:
             raise Building.DoesNotExist
+        return building.description
 
     def get_city(self, building_id):
         # pylint: disable= no-member
@@ -650,8 +659,8 @@ class Building(models.Model):
         Getting the dates of an building as signed int
         :return: list with two elements: new_list[0] start date, new_list[1] end date
         """
-        new_list = [0, 0]
-        date = 9999
+        new_list = [None, None]
+        date = None
         if self.year_from is not None:
             # Checking for the self start date if it is before or after the birth of christ
             if self.year_from_BC_or_AD == 'v.Chr.':
@@ -663,7 +672,7 @@ class Building(models.Model):
                 if self.year_century and date != 0:
                     date = date * 100 - 50
         new_list[0] = date
-        date = 9999
+        date = None
         if self.year_to is not None:
             # Checking for the self end date if it is before or after the birth of christ
             if self.year_to_BC_or_AD == 'v.Chr.':
@@ -682,7 +691,7 @@ class Building(models.Model):
         Getting the start year plus end year as string
         """
         century = '. Jh.' if self.year_century else ''
-        circa = 'ca. ' if self.year_ca else ''
+        # circa = 'ca. ' if self.year_ca else ''
         start = ''
         end = ''
         if self.year_from is not None:
@@ -690,13 +699,15 @@ class Building(models.Model):
             # default n.Chr.
             bc_ad_from = ' ' + str(
                 self.year_from_BC_or_AD) if self.year_from is not None else 'v.Chr.'
-            start = circa + year_from + century + bc_ad_from
+            # start = circa + year_from + century + bc_ad_from
+            start = year_from + century + bc_ad_from
             if self.year_to is not None:
                 year_to = str(self.year_to)
                 # default n.Chr.
                 bc_ad_to = ' ' + str(
                     self.year_to_BC_or_AD) if self.year_to_BC_or_AD is not None else 'v.Chr.'
-                end = ' - ' + circa + year_to + century + bc_ad_to
+                # end = ' - ' + circa + year_to + century + bc_ad_to
+                end = ' - ' + year_to + century + bc_ad_to
 
         return start + end
 
@@ -712,6 +723,44 @@ class Building(models.Model):
             thumbnail = Picture.objects.filter(building=self.id, usable_as_thumbnail=True)[0]
         return thumbnail
 
+    def get_year_and_bc_ad_as_str(self):
+        """
+        Get the year as number, and the bc and ad as strings.
+        :return: a tuple of strings for year and bd/ad.
+        """
+        century = 'Jh. ' if self.year_century else ''
+        #circa = 'circa ' if self.year_ca else ''
+        start = ''
+        end = ''
+        if self.year_from is not None:
+            start = str(self.year_from)
+            if self.year_century:
+                start = start + "."
+        if self.year_to is not None:
+            end = str(self.year_to)
+            if self.year_century:
+                end = end + "."
+        if start != '' and end != '':
+            res_years = start+' - '+end
+        elif start == '' and end != '':
+            res_years = "bis " + end
+        elif start != '' and end == '':
+            res_years = "ab " + start
+        else:
+            res_years = ''
+        bc_ad = ''
+        if self.year_from_BC_or_AD is not None:
+            bc_ad = self.year_from_BC_or_AD
+        if self.year_to_BC_or_AD is not None:
+            if bc_ad != '':
+                if self.year_from_BC_or_AD != self.year_to_BC_or_AD:
+                    bc_ad = bc_ad + ' - ' + str(self.year_to_BC_or_AD)
+            else:
+                bc_ad = str(self.year_to_BC_or_AD)
+        other_info = century+bc_ad
+        #other_info = other_info+" | "+circa if circa != '' else other_info
+        return res_years, other_info
+
 
 class Blueprint(models.Model):
     # pylint : disable = too-few-public-methods
@@ -725,7 +774,7 @@ class Blueprint(models.Model):
     """
 
     class Meta:
-        # pylint : disable = too-few-public-methods
+        # pylint: disable=too-few-public-methods
         """
         Meta data for the model
         In this case the singular and plural name that will be seen in the admin interface

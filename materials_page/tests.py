@@ -147,9 +147,7 @@ class MaterialTestCases(TestCase):
         Material.objects.create(name='TestDatei3', file='/media/material/Test3.pdf', category=test2)
         Material.objects.create(name='', category=test3)
         response = self.client.get('/materials_page/')
-        print(response)
         response = self.client.get('/materials_page/TestKategorie1/')
-        print(response)
 
         Material.objects.create(name='TestDatei5', category=test4)
         Material.objects.create(name='TestDatei6', category=test4)

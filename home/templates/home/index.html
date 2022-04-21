@@ -4,25 +4,48 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="{% static './home/index.css' %}">
     {% include '../default_head.html' %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{% static './home/index.css' %}">
+    <title>Home</title>
 </head>
 <body>
 
-    <!-- Logo in the middle-->
+    <div class="index-page-body h-100">
+        <div class="container justify-content-center h-100">
+            <div class="row logo-row">
+                <div class="col-md-4">
 
-    <div class="container full_height" height="100%">
-        <div class="row align-items-center full_height" height="100%">
-            <div class="col">
-                <div class="row main_logo_container">
-                    <img src="{% static "logoneu.png"  %}" width="100%">
                 </div>
-                <div class="row main_button_container">
-                    <a href="{% url 'start:start' %}" style="width: 100%;"> <button class="button" id="color-btn" style="width: 100%;">Anmelden</button></a>
+                <div class="col-md-4">
+                    <!-- Logo -->
+                    <img class="w-100" src="{% static 'home-logo.png' %}">
+                </div>
+                <div class="col-md-4">
+
+                </div>
+            </div>
+            <div class="row button-row">
+                <div class="col-md-4">
+
+                </div>
+                <div class="col-md-4">
+                    <!-- Login Button -->
+                    <a href="{% url 'start:start' %}" style="width: 100%;">
+                        <button class="index-button w-100 font-benton-sans" id="color-btn">
+                            <b>Anmelden</b>
+                        </button>
+                    </a>
+                </div>
+                <div class="col-md-4">
+
                 </div>
             </div>
         </div>
     </div>
+
+    {% include 'footer.html' %}
+    {% include 'mobile_nav_footer.html' %}
 
 </body>
 </html>

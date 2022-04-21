@@ -45,11 +45,15 @@ INSTALLED_APPS = [
     'filter_page',
     'timeline',
     'start',
-    'bootstrap4',
     'search',
     'materials_page',
     'impressum',
+    'bootstrap4',
+    'mathfilters',
     'cas',
+    'announcements.apps.AnnouncementsConfig',
+    'analytics.apps.AnalyticsConfig',
+    'chartjs',
     ]
 
 MIDDLEWARE = [

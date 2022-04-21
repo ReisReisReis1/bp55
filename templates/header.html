@@ -4,39 +4,127 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <script>
+        $("#header-search").click(function(toggleHideSearchBar) {
+           toggleHideSearchBar.stopPropagation();
+        });
 
+        function toggleHideSearchBar() {
+            var search_bar = document.getElementById("header-search");
+            var search_form = search_bar.getElementsByTagName("INPUT").item(0)
+
+            search_bar.classList.toggle("header-search-hide")
+            search_form.focus()
+        }
+
+        function toggleBurgerMenu() {
+            var burger_menu = document.getElementById("burger-menu");
+
+            burger_menu.classList.toggle("header-burger-hide")
+
+            document.body.classList.toggle("remove-scrolling");
+        }
+    </script>
 </head>
 <body>
-    <div class="row row-no-margin" id="color-bg-primary">
+    <div class="header-bar align-items-center d-flex">
+        <div class="container">
+            <div class="row items">
+                <div class="col-2 col-no-padding">
+                    <a href="{% url "start:start" %}">
+                        <img class="header-logo" src="{% static "logo-nav.png" %}">
+                    </a>
+                </div>
+                <div class="col col-no-padding d-flex justify-content-end align-items-center font-header">
+                    <!-- Links to all sub pages of website -->
+                    <a href="{% url "start:start" %}" class="header-menu-item color-primary-header">Intro</a>
+                    <a href="{% url "timeline:timeline" %}" class="header-menu-item color-primary-header">Zeitachse</a>
+                    <a href="{% url "filter_page:filter" %}" class="header-menu-item color-primary-header">Bauwerke</a>
+                    <a href="{% url "video_content:videos" %}" class="header-menu-item color-primary-header">Staffeln</a>
+                    <a href="{% url "materials_page:material" %}" class="header-menu-item color-primary-header">Materialien</a>
+                    <img class="search-icon" src="{% static 'icon-search.png' %}" onclick="toggleHideSearchBar()">
+                    <!-- The hamburger / overflow menu for mobile devices -->
+                    <img class="menu-icon" src="{% static 'icon-menu.png' %}" onclick="toggleBurgerMenu()">
 
-        <div class = "col text-left">
-            <div style="padding: 45px">
-
-            </div>
-        </div>
-        <div class = "col align-items-center text-center">
-            <a href="{% url "start:start" %}">
-                <img class="header_logo" src="{% static "logoneu.png" %}">
-            </a>
-        </div>
-        <div class = "col text-right">
-            <div class="row align-items-center justify-content-end" style="height: 100%">
-                <form class="header-search" action="{% url 'search:search' %}" method="get">
-                    <input type="search" class="form-control header-search-input" id="color-bg-secondary" placeholder="Suche" name="search_request">
-                </form>
+                </div>
             </div>
         </div>
     </div>
-    <div class="row row-no-margin row-distance-lg" id="color-bg-secondary">
+
+    <div id="header-search" class="header-search-bar header-search-hide">
+        <div class="header-search-close w-100 h-100" onclick="toggleHideSearchBar()">
+
+        </div>
+        <div class="container">
+            <div class="row justify-content-end">
+                <div id="header-search" class="header-search">
+                    <form action="{% url 'search:search' %}" method="get">
+                        <input type="search" class="form-control header-search-input" id="color-bg-secondary" placeholder="Suche" name="search_request">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- The actual burger menu -->
+    <div class="burger-menu header-burger-hide" id="burger-menu">
         <div class="container">
             <div class="row">
-                <div class = "col align-items-center text-center sub_menu">
-                    <a href="{% url "start:start" %}" class="menu_item" id="color-txt-primary">Intro</a>
-                    <a href="{% url "timeline:timeline" %}" class="menu_item" id="color-txt-primary">Zeitachse</a>
-                    <a href="{% url "filter_page:filter" %}" class="menu_item" id="color-txt-primary">Bauwerke</a>
-                    <a href="{% url "video_content:videos" %}" class="menu_item" id="color-txt-primary">Staffeln</a>
-                    <a href="{% url "materials_page:material" %}" class="menu_item" id="color-txt-primary">Materialien</a>
-                </div>
+                <a href="{% url "start:start" %}" class="burger-menu-item color-primary-header">
+                    <div class="col">
+                        Intro
+                    </div>
+                </a>
+            </div>
+            <div class="row">
+                <a href="{% url "timeline:timeline" %}" class="burger-menu-item color-primary-header">
+                    <div class="col">
+                        Zeitachse
+                    </div>
+                </a>
+            </div>
+            <div class="row">
+                <a href="{% url "filter_page:filter" %}" class="burger-menu-item color-primary-header">
+                    <div class="col">
+                        Bauwerke
+                    </div>
+                </a>
+            </div>
+            <div class="row">
+                <a href="{% url "video_content:videos" %}" class="burger-menu-item color-primary-header">
+                    <div class="col">
+                        Staffeln
+                    </div>
+                </a>
+            </div>
+            <div class="row">
+                <a href="{% url "materials_page:material" %}" class="burger-menu-item color-primary-header">
+                    <div class="col">
+                        Materialien
+                    </div>
+                </a>
+            </div>
+            <div class="row">
+                <a href="{% url "impressum:impressum" %}" class="burger-menu-item color-primary-header">
+                    <div class="col">
+                        Impressum
+                    </div>
+                </a>
+            </div>
+            <div class="row">
+                {% if Kurs_Link|length == 0 %}
+                    <a href="" class="burger-menu-item color-primary-header">
+                        <div class="col">
+                            Moodle-Kurs
+                        </div>
+                    </a>
+                {% else %}
+                    <a href="{{Kurs_Link}}" target="_blank" class="burger-menu-item color-primary-header">
+                        <div class="col">
+                            Moodle-Kurs
+                        </div>
+                    </a>
+                {% endif %}
             </div>
         </div>
     </div>

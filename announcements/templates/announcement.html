@@ -1,0 +1,99 @@
+{% load static %}
+{% load bootstrap4 %}
+{% load announcement_filters %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'announcement.css'%}">
+    <script>
+        // function to close a banner
+        function closeBanner(id) {
+            // Get the content by ID
+            var banner = document.getElementById("banner-hide-" + id)
+            // Toggle the class 'hide'
+            banner.classList.toggle("hide");
+            // save to session storage
+            sessionStorage.setItem("closed-banner-"+id, 'yes');
+            // Update height for every other
+            for(var i = 0; i < {{ announcements.items|length }}; i++){
+                if(i <= id){
+                    continue;
+                }
+                var banner_rest = document.getElementById("banner-hide-" + i)
+                let top = banner_rest.style.top.replace("px", "") - 50;
+                banner_rest.style.top = top+"px";
+            }
+        }
+      
+        // For on load to check with sessionStorage, if banner should be displayed.
+        function autoCloseSessionClosedBanners(id) {
+            // Check if banner is set as closed in session storage
+            const closed = sessionStorage.getItem("closed-banner-"+id);
+            if (closed == "yes") {
+                closeBanner(id);
+            }
+        }
+    </script>
+</head>
+<body>
+{% for is_warning_and_len, contents in announcements.items %}
+    {% if is_warning_and_len|first %}
+        <div class="announcement-bar warning-announce-color" id="banner-hide-{{ forloop.counter0 }}" style="top: {{ forloop.counter0|multiply:50 }}px;">
+            <div class="container h-100">
+                <div class="row p-0 h-100">
+                    <div class="col-11 p-0 font-benton-sans announce-text">
+                        <div class="marquee">
+                            <div class="marquee-content" style="animation-duration: {{ is_warning_and_len|last }}s;">
+                                {% for w_group in contents %}
+                                <span class="item-collection-{{ forloop.counter }}" {% if forloop.counter0 == 0 %} style="animation: swap {{ is_warning_and_len|last }}s linear infinite;"{% endif %}>
+                                    {% for w in w_group %}
+                                    <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+++&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>{{ w.title }}: </b>{{ w.content }}</span>
+                                    {% endfor %}
+                                </span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-1 p-0">
+                        <button class="x-button float-right announce-text font-benton-sans" onclick="closeBanner({{ forloop.counter0 }});">
+                            X
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="announcement-bar announce-color" id="banner-hide-{{ forloop.counter0 }}" style="top: {{ forloop.counter0|multiply:50 }}px;">
+            <div class="container h-100">
+                <div class="row p-0 h-100">
+                    <div class="col-11 p-0 font-benton-sans announce-text">
+                        <div class="marquee">
+                            <div class="marquee-content" style="animation-duration: {{ is_warning_and_len|last }}s;">
+                                {% for u_group in contents %}
+                                <span class="item-collection-{{ forloop.counter }}" {% if forloop.counter0 == 0 %} style="animation: swap {{ is_warning_and_len|last }}s linear infinite;"{% endif %}>
+                                    {% for u in u_group %}
+                                    <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+++&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>{{ u.title }}: </b>{{ u.content }}</span>
+                                    {% endfor %}
+                                </span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-1 p-0">
+                        <button class="x-button float-right announce-text font-benton-sans" onclick="closeBanner({{ forloop.counter0 }})">
+                            X
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endfor %}
+<!-- Make an extra for loop for scripts, cause here the classes they try to exit are declared -->
+{% for _, __ in announcements.items %}
+    <!-- Add onLoad check skript -->
+    <script type="text/javascript">autoCloseSessionClosedBanners({{ forloop.counter0 }});</script>
+{% endfor %}
+</body>
+</html>
