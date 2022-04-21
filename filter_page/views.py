@@ -7,6 +7,8 @@ from django.shortcuts import render
 from details_page.models import Building, Era
 from start.views import login_required
 from impressum.views import get_course_link
+from announcements.views import get_announcements
+from analytics.views import register_visit
 
 
 def splitting(lst):
@@ -97,6 +99,7 @@ def display_building_filter(request):
     :return: rendering the subpage based on filter.html with context
     context: Variable to filter all buildings with the criteria got from the request
     """
+    register_visit(request, "Filterseite")
 
     # We can filter by this options:
     # era, country, region, city, architect, builders, column_orders, designs, material, function
@@ -114,19 +117,19 @@ def display_building_filter(request):
             # If here the key is in it, it will be filtered by.
             querys = urls_parameters.getlist(key)
             if len(querys) > 1:
-                # Here it is an list with more than one elements.
-                # Therefore we will not update data types.
+                # Here it is an list with more than one element.
+                # Therefore, we will not update data types.
                 result_for_lst = None
                 for query in querys:
-                    # There are more then one of this filter type (key): Use of OR on the results.
-                    # OR means we keep all filterings, just discard duplications.
-                    # Therefore we added up everything here, just need to check,
+                    # There are more than one of this filter type (key): Use of OR on the results.
+                    # OR means we keep all filtering attributes, just discard duplications.
+                    # Therefore, we added up everything here, just need to check,
                     # if there are duplications
                     if result_for_lst is None:
                         result_for_lst = my_filter(result, key, query)
                     else:
                         # This will add querysets to each other:
-                        # (Similar to SQL UNION Statment)
+                        # (Similar to SQL UNION Statement)
                         result_for_lst = result_for_lst | my_filter(result, key, query)
                 # Set it to the result. We had to work on a temporary var, otherwise
                 # it would be impossible to use an OR logic (for AND it will be easier).
@@ -158,46 +161,46 @@ def display_building_filter(request):
     # pylint: disable = no-member
     buildings = Building.objects.all()
     # pylint: disable = no-member
-    eras = Era.objects.all().exclude(name=None).order_by("name").values('name')
-    # Now we just need to delete all duplicates. We could use .distinct() for that,
-    # but this only works on postgres Databases
-    # (what is painful cause we use sqlite for development)
-    # so we will implement duplication deletion in python here for this matter.
-    # But later (if no one uses sqlite anymore)
-    # it would be better and more efficient to set .distinct() for that.
+
+    eras = Era.objects.all().exclude(name=None).values('name').distinct()
     eras = delete_duplicates(splitting(one_dict_set_to_string_list(eras)))
+    eras = sorted(eras, key=lambda x: x.lower())
 
-    countries = buildings.only('country').exclude(country=None).order_by("country")\
-        .values('country')
+    countries = buildings.only('country').exclude(country=None).values('country').distinct()
     countries = delete_duplicates(splitting(one_dict_set_to_string_list(countries)))
+    countries = sorted(countries, key=lambda x: x.lower())
 
-    regions = buildings.only('region').exclude(region=None).order_by("region").values('region')
+    regions = buildings.only('region').exclude(region=None).values('region').distinct()
     regions = delete_duplicates(splitting(one_dict_set_to_string_list(regions)))
+    regions = sorted(regions, key=lambda x: x.lower())
 
-    cities = buildings.only('city').exclude(city=None).order_by("city").values('city')
+    cities = buildings.only('city').exclude(city=None).values('city').distinct()
     cities = delete_duplicates(splitting(one_dict_set_to_string_list(cities)))
+    cities = sorted(cities, key=lambda x: x.lower())
 
-    architects = buildings.only('architect').exclude(architect=None).order_by("architect")\
-        .values('architect')
+    architects = buildings.only('architect').exclude(architect=None).values('architect').distinct()
     architects = delete_duplicates(splitting(one_dict_set_to_string_list(architects)))
+    architects = sorted(architects, key=lambda x: x.lower())
 
-    builders = buildings.only('builder').exclude(builder=None).order_by("builder").values('builder')
+    builders = buildings.only('builder').exclude(builder=None).values('builder').distinct()
     builders = delete_duplicates(splitting(one_dict_set_to_string_list(builders)))
+    builders = sorted(builders, key=lambda x: x.lower())
 
-    column_orders = buildings.only('column_order').exclude(column_order=None)\
-        .order_by("column_order").values('column_order')
+    column_orders = buildings.only('column_order').exclude(column_order=None).values('column_order').distinct()
     column_orders = delete_duplicates(splitting(one_dict_set_to_string_list(column_orders)))
+    column_orders = sorted(column_orders, key=lambda x: x.lower())
 
-    designs = buildings.only('design').exclude(design=None).order_by("design").values('design')
+    designs = buildings.only('design').exclude(design=None).values('design').distinct()
     designs = delete_duplicates(splitting(one_dict_set_to_string_list(designs)))
+    designs = sorted(designs, key=lambda x: x.lower())
 
-    material = buildings.only('material').exclude(material=None).order_by("material") \
-        .values('material')
+    material = buildings.only('material').exclude(material=None).values('material').distinct()
     material = delete_duplicates(splitting(one_dict_set_to_string_list(material)))
+    material = sorted(material, key=lambda x: x.lower())
 
-    function = buildings.only('function').exclude(function=None).order_by("function") \
-        .values('function')
+    function = buildings.only('function').exclude(function=None).values('function').distinct()
     function = delete_duplicates(splitting(one_dict_set_to_string_list(function)))
+    function = sorted(function, key=lambda x: x.lower())
 
     context = {
         'Cities': cities,
@@ -214,6 +217,7 @@ def display_building_filter(request):
         'Filter_Names': filter_names,
         'Active_Filter': dict(urls_parameters),
         'Kurs_Link': get_course_link(),
+        'announcements': get_announcements(),
     }
 
     return render(request, 'filter.html', context)

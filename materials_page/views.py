@@ -15,6 +15,8 @@ import zipfile
 import os
 from django.http import HttpResponse
 from impressum.views import get_course_link
+from announcements.views import get_announcements
+from analytics.views import register_visit
 
 
 def get_categories_and_corresponding_files():
@@ -35,17 +37,18 @@ def get_categories_and_corresponding_files():
 
 
 # Hier einkommentieren für SSO:
-@login_required
+#@login_required
 def get_categories_and_corresponding_zip_files(request, category):
     #
     """
     :return: the categories and HttpsResponse for the corresponding zip files in a dictionary
     """
-
+    register_visit(request, "ZIP,"+category)
     material_dict = get_categories_and_corresponding_files()
     # Get all material files of one category in a single list
     # Files (local path) to put in the .zip
     filenames = []
+    resp = None
     for material_entry in material_dict[category]:
         filenames = filenames + [material_entry.file.path]
 
@@ -74,10 +77,11 @@ def get_categories_and_corresponding_zip_files(request, category):
         resp = HttpResponse(sio.getvalue(), content_type="application/x-zip-compressed")
         # ..and correct content-disposition
         resp['Content-Disposition'] = 'attachment; filename=%s' % zip_filename
+        sio.close()
     return resp
 
 
-@login_required
+#@login_required
 def material(request):
     """
     Subpage to show the characteristics of a building
@@ -85,9 +89,28 @@ def material(request):
     :return: rendering the subpage based on material.html
     with a context variable to get the characteristics
     """
+    register_visit(request, "Materialseite", alter_url="materials_page")
+    # this code ist for adding colors to the materials
+    # for visual difference, both colors will take turns
+    colors = ["2F4B33", "B43B44"]
+    materials = get_categories_and_corresponding_files()
+    materials_with_colors = []
+    i = 0
+    for category in materials.keys():
+        color = None
+        nextcolor = None
+        if i % 2 == 0:
+            color = colors[0]
+            nextcolor = colors[1]
+        else:
+            color = colors[1]
+            nextcolor = colors[0]
+        materials_with_colors.append([category, materials[category], color, nextcolor])
+        i += 1
 
     context = {
-        'Materials': get_categories_and_corresponding_files(),
-        'Kurs_Link': get_course_link()
+        'Materials': materials_with_colors,
+        'Kurs_Link': get_course_link(),
+        'announcements': get_announcements(),
     }
     return render(request, "material.html", context)

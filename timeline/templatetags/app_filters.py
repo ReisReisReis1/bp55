@@ -1,6 +1,7 @@
 """
 New Filters that can be used in templates
 """
+import math
 
 from django import template
 from django.template.defaulttags import register

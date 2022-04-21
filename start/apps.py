@@ -11,3 +11,4 @@ class StartConfig(AppConfig):
     Configurations for this APP
     """
     name = 'start'
+    verbose_name = "Intro-Seite"

@@ -1,9 +1,9 @@
 # Ruins and beyond!
 
 Diese Software ist im Rahmen des Pflichtfaches "Bachelor Praktikum" für den Studiengang Informatik
-Bachlor of Science im Wintersemester 2020/21 an der TU-Darmstadt entstanden. 
+Bachelor of Science im Wintersemester 2020/21 an der TU-Darmstadt entstanden. 
 
-Dieses Projekt ist unter der [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.txt) lizensiert, siehe LICENSE.
+Dieses Projekt ist unter der [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.txt) lizenziert, siehe LICENSE.
 
 **Motivation und Kontext**: Die Auftraggeber, die Veranstalter des Moduls "Klassische Architektur und Städtebau der Antike" des Fachbereichs Architektur der TU-Darmstadt, möchten die Gestaltung ihrer Vorlesung um eine Webanwendung zum digitalen Lernen erweitern. Die Idee ist aufgrund des pandemiebedingten Onlinestudienbetriebs entstanden und soll nun im Rahmen des Bachlorpraktikums umgesetzt werden. Hierfür möchten die Auftraggeber eine digitale Wissensplattform "Ruins and Beyond!" zu Bauwerken der Antike aufbauen, auf der die Studierenden, auf der Basis der zur Verfügung gestellten Materialien, die Lehrinhalte selbstbestimmt kombinieren und absolvieren können. Diese benötigten Videos, Bilder und Gebäudedaten wurden hierfür zu Beginn des Projektes von den Auftraggebern zur Verfügung gestellt.
 
@@ -19,7 +19,7 @@ Es wurde sich an dieser [Dokumentation](https://docs.djangoproject.com/en/3.1/) 
 
 Das Projekt ist in Apps, typische Django Struktur, unterteilt. Die Apps stellen in diesem Projekt jeweils eine Unterseite der Webseite dar und existieren als Python-Packages. Die Python-Directories werden verwendet um Template- und Static-Files, welche in mehreren Apps benötigt werden, ohne Komplikationen erreichbar zu machen.
 
-Die einzelnen Python-Directory und Python-Packages, die nicht automnatisch beim Start von Django automatisch erstellt werden, werden in der folgenden Struktur erklärt.
+Die einzelnen Python-Directory und Python-Packages, die nicht automatisch beim Start von Django automatisch erstellt werden, werden in der folgenden Struktur erklärt.
 
 
 |--bp55_ruins_and_beyond <br>
@@ -67,7 +67,7 @@ Die einzelnen Python-Directory und Python-Packages, die nicht automnatisch beim 
 
 ### details_page
 
-Die App details_page ist zuständig für die Darstellung der Detailseite. Auf der Detailseite wird ein  kurzer Steckbrief, sowie Bilder, Grundriss und Videos zu einem betsimmten Gebäude angezeigt. Dafür wurden in models folgende Klassen erzeugt: Era, um die verschiedenen Eras mit ihren jeweiligen Daten darzustellen, Building, die Gebäude mit allen zugehörigen Informationen darstellt, Blueprint, um den Gebäuden einen Grundriss als Bild zuordnen zu können, Picture, um den Gebäuden verschiedene Bilder zuweisen zu können. Für alle Attribute der Klassen wurden getter-Funktionen eingerichtet, um die entsrpechenden Werte auslesen zu können.
+Die App details_page ist zuständig für die Darstellung der Detailseite. Auf der Detailseite wird ein kurzer Steckbrief, sowie Bilder, Grundriss und Videos zu einem betsimmten Gebäude angezeigt. Dafür wurden in models folgende Klassen erzeugt: Era, um die verschiedenen Eras mit ihren jeweiligen Daten darzustellen, Building, die Gebäude mit allen zugehörigen Informationen darstellt, Blueprint, um den Gebäuden einen Grundriss als Bild zuordnen zu können, Picture, um den Gebäuden verschiedene Bilder zuweisen zu können. Für alle Attribute der Klassen wurden getter-Funktionen eingerichtet, um die entsrpechenden Werte auslesen zu können.
 
 ### filter_page
 
@@ -79,7 +79,7 @@ Die App home dient nur zur Darstellung der Startseite und benötigt daher keine 
 
 ### impressum
 
-Die App impressum ist zuständig für die Darstellung der Impressum-Seite und die Verfügbarkeit des Kurslinks auf allen Seiten der Webandwendung. Dafür enthält die Datei models die Klasse Impressum. Diese besitzt nur die Attribute course_link, mit dem der Link zum aktuellen Vorlesungskurs festgehalten werden kann, und name um die Objekte der Klasse Impressum unterscheiden zu können. Hier ist anzumerken, dass durch das Überschreiben der Funktion save, nur ein Objekt dieser Klasse erzeugt werden kann. In views wird eine getter Funktion für das Attribut course_link bereitgestellt. Damit der Kurslink auch auf allen anderen Seiten verfügbar ist, wurde diese Funktion in die views aller anderen Apps importiert.
+Die App impressum ist zuständig für die Darstellung der Impressum-Seite und die Verfügbarkeit des Kurslinks auf allen Seiten der Webanwendung. Dafür enthält die Datei models die Klasse Impressum. Diese besitzt nur die Attribute course_link, mit dem der Link zum aktuellen Vorlesungskurs festgehalten werden kann, und name um die Objekte der Klasse Impressum unterscheiden zu können. Hier ist anzumerken, dass durch das Überschreiben der Funktion save, nur ein Objekt dieser Klasse erzeugt werden kann. In views wird eine getter Funktion für das Attribut course_link bereitgestellt. Damit der Kurslink auch auf allen anderen Seiten verfügbar ist, wurde diese Funktion in die views aller anderen Apps importiert.
 
 ### materials_page
 

@@ -2,99 +2,122 @@
     CSS File for styling on the filter page
 =============================================================================*/
 
-/*----------------------------------------------------------------------------
-    Adds a max width to the dropdown filters so long words don't break the design
- */
+.search-filters {
+    background-color: #1F1F1F;
+    padding-top: 14px;
+    padding-bottom: 14px;
+}
+
+.dropdown {
+    padding-bottom: 14px;
+}
+
+.dropdown-menu {
+    width: 90%;
+    scrollbar-color: #701F2C #F9EAD8;
+    background-color: #1F1F1F;
+    border-color: #F7F7F7;
+    color: #F7F7F7;
+}
+
 .dropdown-item {
-    max-width: 400px;
+    cursor: pointer;
+    color: #F7F7F7;
 }
 
-/*
-    Shows that you can klick and select a filter from dropdown menu
- */
 .dropdown-item:hover {
-    cursor: pointer !important;
+    background-color: #F9EAD8;
+    color: #1F1F1F;
 }
 
-/*----------------------------------------------------------------------------
-    Style for the 'Mehr erfahren' buttons
- */
-.card-body .btn {
+.btn-dropdown, .search-filters {
+    color: #F7F7F7;
+}
+
+.btn-dropdown:hover {
+    color: #F9EAD8;
+    border-color: #F9EAD8;
+}
+
+.btn-dropdown {
+    text-align: left;
+    border-style: solid;
+    border-radius: 5px;
+    border-color: #F7F7F7;
     width: 100%;
 }
 
-/*
-    Remove shadow of 'Mehr erfahren' buttons after they get clicked
- */
-.card-body .btn:focus {
-    box-shadow: none !important;
+/* Style symbol to make buttons to hide and unhide materials */
+.dash-symbol {
+    margin-top: 10px;
+    width: 8px;
+    height: 8px;
+    transform: scaleY(-1) scaleX(-1) translate(0px, 50%) rotate(0.125turn);
+    border: 2px solid #F2F2F2;
+    border-right-width: 0px;
+    border-bottom-width: 0px;
 }
 
-/*----------------------------------------------------------------------------
-    Style of the active filters
- */
+.btn-filter-parent, .btn-filter-parent:hover {
+    cursor: pointer;
+    color: #F7F7F7;
+    margin-right: 20px;
+}
+
 .btn-filter {
-    max-width: 92%;
-    overflow: hidden;
-
-    margin-left: 10px;
-    margin-bottom: 5px;
-    padding-top: 5px;
-    padding-right: 15px;
-    padding-left: 15px;
-    padding-bottom: 5px;
+    margin-right: 7px;
+    display: inherit;
 }
 
-/*
-    Style of the active filters on hover
- */
-.btn-filter:hover {
-    cursor: pointer;
-    text-decoration: none;
-    color: black;
-}
-
-/*
-    Style of the remove active filter button
- */
 .btn-filter-x {
-    color: black;
-
-    padding-top: 5px;
-    margin-bottom: 5px;
-    padding-right: 10px;
-    padding-left: 10px;
-    padding-bottom: 5px;
+    font-size: 20px;
+    display: inherit;
 }
 
-/*
-    Style of the remove active filter button on mouse hover
- */
-.btn-filter-x:hover {
-    cursor: pointer;
-    text-decoration: none;
-    color: black;
+
+.no-results {
+    text-align: center;
+    font-size: 84px;
+    padding-top: 50px;
+    padding-bottom: 50px;
 }
 
-/*----------------------------------------------------------------------------
-    Styling of the result box containing a building
- */
-.result-box {
-    width: 33.33%;
-    padding-left: 5px;
-    padding-right: 5px;
-}
-
-/*
-    Styling of one row of results
- */
 .row-result {
-    margin-bottom: 20px;
+    margin-bottom: 67px;
 }
 
-/*----------------------------------------------------------------------------
-    Styling of the image of one result card
- */
-.card-img {
-    height: 200px;
+.building-image {
+    height: 180px;
+    background-color: #e8d4bd;
+}
+
+.card-title {
+    color: black;
+    padding-bottom: 28px;
+}
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+    .building-image {
+        height: 100px;
+        background-color: #e8d4bd;
+    }
+
+    .card-title {
+        padding-bottom: 10px;
+    }
+
+    .row-result {
+        margin-bottom: 30px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .row-result {
+        margin-bottom: 0;
+    }
+
+    .card-title {
+        margin-bottom: 28px;
+        padding-bottom: 5px;
+    }
 }

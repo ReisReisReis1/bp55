@@ -8,18 +8,22 @@
 
 </head>
 <body>
-    <div class="row row-no-margin bottom-menu-bg" id="color-bg-secondary">
+    <div class="footer-bar align-items-center">
         <div class="container">
-            <div class="row">
-                <div class="col text-center bottom-menu">
+            <div class="row items">
+                <div class="col-1 col-no-padding">
+                    <a href="{% url "start:start" %}">
+                        <img class="footer-logo" src="{% static "logo-small.png" %}">
+                    </a>
+                </div>
+                <div class="col col-no-padding d-flex justify-content-end align-items-center font-footer">
                     <!-- Link to impressum -->
-                    <a href="{% url "impressum:impressum" %}" id="color-txt-primary">Impressum</a>
-                    <b>·</b>
+                    <a href="{% url "impressum:impressum" %}" class="footer-menu-item color-primary-footer">Impressum</a>
                     <!-- Link to Moodle course -->
                     {% if Kurs_Link|length == 0 %}
-                        <a href="" id="color-txt-primary">Moodlekurs</a>
+                        <a href="" class="footer-menu-item color-primary-footer">Moodlekurs</a>
                     {% else %}
-                        <a href="{{Kurs_Link}}" target="_blank" id="color-txt-primary">Moodlekurs</a>
+                        <a href="{{Kurs_Link}}" target="_blank" class="footer-menu-item color-primary-footer">Moodlekurs</a>
                     {% endif %}
                 </div>
             </div>

@@ -7,39 +7,90 @@
     {% include 'default_head.html' %}
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="{% static 'start.css' %}">
+    <title>Startseite</title>
 </head>
 
 <body>
 
     {% include './header.html' %}
+    {% include './announcement.html' %}
 
-    <!-- Intro-Video -->
-    <div class="container container-page">
-        <div class="row row-distance-sm">
-            <h1>Herzlich Willkommen!</h1>
-            <video width="100%" controls="controls" preload="none" poster="/media/{{ Video.thumbnail }}" oncontextmenu="return false;" controlsList="nodownload">
-                <source src="{{Video.video.url}}" type="video/mp4">
-                <b>{{Video.title}}</b>
-            </video>
+    <div class="subheader" style="background: url('{% static 'start-head-background.png' %}');">
+        <div class="container h-100 d-flex align-items-center justify-content-center">
+            <h1 class="subheader-text">RUINS AND BEYOND!</h1>
+        </div>
+    </div>
+
+    <div class="default-page-body intro-page-body">
+        <div class="container">
+            <div class="row">
+                <div class="col welcome-text">
+                    <h2 class="font-calluna m-0"><b>Herzlich Willkommen!</b></h2>
+                </div>
+            </div>
+            <!-- Intro Video -->
+            <div class="row">
+                <div class="col">
+                    <video width="100%" controls="controls" preload="none" poster="/media/{{ Video.thumbnail }}" oncontextmenu="return false;" controlsList="nodownload">
+                        <source src="{{Video.video.url}}" type="video/mp4">
+                        <b>{{Video.title}}</b>
+                    </video>
+                </div>
+            </div>
             <!-- Description text for the webapplikation -->
-            <p align="justify">Die Vorlesung Architektur und Städtebau der Antike soll in ein zeitgemäßes digitales Format überführt werden.
-            Hierfür möchten wir eine digitale Wissensplattform zur Architekturgeschichte der Antike als Webanwendung aufbauen,
-            mit der die Studierenden auf der Basis des zur Verfügung gestellten Materials die Lehreinheiten selbstbestimmt
-            kombinieren und absolvieren können. Die bislang 13 1,5-stündigen Vorlesungen, die einen chronologischen Überblick
-            über den Wandel der Architektur in der Antike zum Gegenstand haben, werden zu 72 15-minütigen Videos umgewandelt
-                und durch einen Bauwerkskatalog bestehend aus 220 Steckbriefen mit grundlegenden Charakteristiken ergänzt.</p><br>
-            Anhand des Web-Tools Ruins and Beyond! werden diese Daten auf unterschiedlichen Wegen miteinander verknüpft:
-            <ol>
-                <li><a href="{% url "timeline:timeline" %}">Zeitachse</a>: Auf der Zeitachse werden die Einzelbauten mit
-                    ihren Charakteristiken und zugehörigen Vorlesungsvideos über Bild-Buttons abrufbar gemacht.</li>
-                <li><a href="{% url "filter_page:filter" %}">Bauwerke</a>: Im Reiter Bauwerke werden die Gebäude thematisch
-                    abgefragt und zusammengestellt. Auch ermöglicht die Filterfunktion eine gezielte Auswahl bestimmter Gebäudegruppen.</li>
-                <li><a href="{% url "video_content:videos" %}">Staffeln</a>: Im Reiter Staffeln werden alle vorhandenen
-                    Videos in chronologischer Reihenfolge und nach Epoche sortiert aufgelistet</li>
-            </ol>
+            <div class="row">
+                <div class="col intro-text break-words">
+                    <p align="justify" class="m-0 font-calluna">
+                        {{ intro_text }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="alternative-page-body">
+        <div class="container">
+            <div class="row">
+                <div class="col font-benton-sans">
+                    <p>
+                        <b>Anhand des Web-Tools Ruins and Beyond! werden diese Daten auf unterschiedlichen Wegen miteinander verknüpft:</b>
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="card-deck">
+                        <!-- Card: Zeitachse -->
+                        <a class="card" href="{% url 'timeline:timeline' %}">
+                            <div class="card-body">
+                                <h5 class="card-title font-bebas-neue">ZEITACHSE</h5>
+                                <p class="card-text font-calluna">{{ timeline_card_text }}</p>
+                            </div>
+                            <img class="card-img-bottom" src="{% static 'timeline-head-background.png' %}" alt="Zeitachse Hintergrundbild">
+                        </a>
+                        <!-- Card: Bauwerke -->
+                        <a class="card" href="{% url 'filter_page:filter' %}">
+                            <div class="card-body">
+                                <h5 class="card-title font-bebas-neue">BAUWERKE</h5>
+                                <p class="card-text font-calluna">{{ buildings_card_text }}</p>
+                            </div>
+                        <img class="card-img-bottom" src="{% static 'filter-head-background.png' %}" alt="Zeitachse Hintergrundbild">
+                        </a>
+                        <!-- Card: Staffeln -->
+                        <a class="card" href="{% url 'video_content:videos' %}">
+                            <div class="card-body">
+                                <h5 class="card-title font-bebas-neue">STAFFELN</h5>
+                                <p class="card-text font-calluna">{{ video_card_text }}</p>
+                            </div>
+                            <img class="card-img-bottom" src="{% static 'videos-head-background.png' %}" alt="Zeitachse Hintergrundbild">
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     {% include './footer.html' %}
+    {% include './mobile_nav_footer.html' %}
+
 </body>
 </html>

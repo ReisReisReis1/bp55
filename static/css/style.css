@@ -2,17 +2,62 @@
     General CSS file for styling on every page
 =============================================================================*/
 
-body {
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
+body{
+    overflow-x: hidden;
 }
+
+.default-page-body {
+    background-color: #F9EAD8;
+    padding-top: 75px;
+    padding-bottom: 75px;
+}
+
+.alternative-page-body {
+    background-color: #CAA36E;
+    padding-top: 75px;
+    padding-bottom: 75px;
+}
+
+.subheader {
+    background-color: #1F1F1F !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
+    height: 500px;
+}
+
+.subheader-small {
+    background-color: #1F1F1F !important;
+    background-position: top !important;
+    background-repeat: no-repeat !important;
+    height: 250px;
+}
+
+/* Responsive design for the subheader */
+@media screen and (max-width: 1100px) {
+    .subheader {
+        background-color: #1F1F1F !important;
+        background-position: bottom !important;
+        background-repeat: no-repeat !important;
+        background-size: contain !important;
+        height: 220px;
+    }
+    .subheader-text {
+        font-size: 70px !important;
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 460px) {
+    .subheader-text {
+        font-size: 50px !important;
+    }
+}
+
 
 /*----------------------------------------------------------------------------
     Add to Bootstrap .container to get the default spacing
  */
-.container-page {
-    margin-bottom: 100px;
-}
 
 .heading-no-margin {
     margin-bottom: 0 !important;
@@ -24,6 +69,11 @@ body {
 .row-no-margin {
     margin-left: 0 !important;
     margin-right: 0 !important;
+}
+
+.col-no-padding {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
 }
 
 /*
@@ -62,14 +112,40 @@ body {
     hyphens: auto;
 }
 
+.truncate-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.truncate-title-alternative {
+    overflow: hidden;
+    display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
 /*----------------------------------------------------------------------------
     Styling of the 'back to top' button
  */
 .back-to-top {
-    font-size: 1.5rem !important;
+    color: #CAA36E !important;
+    background-color: #1F1F1F;
     font-weight: 700 !important;
-    border: solid 2px !important;
     position: fixed;
     bottom: 20px;
     left: 20px;
+    padding: 0 11px 6px 11px;
+    transform: rotate(90deg);
+    z-index: 998;
+}
+
+@media screen and (max-width: 1100px) {
+    .back-to-top {
+        bottom: 75px;
+    }
+
+    .default-page-body, .alternative-page-body {
+        padding-bottom: 130px !important;
+    }
 }

@@ -1,0 +1,48 @@
+{% load static %}
+{% load bootstrap4 %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+</head>
+<body>
+    <div class="mobile-footer-bar align-items-center">
+        <div class="container">
+            <div class="row">
+                <!-- The items -->
+                <div class="mobile-footer-menu-item align-items-center">
+                    <a href="{% url 'start:start' %}">
+                        <img src="{% static 'mobile-intro.png' %}" class="nav-img mx-auto d-block">
+                        <p class="nav-text">Intro</p>
+                    </a>
+                </div>
+                <div class="mobile-footer-menu-item align-items-center">
+                    <a href="{% url 'timeline:timeline' %}">
+                        <img src="{% static 'mobile-timeline.png' %}" class="nav-img mx-auto d-block">
+                        <p class="nav-text">Zeitachse</p>
+                    </a>
+                </div>
+                <div class="mobile-footer-menu-item align-items-center">
+                    <a href="{% url 'filter_page:filter' %}">
+                        <img src="{% static 'mobile-buildings.png' %}" class="nav-img mx-auto d-block">
+                        <p class="nav-text">Bauwerke</p>
+                    </a>
+                </div>
+                <div class="mobile-footer-menu-item align-items-center">
+                    <a href="{% url 'video_content:videos' %}">
+                        <img src="{% static 'mobile-videos.png' %}" class="nav-img mx-auto d-block">
+                        <p class="nav-text">Staffeln</p>
+                    </a>
+                </div>
+                <div class="mobile-footer-menu-item align-items-center">
+                    <a href="{% url 'materials_page:material' %}">
+                        <img src="{% static 'mobile-material.png' %}" class="nav-img mx-auto d-block">
+                        <p class="nav-text">Materialien</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
