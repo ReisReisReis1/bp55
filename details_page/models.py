@@ -240,7 +240,7 @@ class Building(models.Model):
                                        help_text="Sind die Daten Jahrhundert Angaben?")
     year_ca = models.BooleanField(verbose_name='ungefähre Jahresangabe?', default=False,
                                   help_text="ca. zum Datum hinzufügen (für ungenaue Datumsangaben)"
-                                            ".")
+                                            ".", editable=False)
     era = models.ForeignKey(verbose_name='Epoche', to=Era, on_delete=models.SET_NULL,
                             null=True, blank=True)
     architect = models.CharField(verbose_name='Architekt', max_length=100,
@@ -691,7 +691,7 @@ class Building(models.Model):
         Getting the start year plus end year as string
         """
         century = '. Jh.' if self.year_century else ''
-        circa = 'ca. ' if self.year_ca else ''
+        # circa = 'ca. ' if self.year_ca else ''
         start = ''
         end = ''
         if self.year_from is not None:
@@ -699,13 +699,15 @@ class Building(models.Model):
             # default n.Chr.
             bc_ad_from = ' ' + str(
                 self.year_from_BC_or_AD) if self.year_from is not None else 'v.Chr.'
-            start = circa + year_from + century + bc_ad_from
+            # start = circa + year_from + century + bc_ad_from
+            start = year_from + century + bc_ad_from
             if self.year_to is not None:
                 year_to = str(self.year_to)
                 # default n.Chr.
                 bc_ad_to = ' ' + str(
                     self.year_to_BC_or_AD) if self.year_to_BC_or_AD is not None else 'v.Chr.'
-                end = ' - ' + circa + year_to + century + bc_ad_to
+                # end = ' - ' + circa + year_to + century + bc_ad_to
+                end = ' - ' + year_to + century + bc_ad_to
 
         return start + end
 
@@ -727,19 +729,23 @@ class Building(models.Model):
         :return: a tuple of strings for year and bd/ad.
         """
         century = 'Jh. ' if self.year_century else ''
-        circa = 'circa ' if self.year_ca else 'exakt '
+        #circa = 'circa ' if self.year_ca else ''
         start = ''
         end = ''
         if self.year_from is not None:
             start = str(self.year_from)
+            if self.year_century:
+                start = start + "."
         if self.year_to is not None:
             end = str(self.year_to)
+            if self.year_century:
+                end = end + "."
         if start != '' and end != '':
             res_years = start+' - '+end
         elif start == '' and end != '':
-            res_years = "bis "+ end
+            res_years = "bis " + end
         elif start != '' and end == '':
-            res_years = "ab "+start
+            res_years = "ab " + start
         else:
             res_years = ''
         bc_ad = ''
@@ -752,7 +758,7 @@ class Building(models.Model):
             else:
                 bc_ad = str(self.year_to_BC_or_AD)
         other_info = century+bc_ad
-        other_info = other_info+" | "+circa if circa != '' else other_info
+        #other_info = other_info+" | "+circa if circa != '' else other_info
         return res_years, other_info
 
 
