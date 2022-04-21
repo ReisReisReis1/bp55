@@ -4,37 +4,42 @@
 <!DOCTYPE html>
 <html>
 <head>
+    {% include '../default_head.html' %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="{% static './home/index.css' %}">
     <title>Home</title>
-    {% include '../default_head.html' %}
 </head>
 <body>
 
-    <div class="h-100 bg-image">
-        <div class="container">
-            <div class="row">
-                <div class="col-4"></div>
-                <div class="col-4 d-flex justify-content-center">
-                    <div class="main_logo_container d-flex justify-content-center">
-                        <!-- Logo -->
-                        <img class="logo" src="{% static 'home-logo.png' %}">
-                    </div>
+    <div class="index-page-body h-100">
+        <div class="container justify-content-center h-100">
+            <div class="row logo-row">
+                <div class="col-md-4">
+
                 </div>
-                <div class="col-4"></div>
+                <div class="col-md-4">
+                    <!-- Logo -->
+                    <img class="w-100" src="{% static 'home-logo.png' %}">
+                </div>
+                <div class="col-md-4">
+
+                </div>
             </div>
-            <div class="row">
-                <div class="col-4"></div>
-                <div class="col-4 d-flex justify-content-center">
-                    <div class="main_button_container">
-                        <!-- Login Button -->
-                        <a href="{% url 'start:start' %}" style="width: 100%;">
-                            <button class="button font-benton-sans" id="color-btn" style="width: 100%;">
-                                <b>Anmelden</b>
-                            </button>
-                        </a>
-                    </div>
+            <div class="row button-row">
+                <div class="col-md-4">
+
                 </div>
-                <div class="col-4"></div>
+                <div class="col-md-4">
+                    <!-- Login Button -->
+                    <a href="{% url 'start:start' %}" style="width: 100%;">
+                        <button class="index-button w-100 font-benton-sans" id="color-btn">
+                            <b>Anmelden</b>
+                        </button>
+                    </a>
+                </div>
+                <div class="col-md-4">
+
+                </div>
             </div>
         </div>
     </div>

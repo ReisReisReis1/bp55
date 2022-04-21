@@ -118,18 +118,19 @@
                     <li>Wähle Monat und Jahr oben im Dropdown Menü aus, um die entsprechende Erhebung des Monats zu betrachten.</li>
                     <li>Unten findet sich die Zusammenfassung für das aktuelle Semester, darunter die Erhebung des ausgewählten Monats.</li>
                     <li>Die Verlinkungen führen jeweils direkt zu dem Element, das in der Zeile erfasst wurde. So kann man sich z.B. direkt selbst schnell das meist angesehene Gebäude anschauen. Diese öffnen sich in neuen Tabs, sodass die Analyseseite offen bleibt.</li>
-                    <li>Am unteren Ende der Seite können die älteren Analysedaten gelöscht werden.</li>
-                    <li>Das Zusammenfassungs-Diagramm ist interaktiv: Klickt man auf Elemente der Legende, kann man Datensätze ein- oder ausblenden, das Diagramm passt sich entsprechend an. Fährt man mit der Maus über Datenpunkte im Diagramm, bekommt man die Werte zu diesem Punkt angezeigt.</li>
+                    <li>Am unteren Ende der Seite können die Daten herunterladen werden, und die älteren Analysedaten gelöscht werden.</li>
+                    <li>Das Zusammenfassungs-Diagramm ist interaktiv: Klickt man auf Elemente der Legende, kann man Datensätze ein- oder ausblenden, das Diagramm passt sich entsprechend an. Fährt man mit der Maus über Datenpunkte im Diagramm, bekommt man die Werte zu diesem Punkt angezeigt. Wählt man z.B. "Alle erhobenen Zugriffe" ab, dann kann man sich gut die Aufteilung auf die einzelnen Bereiche ansehen.</li>
+                    <li>Das Zusammenfassungs-Diagramm kann man mittels Rechtsklick wie ein Bild herunterladen.</li>
                 </ul>
             </div>
 
             <!-- Chart for the semester -->
             <h2>Zusammenfassung für das {{ semester }}:</h2>
             <canvas id="myChart" max-height="200px !important;"></canvas>
-            <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+            <script type="text/javascript" src="https://code.jquery.com/jquery-1.10.0.min.js"></script>
             <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
             <script type="text/javascript">
-                $.get('/analytics/chartJSON', function(data) {
+                $.get('{% url 'analytics:line_chart_json' %}', function(data) {
                     var ctx = $("#myChart").get(0).getContext("2d");
                     new Chart(ctx, {
                         type: 'line', data: data
@@ -334,6 +335,19 @@
             </table>
         </div>
     </div>
+
+    <div class="csv-hg">
+        <div class="container csv-zone">
+            <h2>Daten herunterladen:</h2>
+            <p>Hier können alle Datensätze als Tabelle im .csv Dateiformat heruntergeladen werden. Diese enthält alle Rohdaten, wie sie in der Datenbank zu finden sind. Der Download enthält immer stets alle vorhandenen Daten (unabhängig davon, ob sie schon mal heruntergeladen wurden oder nicht).
+                <ul>
+                    <li>Hinweis: Die Bezeichnungen enthalten bei Unterseiten den Seitennamen, bei Gebäuden, Videos und Materialien den Namen und die Datenbank ID des Objektes. Bei ZIP Downloads besteht die Bezeichnung aus "ZIP", und dem Namen der heruntergeladenen Kategorie. Die URL versteht sich als alles hinter der eigentlichen Adresse (z.B. [...]ruinsandbeyond.de/[URL hier]).</li>
+                    <li>Öffnen der Datei: Das .csv ("Comma separated values") Format verwendet ein bestimmtes Zeichen, um die Einträge zu trennen. Beim Öffnen der Datei mit einem regulären Tabellenverarbeitungsprogramm muss man hier das Semikolon ";" als Seperator auswählen damit es richtig formatiert wird (In den meisten Programmen der Standard).</li>
+                </ul>
+            <a type="button" href="{% url 'analytics:download_csv' %}" class="btn d-flex justify-content-center"><b>CSV-Tabelle herunterladen</b></a>
+        </div>
+    </div>
+
     <div class="danger-hg">
         <div class="container danger-zone">
             <h2>GEFAHRENZONE:</h2>

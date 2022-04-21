@@ -77,6 +77,7 @@ def get_categories_and_corresponding_zip_files(request, category):
         resp = HttpResponse(sio.getvalue(), content_type="application/x-zip-compressed")
         # ..and correct content-disposition
         resp['Content-Disposition'] = 'attachment; filename=%s' % zip_filename
+        sio.close()
     return resp
 
 
